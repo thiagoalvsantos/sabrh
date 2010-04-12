@@ -7,10 +7,7 @@
 				initialize="{initTimer()}">
 
 	<mx:Style source="assets/css.css"/>
-	<mx:Model id="listSample"
-			  source="sampledata/listsample.xml"/>
-
-
+	
 	<mx:Script>
 		<![CDATA[
 			import mx.binding.utils.BindingUtils;
@@ -81,7 +78,7 @@
 			<mx:Canvas width="100%"
 					   height="100%"
 					   label="Cadastros"
-					   icon="@Embed(source='assets/email-48x48.png')">
+					   icon="@Embed(source='assets/img/email-48x48.png')">
 				<mx:TextArea text="Content"
 							 width="100%"
 							 height="100%"/>
@@ -89,7 +86,7 @@
 			<mx:Canvas width="100%"
 					   height="100%"
 					   label="Consultas"
-					   icon="@Embed(source='assets/rss-48x48.png')">
+					   icon="@Embed(source='assets/img/article-48x48.png')">
 				<mx:TextArea text="Content"
 							 width="100%"
 							 height="100%"/>
@@ -97,7 +94,7 @@
 			<mx:Canvas width="100%"
 					   height="100%"
 					   label="Avaliação"
-					   icon="@Embed(source='assets/article-48x48.png')">
+					   icon="@Embed(source='assets/img/article-48x48.png')">
 				<mx:TextArea text="Content"
 							 width="100%"
 							 height="100%"/>
@@ -105,7 +102,7 @@
 			<mx:Canvas width="100%"
 					   height="100%"
 					   label="Animais"
-					   icon="@Embed(source='assets/article-48x48.png')">
+					   icon="@Embed(source='assets/img/author-48x48.png')">
 				<mx:TextArea text="Content"
 							 width="100%"
 							 height="100%"/>
@@ -113,7 +110,7 @@
 			<mx:Canvas width="100%"
 					   height="100%"
 					   label="Relatórios"
-					   icon="@Embed(source='assets/article-48x48.png')">
+					   icon="@Embed(source='assets/img/article-48x48.png')">
 				<mx:TextArea text="Content"
 							 width="100%"
 							 height="100%"/>

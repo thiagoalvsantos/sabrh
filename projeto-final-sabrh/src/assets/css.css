@@ -674,17 +674,17 @@ Tree
 }
 
 .drawerCloseRight {
-  up-skin:Embed(source="assets/closeaccordion2.png");
-  over-skin:Embed(source="assets/closeaccordion2.png");
-  down-skin:Embed(source="assets/closeaccordion2.png");
-  disabled-skin:Embed(source="assets/closeaccordion2.png");
+  up-skin:Embed(source="assets/img/closeaccordion2.png");
+  over-skin:Embed(source="assets/img/closeaccordion2.png");
+  down-skin:Embed(source="assets/img/closeaccordion2.png");
+  disabled-skin:Embed(source="assets/img/closeaccordion2.png");
 }
 
 .drawerCloseLeft {
-  up-skin:Embed(source="assets/closeaccordion2.png");
-  over-skin:Embed(source="assets/closeaccordion2.png");
-  down-skin:Embed(source="assets/closeaccordion2.png");
-  disabled-skin:Embed(source="assets/closeaccordion2.png");
+  up-skin:Embed(source="assets/img/closeaccordion2.png");
+  over-skin:Embed(source="assets/img/closeaccordion2.png");
+  down-skin:Embed(source="assets/img/closeaccordion2.png");
+  disabled-skin:Embed(source="assets/img/closeaccordion2.png");
 } 
 
 
