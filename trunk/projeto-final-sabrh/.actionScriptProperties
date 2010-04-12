@@ -11,7 +11,6 @@
   <applications>
     <application path="Index.mxml"/>
     <application path="login.mxml"/>
-    <application path="main.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

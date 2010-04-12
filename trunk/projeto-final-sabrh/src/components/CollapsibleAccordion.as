@@ -94,10 +94,10 @@ package components
     private var _selectedIndex : Number=1;
     private var selectedIndexChanged : Boolean=false;
     //Icons - default 
-    [Embed(source="/assets/close.png")]
+    [Embed(source="/assets/img/close.png")]
     private var rightCloseIcon : Class;
 
-    [Embed(source="/assets/closeleft.png")]
+    [Embed(source="/assets/img/closeleft.png")]
     private var leftCloseIcon : Class;
     
           
