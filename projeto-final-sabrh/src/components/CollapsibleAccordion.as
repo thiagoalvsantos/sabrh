@@ -54,13 +54,13 @@ package components
   //Styles
   [Style(name="orientation", defaultValue="right", type="String", enumeration="left,right")]
   [Style(name="initialWidth", type="int")]
-  [Style(name="openSize", type="int", defaultValue="250")]
+  [Style(name="openSize", type="int", defaultValue="200")]
   
   public class CollapsibleAccordion extends Container
   {
     //Width of component when you click to expand it
     [Bindable]
-    public var openSize : Number = 250;
+    public var openSize : Number = 200;
 
     //make this style
     private var _barSize : Number;
