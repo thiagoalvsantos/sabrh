@@ -12,6 +12,9 @@
     <application path="Index.mxml"/>
     <application path="login.mxml"/>
   </applications>
-  <modules/>
+  <modules>
+    <module application="src/Index.mxml" destPath="modulos/cadastros/CadastroPropriedade.swf" optimize="true" sourcePath="src/modulos/cadastros/CadastroPropriedade.mxml"/>
+    <module application="src/Index.mxml" destPath="modulos/cadastros/ConsultarProdutores.swf" optimize="true" sourcePath="src/modulos/cadastros/ConsultarProdutores.mxml"/>
+  </modules>
   <buildCSSFiles/>
 </actionScriptProperties>

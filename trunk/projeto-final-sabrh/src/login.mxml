@@ -1,23 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
-				xmlns:fx="scripts.*"
-				layout="absolute">
+	layout="absolute">
 	<mx:Style source="assets/css.css"/>
-	<mx:Script source="scripts/login.as" />
-		
-	<mx:Panel id="panelLogin" width="540" height="134" layout="absolute" horizontalCenter="0" verticalCenter="0" creationCompleteEffect="Fade"  title=":: Entrar ::">
-		<mx:Label x="97" y="13" text="Usuário:"/>
-		<mx:Label x="97" y="42" text="Senha:"/>
-		<mx:TextInput x="157" y="11" width="302"/>
-		<mx:TextInput x="157" y="40" width="302"/>
-		<mx:Button x="467" y="10" label="Entrar" height="55" click="trateFecharClick"/>
-		<mx:Image x="10" y="6" source="assets/img/lock.png" width="70" height="70"/>
-		<mx:LinkButton x="343" y="70" label="esqueci a senha &gt;&gt;" fontSize="10"/>
-		<mx:LinkButton x="253" y="70" label="cadastrar &gt;&gt;" fontSize="10"/>
-	</mx:Panel>
-	
-	
-	
+	<mx:Script source="scripts/login.as"/>
 
-		
+	<mx:Panel id="panelLogin"
+			  width="540"
+			  height="134"
+			  layout="absolute"
+			  horizontalCenter="0"
+			  verticalCenter="0"
+			  creationCompleteEffect="Fade"
+			  title=":: Entrar ::">
+		<mx:Label x="97"
+				  y="13"
+				  text="Usuário:"/>
+		<mx:Label x="97"
+				  y="42"
+				  text="Senha:"/>
+		<mx:TextInput x="157"
+					  y="11"
+					  width="302"/>
+		<mx:TextInput x="157"
+					  y="40"
+					  width="302"/>
+		<mx:Button x="467"
+				   y="10"
+				   label="Entrar"
+				   height="55"
+				   click="trateFecharClick"/>
+		<mx:Image x="10"
+				  y="6"
+				  source="assets/img/lock.png"
+				  width="70"
+				  height="70"/>
+		<mx:LinkButton x="343"
+					   y="70"
+					   label="esqueci a senha &gt;&gt;"
+					   fontSize="10"/>
+		<mx:LinkButton x="253"
+					   y="70"
+					   label="cadastrar &gt;&gt;"
+					   fontSize="10"/>
+	</mx:Panel>
+
+
+
+
+
 </mx:Application>
