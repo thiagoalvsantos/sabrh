@@ -3,8 +3,11 @@
 //	Index.as
 //
 ////////////////////////////////////////
-import modulos.cadastros.ConsultarProdutores;
-import modulos.cadastros.CadastroPropriedade;
+import mx.controls.Alert;
+import mx.events.ModuleEvent;
+import mx.modules.ModuleLoader;
+
+
 
 
 //--------------------------------------
@@ -36,44 +39,39 @@ public function incrementa(event:TimerEvent):void
 /**
  *
  */
-public function initTimer():void
+public function init():void
 {
 	this.timer=new Timer(1000 * 1);
 	timer.addEventListener("timer", incrementa);
 	timer.start();
+
 }
 
 /**
  *
  */
-public function action(action:String):void
-{	
-	if (acaoAtual != action)
-	{
-		acaoAtual=action;
-		var p=null;
-		switch (action)
-		{
-			case 'CadastroProdutor':
-				painelConteudo.label = "Consultar Produtores"
-				p=new ConsultarProdutores();
-				break;
-			case 'CadastroPropriedade':
-				p=new CadastroPropriedade();
-				break;
-			default:
-				p=null;
+public function action():void
+{
+	
+	painelConteudo.title="Consultar Produtores";
 
 
-		}
-		painelConteudo.removeAllChildren();
-
-		painelConteudo.addChild(p);
-	}
+	var ml:ModuleLoader = new ModuleLoader();
+	
+	ml.addEventListener(ModuleEvent.ERROR,onError);
+	
+	ml.url = "ConsultarProdutores.swf"
+	ml.loadModule();
+	
+	painelConteudo.removeAllChildren();
+	painelConteudo.addChild(ml);
 
 
 
 }
 
+public function onError(event:ModuleEvent):void{
+	Alert.show(event.errorText.toString());
+}
 
 
