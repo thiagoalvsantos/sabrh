@@ -11,9 +11,9 @@
 		 //
 		 //					CSS e AS
 		 //
+		 <mx:Style source="assets/css.css"/>
 		 /////////////////////////////////////////////// -->
-
-	<mx:Style source="assets/css.css"/>
+	<mx:Style source="css/css2.css"/>
 	<mx:Script source="scripts/index.as"/>
 
 	<!--///////////////////////////////////////////
@@ -40,24 +40,16 @@
 		<mx:Label text=".:: SABRH ::."
 				  fontSize="15"
 				  fontWeight="bold"
-				  width="100%"
-				  color="#4D4D4D"
-				  enabled="true"/>
-		<mx:Label text="Usuario Logado"
-				  color="#4D4D4D"/>
+				  width="100%"	 />
+		<mx:Label text="Usuario Logado"/>
 		<mx:Label text="User"
 				  id="usuarioLogado"
-				  alpha="0.77"
-				  color="#999999"/>
-		<mx:Label text="Data do Sistema"
-				  color="#4D4D4D"/>
-		<mx:Label text="{ df.format( new Date() ) }"
-				  color="#999999"/>
-		<mx:Label text="Hora do Sistema"
-				  color="#4D4D4D"/>
+				  alpha="0.77"/>
+		<mx:Label text="Data do Sistema"/>
+		<mx:Label text="{ df.format( new Date() ) }"/>
+		<mx:Label text="Hora do Sistema"/>
 		<mx:Label id="txthora"
-				  text="{ hora }"
-				  color="#999999"/>
+				  text="{ hora }"/>
 	</mx:ApplicationControlBar>
 
 
@@ -79,7 +71,7 @@
 										 drawerButtonStyle="drawerButton"
 										 closeButtonStyle="drawerCloseRight"
 										 accordianStyle="drawerAccordion">
-			<mx:Canvas width="100%"
+			<mx:Canvas width="80%"
 					   height="100%"
 					   label="Consultas"
 					   autoLayout="true"
@@ -93,31 +85,55 @@
 						 paddingBottom="2">
 
 
-					<mx:LinkButton label="Consultar Produtores"
-								   icon="@Embed(source='assets/img/marcador-16x16.png')"
+					<mx:LinkButton label="Consultar Produtor"
+								   icon="@Embed(source='/assets/botones/adelante1.png')"
 								   width="100%"
 								   textAlign="left"
-								   click="{action()}"/>
+								   click="{carregarModulo('modulos/consultas/ConsultarProdutor.swf','Consultar Produtor')}"/>
 
+					<mx:LinkButton label="Consultar Propriedade"
+								   icon="@Embed(source='/assets/botones/adelante1.png')"
+								   width="100%"
+								   textAlign="left"
+								   click="{carregarModulo('modulos/consultas/ConsultarPropriedade.swf','Consultar Propriedade')}"/>
 
 				</mx:VBox>
 			</mx:Canvas>
 
+			<mx:Canvas width="100%"
+					   height="100%"
+					   label="Cadastros"
+					   autoLayout="true"
+					   icon="@Embed(source='assets/img/search-48x48.png')">
+				<mx:VBox width="100%"
+						 height="100%"
+						 verticalGap="0"
+						 paddingTop="2"
+						 paddingLeft="2"
+						 paddingRight="2"
+						 paddingBottom="2">
+
+				</mx:VBox>
+			</mx:Canvas>
 		</components:CollapsibleAccordion>
 		<!--///////////////////////////////////////////
 			 //
 			 //					Conteúdo
 			 //
 			 /////////////////////////////////////////////// -->
-		<mx:Panel title="Sistema de Acasalamento Bovino da Raça Holandesa"
-				  width="100%"
-				  height="100%"
-				  id="painelConteudo">
-		
-		
-		<mx:Button label="teste" click="{action()}"/>
-			
-		</mx:Panel>
+		<mx:Canvas id="painelConteudo"
+				   width="100%"
+				   height="100%">
+
+
+			<mx:ModuleLoader id="mloader"
+							 width="100%"
+							 horizontalCenter="0"
+							 height="100%"
+							 verticalCenter="0"/>
+
+
+		</mx:Canvas>
 
 	</mx:HBox>
 
@@ -125,4 +141,8 @@
 			  fontSize="8"
 			  bottom="7"
 			  horizontalCenter="0"/>
+
+
+
+
 </mx:Application>
