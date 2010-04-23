@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml"
+		   layout="absolute"
+		   width="100%"
+		   height="100%">
+
+	<mx:TitleWindow title="Consultar Propriedade"
+					verticalAlign="middle"
+					horizontalAlign="center"
+					showCloseButton="true"
+					width="100%" horizontalCenter="0" height="100%" verticalCenter="0">
+
+
+		<mx:VBox width="90%"
+				 height="80%">
+
+
+			<mx:Panel height="180"
+					  layout="absolute"
+					  title="Pesquisa"
+					  left="10"
+					  right="10"
+					  top="10"
+					  width="100%">
+
+				<mx:Label id="labelCodigoProdutor"
+						  text="Código Produtor"
+						  x="0"
+						  y="2"/>
+				<mx:TextInput id="txtcodigoProdutor"
+							  x="108"
+							  y="0"
+							  width="60"/>
+
+				<mx:Label id="labelNomeProdutor"
+						  text="Nome Produtor"
+						  x="176"
+						  y="2"/>
+				<mx:TextInput id="txtNomeProdutor"
+							  y="0"
+							  left="266" right="0"/>
+
+				<mx:Label id="labelCodigoPropriedade"
+						  text="Código Propriedade"
+						  x="0"
+						  y="29"/>
+				<mx:TextInput id="txtcodigoPropriedade"
+							  x="108"
+							  y="27"
+							  width="60"/>
+
+				<mx:Label id="labelNomeProPriedade"
+						  text="Nome Propriedde"
+						  x="176"
+						  y="29"/>
+				<mx:TextInput id="txtNomePropriedade"
+							  y="27"
+							  left="266" right="0"/>
+
+				<mx:Label id="labelUFProdutor"
+						  text="UF"
+						  y="56"
+						  x="0"/>
+				<mx:ComboBox id="cbUFProdutor"
+							 x="108"
+							 y="53"
+							 width="59">
+					<mx:Array>
+						<mx:String>PR</mx:String>
+						<mx:String>SC</mx:String>
+						<mx:String>RS</mx:String>
+						<mx:String>SP</mx:String>
+					</mx:Array>
+				</mx:ComboBox>
+				<mx:Label id="labelMunicipioProdutor"
+						  text="Município"
+						  x="176"
+						  y="56"/>
+				<mx:TextInput id="txtMunicipioProdutor"
+							  y="54"
+							  left="266" right="0"/>
+
+				<mx:Label id="labelEmailProdutor"
+						  text="E-mail"
+						  x="0"
+						  y="83"/>
+				<mx:TextInput id="txtEmailProdutor"
+							  y="81"
+							  left="108" right="0"/>
+				<mx:Button y="108"
+						   label="Pesquisar"
+						   id="btnPesquisa"
+						   right="0"/>
+
+
+
+
+			</mx:Panel>
+			<mx:Panel height="100%"
+					  layout="absolute"
+					  title="Resultado"
+					  left="10"
+					  right="10"
+					  top="137"
+					  width="100%">
+
+				<mx:AdvancedDataGrid id="adg1"
+									 designViewDataType="tree"
+									 left="0"
+									 right="0"
+									 top="0"
+									 bottom="0"
+									 selectionMode="singleRow">
+					<mx:columns>
+						<mx:AdvancedDataGridColumn headerText="Código"
+												   dataField="col1"/>
+						<mx:AdvancedDataGridColumn headerText="Nome"
+												   dataField="col2"/>
+						<mx:AdvancedDataGridColumn headerText="UF"
+												   dataField="col3"/>
+						<mx:AdvancedDataGridColumn headerText="Municipio"
+												   dataField="col4"/>
+						<mx:AdvancedDataGridColumn headerText="E-mail"
+												   dataField="col5"/>
+					</mx:columns>
+				</mx:AdvancedDataGrid>
+			</mx:Panel>
+		</mx:VBox>
+	</mx:TitleWindow>
+</mx:Module>
