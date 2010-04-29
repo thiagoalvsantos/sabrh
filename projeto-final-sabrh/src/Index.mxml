@@ -40,7 +40,7 @@
 		<mx:Label text=".:: SABRH ::."
 				  fontSize="15"
 				  fontWeight="bold"
-				  width="100%"	 />
+				  width="100%"/>
 		<mx:Label text="Usuario Logado"/>
 		<mx:Label text="User"
 				  id="usuarioLogado"
@@ -71,6 +71,12 @@
 										 drawerButtonStyle="drawerButton"
 										 closeButtonStyle="drawerCloseRight"
 										 accordianStyle="drawerAccordion">
+
+			<!--///////////////////////////////////////////
+				 //
+				 //				Menu Consultas
+				 //
+				 /////////////////////////////////////////////// -->
 			<mx:Canvas width="80%"
 					   height="100%"
 					   label="Consultas"
@@ -97,9 +103,20 @@
 								   textAlign="left"
 								   click="{carregarModulo('modulos/consultas/ConsultarPropriedade.swf','Consultar Propriedade')}"/>
 
+					<mx:LinkButton label="Consultar Animal"
+								   icon="@Embed(source='/assets/botones/adelante1.png')"
+								   width="100%"
+								   textAlign="left"
+								   click="{carregarModulo('modulos/consultas/ConsultarAnimal.swf','Consultar Animal')}"/>
+
 				</mx:VBox>
 			</mx:Canvas>
 
+			<!--///////////////////////////////////////////
+				 //
+				 //				Menu Cadastros
+				 //
+				 /////////////////////////////////////////////// -->
 			<mx:Canvas width="100%"
 					   height="100%"
 					   label="Cadastros"
@@ -112,6 +129,11 @@
 						 paddingLeft="2"
 						 paddingRight="2"
 						 paddingBottom="2">
+					<mx:LinkButton label="Sincronizar Dados"
+								   icon="@Embed(source='/assets/botones/adelante1.png')"
+								   width="100%"
+								   textAlign="left"
+								   click="{carregarModulo('modulos/consultas/ConsultarProdutor.swf','Consultar Produtor')}"/>
 
 				</mx:VBox>
 			</mx:Canvas>
