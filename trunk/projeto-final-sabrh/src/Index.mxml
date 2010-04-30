@@ -40,16 +40,16 @@
 		<mx:Label text=".:: SABRH ::."
 				  fontSize="15"
 				  fontWeight="bold"
-				  width="100%"/>
-		<mx:Label text="Usuario Logado"/>
+				  width="100%" color="#A8A1A1"/>
+		<mx:Label text="Usuario Logado" color="#A8A1A1" fontWeight="bold"/>
 		<mx:Label text="User"
 				  id="usuarioLogado"
-				  alpha="0.77"/>
-		<mx:Label text="Data do Sistema"/>
-		<mx:Label text="{ df.format( new Date() ) }"/>
-		<mx:Label text="Hora do Sistema"/>
+				  alpha="0.77" color="#A4A0A0"/>
+		<mx:Label text="Data do Sistema" color="#A8A1A1" fontWeight="bold"/>
+		<mx:Label text="{ df.format( new Date() ) }" color="#A4A0A0"/>
+		<mx:Label text="Hora do Sistema" color="#A8A1A1" fontWeight="bold"/>
 		<mx:Label id="txthora"
-				  text="{ hora }"/>
+				  text="{ hora }" color="#A4A0A0"/>
 	</mx:ApplicationControlBar>
 
 
@@ -133,7 +133,7 @@
 								   icon="@Embed(source='/assets/botones/adelante1.png')"
 								   width="100%"
 								   textAlign="left"
-								   click="{carregarModulo('modulos/consultas/ConsultarProdutor.swf','Consultar Produtor')}"/>
+								   click="{carregarModulo('modulos/cadastros/ImportarDados.swf','Consultar Produtor')}"/>
 
 				</mx:VBox>
 			</mx:Canvas>

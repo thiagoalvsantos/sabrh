@@ -17,6 +17,7 @@
     <module application="src/Index.mxml" destPath="modulos/login.swf" optimize="true" sourcePath="src/modulos/login.mxml"/>
     <module application="src/Index.mxml" destPath="modulos/consultas/ConsultarPropriedade.swf" optimize="true" sourcePath="src/modulos/consultas/ConsultarPropriedade.mxml"/>
     <module application="src/Index.mxml" destPath="modulos/consultas/ConsultarAnimal.swf" optimize="true" sourcePath="src/modulos/consultas/ConsultarAnimal.mxml"/>
+    <module application="src/Index.mxml" destPath="modulos/cadastros/ImportarDados.swf" optimize="true" sourcePath="src/modulos/cadastros/ImportarDados.mxml"/>
   </modules>
   <buildCSSFiles/>
 </actionScriptProperties>
