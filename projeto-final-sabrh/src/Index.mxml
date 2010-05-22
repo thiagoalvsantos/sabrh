@@ -40,16 +40,26 @@
 		<mx:Label text=".:: SABRH ::."
 				  fontSize="15"
 				  fontWeight="bold"
-				  width="100%" color="#A8A1A1"/>
-		<mx:Label text="Usuario Logado" color="#A8A1A1" fontWeight="bold"/>
+				  width="100%"
+				  color="#A8A1A1"/>
+		<mx:Label text="Usuario Logado"
+				  color="#A8A1A1"
+				  fontWeight="bold"/>
 		<mx:Label text="User"
 				  id="usuarioLogado"
-				  alpha="0.77" color="#A4A0A0"/>
-		<mx:Label text="Data do Sistema" color="#A8A1A1" fontWeight="bold"/>
-		<mx:Label text="{ df.format( new Date() ) }" color="#A4A0A0"/>
-		<mx:Label text="Hora do Sistema" color="#A8A1A1" fontWeight="bold"/>
+				  alpha="0.77"
+				  color="#A4A0A0"/>
+		<mx:Label text="Data do Sistema"
+				  color="#A8A1A1"
+				  fontWeight="bold"/>
+		<mx:Label text="{ df.format( new Date() ) }"
+				  color="#A4A0A0"/>
+		<mx:Label text="Hora do Sistema"
+				  color="#A8A1A1"
+				  fontWeight="bold"/>
 		<mx:Label id="txthora"
-				  text="{ hora }" color="#A4A0A0"/>
+				  text="{ hora }"
+				  color="#A4A0A0"/>
 	</mx:ApplicationControlBar>
 
 

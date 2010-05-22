@@ -140,7 +140,6 @@
 			</mx:Sequence>
 		</mx:Transition>
 
-		<!-- Define the transition from the Register state to the base state.-->
 		<mx:Transition id="toSimples"
 					   fromState="Avancado"
 					   toState="*">
@@ -155,6 +154,11 @@
 		</mx:Transition>
 	</mx:transitions>
 
+	<!-- /////////////////////////////////
+		 //
+		 //	JANELA PRINCIPAL
+		 //
+		 /////////////////////////////////-->
 	<mx:TitleWindow id="painelConsultarProdutor"
 					title="Consultar Produtor"
 					verticalAlign="middle"
@@ -169,7 +173,11 @@
 		<mx:VBox width="90%"
 				 height="80%">
 
-
+			<!-- /////////////////////////////////
+				 //
+				 //	PAINEL DE PESQUISA
+				 //
+				 /////////////////////////////////-->
 			<mx:Panel height="110"
 					  layout="absolute"
 					  title="Pesquisa"
@@ -206,14 +214,20 @@
 				</mx:ControlBar>
 
 			</mx:Panel>
+
+
 			<mx:TabNavigator height="100%"
 							 left="10"
 							 right="10"
 							 top="137"
 							 width="100%">
+
+				<!-- /////////////////////////////////
+					 //
+					 //	ABA RESULTADO
+					 //
+					 /////////////////////////////////-->
 				<mx:Canvas label="Resultado">
-
-
 
 					<mx:AdvancedDataGrid id="adg1"
 										 designViewDataType="tree"
@@ -236,70 +250,105 @@
 						</mx:columns>
 					</mx:AdvancedDataGrid>
 				</mx:Canvas>
+				<!-- /////////////////////////////////
+					 //
+					 //	ABA DETALHE
+					 //
+					 /////////////////////////////////-->
 				<mx:Canvas label="Detalhes"
 						   width="100%"
 						   height="100%">
 
+					<mx:VBox width="98%"
+							 left="10"
+							 bottom="0"
+							 right="0"
+							 top="0"
+							 horizontalScrollPolicy="off">
+						<arc:CollapsiblePanel title="Dados Básicos"
+											  width="96%"
+											  top="3"
+											  layout="absolute"
+											  horizontalCenter="0">
 
-					<arc:CollapsiblePanel title="Dados Básicos"
-										  width="98%"
-										  top="3"
-										  layout="absolute"
-										  horizontalCenter="0">
+							<mx:Label id="lbCodigoProdutorDetalhe"
+									  text="Código"
+									  x="0"
+									  y="2"/>
 
-						<mx:Label id="lbCodigoProdutorDetalhe"
-								  text="Código"
-								  x="0"
-								  y="2"/>
+							<mx:TextInput id="txtcodigoProdutorDetalhe"
+										  x="43"
+										  y="0"
+										  width="60"/>
+							<mx:Label id="lbNomeProdutorDetalhe"
+									  text="Nome"
+									  x="111"
+									  y="2"/>
+							<mx:TextInput id="txtNomeProdutorDetalhe"
+										  x="166"
+										  y="0"
+										  width="288"/>
+							<mx:Label id="lbUFProdutorDetalhe"
+									  text="UF"
+									  y="34"
+									  x="0"/>
+							<mx:ComboBox id="cbUFProdutorDetalhe"
+										 x="44"
+										 y="31"
+										 width="59">
+								<mx:Array>
+									<mx:String>PR</mx:String>
+									<mx:String>SC</mx:String>
+									<mx:String>RS</mx:String>
+									<mx:String>SP</mx:String>
+								</mx:Array>
+							</mx:ComboBox>
+							<mx:Label id="lbMunicipioProdutorDetalhe"
+									  text="Município"
+									  x="111"
+									  y="34"/>
 
-						<mx:TextInput id="txtcodigoProdutorDetalhe"
-									  x="43"
-									  y="0"
-									  width="60"/>
-						<mx:Label id="lbNomeProdutorDetalhe"
-								  text="Nome"
-								  x="111"
-								  y="2"/>
-						<mx:TextInput id="txtNomeProdutorDetalhe"
-									  x="166"
-									  y="0"
-									  width="288"/>
-						<mx:Label id="lbUFProdutorDetalhe"
-								  text="UF"
-								  y="34"
-								  x="0"/>
-						<mx:ComboBox id="cbUFProdutorDetalhe"
-									 x="44"
-									 y="31"
-									 width="59">
-							<mx:Array>
-								<mx:String>PR</mx:String>
-								<mx:String>SC</mx:String>
-								<mx:String>RS</mx:String>
-								<mx:String>SP</mx:String>
-							</mx:Array>
-						</mx:ComboBox>
-						<mx:Label id="lbMunicipioProdutorDetalhe"
-								  text="Município"
-								  x="111"
-								  y="34"/>
+							<mx:TextInput id="txtMunicipioProdutorDetalhe"
+										  x="166"
+										  y="32"
+										  width="288"/>
+							<mx:Label id="lbEmailProdutorDetalhe"
+									  text="E-mail"
+									  x="0"
+									  y="64"/>
+							<mx:TextInput id="txtEmailProdutorDetalhe"
+										  x="44"
+										  y="62"
+										  width="410"/>
+						</arc:CollapsiblePanel>
 
-						<mx:TextInput id="txtMunicipioProdutorDetalhe"
-									  x="166"
-									  y="32"
-									  width="288"/>
-						<mx:Label id="lbEmailProdutorDetalhe"
-								  text="E-mail"
-								  x="0"
-								  y="64"/>
-						<mx:TextInput id="txtEmailProdutorDetalhe"
-									  x="44"
-									  y="62"
-									  width="410"/>
-					</arc:CollapsiblePanel>
-					
-					
+						<arc:CollapsiblePanel title="Propriedades"
+											  width="96%"
+											  top="3"
+											  height="150"
+											  layout="absolute"
+											  horizontalCenter="0">
+							<mx:AdvancedDataGrid id="adg2"
+												 designViewDataType="tree"
+												 left="3"
+												 right="3"
+												 top="3"
+												 bottom="3"
+												 selectionMode="singleRow">
+								<mx:columns>
+									<mx:AdvancedDataGridColumn headerText="Código"
+															   dataField="col1"/>
+									<mx:AdvancedDataGridColumn headerText="Nome"
+															   dataField="col2"/>
+									<mx:AdvancedDataGridColumn headerText="UF"
+															   dataField="col3"/>
+									<mx:AdvancedDataGridColumn headerText="Municipio"
+															   dataField="col4"/>
+								</mx:columns>
+							</mx:AdvancedDataGrid>
 
+						</arc:CollapsiblePanel>
+					</mx:VBox>
 				</mx:Canvas>
 			</mx:TabNavigator>
 		</mx:VBox>

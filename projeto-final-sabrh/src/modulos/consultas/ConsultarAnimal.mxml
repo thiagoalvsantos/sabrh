@@ -214,7 +214,8 @@
 					<mx:Button y="32"
 							   label="Pesquisar"
 							   id="btnPesquisa"
-							   right="0"/>
+							   right="0"
+							   click="{}"/>
 					<mx:Button y="32"
 							   label="Avançado"
 							   id="btnTipoPesquisa"
