@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml"
+		   layout="absolute"
+		   width="100%"
+		   height="100%"
+		   xmlns:arc="com.arc90.flexlib.containers.*">
+
+
+
+	<mx:TitleWindow id="painelImportarDados"
+					title="Sincronizar Dados"
+					verticalAlign="top"
+					horizontalAlign="center"
+					showCloseButton="true"
+					left="0"
+					right="0"
+					top="0"
+					bottom="0"
+					layout="absolute">
+
+		<mx:Canvas left="15"
+				   right="15"
+				   top="40"
+				   bottom="10">
+
+
+			<mx:VBox verticalAlign="top"
+					 verticalGap="6"
+					 top="0"
+					 horizontalAlign="center"
+					 left="20"
+					 right="20"
+					 bottom="50">
+
+				<arc:CollapsiblePanel title="Propriedades"
+									  width="100%"
+									  top="3"
+									  layout="absolute"
+									  horizontalCenter="0"
+									  height="222">
+				</arc:CollapsiblePanel>
+				<arc:CollapsiblePanel title="Produtores"
+									  width="100%"
+									  top="3"
+									  layout="absolute"
+									  horizontalCenter="0"
+									  height="222"
+									  collapsed="true">
+				</arc:CollapsiblePanel>
+
+				<arc:CollapsiblePanel title="Animais"
+									  width="100%"
+									  top="3"
+									  layout="absolute"
+									  horizontalCenter="0"
+									  height="222"
+									  collapsed="true">
+				</arc:CollapsiblePanel>
+				<arc:CollapsiblePanel title="Classificação Linear"
+									  width="100%"
+									  top="3"
+									  layout="absolute"
+									  horizontalCenter="0"
+									  height="222"
+									  collapsed="true">
+				</arc:CollapsiblePanel>
+				<arc:CollapsiblePanel title="Prova de Reprodutores"
+									  width="100%"
+									  top="3"
+									  layout="absolute"
+									  horizontalCenter="0"
+									  height="222"
+									  collapsed="true">
+				</arc:CollapsiblePanel>
+			</mx:VBox>
+		</mx:Canvas>
+	</mx:TitleWindow>
+</mx:Module>
