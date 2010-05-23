@@ -7,7 +7,7 @@
 				viewSourceURL="srcview/index.html"
 				initialize="{init()}"
 				xmlns:effects="components.effects.*"
-				xmlns:modulos="modulos.*">
+				xmlns:modulos="modulos.*" xmlns:consultas="modulos.consultas.*">
 
 
 	<!--///////////////////////////////////////////
@@ -110,7 +110,7 @@
 								   icon="@Embed(source='/assets/botones/adelante1.png')"
 								   width="100%"
 								   textAlign="left"
-								   click="{carregarModulo('modulos/consultas/ConsultarProdutor.swf','Consultar Produtor')}"/>
+								   click="{carregarConsultarProdutor()}"/>
 
 					<mx:LinkButton label="Consultar Propriedade"
 								   icon="@Embed(source='/assets/botones/adelante1.png')"
@@ -158,20 +158,7 @@
 			 //					Conteúdo
 			 //
 			 /////////////////////////////////////////////// -->
-		<!--	<mx:Canvas id="painelConteudo"
-			 width="100%"
-			 height="100%">
 
-
-			 <mx:ModuleLoader id="mloader"
-			 width="100%"
-			 horizontalCenter="0"
-			 height="100%"
-			 verticalCenter="0"/>
-
-
-			 </mx:Canvas>
-		-->
 
 		<containers:PodStack id="vs"
 							 width="100%"
@@ -181,6 +168,9 @@
 			</mx:Canvas>
 			<mx:Canvas id="painelHome">
 				<modulos:Home/>
+			</mx:Canvas>
+			<mx:Canvas id="painelConsultarProdutor">
+				<consultas:ConsultarProdutor2/>
 			</mx:Canvas>
 		</containers:PodStack>
 

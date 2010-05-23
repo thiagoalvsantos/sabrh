@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+		   width="244"
+		   height="232"
+		   verticalScrollPolicy="off"
+		   horizontalScrollPolicy="off"
+		   styleName="view"
+		   filters="{[glow]}"
+		   implements="components.quicksearch.IQuickView">
+
+	<mx:Script>
+		<![CDATA[
+			import mocks.ProdutorDTO;
+			import components.quicksearch.QuickView;
+
+			private function closeClickHandler(event:MouseEvent):void
+			{
+				QuickView.hide();
+			}
+
+			public function displayData():void
+			{
+				var produtor:ProdutorDTO=ProdutorDTO(data);
+				lbTitulo.text=produtor.codigo + " - " + produtor.nome;
+				lbEstado.text=produtor.uf;
+				lbMunicipio.text=produtor.municipio;
+				lbEmail.text=produtor.email;
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Style>
+		
+		.view
+		{
+			background-color:#000000;
+			background-alpha:0.4;
+			border-style:solid;
+			border-color:#7D7D7D;
+			corner-radius:5;
+			color:#FFFFFF;
+		}
+		
+		.closeButton
+		{
+			up-skin: Embed('quick-view-close.png');
+			over-skin: Embed('quick-view-close.png');
+			down-skin: Embed('quick-view-close.png');
+			selected-up-skin: Embed('quick-view-close.png');
+			selected-over-skin: Embed('quick-view-close.png');
+			selected-down-skin: Embed('quick-view-close.png');
+		}
+		
+	</mx:Style>
+
+	<mx:GlowFilter id="glow"
+				   color="0x333333"
+				   alpha="0.7"
+				   blurX="20"
+				   blurY="20"
+				   quality="{BitmapFilterQuality.HIGH}"/>
+
+	<mx:Button styleName="closeButton"
+			   right="5"
+			   width="15"
+			   top="5"
+			   click="closeClickHandler(event)"/>
+	<mx:Grid width="203"
+			 height="101"
+			 horizontalCenter="0"
+			 verticalCenter="0">
+		<mx:GridRow width="100%"
+					height="100%">
+			<mx:GridItem width="100%"
+						 height="100%">
+				<mx:Label text="Estado"/>
+			</mx:GridItem>
+			<mx:GridItem width="100%"
+						 height="100%">
+				<mx:Label id="lbEstado"/>
+			</mx:GridItem>
+		</mx:GridRow>
+		<mx:GridRow width="100%"
+					height="100%">
+			<mx:GridItem width="100%"
+						 height="100%">
+				<mx:Label text="Município"/>
+			</mx:GridItem>
+			<mx:GridItem width="100%"
+						 height="100%">
+				<mx:Label id="lbMunicipio"/>
+			</mx:GridItem>
+		</mx:GridRow>
+		<mx:GridRow width="100%"
+					height="100%">
+			<mx:GridItem width="100%"
+						 height="100%">
+				<mx:Label text="E-mail"/>
+			</mx:GridItem>
+			<mx:GridItem width="100%"
+						 height="100%">
+				<mx:Label id="lbEmail"/>
+			</mx:GridItem>
+		</mx:GridRow>
+	</mx:Grid>
+	<mx:Label text="Label"
+			  id="lbTitulo"
+			  horizontalCenter="0"
+			  top="10"
+			  fontWeight="bold"
+			  fontSize="15"/>
+
+
+</mx:Canvas>

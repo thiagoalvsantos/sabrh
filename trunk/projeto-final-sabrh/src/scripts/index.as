@@ -41,11 +41,21 @@ public function init():void
 	this.timer=new Timer(1000 * 1);
 	timer.addEventListener("timer", incrementa);
 	timer.start();
-	menu.enabled = false;
-	//var l:Login = new Login();
-	//painelConteudo.addChild(l);
-	//carregarModulo("modulos/login.swf", "Login");
+	menu.enabled=false;
 }
+
+/**
+ *
+ */
+public function carregarConsultarProdutor():void
+{
+	vs.selectedChild=Application.application.painelConsultarProdutor;
+}
+
+
+
+
+
 
 /**
  *
