@@ -9,9 +9,69 @@
 					 title="Entrar"
 					 showEffect="{effects.showEffect1}"
 					 hideEffect="{effects.hideEffect1}">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+		]]>
+	</mx:Script>
 	<mx:Style source="../assets/css.css"/>
 	<mx:Script source="../scripts/login.as"/>
+	
 	<effects:Effects2 id="effects"/>
+	
+	
+	<!-- Define one view state, in addition to the base state.
+    <mx:states>
+        <mx:State name="RecuperarSenha">
+            <mx:AddChild relativeTo="{Application.application}" position="lastChild">
+                <mx:target>
+                    <mx:FormItem id="confirm" label="Confirm:">
+                        <mx:TextInput/>
+                    </mx:FormItem>
+                </mx:target>
+            </mx:AddChild>
+            <mx:SetProperty target="{loginPanel}" name="title" value="Register"/>
+            <mx:SetProperty target="{loginButton}" name="label" value="Register"/>
+            <mx:SetStyle target="{loginButton}" 
+                name="color" value="blue"/>
+            <mx:RemoveChild target="{registerLink}"/>
+            <mx:AddChild relativeTo="{spacer1}" position="before">
+                <mx:target>
+                    <mx:LinkButton id="loginLink" label="Return to Login" click="currentState=''"/>
+                </mx:target>
+            </mx:AddChild>
+        </mx:State>
+    </mx:states>
+
+    <mx:transitions>
+    -->
+        <!-- Define the transition from the base state to the Register state.
+        <mx:Transition id="toRegister" fromState="*" toState="Register">
+            <mx:Sequence targets="{[loginPanel, registerLink, confirm, loginLink, spacer1]}">
+                <mx:RemoveChildAction/>
+                <mx:SetPropertyAction target="{loginPanel}" name="title"/>
+                <mx:SetPropertyAction target="{loginButton}" name="label"/>
+                <mx:SetStyleAction target="{loginButton}" name="color"/>
+                <mx:Resize target="{loginPanel}"/>
+                <mx:AddChildAction/>
+            </mx:Sequence>
+        </mx:Transition>
+-->
+        <!-- Define the transition from the Register state to the base state.
+        <mx:Transition id="toDefault" fromState="Register" toState="*">
+            <mx:Sequence targets="{[loginPanel, registerLink, 
+                    confirm, loginLink, spacer1]}">
+                <mx:RemoveChildAction/>
+                <mx:SetPropertyAction target="{loginPanel}" name="title"/>
+                <mx:SetPropertyAction  target="{loginButton}" name="label"/>
+                <mx:SetStyleAction target="{loginButton}" name="color"/>
+                <mx:Resize target="{loginPanel}"/>
+                <mx:AddChildAction/>
+            </mx:Sequence>
+        </mx:Transition>
+    </mx:transitions>
+
+	-->
 
 	<mx:Label x="106.5"
 			  y="17"
@@ -29,7 +89,7 @@
 			   y="14"
 			   label="Entrar"
 			   height="55"
-			   click="trateFecharClick"/>
+			   click="{actionEntrar()}"/>
 	<mx:Image x="19.5"
 			  y="10"
 			  source="assets/img/lock.png"
