@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Object xmlns="*" xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.effects.easing.*;
+			
+			[Bindable] 
+			private var easeOut:Function = mx.effects.easing.Bounce.easeOut;
+		]]>
+	</mx:Script>
+	
+	<mx:Zoom id="hideEffect1"
+		zoomHeightFrom="1" zoomHeightTo="0" 
+		zoomWidthFrom="1" zoomWidthTo="0"/>
+	
+	<mx:Zoom id="hideEffect2" 
+		zoomHeightFrom="1" zoomHeightTo="0" 
+		zoomWidthFrom="1" zoomWidthTo="0" startDelay="100"/>
+	
+	<mx:Zoom id="hideEffect3" 
+		zoomHeightFrom="1" zoomHeightTo="0" 
+		zoomWidthFrom="1" zoomWidthTo="0" startDelay="150"/>
+	
+	<mx:Zoom id="hideEffect4" 
+		zoomHeightFrom="1" zoomHeightTo="0" 
+		zoomWidthFrom="1" zoomWidthTo="0" startDelay="200"/>
+	
+	<mx:Zoom id="showEffect1"
+		zoomHeightFrom="0" zoomHeightTo="1" 
+		zoomWidthFrom="0" zoomWidthTo="1"
+		easingFunction="{easeOut}"/>
+	
+	<mx:Zoom id="showEffect2" 
+		zoomHeightFrom="0" zoomHeightTo="1" 
+		zoomWidthFrom="0" zoomWidthTo="1" startDelay="100"
+		easingFunction="{easeOut}"/>
+	
+	<mx:Zoom id="showEffect3" 
+		zoomHeightFrom="0" zoomHeightTo="1" 
+		zoomWidthFrom="0" zoomWidthTo="1" startDelay="150"
+		easingFunction="{easeOut}"/>
+	
+	<mx:Zoom id="showEffect4" 
+		zoomHeightFrom="0" zoomHeightTo="1" 
+		zoomWidthFrom="0" zoomWidthTo="1" startDelay="200"
+		easingFunction="{easeOut}"/>
+		
+</mx:Object>
