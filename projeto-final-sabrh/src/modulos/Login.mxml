@@ -1,109 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:PanelPod xmlns:mx="http://www.adobe.com/2006/mxml"
-					 xmlns:containers="components.containers.*"
-					 xmlns:effects="components.effects.*"
-					 layout="absolute"
-					 horizontalCenter="0"
-					 verticalCenter="0"
-					 visible="false"
-					 title="Entrar"
-					 showEffect="{effects.showEffect1}"
-					 hideEffect="{effects.hideEffect1}">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+		  xmlns:containers="components.containers.*"
+		  xmlns:effects="components.effects.*"
+		  layout="absolute"
+		  horizontalCenter="0"
+		  verticalCenter="0"
+		  visible="true"
+		  title="Entrar"
+		  implements="components.containers.IPod"
+		  showEffect="{effects.showEffect1}"
+		  hideEffect="{effects.hideEffect1}">
 
-	<mx:Style source="../assets/css.css"/>
+
 	<mx:Script source="../scripts/login.as"/>
 
 	<effects:Effects2 id="effects"/>
 
-	<!-- Define one view state, in addition to the base state.
-		 <mx:states>
-		 <mx:State name="RecuperarSenha">
-		 <mx:AddChild relativeTo="{Application.application}"
-		 position="lastChild">
-		 <mx:target>
-		 <mx:FormItem id="confirm"
-		 label="Confirm:">
-		 <mx:TextInput/>
-		 </mx:FormItem>
-		 </mx:target>
-		 </mx:AddChild>
-		 <mx:SetProperty target="{loginPanel}"
-		 name="title"
-		 value="Register"/>
-		 <mx:SetProperty target="{loginButton}"
-		 name="label"
-		 value="Register"/>
-		 <mx:SetStyle target="{loginButton}"
-		 name="color"
-		 value="blue"/>
-		 <mx:RemoveChild target="{registerLink}"/>
-		 <mx:AddChild relativeTo="{spacer1}"
-		 position="before">
-		 <mx:target>
-		 <mx:LinkButton id="loginLink"
-		 label="Return to Login"
-		 click="currentState=''"/>
-		 </mx:target>
-		 </mx:AddChild>
-		 </mx:State>
-		 </mx:states>
-	-->
+	<!-- //////////////////////////////////////////////
+		 //
+		 //			ESTADOS DA TELA
+		 //
+		 //////////////////////////////////////////////-->
 
-	<!-- Define the transition from the base state to the Register state.
-		 <mx:transitions>
-		 <mx:Transition id="toRegister" fromState="*" toState="Register">
-		 <mx:Sequence targets="{[loginPanel, registerLink, confirm, loginLink, spacer1]}">
-		 <mx:RemoveChildAction/>
-		 <mx:SetPropertyAction target="{loginPanel}" name="title"/>
-		 <mx:SetPropertyAction target="{loginButton}" name="label"/>
-		 <mx:SetStyleAction target="{loginButton}" name="color"/>
-		 <mx:Resize target="{loginPanel}"/>
-		 <mx:AddChildAction/>
-		 </mx:Sequence>
-		 </mx:Transition>
-	-->
-	<!-- Define the transition from the Register state to the base state.
-		 <mx:Transition id="toDefault" fromState="Register" toState="*">
-		 <mx:Sequence targets="{[loginPanel, registerLink,
-		 confirm, loginLink, spacer1]}">
-		 <mx:RemoveChildAction/>
-		 <mx:SetPropertyAction target="{loginPanel}" name="title"/>
-		 <mx:SetPropertyAction  target="{loginButton}" name="label"/>
-		 <mx:SetStyleAction target="{loginButton}" name="color"/>
-		 <mx:Resize target="{loginPanel}"/>
-		 <mx:AddChildAction/>
-		 </mx:Sequence>
-		 </mx:Transition>
-		 </mx:transitions>
-
-	-->
-	<mx:Form id="formLogin" x="110.1" y="-4.6">
-		<mx:FormItem label="Usuário">
-			<mx:TextInput/>
-		</mx:FormItem>
-
-		<mx:FormItem label="Senha">
-			<mx:TextInput/>
-		</mx:FormItem>
-	</mx:Form>
-	<mx:Button x="476.5"
-			   y="14"
-			   label="Entrar"
-			   height="55"
-			   click="{actionEntrar()}"/>
-	<mx:Image x="19.5"
-			  y="10"
-			  source="assets/img/lock.png"
-			  width="70"
-			  height="70"/>
-	<mx:LinkButton x="360.5"
-				   y="74"
-				   label="esqueci a senha &gt;&gt;"
-				   fontSize="10"/>
+	<mx:states>
+		<mx:State name="RecuperarSenha">
+			<mx:RemoveChild target="{fieldUsuario}"/>
+			<mx:RemoveChild target="{fieldSenha}"/>
+			<mx:AddChild relativeTo="{formLogin}"
+						 position="firstChild">
+				<mx:target>
+					<mx:FormItem id="fieldEmail"
+								 label="E-mail">
+						<mx:TextInput width="300"/>
+					</mx:FormItem>
+				</mx:target>
+			</mx:AddChild>
+			<mx:SetProperty target="{this}"
+							name="title"
+							value="Recuperar Senha"/>
+			<mx:SetProperty target="{btnEntrar}"
+							name="label"
+							value="Recuperar Senha"/>
+			<mx:SetProperty target="{btnRecuperarSenha}"
+							name="label"
+							value="&lt;&lt; voltar"/>
+			<mx:SetProperty target="{btnEntrar}"
+							name="width"
+							value="120"/>
+			<mx:SetEventHandler name="click"
+								target="{btnEntrar}"
+								handler="actionResetCurrentState()"/>
+			<mx:SetEventHandler name="click"
+								target="{btnRecuperarSenha}"
+								handler="actionResetCurrentState()"/>
+			<mx:SetProperty target="{btnEntrar}" name="height" value="23"/>
+		</mx:State>
+	</mx:states>
 
 
+	<!-- //////////////////////////////////////////////
+		 //
+		 //			TRANSITIONS - INCIO TO RECUPERA SENHA
+		 //
+		 //////////////////////////////////////////////-->
+	<mx:transitions>
+		<mx:Transition id="toRecuperarSenha"
+					   fromState="*"
+					   toState="RecuperarSenha">
+			<mx:Sequence targets="{[formLogin, fieldUsuario, fieldSenha, btnEntrar, btnRecuperarSenha]}">
+				<mx:RemoveChildAction/>
+				<mx:SetPropertyAction target="{formLogin}"
+									  name="title"/>
+				<mx:SetPropertyAction target="{btnRecuperarSenha}"
+									  name="label"/>
+				<mx:Resize target="{formLogin}"/>
+				<mx:Resize target="{btnEntrar}"/>
+				<mx:SetPropertyAction target="{btnEntrar}"
+									  name="label"/>
+				<mx:AddChildAction/>
+			</mx:Sequence>
+		</mx:Transition>
 
-</containers:PanelPod>
+		<!-- //////////////////////////////////////////////
+			 //
+			 //			TRANSITIONS -  RECUPERA SENHA TO INCIO
+			 //
+			 //////////////////////////////////////////////-->
+		<mx:Transition id="toInicio"
+					   fromState="RecuperarSenha"
+					   toState="*">
+			<mx:Sequence targets="{[formLogin, fieldUsuario, fieldSenha, btnEntrar, btnRecuperarSenha]}">
+				<mx:RemoveChildAction/>
+				<mx:AddChildAction/>
+				<mx:SetPropertyAction target="{formLogin}"
+									  name="title"/>
+				<mx:SetPropertyAction target="{btnEntrar}"
+									  name="label"/>
+				<mx:SetPropertyAction target="{btnRecuperarSenha}"
+									  name="label"/>
+				<mx:Resize target="{btnEntrar}"/>
+				<mx:Resize target="{formLogin}"/>
+			</mx:Sequence>
+		</mx:Transition>
+
+
+
+	</mx:transitions>
+
+	<mx:HBox verticalAlign="middle">
+		<mx:Image source="assets/img/lock.png"
+				  width="70"
+				  height="70"
+				  left="5"
+				  verticalCenter="0"/>
+
+		<mx:Form id="formLogin"
+				 verticalCenter="0"
+				 horizontalCenter="0">
+			<mx:FormItem id="fieldUsuario"
+						 label="Usuário">
+				<mx:TextInput width="300"/>
+			</mx:FormItem>
+			<mx:FormItem id="fieldSenha"
+						 label="Senha">
+				<mx:TextInput width="300"/>
+			</mx:FormItem>
+		</mx:Form>
+		<mx:Button id="btnEntrar"
+				   label="Entrar"
+				   height="55"
+				   click="{actionEntrar()}"
+				   right="5"
+				   verticalCenter="0"
+				   width="67"/>
+
+	</mx:HBox>
+
+	<mx:ControlBar horizontalAlign="right"
+				   y="90"
+				   verticalAlign="middle">
+		<mx:LinkButton id="btnRecuperarSenha"
+					   label="esqueci a senha &gt;&gt;"
+					   fontSize="10"
+					   bottom="0"
+					   click="{actionRecuperaSenha()}"/>
+
+	</mx:ControlBar>
+
+
+
+</mx:Panel>
 
 
 
