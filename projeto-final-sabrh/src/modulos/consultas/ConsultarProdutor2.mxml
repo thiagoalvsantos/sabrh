@@ -9,24 +9,27 @@
 				showEffect="{effects.showEffect2}"
 				hideEffect="{effects.hideEffect2}"
 				xmlns:effects="components.effects.*"
-				xmlns:quicksearch="components.quicksearch.*">
+				initialize="initializeHandler(event)"
+				xmlns:quicksearch="components.quicksearch.*"
+				title="Consultar Produtor"
+				showCloseButton="true">
 
 	<mx:Script source="../../scripts/consultarProdutor.as"/>
 	<effects:Effects2 id="effects"/>
 
 	<quicksearch:QuickView id="quickView"
-						source="{list}"
-						view="{ProdutorQuickView}"/>
-						
+						   source="{list}"
+						   view="{ProdutorQuickView}"/>
+
 	<quicksearch:ListQuickView id="list"
-							   x="10"
-							   y="10"
-							   width="100%"
-							   height="100%"
-							   labelField="name"
+							   labelField="nome"
 							   itemRenderer="components.quicksearch.QuickViewItemRenderer"
 							   dataProvider="{listaProdutores}"
-							   quickViewClick="quickViewClickHandler(event)">
+							   quickViewClick="quickViewClickHandler(event)"
+							   left="10"
+							   right="10"
+							   top="40"
+							   bottom="50">
 	</quicksearch:ListQuickView>
 
 	<mx:ControlBar>

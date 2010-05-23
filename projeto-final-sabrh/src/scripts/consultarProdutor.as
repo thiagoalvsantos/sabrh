@@ -14,17 +14,18 @@ private function initializeHandler(event:FlexEvent):void
 
 	listaProdutores=new ArrayCollection();
 
-	for (var i:int=0; i < 5; i++)
+	for (var i:int=0; i < 50; i++)
 	{
 		var produtor:ProdutorDTO;
 		produtor=new ProdutorDTO();
-		produtor.codigo= i;
-		produtor.email= i + "@apcbrh.com.br";
+		produtor.codigo=i;
+		produtor.email=i + "@apcbrh.com.br";
 		produtor.municipio="Curitiba";
 		produtor.nome="Produtor " + i;
 		produtor.uf="PR";
 
 		listaProdutores.addItem(produtor);
+
 	}
 
 }
@@ -49,7 +50,7 @@ private function clearHandler(event:Event):void
 private function listFilterFunction(item:Object):Boolean
 {
 	var textToDisplay:String=filterInput.text;
-	var label:String=item.name;
+	var label:String=item.nome;
 	var result:Boolean=label.toLocaleLowerCase().search(textToDisplay.toLocaleLowerCase()) != -1;
 	return result;
 }

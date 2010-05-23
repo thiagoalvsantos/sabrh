@@ -269,10 +269,9 @@
 							 left="10"
 							 bottom="0"
 							 right="0"
-							 top="0"
-							 horizontalScrollPolicy="off">
+							 top="0">
 						<arc:CollapsiblePanel title="Dados Básicos"
-											  width="96%"
+											  width="98%"
 											  top="3"
 											  layout="absolute"
 											  horizontalCenter="0">
@@ -329,9 +328,9 @@
 						</arc:CollapsiblePanel>
 
 						<arc:CollapsiblePanel title="Propriedades"
-											  width="96%"
+											  width="98%"
 											  top="3"
-											  height="150"
+											  height="98%"
 											  layout="absolute"
 											  horizontalCenter="0">
 							<mx:AdvancedDataGrid id="adg2"

@@ -170,7 +170,7 @@
 				<modulos:Home/>
 			</mx:Canvas>
 			<mx:Canvas id="painelConsultarProdutor">
-				<consultas:ConsultarProdutor2/>
+				<consultas:ConsultarProdutor/>
 			</mx:Canvas>
 		</containers:PodStack>
 
