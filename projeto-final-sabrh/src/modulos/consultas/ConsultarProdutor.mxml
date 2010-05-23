@@ -3,8 +3,14 @@
 		   layout="absolute"
 		   width="100%"
 		   height="100%"
-		   xmlns:arc="com.arc90.flexlib.containers.*">
+		   xmlns:arc="com.arc90.flexlib.containers.*"
+		   visible="true"
+		   implements="components.containers.IPod"
+		   showEffect="{effects.showEffect2}"
+		   hideEffect="{effects.hideEffect2}"
+		   xmlns:effects="components.effects.*">
 
+	<effects:Effects2 id="effects"/>
 	<mx:states>
 		<mx:State name="Avancado">
 			<mx:SetProperty target="{painelPesquisa}"

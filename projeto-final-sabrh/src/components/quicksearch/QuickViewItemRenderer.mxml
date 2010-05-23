@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	backgroundColor="#FF0000" backgroundAlpha="0"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off"
+	rollOver="rollOverHandler(event)"
+	rollOut="rollOutHandler(event)" 
+	initialize="initializeHandler(event)">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import mx.controls.listClasses.ListBase;
+			import mx.events.EffectEvent;
+			import flash.utils.setTimeout;
+			
+			private var isOverHere:Boolean;
+			
+			private function initializeHandler(event:FlexEvent):void
+			{
+				hideInfoIcon();
+				myIcon.addEventListener(MouseEvent.MOUSE_DOWN, mouseEventHandler, false, -1);
+				myIcon.addEventListener(MouseEvent.CLICK, mouseEventHandler, false, -1);
+			}
+			
+			private function rollOverHandler(event:MouseEvent):void
+			{
+				if (isOverHere == false)
+				{
+					setTimeout(showInfoIcon, 300);
+					isOverHere = true;
+				}
+			}
+
+			private function rollOutHandler(event:MouseEvent):void
+			{
+				if (isOverHere == true)
+				{
+					isOverHere = false;
+					setTimeout(hideInfoIcon, 300);
+				}	
+			}
+			
+			private function showInfoIcon():void
+			{
+				if (isOverHere == true)
+				{
+					myIcon.x = owner.width - myIcon.width - 5;
+				}
+			}
+			
+			private function hideInfoIcon():void
+			{
+				if (isOverHere == false)
+				{
+					myIcon.x = owner.width + myIcon.width;
+				}
+			}
+			
+			private function mouseEventHandler(event:MouseEvent):void
+			{
+				var listQuickViewEvent:ListQuickViewEvent = new ListQuickViewEvent(ListQuickViewEvent.QUICK_VIEW_CLICK);
+				listQuickViewEvent.item = data;
+				owner.dispatchEvent(listQuickViewEvent);
+				
+				event.stopImmediatePropagation();
+			}
+						
+			private function effectEndHandler(event:EffectEvent):void
+			{
+				hideInfoIcon();
+			}
+			
+			private function getText(data:Object):Object
+			{
+				var result:Object;
+				var list:ListBase = ListBase(owner);
+				
+				if (list.labelFunction != null)
+				{
+					result = list.labelFunction.apply(owner, [data]);
+				}
+				else if (list.labelField != null)
+				{
+					result = data[list.labelField];
+				}
+				else
+				{
+					result = data;
+				}
+				
+				return result;
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Move id="myMove" duration="300" effectEnd="effectEndHandler(event)"/>
+
+	<mx:Image id="myIcon" 
+		source="@Embed('assets/eye-icon.png')" y="3" moveEffect="{myMove}"
+		toolTip="Quick View" buttonMode="true" useHandCursor="true"/>
+
+	<mx:Label id="myLabel" 
+		text="{getText(data)}" moveEffect="{myMove}"/>
+	
+</mx:Canvas>

@@ -6,7 +6,7 @@
 		  width="100%"
 		  height="100%"
 		  layout="absolute"
-		  visible="false"
+		  visible="true"
 		  implements="components.containers.IPod"
 		  showEffect="{effects.showEffect2}"
 		  hideEffect="{effects.hideEffect2}">
@@ -18,21 +18,87 @@
 						  top="0"
 						  left="0"
 						  right="0">
-		<mx:Text x="-10"
-				 y="0"
-				 text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi porttitor tempor nunc, quis imperdiet ligula condimentum sed. Sed elementum pretium posuere. Duis in euismod justo. Fusce eu risus id arcu luctus auctor. In hac habitasse platea dictumst. Nulla dapibus malesuada magna vel euismod. Nullam nibh risus, fermentum non sagittis eget, ornare eget turpis. Ut imperdiet porttitor massa sed commodo. Etiam arcu nisi, dignissim ac faucibus ullamcorper, bibendum ut nunc. Nulla tincidunt dictum metus ac sagittis. Ut varius, est ut pretium rhoncus, lectus ipsum condimentum diam, vitae aliquet felis ante vitae enim. Aliquam interdum lacus eget dui dictum vulputate sollicitudin nisl volutpat. Proin vel iaculis est. Sed egestas nulla nec metus pulvinar id tempor odio fermentum."
-				 height="114"
-				 width="100%"/>
+		<mx:Text text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi porttitor tempor nunc, quis imperdiet ligula condimentum sed. Sed elementum pretium posuere. Duis in euismod justo. Fusce eu risus id arcu luctus auctor. In hac habitasse platea dictumst. Nulla dapibus malesuada magna vel euismod. Nullam nibh risus, fermentum non sagittis eget, ornare eget turpis. Ut imperdiet porttitor massa sed commodo. Etiam arcu nisi, dignissim ac faucibus ullamcorper, bibendum ut nunc. Nulla tincidunt dictum metus ac sagittis. Ut varius, est ut pretium rhoncus, lectus ipsum condimentum diam, vitae aliquet felis ante vitae enim. Aliquam interdum lacus eget dui dictum vulputate sollicitudin nisl volutpat. Proin vel iaculis est. Sed egestas nulla nec metus pulvinar id tempor odio fermentum."
+				 width="100%"
+				 top="0"
+				 bottom="78"
+				 left="0"/>
+		<mx:Image
+				  source="assets/img/apcbrh.PNG"
+				  width="55%"
+				  height="55%" alpha="0.71" autoLoad="true" scaleContent="true" horizontalCenter="0" bottom="0"/>
 	</ns1:CollapsiblePanel>
-	<ns1:CollapsiblePanel left="0"
-						  bottom="10"
-						  width="49%"
-						  height="45%">
-	</ns1:CollapsiblePanel>
-	<ns1:CollapsiblePanel bottom="10"
-						  right="0"
-						  width="49%"
-						  height="45%">
-	</ns1:CollapsiblePanel>
+	<mx:HBox bottom="0"
+			 height="48%"
+			 left="0"
+			 right="0"
+			 horizontalAlign="center"
+			 verticalAlign="top">
 
+
+		<ns1:CollapsiblePanel left="0"
+							  bottom="10"
+							  width="49%"
+							  height="100%"
+							  title="Ultimos Eventos">
+
+			<mx:VBox width="100%"
+					 height="100%"
+					 verticalGap="0"
+					 paddingTop="2"
+					 paddingLeft="2"
+					 paddingRight="2"
+					 paddingBottom="2">
+
+
+				<mx:LinkButton label="Consultar Produtor"
+							   icon="@Embed(source='/assets/botones/adelante1.png')"
+							   width="100%"
+							   textAlign="left"/>
+
+				<mx:LinkButton label="Consultar Propriedade"
+							   icon="@Embed(source='/assets/botones/adelante1.png')"
+							   width="100%"
+							   textAlign="left"/>
+
+				<mx:LinkButton label="Consultar Animal"
+							   icon="@Embed(source='/assets/botones/adelante1.png')"
+							   width="100%"
+							   textAlign="left"/>
+
+			</mx:VBox>
+		</ns1:CollapsiblePanel>
+		<ns1:CollapsiblePanel bottom="10"
+							  right="0"
+							  width="49%"
+							  height="100%"
+							  title="Alertas">
+
+			<mx:VBox width="100%"
+					 height="100%"
+					 verticalGap="0"
+					 paddingTop="2"
+					 paddingLeft="2"
+					 paddingRight="2"
+					 paddingBottom="2">
+
+
+				<mx:LinkButton label="Consultar Produtor"
+							   icon="@Embed(source='/assets/botones/adelante1.png')"
+							   width="100%"
+							   textAlign="left"/>
+
+				<mx:LinkButton label="Consultar Propriedade"
+							   icon="@Embed(source='/assets/botones/adelante1.png')"
+							   width="100%"
+							   textAlign="left"/>
+
+				<mx:LinkButton label="Consultar Animal"
+							   icon="@Embed(source='/assets/botones/adelante1.png')"
+							   width="100%"
+							   textAlign="left"/>
+
+			</mx:VBox>
+		</ns1:CollapsiblePanel>
+	</mx:HBox>
 </mx:Panel>
