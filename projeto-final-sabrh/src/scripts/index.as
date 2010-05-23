@@ -3,11 +3,9 @@
 //	Index.as
 //
 ////////////////////////////////////////
-import mx.controls.Alert;
+import modulos.Login;
+
 import mx.events.ModuleEvent;
-
-
-
 
 //--------------------------------------
 //
@@ -43,7 +41,10 @@ public function init():void
 	this.timer=new Timer(1000 * 1);
 	timer.addEventListener("timer", incrementa);
 	timer.start();
-	carregarModulo("modulos/login.swf", "Login");
+	menu.enabled = false;
+	//var l:Login = new Login();
+	//painelConteudo.addChild(l);
+	//carregarModulo("modulos/login.swf", "Login");
 }
 
 /**
@@ -104,14 +105,14 @@ public function FadeEffect(target:Object, duration:Number, delay:Number, alphaFr
 
 private function moduleHandler(moduleUrl:String):void
 {
-	if (mloader.url != "" || mloader.url != null)
-	{
-		mloader.unloadModule();
-	}
-	mloader.url=moduleUrl;
-	mloader.addEventListener(ModuleEvent.READY, readyHandler);
-	mloader.addEventListener(ModuleEvent.ERROR, errorHandler);
-	mloader.loadModule();
+//	if (mloader.url != "" || mloader.url != null)
+//	{
+//		mloader.unloadModule();
+//	}
+//	mloader.url=moduleUrl;
+//	mloader.addEventListener(ModuleEvent.READY, readyHandler);
+//	mloader.addEventListener(ModuleEvent.ERROR, errorHandler);
+//	mloader.loadModule();
 }
 
 private function readyHandler(event:ModuleEvent):void
@@ -127,7 +128,7 @@ private function readyHandler(event:ModuleEvent):void
 
 private function errorHandler(event:ModuleEvent):void
 {
-	Alert.show("ERROR Loading Module: " + mloader.url, "ERROR");
+//	Alert.show("ERROR Loading Module: " + mloader.url, "ERROR");
 
 }
 
