@@ -44,7 +44,7 @@
 			{
 				if (isOverHere == true)
 				{
-					myIcon.x = owner.width - myIcon.width - 5;
+					myIcon.x = owner.width - myIcon.width - 25;
 				}
 			}
 			
@@ -98,7 +98,7 @@
 
 	<mx:Image id="myIcon" 
 		source="@Embed('assets/eye-icon.png')" y="3" moveEffect="{myMove}"
-		toolTip="Quick View" buttonMode="true" useHandCursor="true"/>
+		toolTip="Visualizar" buttonMode="true" useHandCursor="true"/>
 
 	<mx:Label id="myLabel" 
 		text="{getText(data)}" moveEffect="{myMove}"/>
