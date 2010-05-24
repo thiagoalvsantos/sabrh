@@ -172,6 +172,9 @@
 			<mx:Canvas id="painelConsultarProdutor">
 				<consultas:ConsultarProdutor/>
 			</mx:Canvas>
+			<mx:Canvas id="painelConsultarPropriedade">
+				<consultas:ConsultarPropriedade/>
+			</mx:Canvas>
 		</containers:PodStack>
 
 	</mx:HBox>

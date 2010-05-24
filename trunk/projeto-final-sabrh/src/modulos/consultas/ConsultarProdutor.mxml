@@ -4,12 +4,14 @@
 		   width="100%"
 		   height="100%"
 		   xmlns:arc="com.arc90.flexlib.containers.*"
-		   visible="true"
+		   visible="false"
 		   implements="components.containers.IPod"
 		   showEffect="{effects.showEffect2}"
-		   hideEffect="{effects.hideEffect2}"
-		   xmlns:effects="components.effects.*">
+		   hideEffect="{effects.hideEffect1}"
+		   xmlns:effects="components.effects.*"
+		   initialize="initializeHandler(event)">
 
+	<mx:Script source="../../scripts/consultarProdutor.as"/>
 	<effects:Effects2 id="effects"/>
 	<mx:states>
 		<mx:State name="Avancado">
@@ -173,11 +175,11 @@
 					horizontalCenter="0"
 					verticalCenter="0"
 					width="100%"
-					height="100%">
+					height="100%" layout="absolute">
 
 
-		<mx:VBox width="90%"
-				 height="80%">
+		<mx:VBox
+				 left="10" right="10" top="35" bottom="10">
 
 			<!-- /////////////////////////////////
 				 //
@@ -241,18 +243,19 @@
 										 right="3"
 										 top="3"
 										 bottom="3"
-										 selectionMode="singleRow">
+										 selectionMode="singleRow"
+										 dataProvider="{listaProdutores}">
 						<mx:columns>
 							<mx:AdvancedDataGridColumn headerText="Código"
-													   dataField="col1"/>
+													   dataField="codigo"/>
 							<mx:AdvancedDataGridColumn headerText="Nome"
-													   dataField="col2"/>
+													   dataField="nome"/>
 							<mx:AdvancedDataGridColumn headerText="UF"
-													   dataField="col3"/>
+													   dataField="uf"/>
 							<mx:AdvancedDataGridColumn headerText="Municipio"
-													   dataField="col4"/>
+													   dataField="municipio"/>
 							<mx:AdvancedDataGridColumn headerText="E-mail"
-													   dataField="col5"/>
+													   dataField="email"/>
 						</mx:columns>
 					</mx:AdvancedDataGrid>
 				</mx:Canvas>
@@ -261,15 +264,11 @@
 					 //	ABA DETALHE
 					 //
 					 /////////////////////////////////-->
-				<mx:Canvas label="Detalhes"
-						   width="100%"
-						   height="100%">
+				<mx:Canvas label="Detalhes">
 
-					<mx:VBox width="98%"
-							 left="10"
-							 bottom="0"
-							 right="0"
-							 top="0">
+					<mx:VBox left="10"
+							 right="10"
+							 top="0" horizontalAlign="center" verticalAlign="middle" bottom="10">
 						<arc:CollapsiblePanel title="Dados Básicos"
 											  width="98%"
 											  top="3"
@@ -330,7 +329,7 @@
 						<arc:CollapsiblePanel title="Propriedades"
 											  width="98%"
 											  top="3"
-											  height="98%"
+											  height="90%"
 											  layout="absolute"
 											  horizontalCenter="0">
 							<mx:AdvancedDataGrid id="adg2"
@@ -339,16 +338,17 @@
 												 right="3"
 												 top="3"
 												 bottom="3"
-												 selectionMode="singleRow">
+												 selectionMode="singleRow"
+												 dataProvider="{listaProdutores}">
 								<mx:columns>
 									<mx:AdvancedDataGridColumn headerText="Código"
-															   dataField="col1"/>
+															   dataField="codigo"/>
 									<mx:AdvancedDataGridColumn headerText="Nome"
-															   dataField="col2"/>
+															   dataField="nome"/>
 									<mx:AdvancedDataGridColumn headerText="UF"
-															   dataField="col3"/>
+															   dataField="uf"/>
 									<mx:AdvancedDataGridColumn headerText="Municipio"
-															   dataField="col4"/>
+															   dataField="municipio"/>
 								</mx:columns>
 							</mx:AdvancedDataGrid>
 

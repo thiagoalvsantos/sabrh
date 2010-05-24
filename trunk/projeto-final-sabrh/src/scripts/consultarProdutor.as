@@ -29,7 +29,7 @@ private function initializeHandler(event:FlexEvent):void
 	}
 
 }
-
+/*
 private function quickViewClickHandler(event:ListQuickViewEvent):void
 {
 	quickView.display(event.item);
@@ -55,3 +55,4 @@ private function listFilterFunction(item:Object):Boolean
 	return result;
 }
 
+*/
