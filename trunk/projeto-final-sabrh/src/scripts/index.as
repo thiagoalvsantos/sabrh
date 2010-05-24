@@ -3,8 +3,7 @@
 //	Index.as
 //
 ////////////////////////////////////////
-import modulos.Login;
-
+import mx.containers.Canvas;
 import mx.events.ModuleEvent;
 
 //--------------------------------------
@@ -49,10 +48,26 @@ public function init():void
  */
 public function carregarConsultarProdutor():void
 {
-	vs.selectedChild=Application.application.painelConsultarProdutor;
+	vs.selectedChild=painelConsultarProdutor;
 }
 
+/**
+ *
+ */
+public function carregarConsultarPropriedade():void
+{
+	vs.selectedChild=painelConsultarPropriedade;
+}
 
+public function carregarPaginaInicial():void
+{
+	vs.selectedChild=painelHome;
+}
+
+public function carregarConsultarAnimal():void
+{
+	vs.selectedChild=painelConsultarAnimal;
+}
 
 
 
