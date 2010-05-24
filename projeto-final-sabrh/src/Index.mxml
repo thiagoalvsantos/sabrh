@@ -7,7 +7,8 @@
 				viewSourceURL="srcview/index.html"
 				initialize="{init()}"
 				xmlns:effects="components.effects.*"
-				xmlns:modulos="modulos.*" xmlns:consultas="modulos.consultas.*">
+				xmlns:modulos="modulos.*"
+				xmlns:consultas="modulos.consultas.*">
 
 
 	<!--///////////////////////////////////////////
@@ -116,13 +117,13 @@
 								   icon="@Embed(source='/assets/botones/adelante1.png')"
 								   width="100%"
 								   textAlign="left"
-								   click="{carregarModulo('modulos/consultas/ConsultarPropriedade.swf','Consultar Propriedade')}"/>
+								   click="{carregarConsultarPropriedade()}"/>
 
 					<mx:LinkButton label="Consultar Animal"
 								   icon="@Embed(source='/assets/botones/adelante1.png')"
 								   width="100%"
 								   textAlign="left"
-								   click="{carregarModulo('modulos/consultas/ConsultarAnimal.swf','Consultar Animal')}"/>
+								   click="{carregarConsultarAnimal()}"/>
 
 				</mx:VBox>
 			</mx:Canvas>
@@ -174,6 +175,9 @@
 			</mx:Canvas>
 			<mx:Canvas id="painelConsultarPropriedade">
 				<consultas:ConsultarPropriedade/>
+			</mx:Canvas>
+			<mx:Canvas id="painelConsultarAnimal">
+				<consultas:ConsultarAnimal/>
 			</mx:Canvas>
 		</containers:PodStack>
 

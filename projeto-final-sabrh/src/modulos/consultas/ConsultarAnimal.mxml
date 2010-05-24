@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml"
-		   layout="absolute"
-		   width="100%"
-		   height="100%"
-		   xmlns:arc="com.arc90.flexlib.containers.*">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				width="100%"
+				height="100%"
+				xmlns:arc="com.arc90.flexlib.containers.*"
+				visible="true"
+				implements="components.containers.IPod"
+				showEffect="{effects.showEffect2}"
+				hideEffect="{effects.hideEffect1}"
+				xmlns:effects="components.effects.*"
+				initialize="initializeHandler(event)"
+				title="Consultar Animal"
+				verticalAlign="middle"
+				horizontalAlign="center"
+				showCloseButton="true"
+				horizontalCenter="0"
+				verticalCenter="0"
+				close="close()">
 
+	<mx:Script source="../../scripts/consultarAnimal.as"/>
+
+	<effects:Effects2 id="effects"/>
 	<mx:states>
 		<mx:State name="Avancado">
 			<mx:SetProperty target="{painelPesquisa}"
@@ -172,192 +188,176 @@
 		</mx:Transition>
 	</mx:transitions>
 
-	<mx:TitleWindow id="painelConsultarAnima"
-					title="Consultar Animal"
-					verticalAlign="middle"
-					horizontalAlign="center"
-					showCloseButton="true"
-					horizontalCenter="0"
-					verticalCenter="0"
-					width="100%"
-					height="100%">
+	<mx:VBox
+			 left="10" right="10" bottom="10" top="40">
 
 
-		<mx:VBox width="90%"
-				 height="80%">
+		<mx:Panel height="110"
+				  layout="absolute"
+				  title="Pesquisa"
+				  left="10"
+				  right="10"
+				  top="10"
+				  width="100%"
+				  id="painelPesquisa">
 
+			<mx:Label x="0"
+					  y="0"
+					  text="Pesquisa"
+					  id="lbPesquisa"/>
 
-			<mx:Panel height="110"
-					  layout="absolute"
-					  title="Pesquisa"
-					  left="10"
-					  right="10"
-					  top="10"
-					  width="100%"
-					  id="painelPesquisa">
+			<mx:TextInput y="0"
+						  right="0"
+						  left="56"
+						  id="txtPesquisa"/>
 
-				<mx:Label x="0"
-						  y="0"
-						  text="Pesquisa"
-						  id="lbPesquisa"/>
+			<mx:ControlBar verticalAlign="top"
+						   horizontalAlign="right"
+						   height="40"
+						   y="42">
 
-				<mx:TextInput y="0"
-							  right="0"
-							  left="56"
-							  id="txtPesquisa"/>
+				<mx:Button y="32"
+						   label="Pesquisar"
+						   id="btnPesquisa"
+						   right="0"
+						   click="{}"/>
+				<mx:Button y="32"
+						   label="Avançado"
+						   id="btnTipoPesquisa"
+						   right="85"
+						   click="{currentState = 'Avancado'}"/>
+			</mx:ControlBar>
 
-				<mx:ControlBar verticalAlign="top"
-							   horizontalAlign="right"
-							   height="40"
-							   y="42">
-
-					<mx:Button y="32"
-							   label="Pesquisar"
-							   id="btnPesquisa"
-							   right="0"
-							   click="{}"/>
-					<mx:Button y="32"
-							   label="Avançado"
-							   id="btnTipoPesquisa"
-							   right="85"
-							   click="{currentState = 'Avancado'}"/>
-				</mx:ControlBar>
-
-			</mx:Panel>
-			<mx:TabNavigator height="100%"
-							 left="10"
-							 right="10"
-							 top="137"
-							 width="100%">
-				<mx:Canvas label="Resultado">
+		</mx:Panel>
+		<mx:TabNavigator height="100%"
+						 left="10"
+						 right="10"
+						 top="137"
+						 width="100%">
+			<mx:Canvas label="Resultado">
 
 
 
-					<mx:AdvancedDataGrid id="adg1"
-										 designViewDataType="tree"
-										 left="3"
-										 right="3"
-										 top="3"
-										 bottom="3"
-										 selectionMode="singleRow">
-						<mx:columns>
-							<mx:AdvancedDataGridColumn headerText="Código"
-													   dataField="col1"/>
-							<mx:AdvancedDataGridColumn headerText="Nome"
-													   dataField="col2"/>
-							<mx:AdvancedDataGridColumn headerText="UF"
-													   dataField="col3"/>
-							<mx:AdvancedDataGridColumn headerText="Municipio"
-													   dataField="col4"/>
-							<mx:AdvancedDataGridColumn headerText="E-mail"
-													   dataField="col5"/>
-						</mx:columns>
-					</mx:AdvancedDataGrid>
-				</mx:Canvas>
-				<mx:Canvas label="Detalhes"
-						   width="100%"
-						   height="100%">
+				<mx:AdvancedDataGrid id="adg1"
+									 designViewDataType="tree"
+									 left="3"
+									 right="3"
+									 top="3"
+									 bottom="3"
+									 selectionMode="singleRow">
+					<mx:columns>
+						<mx:AdvancedDataGridColumn headerText="Código"
+												   dataField="col1"/>
+						<mx:AdvancedDataGridColumn headerText="Nome"
+												   dataField="col2"/>
+						<mx:AdvancedDataGridColumn headerText="UF"
+												   dataField="col3"/>
+						<mx:AdvancedDataGridColumn headerText="Municipio"
+												   dataField="col4"/>
+						<mx:AdvancedDataGridColumn headerText="E-mail"
+												   dataField="col5"/>
+					</mx:columns>
+				</mx:AdvancedDataGrid>
+			</mx:Canvas>
+			<mx:Canvas label="Detalhes"
+					   width="100%"
+					   height="100%">
 
-					<arc:CollapsiblePanel title="Dados Básicos"
-										  width="98%"
-										  top="3"
-										  layout="absolute"
-										  horizontalCenter="0"
-										  id="collapsiblepanel1"
-										  height="266">
-
-
-						<mx:TextInput id="txtNomeProdutorDetalhe"
-									  x="71"
-									  y="0"
-									  width="455"/>
-						<mx:Label id="lbEmailProdutorDetalhe"
-								  text="Registro"
-								  x="0"
-								  y="62"/>
-						<mx:TextInput id="txtEmailProdutorDetalhe"
-									  x="71"
-									  y="60"
-									  width="70"/>
-						<mx:TextInput id="txtEmailProdutorDetalhe0"
-									  x="71"
-									  y="90"
-									  width="220"/>
-						<mx:Label id="lbNomeProdutorDetalhe0"
-								  text="Propriedade"
-								  x="0"
-								  y="32"/>
-						<mx:TextInput id="txtNomeProdutorDetalhe0"
-									  x="71"
-									  y="30"
-									  width="455"/>
-						<mx:Label id="lbNomeProdutorDetalhe1"
-								  text="Nome"
-								  x="149"
-								  y="62"/>
-						<mx:TextInput id="txtNomeProdutorDetalhe1"
-									  x="195"
-									  y="60"
-									  width="331"/>
-						<mx:Label id="lbEmailProdutorDetalhe0"
-								  text="Data Nascimento"
-								  x="299"
-								  y="93"/>
-						<mx:Label id="lbEmailProdutorDetalhe1"
-								  text="Apelido"
-								  x="0"
-								  y="92"/>
-						<mx:DateField x="395"
-									  y="93"
-									  width="131"/>
-						<mx:TextInput id="txtMunicipioProdutor1"
-									  x="218"
-									  y="120"
-									  width="306"/>
-						<mx:Label id="labelMunicipioProdutor1"
-								  text="Nome Pai"
-								  x="140"
-								  y="122"/>
-						<mx:Label id="labelUFProdutor2"
-								  text="Reg. Pai"
-								  y="122"
-								  x="0"/>
-						<mx:TextInput id="txtcodigoProdutor3"
-									  x="72"
-									  y="120"
-									  width="60"/>
-						<mx:Label id="labelMunicipioProdutor2"
-								  text="Nome Mãe"
-								  x="140"
-								  y="152"/>
-						<mx:Label id="labelUFProdutor3"
-								  text="Reg. Mãe"
-								  y="152"
-								  x="0"/>
-						<mx:TextInput id="txtcodigoProdutor4"
-									  x="72"
-									  y="150"
-									  width="60"/>
-						<mx:TextInput id="txtMunicipioProdutor2"
-									  x="218"
-									  y="150"
-									  width="306"/>
-						<mx:Label id="lbNomeProdutorDetalhe2"
-								  text="Cliente"
-								  x="0.4"
-								  y="2"/>
-						<mx:ControlBar horizontalAlign="right">
-							<mx:Button label="Acompanhamento Genético"/>
-							<mx:Button label="Árvore Genealógica"/>
-							<mx:Button label="Classificação Linear"/>
-						</mx:ControlBar>
-					</arc:CollapsiblePanel>
+				<arc:CollapsiblePanel title="Dados Básicos"
+									  width="98%"
+									  top="3"
+									  layout="absolute"
+									  horizontalCenter="0"
+									  id="collapsiblepanel1"
+									  height="266">
 
 
-
-				</mx:Canvas>
-			</mx:TabNavigator>
-		</mx:VBox>
-	</mx:TitleWindow>
-
-</mx:Module>
+					<mx:TextInput id="txtNomeProdutorDetalhe"
+								  x="71"
+								  y="0"
+								  width="455"/>
+					<mx:Label id="lbEmailProdutorDetalhe"
+							  text="Registro"
+							  x="0"
+							  y="62"/>
+					<mx:TextInput id="txtEmailProdutorDetalhe"
+								  x="71"
+								  y="60"
+								  width="70"/>
+					<mx:TextInput id="txtEmailProdutorDetalhe0"
+								  x="71"
+								  y="90"
+								  width="220"/>
+					<mx:Label id="lbNomeProdutorDetalhe0"
+							  text="Propriedade"
+							  x="0"
+							  y="32"/>
+					<mx:TextInput id="txtNomeProdutorDetalhe0"
+								  x="71"
+								  y="30"
+								  width="455"/>
+					<mx:Label id="lbNomeProdutorDetalhe1"
+							  text="Nome"
+							  x="149"
+							  y="62"/>
+					<mx:TextInput id="txtNomeProdutorDetalhe1"
+								  x="195"
+								  y="60"
+								  width="331"/>
+					<mx:Label id="lbEmailProdutorDetalhe0"
+							  text="Data Nascimento"
+							  x="299"
+							  y="93"/>
+					<mx:Label id="lbEmailProdutorDetalhe1"
+							  text="Apelido"
+							  x="0"
+							  y="92"/>
+					<mx:DateField x="395"
+								  y="93"
+								  width="131"/>
+					<mx:TextInput id="txtMunicipioProdutor1"
+								  x="218"
+								  y="120"
+								  width="306"/>
+					<mx:Label id="labelMunicipioProdutor1"
+							  text="Nome Pai"
+							  x="140"
+							  y="122"/>
+					<mx:Label id="labelUFProdutor2"
+							  text="Reg. Pai"
+							  y="122"
+							  x="0"/>
+					<mx:TextInput id="txtcodigoProdutor3"
+								  x="72"
+								  y="120"
+								  width="60"/>
+					<mx:Label id="labelMunicipioProdutor2"
+							  text="Nome Mãe"
+							  x="140"
+							  y="152"/>
+					<mx:Label id="labelUFProdutor3"
+							  text="Reg. Mãe"
+							  y="152"
+							  x="0"/>
+					<mx:TextInput id="txtcodigoProdutor4"
+								  x="72"
+								  y="150"
+								  width="60"/>
+					<mx:TextInput id="txtMunicipioProdutor2"
+								  x="218"
+								  y="150"
+								  width="306"/>
+					<mx:Label id="lbNomeProdutorDetalhe2"
+							  text="Cliente"
+							  x="0.4"
+							  y="2"/>
+					<mx:ControlBar horizontalAlign="right">
+						<mx:Button label="Acompanhamento Genético"/>
+						<mx:Button label="Árvore Genealógica"/>
+						<mx:Button label="Classificação Linear"/>
+					</mx:ControlBar>
+				</arc:CollapsiblePanel>
+			</mx:Canvas>
+		</mx:TabNavigator>
+	</mx:VBox>
+</mx:TitleWindow>

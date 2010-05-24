@@ -1,130 +1,425 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml"
-		   layout="absolute"
-		   width="100%"
-		   height="100%">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				width="100%"
+				height="100%"
+				xmlns:arc="com.arc90.flexlib.containers.*"
+				visible="true"
+				implements="components.containers.IPod"
+				showEffect="{effects.showEffect2}"
+				hideEffect="{effects.hideEffect1}"
+				xmlns:effects="components.effects.*"
+				initialize="initializeHandler(event)"
+				title="Consultar Propriedade"
+				verticalAlign="middle"
+				horizontalAlign="center"
+				showCloseButton="true"
+				horizontalCenter="0"
+				verticalCenter="0"
+				close="close()">
 
-	<mx:TitleWindow title="Consultar Propriedade"
-					verticalAlign="middle"
-					horizontalAlign="center"
-					showCloseButton="true"
-					width="100%" horizontalCenter="0" height="100%" verticalCenter="0">
+
+	<mx:Script source="../../scripts/consultarPropriedade.as"/>
+	<effects:Effects2 id="effects"/>
+	<mx:states>
+		<mx:State name="Avancado">
+			<mx:SetProperty target="{painelPesquisa}"
+							name="height"
+/>
+			<mx:RemoveChild target="{lbPesquisa}"/>
+			<mx:RemoveChild target="{txtPesquisa}"/>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:Label id="labelCodigoProdutor"
+							  text="Código Produtor"
+							  x="0"
+							  y="2"/>
+
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:TextInput id="txtcodigoProdutor"
+								  x="108"
+								  y="30"
+								  width="60"/>
+				</mx:target>
+			</mx:AddChild>
+			
+			
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:Label id="labelCodigoPropriedade"
+							  text="Código Propriedade"
+							  x="0"
+							  y="32"/>
+
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:TextInput id="txtcodigoPropriedade"
+								  x="108"
+								  y="0"
+								  width="60"/>
+				</mx:target>
+			</mx:AddChild>
+			
+			
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:Label id="labelNomeProdutor"
+							  text="Nome Produtor"
+							  x="176"
+							  y="2"/>
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:TextInput id="txtNomeProdutor"
+								  x="279"
+								  y="0"
+								  width="100%"/>
+				</mx:target>
+			</mx:AddChild>
+			
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:Label id="labelNomePropriedade"
+							  text="Nome Propriedade"
+							  x="176"
+							  y="32"/>
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:TextInput id="txtNomePropriedade"
+								  x="279"
+								  y="30"
+								  width="100%"/>
+				</mx:target>
+			</mx:AddChild>
+			
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:Label id="labelUFProdutor"
+							  text="UF"
+							  y="60"
+							  x="0"/>
 
 
-		<mx:VBox width="90%"
-				 height="80%">
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:ComboBox id="cbUFProdutor"
+								 x="109"
+								 y="57"
+								 width="59">
+						<mx:Array>
+							<mx:String>PR</mx:String>
+							<mx:String>SC</mx:String>
+							<mx:String>RS</mx:String>
+							<mx:String>SP</mx:String>
+						</mx:Array>
+					</mx:ComboBox>
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:Label id="labelMunicipioProdutor"
+							  text="Município"
+							  x="176"
+							  y="60"/>
+
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:TextInput id="txtMunicipioProdutor"
+								  x="279"
+								  y="58"
+								  width="100%"/>
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:Label id="labelEmailProdutor"
+							  text="E-mail"
+							  x="0"
+							  y="95"/>
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:TextInput id="txtEmailProdutor"
+								  x="109"
+								  y="88"
+								  width="100%"/>
+				</mx:target>
+			</mx:AddChild>
 
 
-			<mx:Panel height="180"
-					  layout="absolute"
-					  title="Pesquisa"
-					  left="10"
-					  right="10"
-					  top="10"
-					  width="100%">
+			<mx:SetProperty target="{btnTipoPesquisa}"
+							name="label"
+							value="Simples"/>
+			<mx:SetEventHandler target="{btnTipoPesquisa}"
+								name="click"
+								handler="{currentState = ''}"/>
+			<mx:SetProperty target="{collapsiblepanel1}" name="height"/>
 
-				<mx:Label id="labelCodigoProdutor"
-						  text="Código Produtor"
-						  x="0"
-						  y="2"/>
-				<mx:TextInput id="txtcodigoProdutor"
-							  x="108"
-							  y="0"
-							  width="60"/>
 
-				<mx:Label id="labelNomeProdutor"
-						  text="Nome Produtor"
-						  x="176"
-						  y="2"/>
-				<mx:TextInput id="txtNomeProdutor"
-							  y="0"
-							  left="266" right="0"/>
+		</mx:State>
+	</mx:states>
 
-				<mx:Label id="labelCodigoPropriedade"
-						  text="Código Propriedade"
-						  x="0"
-						  y="29"/>
-				<mx:TextInput id="txtcodigoPropriedade"
-							  x="108"
-							  y="27"
-							  width="60"/>
+	<mx:transitions>
+		<!-- Define the transition from the base state to the Register state.-->
+		<mx:Transition id="toAvancado"
+					   fromState="*"
+					   toState="Avancado">
+			<mx:Sequence targets="{[painelPesquisa, btnTipoPesquisa]}">
+				<mx:Resize target="{painelPesquisa}"/>
 
-				<mx:Label id="labelNomeProPriedade"
-						  text="Nome Propriedde"
-						  x="176"
-						  y="29"/>
-				<mx:TextInput id="txtNomePropriedade"
-							  y="27"
-							  left="266" right="0"/>
+				<mx:SetPropertyAction target="{btnTipoPesquisa}"
+									  name="label"/>
+				<mx:AddChildAction/>
+			</mx:Sequence>
+		</mx:Transition>
 
-				<mx:Label id="labelUFProdutor"
-						  text="UF"
-						  y="56"
-						  x="0"/>
-				<mx:ComboBox id="cbUFProdutor"
-							 x="108"
-							 y="53"
-							 width="59">
-					<mx:Array>
-						<mx:String>PR</mx:String>
-						<mx:String>SC</mx:String>
-						<mx:String>RS</mx:String>
-						<mx:String>SP</mx:String>
-					</mx:Array>
-				</mx:ComboBox>
-				<mx:Label id="labelMunicipioProdutor"
-						  text="Município"
-						  x="176"
-						  y="56"/>
-				<mx:TextInput id="txtMunicipioProdutor"
-							  y="54"
-							  left="266" right="0"/>
+		<mx:Transition id="toSimples"
+					   fromState="Avancado"
+					   toState="*">
+			<mx:Sequence targets="{[painelPesquisa, btnTipoPesquisa]}">
 
-				<mx:Label id="labelEmailProdutor"
-						  text="E-mail"
-						  x="0"
-						  y="83"/>
-				<mx:TextInput id="txtEmailProdutor"
-							  y="81"
-							  left="108" right="0"/>
-				<mx:Button y="108"
+
+				<mx:SetPropertyAction target="{btnTipoPesquisa}"
+									  name="label"/>
+				<mx:Resize target="{painelPesquisa}"/>
+				<mx:AddChildAction/>
+			</mx:Sequence>
+		</mx:Transition>
+	</mx:transitions>
+
+
+
+
+
+	<mx:VBox left="10"
+			 right="10"
+			 top="35"
+			 bottom="10">
+
+		<!-- /////////////////////////////////
+			 //
+			 //	PAINEL DE PESQUISA
+			 //
+			 /////////////////////////////////-->
+		<mx:Panel height="110"
+				  layout="absolute"
+				  title="Pesquisa"
+				  left="10"
+				  right="10"
+				  top="10"
+				  width="100%"
+				  id="painelPesquisa">
+
+			<mx:Label x="0"
+					  y="0"
+					  text="Pesquisa"
+					  id="lbPesquisa"/>
+
+			<mx:TextInput y="0"
+						  right="0"
+						  left="56"
+						  id="txtPesquisa"/>
+
+			<mx:ControlBar verticalAlign="top"
+						   horizontalAlign="right"
+						   height="40"
+						   y="42">
+
+				<mx:Button y="32"
 						   label="Pesquisar"
 						   id="btnPesquisa"
 						   right="0"/>
+				<mx:Button y="32"
+						   label="Avançado"
+						   id="btnTipoPesquisa"
+						   right="85"
+						   click="{currentState = 'Avancado'}"/>
+			</mx:ControlBar>
+
+		</mx:Panel>
 
 
+		<mx:TabNavigator height="100%"
+						 left="10"
+						 right="10"
+						 top="137"
+						 width="100%">
 
-
-			</mx:Panel>
-			<mx:Panel height="100%"
-					  layout="absolute"
-					  title="Resultado"
-					  left="10"
-					  right="10"
-					  top="137"
-					  width="100%">
+			<!-- /////////////////////////////////
+				 //
+				 //	ABA RESULTADO
+				 //
+				 /////////////////////////////////-->
+			<mx:Canvas label="Resultado">
 
 				<mx:AdvancedDataGrid id="adg1"
 									 designViewDataType="tree"
-									 left="0"
-									 right="0"
-									 top="0"
-									 bottom="0"
-									 selectionMode="singleRow">
+									 left="3"
+									 right="3"
+									 top="3"
+									 bottom="3"
+									 selectionMode="singleRow"
+									 dataProvider="{listaProdutores}">
 					<mx:columns>
 						<mx:AdvancedDataGridColumn headerText="Código"
-												   dataField="col1"/>
+												   dataField="codigo"/>
 						<mx:AdvancedDataGridColumn headerText="Nome"
-												   dataField="col2"/>
+												   dataField="nome"/>
 						<mx:AdvancedDataGridColumn headerText="UF"
-												   dataField="col3"/>
+												   dataField="uf"/>
 						<mx:AdvancedDataGridColumn headerText="Municipio"
-												   dataField="col4"/>
+												   dataField="municipio"/>
 						<mx:AdvancedDataGridColumn headerText="E-mail"
-												   dataField="col5"/>
+												   dataField="email"/>
 					</mx:columns>
 				</mx:AdvancedDataGrid>
-			</mx:Panel>
-		</mx:VBox>
-	</mx:TitleWindow>
-</mx:Module>
+			</mx:Canvas>
+			<!-- /////////////////////////////////
+				 //
+				 //	ABA DETALHE
+				 //
+				 /////////////////////////////////-->
+			<mx:Canvas label="Detalhes">
+
+				<mx:VBox left="10"
+						 right="10"
+						 top="0"
+						 horizontalAlign="center"
+						 verticalAlign="middle"
+						 bottom="10">
+					<arc:CollapsiblePanel title="Dados Básicos"
+										  width="98%"
+										  top="3"
+										  layout="absolute"
+										  horizontalCenter="0" height="100%" id="collapsiblepanel1">
+
+						<mx:Label id="lbCodigoProdutorDetalhe"
+								  text="Código Produtor"
+								  x="0"
+								  y="2"/>
+
+						<mx:TextInput id="txtcodigoProdutorDetalhe"
+									  x="108"
+									  y="0"
+									  width="60"/>
+									  
+						<mx:Label id="lbCodigoPropriedadeDetalhe"
+								  text="Código Propriedade"
+								  x="0"
+								  y="32"/>
+
+						<mx:TextInput id="txtcodigoPropriedadeDetalhe"
+									  x="108"
+									  y="30"
+									  width="60"/>
+
+						<mx:Label id="lbNomeProdutorDetalhe"
+								  text="Nome Produtor"
+								  x="176"
+								  y="2"/>
+						<mx:Label id="lbNomeProdutorDetalhe0"
+								  text="Nome Propriedade"
+								  x="176"
+								  y="32"/>
+						<mx:TextInput id="txtNomeProdutorDetalhe"
+									  x="279"
+									  y="0"
+									  width="100%"/>
+						<mx:TextInput id="txtNomeProdutorDetalhe0"
+									  x="279"
+									  y="30"
+									  width="100%"/>
+						<mx:Label id="lbUFProdutorDetalhe"
+								  text="UF"
+								  y="63"
+								  x="0"/>
+						<mx:ComboBox id="cbUFProdutorDetalhe"
+									 x="109"
+									 y="60"
+									 width="59">
+							<mx:Array>
+								<mx:String>PR</mx:String>
+								<mx:String>SC</mx:String>
+								<mx:String>RS</mx:String>
+								<mx:String>SP</mx:String>
+							</mx:Array>
+						</mx:ComboBox>
+						<mx:Label id="lbMunicipioProdutorDetalhe"
+								  text="Município"
+								  x="176"
+								  y="63"/>
+
+						<mx:TextInput id="txtMunicipioProdutorDetalhe"
+									  x="279"
+									  y="61"
+									  width="100%"/>
+						<mx:Label id="lbEmailProdutorDetalhe"
+								  text="E-mail"
+								  x="0"
+								  y="93"/>
+						<mx:TextInput id="txtEmailProdutorDetalhe"
+									  x="109"
+									  y="91"
+									  width="100%"/>
+					</arc:CollapsiblePanel>
+
+					<arc:CollapsiblePanel title="Animais"
+										  width="98%"
+										  top="3"
+										  height="90%"
+										  layout="absolute"
+										  horizontalCenter="0">
+						<mx:AdvancedDataGrid id="adg2"
+											 designViewDataType="tree"
+											 left="3"
+											 right="3"
+											 top="3"
+											 bottom="3"
+											 selectionMode="singleRow"
+											 dataProvider="{listaProdutores}">
+							<mx:columns>
+								<mx:AdvancedDataGridColumn headerText="Código"
+														   dataField="codigo"/>
+								<mx:AdvancedDataGridColumn headerText="Nome"
+														   dataField="nome"/>
+								<mx:AdvancedDataGridColumn headerText="UF"
+														   dataField="uf"/>
+								<mx:AdvancedDataGridColumn headerText="Municipio"
+														   dataField="municipio"/>
+							</mx:columns>
+						</mx:AdvancedDataGrid>
+
+					</arc:CollapsiblePanel>
+				</mx:VBox>
+			</mx:Canvas>
+		</mx:TabNavigator>
+	</mx:VBox>
+</mx:TitleWindow>
+
