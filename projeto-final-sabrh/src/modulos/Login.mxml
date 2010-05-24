@@ -5,7 +5,7 @@
 		  layout="absolute"
 		  horizontalCenter="0"
 		  verticalCenter="0"
-		  visible="true"
+		  visible="false"
 		  title="Entrar"
 		  implements="components.containers.IPod"
 		  showEffect="{effects.showEffect1}"

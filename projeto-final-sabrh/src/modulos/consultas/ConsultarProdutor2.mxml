@@ -13,9 +13,9 @@
 				xmlns:quicksearch="components.quicksearch.*"
 				title="Consultar Produtor"
 				showCloseButton="true">
-
-	<mx:Script source="../../scripts/consultarProdutor.as"/>
 	<effects:Effects2 id="effects"/>
+<!--
+	<mx:Script source="../../scripts/consultarProdutor.as"/>
 
 	<quicksearch:QuickView id="quickView"
 						   source="{list}"
@@ -38,5 +38,7 @@
 										  change="filterChangeHandler(event)"
 										  clear="clearHandler(event)"/>
 	</mx:ControlBar>
+	
+	-->
 </mx:TitleWindow>
 
