@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				width="100%"
+				xmlns:arc="com.arc90.flexlib.containers.*"
+				visible="true"
+				implements="components.containers.IPod"
+				showEffect="{effects.showEffect2}"
+				hideEffect="{effects.hideEffect1}"
+				xmlns:effects="components.effects.*"
+				initialize="initializeHandler(event)"
+				title="Consultar Reprodutor"
+				verticalAlign="middle"
+				horizontalAlign="center"
+				showCloseButton="true"
+				horizontalCenter="0"
+				verticalCenter="0"
+				close="close()"
+				height="100%">
+
+
+	<mx:Script source="../../scripts/consultarReprodutor.as"/>
+	<effects:Effects2 id="effects"/>
+	<mx:states>
+		<mx:State name="Avancado">
+			<mx:SetProperty target="{painelPesquisa}"
+							name="height"/>
+			<mx:RemoveChild target="{lbPesquisa}"/>
+			<mx:RemoveChild target="{txtPesquisa}"/>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:Label id="labelCodigoProdutor"
+							  text="Registro"
+							  x="0"
+							  y="2"/>
+
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:TextInput id="txtcodigoProdutor"
+								  x="68"
+								  y="30"
+								  width="100"/>
+				</mx:target>
+			</mx:AddChild>
+
+
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:Label id="labelCodigoPropriedade"
+							  text="Registro Pai"
+							  x="0"
+							  y="32"/>
+
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:TextInput id="txtcodigoPropriedade"
+								  x="68"
+								  y="0"
+								  width="100"/>
+				</mx:target>
+			</mx:AddChild>
+
+
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:Label id="labelNomeProdutor"
+							  text="Nome Touro"
+							  x="176"
+							  y="2"/>
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:TextInput id="txtNomeProdutor"
+								  x="250"
+								  y="0"
+								  width="100%"/>
+				</mx:target>
+			</mx:AddChild>
+
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:Label id="labelNomePropriedade"
+							  text="Nome Pai"
+							  x="176"
+							  y="32"/>
+				</mx:target>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="firstChild">
+				<mx:target>
+					<mx:TextInput id="txtNomePropriedade"
+								  x="250"
+								  y="30"
+								  width="100%"/>
+				</mx:target>
+			</mx:AddChild>
+
+
+
+
+
+			<mx:SetProperty target="{btnTipoPesquisa}"
+							name="label"
+							value="Simples"/>
+			<mx:SetEventHandler target="{btnTipoPesquisa}"
+								name="click"
+								handler="{currentState = ''}"/>
+			<mx:SetProperty target="{collapsiblepanel1}"
+							name="height"/>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="lastChild">
+				<mx:TextInput id="txtNomePropriedade0"
+							  x="250"
+							  y="60"
+							  width="100%"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="lastChild">
+				<mx:Label id="labelNomePropriedade0"
+						  text="Nome Mãe"
+						  x="176"
+						  y="62"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="lastChild">
+				<mx:Label id="labelCodigoPropriedade0"
+						  text="Registro Mãe"
+						  x="0"
+						  y="62"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{painelPesquisa}"
+						 position="lastChild">
+				<mx:TextInput id="txtcodigoProdutor0"
+							  x="68"
+							  y="60"
+							  width="100"/>
+			</mx:AddChild>
+
+
+		</mx:State>
+	</mx:states>
+
+	<mx:transitions>
+		<!-- Define the transition from the base state to the Register state.-->
+		<mx:Transition id="toAvancado"
+					   fromState="*"
+					   toState="Avancado">
+			<mx:Sequence targets="{[painelPesquisa, btnTipoPesquisa]}">
+				<mx:Resize target="{painelPesquisa}"/>
+
+				<mx:SetPropertyAction target="{btnTipoPesquisa}"
+									  name="label"/>
+				<mx:AddChildAction/>
+			</mx:Sequence>
+		</mx:Transition>
+
+		<mx:Transition id="toSimples"
+					   fromState="Avancado"
+					   toState="*">
+			<mx:Sequence targets="{[painelPesquisa, btnTipoPesquisa]}">
+
+
+				<mx:SetPropertyAction target="{btnTipoPesquisa}"
+									  name="label"/>
+				<mx:Resize target="{painelPesquisa}"/>
+				<mx:AddChildAction/>
+			</mx:Sequence>
+		</mx:Transition>
+	</mx:transitions>
+
+
+
+
+
+	<mx:VBox left="10"
+			 right="10"
+			 top="35"
+			 bottom="10">
+
+		<!-- /////////////////////////////////
+			 //
+			 //	PAINEL DE PESQUISA
+			 //
+			 /////////////////////////////////-->
+		<mx:Panel height="110"
+				  layout="absolute"
+				  title="Pesquisa"
+				  left="10"
+				  right="10"
+				  top="10"
+				  width="100%"
+				  id="painelPesquisa">
+
+			<mx:Label x="0"
+					  y="0"
+					  text="Pesquisa"
+					  id="lbPesquisa"/>
+
+			<mx:TextInput y="0"
+						  right="0"
+						  left="56"
+						  id="txtPesquisa"/>
+
+			<mx:ControlBar verticalAlign="top"
+						   horizontalAlign="right"
+						   height="40"
+						   y="42">
+
+				<mx:Button y="32"
+						   label="Pesquisar"
+						   id="btnPesquisa"
+						   right="0"/>
+				<mx:Button y="32"
+						   label="Avançado"
+						   id="btnTipoPesquisa"
+						   right="85"
+						   click="{currentState = 'Avancado'}"/>
+			</mx:ControlBar>
+
+		</mx:Panel>
+
+
+		<mx:TabNavigator height="100%"
+						 left="10"
+						 right="10"
+						 top="137"
+						 width="100%">
+
+			<!-- /////////////////////////////////
+				 //
+				 //	ABA RESULTADO
+				 //
+				 /////////////////////////////////-->
+			<mx:Canvas label="Resultado">
+
+				<mx:AdvancedDataGrid id="adg1"
+									 designViewDataType="tree"
+									 left="3"
+									 right="3"
+									 top="3"
+									 bottom="3"
+									 selectionMode="singleRow"
+									 dataProvider="{listaProdutores}">
+					<mx:columns>
+						<mx:AdvancedDataGridColumn headerText="Registro"
+												   dataField="codigo"/>
+						<mx:AdvancedDataGridColumn headerText="Nome"
+												   dataField="nome"/>
+					</mx:columns>
+				</mx:AdvancedDataGrid>
+			</mx:Canvas>
+			<!-- /////////////////////////////////
+				 //
+				 //	ABA DETALHE
+				 //
+				 /////////////////////////////////-->
+			<mx:Canvas label="Detalhes">
+
+				<mx:VBox left="10"
+						 right="20"
+						 top="10"
+						 horizontalAlign="right"
+						 verticalAlign="top"
+						 bottom="10">
+					<arc:CollapsiblePanel title="Dados Básicos"
+										  width="98%"
+										  top="3"
+										  layout="absolute"
+										  horizontalCenter="0"
+										  id="collapsiblepanel1">
+
+						<mx:Label id="lbCodigoProdutorDetalhe"
+								  text="Registro Touro"
+								  x="0"
+								  y="2"/>
+
+						<mx:TextInput id="txtcodigoProdutorDetalhe"
+									  x="85"
+									  y="0"
+									  width="112"/>
+
+						<mx:Label id="lbCodigoPropriedadeDetalhe"
+								  text="Registro Pai"
+								  x="0"
+								  y="32"/>
+
+						<mx:TextInput id="txtcodigoPropriedadeDetalhe"
+									  x="85"
+									  y="30"
+									  width="112"/>
+						<mx:TextInput id="txtcodigoPropriedadeDetalhe0"
+									  x="85"
+									  y="61"
+									  width="112"/>
+
+						<mx:Label id="lbNomeProdutorDetalhe"
+								  text="Nome Touro"
+								  x="205"
+								  y="2"/>
+						<mx:Label id="lbNomeProdutorDetalhe0"
+								  text="Nome Pai"
+								  x="205"
+								  y="32"/>
+						<mx:TextInput id="txtNomeProdutorDetalhe"
+									  x="279"
+									  y="0"
+									  width="100%"/>
+						<mx:TextInput id="txtNomeProdutorDetalhe0"
+									  x="279"
+									  y="30"
+									  width="100%"/>
+						<mx:Label id="lbUFProdutorDetalhe"
+								  text="Registro Mãe"
+								  y="63"
+								  x="0"/>
+						<mx:Label id="lbMunicipioProdutorDetalhe"
+								  text="Nome Mãe"
+								  x="205"
+								  y="63"/>
+
+						<mx:TextInput id="txtMunicipioProdutorDetalhe"
+									  x="279"
+									  y="61"
+									  width="100%"/>
+						<mx:Label id="lbEmailProdutorDetalhe"
+								  text="Data Nasc."
+								  x="0"
+								  y="93"/>
+						<mx:DateField x="85"
+									  y="93"
+									  width="112"/>
+					</arc:CollapsiblePanel>
+					<arc:CollapsiblePanel title="Produção"
+										  width="98%"
+										  top="3"
+										  layout="absolute"
+										  horizontalCenter="0"
+										  id="collapsiblepanel7">
+						<mx:Label id="lbCodigoProdutorDetalhe0"
+								  text="Rebanhos"
+								  x="0"
+								  y="2"/>
+						<mx:Label id="lbCodigoProdutorDetalhe1"
+								  text="Filhas"
+								  x="0"
+								  y="32"/>
+						<mx:Label id="lbCodigoProdutorDetalhe2"
+								  text="Lactações"
+								  x="0"
+								  y="62"/>
+						<mx:Label id="lbCodigoProdutorDetalhe3"
+								  text="Confiabilidade"
+								  x="382"
+								  y="2"/>
+						<mx:Label id="lbCodigoProdutorDetalhe4"
+								  text="Leite"
+								  x="209"
+								  y="2"/>
+						<mx:Label id="lbCodigoProdutorDetalhe5"
+								  text="Gordura"
+								  x="209"
+								  y="32"/>
+						<mx:Label id="lbCodigoProdutorDetalhe6"
+								  text="Proteína"
+								  x="209"
+								  y="62"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe0"
+									  x="89"
+									  y="0"
+									  width="112"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe1"
+									  x="89"
+									  y="30"
+									  width="112"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe2"
+									  x="89"
+									  y="60"
+									  width="112"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe6"
+									  x="471"
+									  y="0"
+									  width="100%"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe3"
+									  x="262"
+									  y="0"
+									  width="112"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe4"
+									  x="262"
+									  y="28"
+									  width="112"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe5"
+									  x="262"
+									  y="58"
+									  width="112"/>
+					</arc:CollapsiblePanel>
+
+					<arc:CollapsiblePanel title="Conformação"
+										  width="98%"
+										  top="3"
+										  layout="absolute"
+										  horizontalCenter="0"
+										  id="collapsiblepan">
+						<mx:Label id="lbCodigoProdutorDetalhe7"
+								  text="Rebanhos"
+								  x="0"
+								  y="12"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe7"
+									  x="61"
+									  y="10"
+									  width="70"/>
+						<mx:Label id="lbCodigoProdutorDetalhe8"
+								  text="Filhas"
+								  x="136"
+								  y="12"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe8"
+									  x="177"
+									  y="10"
+									  width="70"/>
+						<mx:Label id="lbCodigoProdutorDetalhe9"
+								  text="Confiabilidade"
+								  x="260"
+								  y="12"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe9"
+									  x="341"
+									  y="10"
+									  width="70"/>
+						<mx:BarChart x="0"
+									 y="41"
+									 id="graficoConformação"
+									 width="500"
+									 height="220"
+									 showDataTips="true"
+									 dataProvider="{listaGrafico}">
+
+							<mx:verticalAxis>
+								<mx:CategoryAxis categoryField="name"/>
+							</mx:verticalAxis>
+							<mx:series>
+								<mx:BarSeries yField="name"
+											  xField="value"/>
+
+							</mx:series>
+						</mx:BarChart>
+					</arc:CollapsiblePanel>
+					<arc:CollapsiblePanel title="Características Auxiliares"
+										  width="98%"
+										  top="3"
+										  layout="absolute"
+										  horizontalCenter="0">
+						<mx:Label id="lbCodigoProdutorDetalhe10"
+								  text="Profundidade Úbere"
+								  x="0"
+								  y="2"/>
+						<mx:Label id="lbCodigoProdutorDetalhe12"
+								  x="0"
+								  y="66"
+								  text="Lig Susp Médio"/>
+						<mx:Label id="lbCodigoProdutorDetalhe13"
+								  text="Textura Úbere"
+								  x="0"
+								  y="34"/>
+						<mx:Label id="lbCodigoProdutorDetalhe14"
+								  text="Inserção Anterior"
+								  x="0"
+								  y="98"/>
+						<mx:Label id="lbCodigoProdutorDetalhe15"
+								  text="Coloc. Tetos Ant."
+								  x="0"
+								  y="130"/>
+						<mx:Label id="lbCodigoProdutorDetalhe16"
+								  text="Alt. Inserção Post."
+								  x="0"
+								  y="162"/>
+						<mx:Label id="lbCodigoProdutorDetalhe17"
+								  text="Larg. Inserção Post."
+								  x="0"
+								  y="194"/>
+						<mx:Label id="lbCodigoProdutorDetalhe18"
+								  text="Coloc. Tetos Post."
+								  x="0"
+								  y="226"/>
+						<mx:Label id="lbCodigoProdutorDetalhe19"
+								  text="Comprimento Tetos"
+								  x="0"
+								  y="258"/>
+						<mx:Label id="lbCodigoProdutorDetalhe20"
+								  text="Ângulo Casco"
+								  x="0"
+								  y="290"/>
+						<mx:Label id="lbCodigoProdutorDetalhe21"
+								  text="Profund. Talão"
+								  x="0"
+								  y="322"/>
+						<mx:Label id="lbCodigoProdutorDetalhe22"
+								  text="Qualidade Óssea"
+								  x="0"
+								  y="354"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe10"
+									  x="142"
+									  y="0"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe12"
+									  x="142"
+									  y="64"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe14"
+									  x="142"
+									  y="96"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe13"
+									  x="142"
+									  y="32"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe15"
+									  x="142"
+									  y="128"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe16"
+									  x="142"
+									  y="192"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe17"
+									  x="142"
+									  y="224"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe18"
+									  x="142"
+									  y="160"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe19"
+									  x="142"
+									  y="288"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe20"
+									  x="142"
+									  y="320"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe22"
+									  x="142"
+									  y="352"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe21"
+									  x="142"
+									  y="256"
+									  width="70"/>
+						<mx:Label id="lbCodigoProdutorDetalhe11"
+								  text="Pernas Vistas de Lado"
+								  x="247"
+								  y="2"/>
+						<mx:Label id="lbCodigoProdutorDetalhe23"
+								  x="247"
+								  y="66"
+								  text="Pernas Vistas de Trás"/>
+						<mx:Label id="lbCodigoProdutorDetalhe24"
+								  text="Conjunto Pernas Traseiras"
+								  x="247"
+								  y="34"/>
+						<mx:Label id="lbCodigoProdutorDetalhe25"
+								  text="Estatura"
+								  x="247"
+								  y="98"/>
+						<mx:Label id="lbCodigoProdutorDetalhe26"
+								  text="Altura Terço Anterior"
+								  x="247"
+								  y="130"/>
+						<mx:Label id="lbCodigoProdutorDetalhe27"
+								  text="Largura Peito"
+								  x="247"
+								  y="162"/>
+						<mx:Label id="lbCodigoProdutorDetalhe28"
+								  text="Profundidade Corpo"
+								  x="247"
+								  y="194"/>
+						<mx:Label id="lbCodigoProdutorDetalhe29"
+								  text="Angularidade"
+								  x="247"
+								  y="226"/>
+						<mx:Label id="lbCodigoProdutorDetalhe30"
+								  text="Lombo"
+								  x="247"
+								  y="258"/>
+						<mx:Label id="lbCodigoProdutorDetalhe31"
+								  text="Ângulo Garupa"
+								  x="247"
+								  y="290"/>
+						<mx:Label id="lbCodigoProdutorDetalhe32"
+								  x="247"
+								  y="322"
+								  text="Colocação Ísquiones"/>
+						<mx:Label id="lbCodigoProdutorDetalhe33"
+								  text="Larg. da Garupa "
+								  x="247"
+								  y="354"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe11"
+									  x="389"
+									  y="0"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe23"
+									  x="389"
+									  y="64"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe24"
+									  x="389"
+									  y="96"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe25"
+									  x="389"
+									  y="32"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe26"
+									  x="389"
+									  y="128"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe27"
+									  x="389"
+									  y="192"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe28"
+									  x="389"
+									  y="224"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe29"
+									  x="389"
+									  y="160"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe30"
+									  x="389"
+									  y="288"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe31"
+									  x="389"
+									  y="320"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe32"
+									  x="389"
+									  y="352"
+									  width="70"/>
+						<mx:TextInput id="txtcodigoProdutorDetalhe33"
+									  x="389"
+									  y="256"
+									  width="70"/>
+
+					</arc:CollapsiblePanel>
+
+					<arc:CollapsiblePanel title="Funcional"
+										  width="98%"
+										  top="3"
+										  layout="absolute"
+										  horizontalCenter="0"
+										  id="collapsiblepanel3">
+						<mx:Label text="Perm. Rebanho"
+								  x="0"
+								  y="2"/>
+						<mx:Label x="0"
+								  y="66"
+								  text="Persistência Lactação"/>
+						<mx:Label text="C.C.S."
+								  x="0"
+								  y="34"/>
+						<mx:Label text="Fertilidade Filhas"
+								  x="0"
+								  y="98"/>
+						<mx:TextInput x="142"
+									  y="0"
+									  width="70"/>
+						<mx:TextInput x="142"
+									  y="64"
+									  width="70"/>
+						<mx:TextInput x="142"
+									  y="96"
+									  width="70"/>
+						<mx:TextInput x="142"
+									  y="32"
+									  width="70"/>
+						<mx:Label text="Velocidade Ordenha"
+								  x="247"
+								  y="2"/>
+						<mx:Label x="247"
+								  y="66"
+								  text="Facilidade de Parto"/>
+						<mx:Label text="Temperamento"
+								  x="247"
+								  y="34"/>
+						<mx:Label text="Facilidade de Parto Materna"
+								  x="247"
+								  y="98"/>
+						<mx:TextInput x="389"
+									  y="0"
+									  width="70"/>
+						<mx:TextInput x="389"
+									  y="64"
+									  width="70"/>
+						<mx:TextInput x="389"
+									  y="96"
+									  width="70"/>
+						<mx:TextInput x="389"
+									  y="32"
+									  width="70"/>
+
+					</arc:CollapsiblePanel>
+				</mx:VBox>
+			</mx:Canvas>
+		</mx:TabNavigator>
+	</mx:VBox>
+</mx:TitleWindow>
+

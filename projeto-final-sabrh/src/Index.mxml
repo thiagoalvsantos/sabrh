@@ -8,7 +8,8 @@
 				initialize="{init()}"
 				xmlns:effects="components.effects.*"
 				xmlns:modulos="modulos.*"
-				xmlns:consultas="modulos.consultas.*">
+				xmlns:consultas="modulos.consultas.*"
+				xmlns:cadastros="modulos.cadastros.*">
 
 
 	<!--///////////////////////////////////////////
@@ -95,7 +96,7 @@
 				 /////////////////////////////////////////////// -->
 			<mx:Canvas width="80%"
 					   height="100%"
-					   label="Consultas"
+					   label="Menu"
 					   autoLayout="true"
 					   icon="@Embed(source='assets/img/search-48x48.png')">
 				<mx:VBox width="100%"
@@ -124,32 +125,42 @@
 								   width="100%"
 								   textAlign="left"
 								   click="{carregarConsultarAnimal()}"/>
+					<mx:LinkButton label="Consultar Reprodutor"
+								   icon="@Embed(source='/assets/botones/adelante1.png')"
+								   width="100%"
+								   textAlign="left"
+								   click="{carregarConsultarReprodutor()}"/>
+					<mx:LinkButton label="Acasalamento"
+								   icon="@Embed(source='/assets/botones/adelante1.png')"
+								   width="100%"
+								   textAlign="left"
+								   click="{carregarAcasalamento()}"/>
 
-				</mx:VBox>
-			</mx:Canvas>
+					<!--///////////////////////////////////////////
+						 </mx:VBox>
+						 </mx:Canvas>
 
-			<!--///////////////////////////////////////////
-				 //
-				 //				Menu Cadastros
-				 //
-				 /////////////////////////////////////////////// -->
-			<mx:Canvas width="100%"
-					   height="100%"
-					   label="Cadastros"
-					   autoLayout="true"
-					   icon="@Embed(source='assets/img/search-48x48.png')">
-				<mx:VBox width="100%"
+						 //
+						 //				Menu Cadastros
+						 //
+						 <mx:Canvas width="100%"
+						 height="100%"
+						 label="Cadastros"
+						 autoLayout="true"
+						 icon="@Embed(source='assets/img/search-48x48.png')">
+						 <mx:VBox width="100%"
 						 height="100%"
 						 verticalGap="0"
 						 paddingTop="2"
 						 paddingLeft="2"
 						 paddingRight="2"
 						 paddingBottom="2">
+						 /////////////////////////////////////////////// -->
 					<mx:LinkButton label="Sincronizar Dados"
 								   icon="@Embed(source='/assets/botones/adelante1.png')"
 								   width="100%"
 								   textAlign="left"
-								   click="{carregarModulo('modulos/cadastros/ImportarDados.swf','Consultar Produtor')}"/>
+								   click="{carregarSincronizarDados()}"/>
 
 				</mx:VBox>
 			</mx:Canvas>
@@ -178,6 +189,24 @@
 			</mx:Canvas>
 			<mx:Canvas id="painelConsultarAnimal">
 				<consultas:ConsultarAnimal/>
+			</mx:Canvas>
+			<mx:Canvas id="painelConsultarReprodutor">
+				<consultas:ConsultarReprodutor/>
+			</mx:Canvas>
+			<mx:Canvas id="painelSincronizarDados">
+				<cadastros:ImportarDados/>
+			</mx:Canvas>
+			<mx:Canvas id="painelClassificacaoLinear">
+				<consultas:classificacaoView/>
+			</mx:Canvas>
+			<mx:Canvas id="painelArvoreGenealogica">
+				<consultas:ArvoreGenealogica/>
+			</mx:Canvas>
+			<mx:Canvas id="painelAcasalamento">
+				<consultas:Acasalamento/>
+			</mx:Canvas>
+			<mx:Canvas id="painelCompararReprodutores">
+				<consultas:CompararReprodutores/>
 			</mx:Canvas>
 		</containers:PodStack>
 

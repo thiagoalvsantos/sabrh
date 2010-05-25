@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				width="100%"
+				height="100%"
+				visible="true"
+				implements="components.containers.IPod"
+				showEffect="{effects.showEffect2}"
+				hideEffect="{effects.hideEffect1}"
+				xmlns:effects="components.effects.*"
+				initialize="initializeHandler(event)"
+				title="Árvore Genealógica"
+				verticalAlign="middle"
+				horizontalAlign="center"
+				showCloseButton="true"
+				horizontalCenter="0"
+				verticalCenter="0"
+				close="close()">
+
+	<mx:Script source="../../scripts/arvoreGenealogica.as"/>
+
+	<effects:Effects2 id="effects"/>
+	<mx:Image source="assets/img/arvore-genalogica.png"
+			  left="10"
+			  right="10"
+			  top="40"
+			  bottom="50"/>
+	<mx:ControlBar horizontalAlign="right">
+		<mx:Button label="Voltar"
+				   click="{Application.application.carregarConsultarAnimal()}"/>
+	</mx:ControlBar>
+
+</mx:TitleWindow>

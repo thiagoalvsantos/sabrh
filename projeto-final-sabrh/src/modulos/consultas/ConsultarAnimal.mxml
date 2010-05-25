@@ -17,6 +17,11 @@
 				horizontalCenter="0"
 				verticalCenter="0"
 				close="close()">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+		]]>
+	</mx:Script>
 
 	<mx:Script source="../../scripts/consultarAnimal.as"/>
 
@@ -188,8 +193,10 @@
 		</mx:Transition>
 	</mx:transitions>
 
-	<mx:VBox
-			 left="10" right="10" bottom="10" top="40">
+	<mx:VBox left="10"
+			 right="10"
+			 bottom="10"
+			 top="40">
 
 
 		<mx:Panel height="110"
@@ -353,8 +360,10 @@
 							  y="2"/>
 					<mx:ControlBar horizontalAlign="right">
 						<mx:Button label="Acompanhamento Genético"/>
-						<mx:Button label="Árvore Genealógica"/>
-						<mx:Button label="Classificação Linear"/>
+						<mx:Button label="Árvore Genealógica"
+								   click="{Application.application.carregarArvoreGenealogica()}"/>
+						<mx:Button label="Classificação Linear"
+								   click="{Application.application.carregarClassificacaoLinear()}"/>
 					</mx:ControlBar>
 				</arc:CollapsiblePanel>
 			</mx:Canvas>
