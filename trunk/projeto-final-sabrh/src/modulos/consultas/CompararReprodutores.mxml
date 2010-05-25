@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				width="100%"
+				height="100%"
+				visible="true"
+				implements="components.containers.IPod"
+				showEffect="{effects.showEffect2}"
+				hideEffect="{effects.hideEffect1}"
+				xmlns:effects="components.effects.*"
+				initialize="initializeHandler(event)"
+				title="Comparar Reprodutores"
+				verticalAlign="middle"
+				horizontalAlign="center"
+				showCloseButton="true"
+				horizontalCenter="0"
+				verticalCenter="0"
+				close="close()"
+				xmlns:ns1="com.arc90.flexlib.containers.*">
+
+	<mx:Script source="../../scripts/acasalamento.as"/>
+
+	<effects:Effects2 id="effects"/>
+	<mx:VBox left="10"
+			 right="10"
+			 top="50"
+			 bottom="40">
+
+
+		<ns1:CollapsiblePanel layout="absolute"
+							  width="100%"
+							  title="Reprodutores">
+			<mx:HBox width="100%"
+					 horizontalAlign="center"
+					 verticalAlign="top">
+
+
+				<mx:AdvancedDataGrid id="adg1"
+									 designViewDataType="tree"
+									 left="3"
+									 right="3"
+									 top="3"
+									 bottom="3"
+									 selectionMode="singleRow"
+									 dataProvider="{listaProdutores}"
+									 width="48%">
+					<mx:columns>
+						<mx:AdvancedDataGridColumn headerText="Registro"
+												   dataField="codigo"/>
+						<mx:AdvancedDataGridColumn headerText="Nome"
+												   dataField="nome"/>
+					</mx:columns>
+				</mx:AdvancedDataGrid>
+
+				<mx:AdvancedDataGrid designViewDataType="tree"
+									 left="3"
+									 right="3"
+									 top="3"
+									 bottom="3"
+									 selectionMode="singleRow"
+									 dataProvider="{listaProdutores}"
+									 width="48%">
+					<mx:columns>
+						<mx:AdvancedDataGridColumn headerText="Registro"
+												   dataField="codigo"/>
+						<mx:AdvancedDataGridColumn headerText="Nome"
+												   dataField="nome"/>
+					</mx:columns>
+				</mx:AdvancedDataGrid>
+			</mx:HBox>
+		</ns1:CollapsiblePanel>
+
+		<ns1:CollapsiblePanel layout="absolute"
+							  width="100%"
+							  title="Comparação">
+
+			<mx:HBox>
+				<mx:BarChart x="0"
+							 y="41"
+							 id="graficoConformação"
+							 width="50%"
+							 height="200"
+							 showDataTips="true"
+							 dataProvider="{listaGrafico}"
+							 type="overlaid">
+
+					<mx:verticalAxis>
+						<mx:CategoryAxis categoryField="name"/>
+					</mx:verticalAxis>
+					<mx:series>
+						<mx:BarSeries yField="name"
+									  xField="value"/>
+
+					</mx:series>
+				</mx:BarChart>
+				<mx:BarChart x="0"
+							 y="41"
+							 width="50%"
+							 height="200"
+							 showDataTips="true"
+							 dataProvider="{listaGrafico}">
+
+					<mx:verticalAxis>
+						<mx:CategoryAxis categoryField="name"/>
+					</mx:verticalAxis>
+					<mx:series>
+						<mx:BarSeries yField="name"
+									  xField="value"/>
+
+					</mx:series>
+				</mx:BarChart>
+			</mx:HBox>
+
+
+
+
+
+		</ns1:CollapsiblePanel>
+	</mx:VBox>
+
+	<mx:ControlBar horizontalAlign="right">
+	</mx:ControlBar>
+
+</mx:TitleWindow>

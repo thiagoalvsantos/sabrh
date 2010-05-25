@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				width="100%"
+				height="100%"
+				visible="true"
+				implements="components.containers.IPod"
+				showEffect="{effects.showEffect2}"
+				hideEffect="{effects.hideEffect1}"
+				xmlns:effects="components.effects.*"
+				initialize="initializeHandler(event)"
+				title="Acasalamento"
+				verticalAlign="middle"
+				horizontalAlign="center"
+				showCloseButton="true"
+				horizontalCenter="0"
+				verticalCenter="0"
+				close="close()"
+				xmlns:ns1="com.arc90.flexlib.containers.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+		]]>
+	</mx:Script>
+
+	<mx:Script source="../../scripts/acasalamento.as"/>
+
+	<effects:Effects2 id="effects"/>
+	<mx:VBox left="10"
+			 right="10"
+			 top="50"
+			 bottom="40">
+		<ns1:CollapsiblePanel layout="absolute"
+							  width="100%"
+							  title="Animal">
+			<mx:Label x="10"
+					  y="10"
+					  text="Registro Animal"/>
+			<mx:TextInput x="99"
+						  y="8"
+						  width="100"/>
+			<mx:Button x="207"
+					   y="8"
+					   label="Pesquisar"/>
+			<mx:Label x="10"
+					  y="40"
+					  text="Nome Animal"/>
+			<mx:TextInput x="99"
+						  y="38"
+						  width="461"/>
+		</ns1:CollapsiblePanel>
+		<ns1:CollapsiblePanel layout="absolute"
+							  width="100%"
+							  title="Parâmetros">
+			<mx:Label x="10"
+					  y="10"
+					  text="Conformação"/>
+			<mx:TextInput x="99"
+						  y="8"
+						  width="100"/>
+			<mx:TextInput x="265"
+						  y="8"
+						  width="100"/>
+			<mx:Label x="207"
+					  y="10"
+					  text="Produção"/>
+		</ns1:CollapsiblePanel>
+
+		<ns1:CollapsiblePanel layout="absolute"
+							  width="100%"
+							  title="Reprodutores" height="100%">
+
+			<mx:AdvancedDataGrid id="adg1"
+								 designViewDataType="tree"
+								 left="3"
+								 right="3"
+								 top="3"
+								 bottom="3"
+								 selectionMode="singleRow"
+								 dataProvider="{listaProdutores}">
+				<mx:columns>
+					<mx:AdvancedDataGridColumn headerText="Registro"
+											   dataField="codigo"/>
+					<mx:AdvancedDataGridColumn headerText="Nome"
+											   dataField="nome"/>
+				</mx:columns>
+			</mx:AdvancedDataGrid>
+		</ns1:CollapsiblePanel>
+	</mx:VBox>
+
+	<mx:ControlBar horizontalAlign="right">
+		<mx:Button label="Registrar Acasalamento"
+				   click="{Application.application.carregarConsultarAnimal()}"/>
+		<mx:Button label="Comparar Reprodutores"
+				   click="{Application.application.carregarCompararReprodutor()}"/>
+				   
+		<mx:Button label="Buscar Reprodutores"
+				   />
+	</mx:ControlBar>
+
+</mx:TitleWindow>

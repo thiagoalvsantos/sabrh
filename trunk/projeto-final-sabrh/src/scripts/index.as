@@ -12,6 +12,10 @@ import mx.events.ModuleEvent;
 //
 //--------------------------------------
 [Bindable]
+/**
+ * 
+ * @default 
+ */
 public var hora:String;
 private var timer:Timer=null;
 private var moduloAtual:String;
@@ -54,24 +58,73 @@ public function carregarConsultarProdutor():void
 /**
  *
  */
+public function carregarArvoreGenealogica():void
+{
+	vs.selectedChild=painelArvoreGenealogica;
+}
+
+/**
+ *
+ */
 public function carregarConsultarPropriedade():void
 {
 	vs.selectedChild=painelConsultarPropriedade;
 }
 
+/**
+ * 
+ */
 public function carregarPaginaInicial():void
 {
 	vs.selectedChild=painelHome;
 }
 
+/**
+ * 
+ */
 public function carregarConsultarAnimal():void
 {
 	vs.selectedChild=painelConsultarAnimal;
 }
 
+/**
+ * 
+ */
+public function carregarConsultarReprodutor():void
+{
+	vs.selectedChild=painelConsultarReprodutor;
+}
 
+/**
+ * 
+ */
+public function carregarAcasalamento():void
+{
+	vs.selectedChild=painelAcasalamento;
+}
 
+/**
+ * 
+ */
+public function carregarSincronizarDados():void
+{
+	vs.selectedChild=painelSincronizarDados;
+}
+/**
+ * 
+ */
+public function carregarClassificacaoLinear():void
+{
+	vs.selectedChild=painelClassificacaoLinear;
+}
 
+/**
+ * 
+ */
+public function carregarCompararReprodutor():void
+{
+	vs.selectedChild=painelCompararReprodutores;
+}
 /**
  *
  */
@@ -96,6 +149,16 @@ import mx.effects.easing.Cubic;
 import flash.display.DisplayObject;
 import mx.modules.ModuleManager;
 
+/**
+ * 
+ * @param target
+ * @param duration
+ * @param delay
+ * @param xStart
+ * @param xEnd
+ * @param yStart
+ * @param yEnd
+ */
 public function MoveEffect(target:Object, duration:Number, delay:Number, xStart:Number, xEnd:Number, yStart:Number, yEnd:Number):void
 {
 	var moveEffect:Move=new Move();
@@ -111,6 +174,14 @@ public function MoveEffect(target:Object, duration:Number, delay:Number, xStart:
 	moveEffect.play();
 }
 
+/**
+ * 
+ * @param target
+ * @param duration
+ * @param delay
+ * @param alphaFrom
+ * @param alphaTo
+ */
 public function FadeEffect(target:Object, duration:Number, delay:Number, alphaFrom:Number, alphaTo:Number):void
 {
 	var fadeEffect:Fade=new Fade();
