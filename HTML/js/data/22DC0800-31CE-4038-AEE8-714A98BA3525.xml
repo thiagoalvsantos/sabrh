@@ -1,0 +1,17 @@
+tocTab[tocTab.length] = new Array("4:1", "", "Navegação Tela", "EARoot/EA4/EA139.htm", "188.png", "35", "0", "", "Custom diagram0","{62A29FA4-5AC1-48f9-8243-AC276E157D98}");
+tocTab[tocTab.length] = new Array("4:2", "", "T001 - Login", "EARoot/EA4/EA141.htm", "11.png", "157", "0", "", "Screen0","{951901C1-134D-446f-ADC5-30B6C99B5E82}");
+tocTab[tocTab.length] = new Array("4:3", "", "T002 - Recuperar Senha", "EARoot/EA4/EA142.htm", "11.png", "171", "0", "", "Screen0","{559A618E-E5DA-4f66-BB6F-ED50112B7234}");
+tocTab[tocTab.length] = new Array("4:4", "", "T003 - PaginaInicial", "EARoot/EA4/EA143.htm", "11.png", "156", "0", "", "Screen0","{96D52ED9-2377-423e-B23A-0A7E4879DD26}");
+tocTab[tocTab.length] = new Array("4:5", "", "T004 - Consultar Produtores", "EARoot/EA4/EA144.htm", "11.png", "158", "0", "", "Screen0","{EBA3ECB4-14E0-43a0-96D1-87682618602B}");
+tocTab[tocTab.length] = new Array("4:6", "", "T005 - Consultar Propriedades", "EARoot/EA4/EA145.htm", "11.png", "159", "0", "", "Screen0","{C4F7B056-245F-410d-A8C6-938346D729A5}");
+tocTab[tocTab.length] = new Array("4:7", "", "T006 - Arvore Genealógica Animal", "EARoot/EA4/EA146.htm", "11.png", "161", "0", "", "Screen0","{EEA534A4-9158-4951-A06A-739778CFF1C4}");
+tocTab[tocTab.length] = new Array("4:8", "", "T006 - Consultar Animais", "EARoot/EA4/EA147.htm", "11.png", "160", "0", "", "Screen0","{B1EE291C-8FCF-4c92-B3A2-1A695E4DE41F}");
+tocTab[tocTab.length] = new Array("4:9", "", "T007 - Visualizar Classificação Linear", "EARoot/EA4/EA148.htm", "11.png", "162", "0", "", "Screen0","{E9F84FC6-565B-4076-9921-F5F16169AA4E}");
+tocTab[tocTab.length] = new Array("4:10", "", "T008 - Consultar Reprodutores", "EARoot/EA4/EA149.htm", "11.png", "163", "0", "", "Screen0","{99A3519D-03D8-4851-8E09-29DBC5C70E7C}");
+tocTab[tocTab.length] = new Array("4:11", "", "T009 - Importar Dados", "EARoot/EA4/EA150.htm", "11.png", "164", "0", "", "Screen0","{8524AE82-0CE1-4e76-A16B-EC412792D8B7}");
+tocTab[tocTab.length] = new Array("4:12", "", "T010 - Cadastrar Fornecedor de Semêm", "EARoot/EA4/EA151.htm", "11.png", "165", "0", "", "Screen0","{71F5A272-34C4-466f-89B6-C7515BADF241}");
+tocTab[tocTab.length] = new Array("4:13", "", "T011 - Consultar Fornecedores de Semêm", "EARoot/EA4/EA152.htm", "11.png", "166", "0", "", "Screen0","{1B0E5043-6E42-4fb6-9161-33DE05E61DE2}");
+tocTab[tocTab.length] = new Array("4:14", "", "T012 - Buscar Reprodutor Para Acasalamento", "EARoot/EA4/EA153.htm", "11.png", "167", "0", "", "Screen0","{F0F75AB2-A497-4760-A9D8-C3D20D561191}");
+tocTab[tocTab.length] = new Array("4:15", "", "T013 - Comparar Melhoras Genéticas", "EARoot/EA4/EA154.htm", "11.png", "168", "0", "", "Screen0","{62F298B8-3BCD-44c2-820E-618F8C18FFBA}");
+tocTab[tocTab.length] = new Array("4:16", "", "T014 - Registrar Acasalamento", "EARoot/EA4/EA155.htm", "11.png", "169", "0", "", "Screen0","{594F77FC-6FA6-469b-A112-50F79BF39EA8}");
+tocTab[tocTab.length] = new Array("4:17", "", "T015 - Acompanhar Acasalamento", "EARoot/EA4/EA156.htm", "11.png", "170", "0", "", "Screen0","{614D4BC3-7687-4b3a-BE6D-667B6E802B98}");
