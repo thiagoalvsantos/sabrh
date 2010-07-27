@@ -1,0 +1,245 @@
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+
+
+ creationComplete="init()" creationPolicy="all" >
+
+
+
+ <mx:Script>
+
+
+ <![CDATA[
+
+
+public var upImage:String; //Imagem padrão
+
+
+ [Bindable]
+
+
+public var overImage:String; //Imagem para efeito do mouse
+
+
+public var fncClick:Function; //Função usada para o click do mouse
+
+
+public var boEfeitoClick:Boolean = true;  //Flag para controle do efeito glow do click do mouse
+
+
+private function init():void{
+
+
+    up.source = upImage; //Coloca a imagem padrão 
+
+
+
+    //Adicioniona os eventos a imagem
+
+
+    addEventListener(MouseEvent.ROLL_OVER, mouseRollOver);
+
+
+    addEventListener(MouseEvent.ROLL_OUT, mouseRollOut);
+
+
+    addEventListener(MouseEvent.CLICK, mouseClick);
+
+
+
+    //Executa o efeito ao iniciar.
+
+
+    mouseRollOver(null);
+
+
+    mouseRollOut(null);
+
+
+}
+
+
+private function mouseRollOver(e:MouseEvent):void{
+
+
+ if(boEfeitoClick)
+
+
+     currentState = 'overState';
+
+
+    else
+
+
+     currentState = 'overState2';
+
+
+}
+
+
+  private function mouseRollOut(e:MouseEvent):void{
+
+
+    currentState = '';
+
+
+}
+
+
+
+private function mouseClick(e:MouseEvent):void{
+
+
+ if(fncClick != null)
+
+
+     fncClick();
+
+
+}
+
+
+ ]]>
+
+
+</mx:Script>
+
+
+<mx:Glow id="glowImage" duration="400"
+
+
+    alphaFrom="1.0" alphaTo="0.3"
+
+
+    blurXFrom="0.0" blurXTo="50.0"
+
+
+    blurYFrom="0.0" blurYTo="50.0"
+
+
+    color="0x8b9094"/>
+
+
+<mx:Glow id="unglowImage" duration="400"
+
+
+    alphaFrom="0.3" alphaTo="0.0"
+
+
+    blurXFrom="50.0" blurXTo="0.0"
+
+
+    blurYFrom="50.0" blurYTo="0.0"
+
+
+    color="0x8b9094"/>
+
+
+<mx:states>
+
+
+ <!--O primeiro estado usa o efeito glow para o click no mouse-->
+
+
+    <mx:State name="overState">
+
+
+        <mx:RemoveChild target="{up}"/>
+
+
+        <mx:AddChild relativeTo="{this}">
+
+
+         <mx:Image source="{overImage}" id="imgOver"
+
+
+           mouseDownEffect="{glowImage}"
+
+
+           mouseUpEffect="{unglowImage}"/>
+
+
+        </mx:AddChild>
+
+
+    </mx:State>
+
+
+    <!--No estado 2 não usa o efeito glow, o flag boEfeitoClick é que controla -->
+
+
+    <mx:State name="overState2">
+
+
+        <mx:RemoveChild target="{up}"/>
+
+
+        <mx:AddChild relativeTo="{this}">
+
+
+         <mx:Image source="{overImage}" id="imgOver2"/>
+
+
+        </mx:AddChild>
+
+
+    </mx:State>
+
+
+</mx:states>
+
+
+<!--Ao mudar de um estado para o outro executa o efeito de transição-->
+
+
+<mx:transitions>
+
+
+    <mx:Transition fromState="*" toState="overState">
+
+
+     <mx:Fade duration="500" alphaFrom="0" alphaTo="1" target="{imgOver}"/>
+
+
+    </mx:Transition>
+
+
+    <mx:Transition fromState="overState" toState="*">
+
+
+     <mx:Fade duration="200" alphaFrom="0" alphaTo="1" target="{up}"/>
+
+
+    </mx:Transition>
+
+
+     <mx:Transition fromState="*" toState="overState2">
+
+
+     <mx:Fade duration="500" alphaFrom="0" alphaTo="1" target="{imgOver2}"/>
+
+
+    </mx:Transition>
+
+
+    <mx:Transition fromState="overState2" toState="*">
+
+
+     <mx:Fade duration="200" alphaFrom="0" alphaTo="1" target="{up}"/>
+
+
+    </mx:Transition>
+
+
+ </mx:transitions>
+
+
+  <!--Imagem usada para troca-->
+
+
+<mx:Image id="up"/>
+
+
+</mx:Canvas>
+
+
+

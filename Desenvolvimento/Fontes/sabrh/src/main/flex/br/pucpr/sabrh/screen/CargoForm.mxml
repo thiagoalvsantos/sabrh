@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+    layout="absolute" width="424" height="234">
+ 
+    <mx:Form defaultButton="{btSalvar}" horizontalCenter="0" verticalCenter="0">
+        <mx:FormHeading label="Gerenciamento de Cargos" width="100%"/>
+        <mx:FormItem label="ID:" width="127">
+            <mx:TextInput width="100%" id="txtIdCargo"/>
+        </mx:FormItem>
+        <mx:FormItem label="Cargo:" width="345">
+            <mx:TextInput width="100%" id="txtDsCargo"/>
+        </mx:FormItem>
+    </mx:Form>
+ 
+    <mx:ControlBar horizontalAlign="center" x="0" y="189">
+        <mx:Button label="Salvar" id="btSalvar" click="save()" textAlign="center"/>
+    </mx:ControlBar>
+ 
+    <mx:RemoteObject id="cargoService"
+        fault="onFault(event)" destination="cargoService"/>
+ 
+    <mx:Script>
+        <![CDATA[
+        	import br.pucpr.sabrh.view.entity.Cargo;
+            import mx.rpc.events.ResultEvent;
+            import mx.rpc.events.FaultEvent;
+            import mx.controls.Alert;
+ 
+            private var cargo:Cargo;
+ 
+            public function save():void
+            {
+                this.cargo = new Cargo();
+                this.cargo.idCargo   = new Number(txtIdCargo.text);
+                this.cargo.dsCargo   = txtDsCargo.text;
+ 
+                cargoService.addEventListener(ResultEvent.RESULT,
+                    //No flex toda requisicao é assincrona,
+                    //Entao devo programar um funcao quando
+                    //a requisicao terminar de executar
+                    function(event:ResultEvent):void
+                    {
+                        Alert.show("Salvo com Sucesso!"); //Status do TitleWindow
+                    }
+                );
+                //Chama o metodo Save do servico "cargoService"
+                cargoService.save(cargo);
+            }
+ 
+            public function remove():void{}
+ 
+            public function getList():void{}
+ 
+            public function findByPrimaryKey():void{}
+ 
+            public function onFault(event:FaultEvent):void
+            {
+                //Ocorreu uma falha ao chamar o servico.
+                Alert.show(event.fault.message);
+            }
+        ]]>
+    </mx:Script>
+</mx:TitleWindow>
