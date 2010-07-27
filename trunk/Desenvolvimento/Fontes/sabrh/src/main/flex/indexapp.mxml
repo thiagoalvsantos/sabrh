@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				backgroundGradientColors="[0x000000,0x323232]"
+				xmlns:containers="br.pucpr.sabrh.components.containers.*"
+				xmlns:navigators="br.pucpr.sabrh.components.navigators.*"
+				viewSourceURL="srcview/index.html"
+				initialize="{init()}"
+				xmlns:effects="components.effects.*"
+				xmlns:screen="br.pucpr.sabrh.screen.*"
+			>
+
+
+	<!--///////////////////////////////////////////
+		 //
+		 //					CSS e AS
+		 //
+		 /////////////////////////////////////////////// -->
+	<mx:Style source="css/css.css"/>
+	<mx:Script source="/index.as"/>
+
+	<!--///////////////////////////////////////////
+		 //
+		 //					Objetos da página
+		 //
+		 /////////////////////////////////////////////// -->
+
+	<mx:DateFormatter id="df"
+					  formatString="DD/MM/YYYY"/>
+	<mx:DateFormatter id="hf"
+					  formatString="JJ:NN:SS"/>
+
+
+
+
+	<!--///////////////////////////////////////////
+		 //
+		 //					Barra da controle
+		 //
+		 /////////////////////////////////////////////// -->
+	<mx:ApplicationControlBar width="100%"
+							  dock="true"
+							  alpha="1.0"
+							  fillAlphas="[1.0, 1.0]"
+							  fillColors="[#5E677B, #313143]">
+		<mx:Label text=".:: SAB.RH ::."
+				  fontSize="15"
+				  fontWeight="bold"
+				  width="100%"
+				  color="#A8A1A1"/>
+		<mx:Label text="Usuario Logado"
+				  color="#A8A1A1"
+				  fontWeight="bold"/>
+		<mx:Label text="User"
+				  id="usuarioLogado"
+				  alpha="0.77"
+				  color="#A4A0A0"/>
+		<mx:Label text="Data do Sistema"
+				  color="#A8A1A1"
+				  fontWeight="bold"/>
+		<mx:Label text="{ df.format( new Date() ) }"
+				  color="#A4A0A0"/>
+		<mx:Label text="Hora do Sistema"
+				  color="#A8A1A1"
+				  fontWeight="bold"/>
+		<mx:Label id="txthora"
+				  text="{ hora }"
+				  color="#A4A0A0"/>
+	</mx:ApplicationControlBar>
+
+
+	<mx:HBox horizontalGap="5"
+			 left="10"
+			 right="10"
+			 top="10"
+			 bottom="30">
+		<!--///////////////////////////////////////////
+			 //
+			 //				Menu
+			 //
+			 /////////////////////////////////////////////// -->
+		<navigators:CollapsibleAccordion id="menu"
+										 height="100%"
+										 orientation="right"
+										 barSize="36"
+										 currentWidth="36"
+										 drawerButtonStyle="drawerButton"
+										 closeButtonStyle="drawerCloseRight"
+										 accordianStyle="drawerAccordion">
+
+			<!--///////////////////////////////////////////
+				 //
+				 //				Menu Consultas
+				 //
+				 /////////////////////////////////////////////// -->
+			<mx:Canvas width="80%"
+					   height="100%"
+					   label="Menu"
+					   autoLayout="true"
+					   icon="@Embed(source='assets/img/search-48x48.png')">
+				<mx:VBox width="100%"
+						 height="100%"
+						 verticalGap="0"
+						 paddingTop="2"
+						 paddingLeft="2"
+						 paddingRight="2"
+						 paddingBottom="2">
+
+				
+				
+
+				</mx:VBox>
+			</mx:Canvas>
+		</navigators:CollapsibleAccordion>
+		
+		
+		<!--///////////////////////////////////////////
+			 //
+			 //					Conteúdo
+			 //
+			 /////////////////////////////////////////////// -->
+
+
+		<containers:PodStack id="vs"
+							 width="100%"
+							 height="100%">
+			<mx:Canvas id="painelLogin">
+				<screen:LoginForm/>
+			</mx:Canvas>
+			
+		</containers:PodStack>
+
+	</mx:HBox>
+
+	<mx:Label text="Todos os Direitos Reservados © 2010 TR Consulting"
+			  fontSize="8"
+			  bottom="7"
+			  horizontalCenter="0"/>
+
+
+
+
+</mx:Application>

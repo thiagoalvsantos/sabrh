@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				backgroundGradientColors="[0x000000,0x323232]"
+				xmlns:containers="br.pucpr.sabrh.components.containers.*"
+				xmlns:navigators="br.pucpr.sabrh.components.navigators.*"
+				viewSourceURL="srcview/index.html"
+				xmlns:screen="br.pucpr.sabrh.screen.*">
+
+
+	<!--///////////////////////////////////////////
+		 //					CSS e AS
+		 /////////////////////////////////////////////// -->
+	<mx:Style source="css/css.css"/>
+	
+	<mx:HBox horizontalGap="5"
+			 left="10"
+			 right="10"
+			 top="10"
+			 bottom="30">
+
+
+		<!--///////////////////////////////////////////
+			 //
+			 //					Conteúdo
+			 //
+			 /////////////////////////////////////////////// -->
+
+
+		<containers:PodStack id="vs"
+							 width="100%"
+							 height="100%">
+			<mx:Canvas id="painelLogin">
+				<screen:LoginForm/>
+			</mx:Canvas>
+
+		</containers:PodStack>
+
+	</mx:HBox>
+
+	<mx:Label text="Todos os Direitos Reservados © 2010 TR Consulting"
+			  fontSize="8"
+			  bottom="7"
+			  horizontalCenter="0"/>
+
+
+
+
+</mx:Application>
