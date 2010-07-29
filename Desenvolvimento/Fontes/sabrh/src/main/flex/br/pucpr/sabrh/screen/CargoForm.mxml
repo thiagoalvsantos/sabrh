@@ -21,7 +21,7 @@
  
     <mx:Script>
         <![CDATA[
-        	import br.pucpr.sabrh.view.entity.Cargo;
+        	import br.pucpr.sabrh.entity.Cargo;
             import mx.rpc.events.ResultEvent;
             import mx.rpc.events.FaultEvent;
             import mx.controls.Alert;
