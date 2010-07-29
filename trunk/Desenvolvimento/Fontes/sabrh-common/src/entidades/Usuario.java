@@ -5,9 +5,10 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "USUARIO")
+@Entity
 public class Usuario implements Serializable{
 
 	/**
@@ -17,7 +18,7 @@ public class Usuario implements Serializable{
 
 	// CD_USUARIO NUMBER(8) NOT NULL,
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "CD_CODIGO", length = 8)
 	private Long codigo;
 

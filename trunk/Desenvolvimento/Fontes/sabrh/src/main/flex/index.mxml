@@ -31,7 +31,7 @@
 							 width="100%"
 							 height="100%">
 			<mx:Canvas id="painelLogin">
-				<screen:LoginForm/>
+				<screen:CargoForm/>
 			</mx:Canvas>
 
 		</containers:PodStack>
@@ -42,8 +42,5 @@
 			  fontSize="8"
 			  bottom="7"
 			  horizontalCenter="0"/>
-
-
-
 
 </mx:Application>
