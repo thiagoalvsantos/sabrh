@@ -6,7 +6,7 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="sabrh-common.jar" deploy-path="/lib" handle="module:/resource/sabrh-common/sabrh-common">
+        <dependent-module archiveName="sabrh-common.jar" deploy-path="/" handle="module:/resource/sabrh-common/sabrh-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>
