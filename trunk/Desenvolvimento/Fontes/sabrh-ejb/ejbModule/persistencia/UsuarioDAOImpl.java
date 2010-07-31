@@ -33,9 +33,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	@Override
 	public Boolean autenticar(Usuario usuario) {
 		Usuario result = (Usuario) em.createQuery(
-				"select u from USUARIO u where u.TX_LOGIN = "
-						+ usuario.getLogin() + " AND u.TX_SENHA = "
-						+ usuario.getSenha()).getSingleResult();
+				"select u from SABRH.USUARIO u where u.login = '"
+						+ usuario.getLogin() + "' AND u.senha = '"
+						+ usuario.getSenha()+"'").getSingleResult();
 
 		if (result != null) {
 			return true;
