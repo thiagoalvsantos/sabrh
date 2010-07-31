@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name="SABRH.USUARIO")
+@Entity
 public class Usuario implements Serializable{
 
 	/**
