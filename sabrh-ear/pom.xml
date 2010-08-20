@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.pucpr.projeto-final</groupId>
+	<artifactId>sabrh-ear</artifactId>
+	<version>1.0</version>
+	<packaging>ear</packaging>
+	<name>sabrh-ear</name>
+	<dependencies>
+		<dependency>
+			<groupId>br.pucpr.projeto-final</groupId>
+			<artifactId>sabrh-webapp</artifactId>
+			<type>war</type>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<configuration>
+					<modules>
+						<webModule>
+							<groupId>br.pucpr.projeto-final</groupId>
+							<artifactId>sabrh-webapp</artifactId>
+							<contextRoot>/sabrh-webapp</contextRoot>
+							<bundleDir>/</bundleDir>
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+			 <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jboss-maven-plugin</artifactId>
+                    <version>1.4</version>
+                    <configuration>
+                        <jbossHome>D:\projeto-final\jboss-6.0.0.20100429-M3</jbossHome>
+                        <serverName>default</serverName>
+                        <unpack>${myUnpack}</unpack>
+                    </configuration>
+                </plugin>
+		</plugins>
+	</build>
+</project>
