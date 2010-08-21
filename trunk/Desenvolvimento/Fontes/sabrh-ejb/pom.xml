@@ -1,0 +1,87 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>sabrh</artifactId>
+		<groupId>br.pucpr.projeto-final</groupId>
+		<version>1.0</version>
+	</parent>
+	<groupId>br.pucpr.projeto-final</groupId>
+	<artifactId>sabrh-ejb</artifactId>
+	<version>1.0</version>
+	<packaging>ejb</packaging>
+	<name>sabrh-ejb</name>
+	<dependencies>
+		<dependency>
+			<groupId>br.pucpr.projeto-final</groupId>
+			<artifactId>sabrh-datatype</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.4.0.GA</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>GeraJarDeTest</id>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!--
+				<plugin> <groupId>org.codehaus.mojo</groupId>
+				<artifactId>hibernate3-maven-plugin</artifactId>
+				<version>2.2</version> <executions> <execution> <id>GeraDDLTest</id>
+				<phase>process-test-resources</phase> <goals> <goal>hbm2ddl</goal>
+				</goals> </execution> </executions> <configuration> <components>
+				<component> <name>hbm2ddl</name>
+				<implementation>jpaconfiguration</implementation> </component>
+				</components> <componentProperties>
+				<persistenceunit>SABRH</persistenceunit>
+				<outputfilename>sabrh-db-test.ddl</outputfilename>
+				<drop>false</drop> <create>true</create> <export>false</export>
+				<format>true</format> </componentProperties> </configuration>
+				</plugin>
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>CopiaDDLTemp</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${myTempDir}/ddl</outputDirectory>
+							<resources>
+								<resource>
+									<directory>target/hibernate3/sql</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
