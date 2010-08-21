@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+    version="1.0">
+    <persistence-unit name="testPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>br.unicamp.siarq.sigad.persistence.auditoria.ent.AuditoriaBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.auditoria.ent.DetalheAuditoriaBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.especiedoc.ent.EspecieDocumentalBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.especiedoc.ent.MetadadoBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.especiedoc.ent.MetadadoEspecieDocumentalBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.especiedoc.ent.ModeloDocumentoGenericoBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.especiedoc.ent.ModeloDocumentoUnidadeProducaoBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.especiedoc.ent.NumeracaoModeloDocumentoGenericoBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.especiedoc.ent.MembroUnidadeBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.especiedoc.ent.NumeracaoModeloDocumentoUnidadeProducaoBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.especiedoc.ent.UnidadeBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.especiedoc.ent.UnidadeTipoUnidadeBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.noticia.ent.NoticiaBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.noticia.ent.NoticiaUnidadeBiz</class>
+        <class>br.unicamp.siarq.sigad.persistence.usuario.ent.UsuarioBiz</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.connection.provider_class" value="org.hibernate.connection.DriverManagerConnectionProvider" />
+            <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:sigad-test" />
+            <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="false" />
+            <property name="hibernate.connection.username" value="sa" />
+            <property name="hibernate.connection.password" value="" />
+        </properties>
+    </persistence-unit>
+</persistence>
