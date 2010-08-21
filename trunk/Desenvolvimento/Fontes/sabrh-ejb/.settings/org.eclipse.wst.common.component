@@ -3,6 +3,9 @@
     <wb-module deploy-name="sabrh-ejb">
         <wb-resource deploy-path="/" source-path="/ejbModule"/>
         <wb-resource deploy-path="/" source-path="/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/test/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/" source-path="/src/main/resources"/>
         <dependent-module deploy-path="/" handle="module:/resource/sabrh-ejbClient/sabrh-ejbClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>
