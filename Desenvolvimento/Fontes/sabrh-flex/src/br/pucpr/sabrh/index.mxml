@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:view="br.pucpr.sabrh.view.*"
+			   pageTitle="..:: SABRH ::.."
+			   initialize="init()">
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+
+
+
+		<!--////////////////////////////////////
+			 //
+			 //                              OBJETOS DE TELA
+			 //
+			 /////////////////////////////////////-->
+
+		<mx:DateFormatter id="df"
+						  formatString="DD/MM/YYYY"/>
+		<mx:DateFormatter id="hf"
+						  formatString="JJ:NN:SS"/>
+
+		<!--////////////////////////////////////
+			 //
+			 //                              EFEITOS
+			 //
+			 /////////////////////////////////////-->
+
+		<mx:Parallel id="loginEffect">
+			<mx:Fade alphaFrom="0"
+					 alphaTo="1"/>
+		
+			<mx:Sequence>
+				<mx:Blur duration="300"
+						 blurYFrom="1.0"
+						 blurYTo="20.0"/>
+				<mx:Blur duration="300"
+						 blurYFrom="20.0"
+						 blurYTo="1"/>
+			</mx:Sequence>
+		</mx:Parallel>
+
+		<mx:Parallel id="popUpEffect">
+			<mx:Fade alphaFrom="0"
+					 alphaTo="1"/>
+		
+		</mx:Parallel>
+
+
+	</fx:Declarations>
+	<fx:Script source="controller/index.as"/>
+	<s:controlBarContent>
+		<s:Label text=":: Sistema de Acasalamento Bovino da Raça Holandesa ::"
+				 fontSize="15"
+				 fontWeight="bold"
+				 width="100%"
+				 color="#3f3f3f"
+				 enabled="true"/>
+		<s:Label text="Usuario Logado"
+				 color="#3f3f3f"/>
+		<s:Label text=""
+				 id="usuarioLogado"
+				 alpha="0.77"/>
+		<s:Label text="Data do Sistema"
+				 color="#3f3f3f"/>
+		<s:Label text="{ df.format( new Date() ) }"/>
+		<s:Label text="Hora do Sistema"
+				 color="#3f3f3f"/>
+		<s:Label id="txthora"
+				 text="{ hora }"/>
+
+	</s:controlBarContent>
+
+
+</s:Application>
