@@ -12,6 +12,7 @@
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
+  <theme themeIsDefault="false" themeIsSDK="false" themeLocation="${EXTERNAL_THEME_DIR}/yflexskin"/>
   <applications>
     <application path="br/pucpr/sabrh/index.mxml"/>
   </applications>
