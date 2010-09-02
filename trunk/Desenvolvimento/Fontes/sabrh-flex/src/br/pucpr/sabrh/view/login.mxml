@@ -1,36 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+<mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  layout="absolute"
 		  horizontalCenter="0"
 		  verticalCenter="0"
 		  title=".:: Login ::."
-		  width="477">
+ width="491" height="196">
 
-	<mx:Script source="../controller/login.as"/>
+	<fx:Script source="../controller/login.as"/>
 
-	<mx:RemoteObject id="usuarioService"
-					 fault="onFault(event)"
-					 destination="UsuarioService"
-					 showBusyCursor="true">
-		<mx:method result="{autenticarResult(event)}"
-				   name="autenticar"/>
-	</mx:RemoteObject>
+	<fx:Declarations>
 
+		<s:RemoteObject id="usuarioService"
+						fault="onFault(event)"
+						destination="UsuarioService"
+						showBusyCursor="true">
 
-	<mx:Form horizontalCenter="0"
-			 verticalCenter="0">
-		<mx:FormItem label="Usuário"
-					 required="true">
-			<mx:TextInput id="txtUsuario"/>
-		</mx:FormItem>
-		<mx:FormItem label="Senha"
-					 required="true">
-			<mx:TextInput displayAsPassword="true"
-						  id="txtSenha"/>
-		</mx:FormItem>
-		<mx:FormItem>
-			<mx:Button label="Entrar"
-					   click="autenticar()"/>
-		</mx:FormItem>
-	</mx:Form>
+			<s:method result="{autenticarResult(event)}"
+					  name="autenticar"/>
+		</s:RemoteObject>
+
+		<fx:Array id="valArr">
+			<mx:StringValidator source="{txtSenha}"
+								property="text"
+								required="true"/>
+			<mx:StringValidator source="{txtUsuario}"
+								property="text"
+								required="true"/>
+		</fx:Array>
+
+	</fx:Declarations>
+
+	<mx:HBox horizontalCenter="0"
+			 verticalCenter="0"
+			 horizontalAlign="center"
+			 verticalAlign="middle">
+
+		<mx:Form horizontalCenter="0"
+				 verticalCenter="0"
+				 dropShadowVisible="true">
+			<mx:FormItem label="Usuário">
+				<mx:TextInput id="txtUsuario"/>
+			</mx:FormItem>
+			<mx:FormItem label="Senha">
+				<mx:TextInput displayAsPassword="true"
+							  id="txtSenha"/>
+			</mx:FormItem>
+		</mx:Form>
+		<s:Button label="Entrar"
+				   click="autenticar()"
+				   x="295"
+				   y="112"
+				   height="50"/>
+	</mx:HBox>
 </mx:Panel>
