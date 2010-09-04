@@ -1,5 +1,7 @@
 import br.pucpr.sabrh.view.login;
+import br.pucpr.sabrh.view.manterUsuario;
 
+import mx.controls.Image;
 import mx.managers.PopUpManager;
 
 [Bindable]
@@ -40,15 +42,47 @@ public function init():void
 }
 
 /**
- * 
+ *
  */
 public function fazerLogin():void
-{	
+{
 	var popUplogin:login=login(PopUpManager.createPopUp(this, login, true));
 	popUplogin.txtUsuario.setFocus();
 	PopUpManager.centerPopUp(popUplogin);
 	loginEffect.target=popUplogin;
 	loginEffect.play();
+}
+
+//Função para abrir a tela de Manuntenção de Usuários.
+public function abrirManterUsuario():void
+{
+	var popUpManterUsuario:manterUsuario=manterUsuario(PopUpManager.createPopUp(this,manterUsuario, true));
+	PopUpManager.centerPopUp(popUpManterUsuario);
+	popUpEffect.target=popUpManterUsuario;
+	popUpEffect.play();
+}
+
+
+public function iconMoveDown(id:Image):void
+{
+	id.x=id.x + 2;
+	id.y=id.y + 2;
+}
+
+public function iconMoveUp(id:Image):void
+{
+	id.x=id.x - 2;
+	id.y=id.y - 2;
+}
+
+public function iconMD(id:Image):void
+{
+	id.y=id.y + 2;
+}
+
+public function iconMU(id:Image):void
+{
+	id.y=id.y - 2;
 }
 
 
