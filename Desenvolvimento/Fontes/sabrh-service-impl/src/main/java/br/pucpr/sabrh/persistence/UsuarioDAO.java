@@ -4,6 +4,7 @@
 package br.pucpr.sabrh.persistence;
 
 import javax.ejb.Remote;
+import javax.persistence.NoResultException;
 
 import br.pucpr.br.entity.Usuario;
 
@@ -20,6 +21,6 @@ public interface UsuarioDAO {
 	 *            the usuario
 	 * @return true, if successful
 	 */
-	Usuario autenticar(Usuario usuario);
+	Usuario autenticar(Usuario usuario) throws NoResultException;
 
 }
