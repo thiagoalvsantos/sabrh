@@ -10,11 +10,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * The Class Usuario.
  */
 @Entity
+@Table(name="TB_USUARIO")
 public class Usuario implements Serializable {
 
 	/**
@@ -24,7 +28,7 @@ public class Usuario implements Serializable {
 
 	/** The codigo. */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "CD_CODIGO", length = 8)
 	private Long codigo;
 
@@ -43,6 +47,40 @@ public class Usuario implements Serializable {
 	/** The perfil. */
 	@Column(name = "IN_PERFIL", length = 1, nullable = false)
 	private char perfil;
+
+	@Column(name = "TX_CPF", length = 11, nullable = false)
+	private String cpf;
+
+	@Column(name = "TX_NOME", length = 255, nullable = false)
+	private String nome;
+
+	@ManyToOne
+	@JoinColumn(name = "CD_MUNICIPIO",referencedColumnName="CD_CODIGO")
+	private Municipio municipio;
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Municipio getMunicipio() {
+		return municipio;
+	}
+
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
+	}
 
 	/**
 	 * Gets the codigo.
