@@ -96,6 +96,6 @@ public function autenticarResult(event:ResultEvent):void
 public function onFault(event:FaultEvent):void
 {
 	//Ocorreu uma falha ao chamar o servico. 
-	Alert.show(event.fault.message);
+	Alert.show(event.fault.rootCause.message);
 }
 
