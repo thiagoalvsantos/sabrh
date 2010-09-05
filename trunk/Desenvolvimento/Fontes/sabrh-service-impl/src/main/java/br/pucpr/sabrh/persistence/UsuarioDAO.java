@@ -6,7 +6,7 @@ package br.pucpr.sabrh.persistence;
 import javax.ejb.Remote;
 import javax.persistence.NoResultException;
 
-import br.pucpr.sabrh.common.persistence.impl.CrudDAO;
+import br.pucpr.sabrh.common.persistence.CrudDAO;
 import br.pucpr.sabrh.entity.Usuario;
 
 /**

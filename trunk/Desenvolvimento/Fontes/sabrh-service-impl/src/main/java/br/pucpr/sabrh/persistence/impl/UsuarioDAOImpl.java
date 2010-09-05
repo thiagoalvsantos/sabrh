@@ -9,7 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import br.pucpr.sabrh.common.persistence.impl.CrudDAO;
+import br.pucpr.sabrh.common.persistence.CrudDAO;
 import br.pucpr.sabrh.common.persistence.impl.CrudDAOImpl;
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.UsuarioDAO;
