@@ -3,12 +3,15 @@
  */
 package br.pucpr.sabrh.business;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import br.pucpr.br.entity.Usuario;
+import br.pucpr.sabrh.common.persistence.exception.DAOException;
+import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.UsuarioDAO;
 import br.pucpr.sabrh.services.UsuarioService;
 
@@ -51,6 +54,37 @@ public class UsuarioBusiness implements UsuarioService {
 	public Usuario autenticar(Usuario usuario) {
 
 		return usuarioDAO.autenticar(usuario);
+	}
+
+	@Override
+	public Usuario buscarUsuario(Usuario usuario) {
+
+		return null;
+	}
+
+	@Override
+	public Usuario inserirUsuario(Usuario usuario) {
+
+		return usuarioDAO.getUsuarioDAO().create(usuario);
+
+	}
+
+	@Override
+	public boolean excluirUsuario(Usuario usuario) {
+
+		usuarioDAO.getUsuarioDAO().remove(usuario);
+		return true;
+	}
+
+	@Override
+	public Usuario alterarUsuario(Usuario usuario) {
+		usuarioDAO.getUsuarioDAO().update(usuario);
+		return usuario;
+	}
+
+	@Override
+	public List<Usuario> listarUsuarios() throws DAOException{
+		return usuarioDAO.getUsuarioDAO().findAll();
 	}
 
 }

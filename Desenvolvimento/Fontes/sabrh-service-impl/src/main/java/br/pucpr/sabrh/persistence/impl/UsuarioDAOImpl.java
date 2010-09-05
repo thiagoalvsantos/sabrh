@@ -9,7 +9,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import br.pucpr.br.entity.Usuario;
+import br.pucpr.sabrh.common.persistence.impl.CrudDAO;
+import br.pucpr.sabrh.common.persistence.impl.CrudDAOImpl;
+import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.UsuarioDAO;
 
 /**
@@ -18,7 +20,6 @@ import br.pucpr.sabrh.persistence.UsuarioDAO;
 @Stateless
 public class UsuarioDAOImpl implements UsuarioDAO {
 
-	
 	/** O atributo entity manager. */
 	@PersistenceContext(unitName = "SABRH")
 	private EntityManager entityManager;
@@ -33,7 +34,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		return entityManager;
 	}
 
-	
 	/**
 	 * Set entity manager.
 	 * 
@@ -43,6 +43,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	 */
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
+	}
+
+	public CrudDAO<Usuario, Long> getUsuarioDAO() {
+		return new CrudDAOImpl<Usuario, Long>(Usuario.class, getEntityManager());
 	}
 
 	/*
@@ -60,11 +64,12 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		q.setParameter(1, usuario.getLogin());
 		q.setParameter(2, usuario.getSenha());
 		try {
-			Usuario result = (Usuario) q.getSingleResult(); 
+			Usuario result = (Usuario) q.getSingleResult();
 
-			return result; 
+			return result;
 		} catch (NoResultException e) {
-			throw new NoResultException("Erro ao autenticar usuário. \nUsuário não autorizado");
+			throw new NoResultException(
+					"Erro ao autenticar usuário. \nUsuário não autorizado");
 		} catch (Exception e) {
 			return null;
 		}
