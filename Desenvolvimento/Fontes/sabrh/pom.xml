@@ -32,10 +32,11 @@
 	</properties>
 
 	<modules>
-		<module>sabrh-webapp</module>
+		<module>sabrh-common</module>
 		<module>sabrh-entity</module>
 		<module>sabrh-service</module>
 		<module>sabrh-service-impl</module>
+		<module>sabrh-webapp</module>
 		<module>sabrh-ear</module>
 	</modules>
 
@@ -63,6 +64,11 @@
 			<dependency>
 				<groupId>br.pucpr.sabrh</groupId>
 				<artifactId>sabrh-service</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>br.pucpr.sabrh</groupId>
+				<artifactId>sabrh-common</artifactId>
 				<version>1.0</version>
 			</dependency>
 			<dependency>
