@@ -3,9 +3,11 @@
  */
 package br.pucpr.sabrh.services;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
-import br.pucpr.br.entity.Usuario;
+import br.pucpr.sabrh.entity.Usuario;
 
 /**
  * The Interface UsuarioService.
@@ -21,5 +23,15 @@ public interface UsuarioService {
 	 * @return true, if successful
 	 */
 	public Usuario autenticar(Usuario usuario);
+
+	public Usuario buscarUsuario(Usuario usuario);
+
+	public Usuario inserirUsuario(Usuario usuario);
+
+	public boolean excluirUsuario(Usuario usuario);
+
+	public Usuario alterarUsuario(Usuario usuario);
+
+	public List<Usuario> listarUsuarios();
 
 }
