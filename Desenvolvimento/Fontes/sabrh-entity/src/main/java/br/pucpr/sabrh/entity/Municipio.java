@@ -3,6 +3,8 @@
  */
 package br.pucpr.sabrh.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +19,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "TB_MUNICIPIO")
-public class Municipio {
+public class Municipio implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3953099658164851068L;
 
 	/** O atributo codigo. */
 	@Id
