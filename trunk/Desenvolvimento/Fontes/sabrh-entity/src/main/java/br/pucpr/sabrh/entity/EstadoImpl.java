@@ -13,9 +13,9 @@ import javax.persistence.Table;
 /**
  * Class Estado.
  */
-@Entity
+@Entity(name="Estado")
 @Table(name = "TB_ESTADO")
-public class Estado implements Serializable {
+public class EstadoImpl implements Estado, Serializable {
 
 	/**
 	 * 

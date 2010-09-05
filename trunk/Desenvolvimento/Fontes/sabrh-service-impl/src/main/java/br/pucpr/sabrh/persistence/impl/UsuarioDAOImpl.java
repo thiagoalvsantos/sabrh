@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import br.pucpr.sabrh.common.persistence.CrudDAO;
 import br.pucpr.sabrh.common.persistence.impl.CrudDAOImpl;
 import br.pucpr.sabrh.entity.Usuario;
+import br.pucpr.sabrh.entity.UsuarioImpl;
 import br.pucpr.sabrh.persistence.UsuarioDAO;
 
 /**
@@ -46,7 +47,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	public CrudDAO<Usuario, Long> getUsuarioDAO() {
-		return new CrudDAOImpl<Usuario, Long>(Usuario.class, getEntityManager());
+		return new CrudDAOImpl<Usuario, Long>(UsuarioImpl.class, getEntityManager());
 	}
 
 	/*

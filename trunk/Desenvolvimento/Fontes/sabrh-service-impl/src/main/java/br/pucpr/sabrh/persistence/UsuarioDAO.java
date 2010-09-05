@@ -14,9 +14,9 @@ import br.pucpr.sabrh.entity.Usuario;
  */
 @Remote(UsuarioDAO.class)
 public interface UsuarioDAO {
-	
-	CrudDAO <Usuario, Long> getUsuarioDAO();
-	
+
+	CrudDAO<Usuario, Long> getUsuarioDAO();
+
 	/**
 	 * Autenticar.
 	 * 
@@ -25,7 +25,5 @@ public interface UsuarioDAO {
 	 * @return true, if successful
 	 */
 	Usuario autenticar(Usuario usuario) throws NoResultException;
-	
-	
 
 }

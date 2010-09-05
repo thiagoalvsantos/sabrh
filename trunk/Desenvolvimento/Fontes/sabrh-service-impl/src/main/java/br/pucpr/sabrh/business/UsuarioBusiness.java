@@ -24,7 +24,7 @@ import br.pucpr.sabrh.services.UsuarioService;
  */
 @Stateless(name = "UsuarioService")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-public class UsuarioBusiness implements UsuarioService {
+public abstract class UsuarioBusiness implements UsuarioService {
 
 	@EJB
 	private UsuarioDAO usuarioDAO;
