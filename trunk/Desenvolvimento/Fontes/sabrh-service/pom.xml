@@ -25,5 +25,10 @@
 			<artifactId>hibernate-annotations</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>br.pucpr.sabrh</groupId>
+			<artifactId>sabrh-entity</artifactId>
+			<type>ejb</type>
+		</dependency>
 	</dependencies>
 </project>
