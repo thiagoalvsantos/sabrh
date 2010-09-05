@@ -6,7 +6,8 @@
 		  horizontalCenter="0"
 		  verticalCenter="0"
 		  title=".:: Login ::."
- width="491" height="196">
+		  width="491"
+		  height="196">
 
 	<fx:Script source="../controller/login.as"/>
 
@@ -49,9 +50,9 @@
 			</mx:FormItem>
 		</mx:Form>
 		<s:Button label="Entrar"
-				   click="autenticar()"
-				   x="295"
-				   y="112"
-				   height="50"/>
+				  click="autenticar()"
+				  x="295"
+				  y="112"
+				  height="50"/>
 	</mx:HBox>
 </mx:Panel>

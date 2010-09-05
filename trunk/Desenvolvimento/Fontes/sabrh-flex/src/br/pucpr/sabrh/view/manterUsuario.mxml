@@ -8,6 +8,14 @@
 	<fx:Script source="../controller/manterUsuario.as"/>
 
 	<fx:Declarations>
+		<s:RemoteObject id="usuarioService"
+						fault="onFault(event)"
+						destination="UsuarioService"
+						showBusyCursor="true">
+			
+			<s:method result="{listarResult(event)}"
+					  name="listarUsuarios"/>
+		</s:RemoteObject>
 	</fx:Declarations>
 	<s:VGroup left="5"
 			  right="5"

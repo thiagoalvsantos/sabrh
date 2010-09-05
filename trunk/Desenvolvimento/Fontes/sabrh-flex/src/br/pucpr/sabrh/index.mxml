@@ -7,7 +7,8 @@
 			   initialize="init()"
 			   visible="false"
 			   xmlns:entity="br.pucpr.sabrh.entity.*">
-
+	<!--
+	-->
 	<fx:Style source="assets/yflexskin.css"/>
 
 	<s:BitmapImage height="100%"
