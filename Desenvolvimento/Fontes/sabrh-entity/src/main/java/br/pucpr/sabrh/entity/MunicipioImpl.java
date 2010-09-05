@@ -17,9 +17,9 @@ import javax.persistence.Table;
 /**
  * Class Municipio.
  */
-@Entity
+@Entity(name = "Municipio")
 @Table(name = "TB_MUNICIPIO")
-public class Municipio implements Serializable {
+public class MunicipioImpl implements Municipio, Serializable {
 
 	/**
 	 * 
@@ -37,7 +37,7 @@ public class Municipio implements Serializable {
 	private String descricao;
 
 	/** O atributo estado. */
-	@ManyToOne
+	@ManyToOne(targetEntity = EstadoImpl.class)
 	@JoinColumn(name = "TX_ESTADO", referencedColumnName = "TX_SIGLA")
 	private Estado estado;
 
@@ -93,15 +93,10 @@ public class Municipio implements Serializable {
 		return estado;
 	}
 
-	/**
-	 * Set estado.
-	 * 
-	 * @param estado
-	 *            - estado.
-	 * @see Municipio#estado.
-	 */
+	@Override
 	public void setEstado(Estado estado) {
 		this.estado = estado;
+
 	}
 
 }

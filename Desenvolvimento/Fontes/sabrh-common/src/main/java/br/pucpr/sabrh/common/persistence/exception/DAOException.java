@@ -1,7 +1,4 @@
-/**
- * Todos os direitos reservados a Unicamp.
- */
-package br.pucpr.sabrh.common.persistence.exception ;
+package br.pucpr.sabrh.common.persistence.exception;
 
 /**
  * The Class DAOException.

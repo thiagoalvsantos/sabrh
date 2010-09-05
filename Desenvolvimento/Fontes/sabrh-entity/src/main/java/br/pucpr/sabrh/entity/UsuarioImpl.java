@@ -17,9 +17,9 @@ import javax.persistence.Table;
 /**
  * The Class Usuario.
  */
-@Entity
+@Entity(name = "Usuario")
 @Table(name = "TB_USUARIO")
-public class Usuario implements Serializable {
+public class UsuarioImpl implements Usuario, Serializable {
 
 	/**
 	 * 
@@ -54,7 +54,7 @@ public class Usuario implements Serializable {
 	@Column(name = "TX_NOME", length = 255, nullable = false)
 	private String nome;
 
-	@ManyToOne
+	@ManyToOne(targetEntity = MunicipioImpl.class)
 	@JoinColumn(name = "CD_MUNICIPIO", referencedColumnName = "CD_CODIGO")
 	private Municipio municipio;
 
@@ -76,10 +76,6 @@ public class Usuario implements Serializable {
 
 	public Municipio getMunicipio() {
 		return municipio;
-	}
-
-	public void setMunicipio(Municipio municipio) {
-		this.municipio = municipio;
 	}
 
 	/**
@@ -175,6 +171,12 @@ public class Usuario implements Serializable {
 	 */
 	public void setPerfil(char perfil) {
 		this.perfil = perfil;
+	}
+
+	@Override
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
+
 	}
 
 }
