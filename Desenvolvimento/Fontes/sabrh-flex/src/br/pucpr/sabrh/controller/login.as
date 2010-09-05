@@ -65,6 +65,7 @@ public function autenticarResult(event:ResultEvent):void
 	// recupera usuário do evento
 	usuario=event.result as Usuario;
 
+
 	// verifica se usuário é válido
 	if (usuario != null)
 	{

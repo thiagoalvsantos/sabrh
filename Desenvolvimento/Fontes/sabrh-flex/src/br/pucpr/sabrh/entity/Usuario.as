@@ -1,7 +1,7 @@
 package br.pucpr.sabrh.entity
 {
 
-	[RemoteClass(alias="br.pucpr.br.entity.Usuario")]
+	[RemoteClass(alias="br.pucpr.sabrh.entity.Usuario")]
 	[Bindable]
 	public class Usuario
 	{

@@ -1,7 +1,7 @@
 package br.pucpr.sabrh.entity
 {
 
-	[RemoteClass(alias="br.pucpr.br.entity.Estado")]
+	[RemoteClass(alias="br.pucpr.sabrh.entity.Estado")]
 	[Bindable]
 	public class Estado
 	{
@@ -10,6 +10,6 @@ package br.pucpr.sabrh.entity
 		}
 
 		public var sigla:String;
-		public var descrisao:String;
+		public var descricao:String;
 	}
 }
