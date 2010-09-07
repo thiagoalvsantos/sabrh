@@ -1,7 +1,7 @@
 package br.pucpr.sabrh.entity
 {
 
-	[RemoteClass(alias="br.pucpr.sabrh.entity.MunicipioImpl")]
+	[RemoteClass(alias="br.pucpr.sabrh.entity.Municipio")]
 	[Bindable]
 	public class Municipio
 	{

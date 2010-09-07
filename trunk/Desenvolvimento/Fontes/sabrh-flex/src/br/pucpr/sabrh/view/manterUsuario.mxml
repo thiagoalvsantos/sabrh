@@ -1,94 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
-			   xmlns:s="library://ns.adobe.com/flex/spark"
-			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   title="..:: Manutenção de Usuários ::.."
-			   close="fechar(event)"
-			   width="900">
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Manutenção de Usuários ::.." close="fechar(event)" width="900">
 	<fx:Script source="../controller/manterUsuario.as"/>
 
 	<fx:Declarations>
-		<s:RemoteObject id="usuarioService"
-						fault="onFault(event)"
-						destination="UsuarioService"
-						showBusyCursor="true">
-			
-			<s:method result="{listarResult(event)}"
-					  name="listarUsuarios"/>
+		<s:RemoteObject id="usuarioService" fault="onFault(event)" destination="UsuarioService" showBusyCursor="true">
+
+			<s:method result="{listarResult(event)}" name="listarUsuarios"/>
 		</s:RemoteObject>
 	</fx:Declarations>
-	<s:VGroup left="5"
-			  right="5"
-			  top="5"
-			  bottom="5">
+	<s:VGroup left="5" right="5" top="5" bottom="5">
 
 
-		<s:Panel id="panelPesquisa"
-				 top="5"
-				 left="5"
-				 right="5"
-				 title="Pesquisa"
-				 bottom="5"
-				 width="100%">
+		<s:Panel id="panelPesquisa" top="5" left="5" right="5" title="Pesquisa" bottom="243" width="100%" height="100%">
+			<s:Label text="Nome" id="lblPesquisaNome" x="10" y="15"/>
+			<s:Label text="Municipio" id="lblPesquisaMunicipio" x="245" y="45"/>
+			<s:Label text="Status" id="lblPesquisaStatus" x="245" y="75"/>
+			<s:Label text="Perfil" id="lblPesquisaPerfil" x="10" y="75"/>
+			<s:TextInput id="txtPesquisaNome" x="60" y="10" width="514"/>
+			<s:ComboBox id="txtPesquisaMunicipio" x="310" y="40" width="264"/>
+			<s:ComboBox id="cmbPesquisaStatus" x="310" y="70" width="264"/>
+			<s:ComboBox id="cmbPesquisaPerfil" x="60" y="70" width="171"/>
+			<s:Label x="10" y="45" text="Estado" id="lblPesquisaEstado"/>
+			<s:ComboBox x="60" y="40" id="cmbPesquisaEstado" width="171"/>
 			<s:controlBarContent>
 				<s:Button label="Pesquisar" click="{pesquisar()}"/>
 				<s:Button label="Novo"/>
 			</s:controlBarContent>
-			<s:TextInput id="txtPesquisaNome"
-						 x="93"
-						 y="10"
-						 width="370"/>
-			<s:TextInput id="txtPesquisaCPF"
-						 x="93"
-						 y="40"/>
-			<s:TextInput id="txtPesquisaMunicipio"
-						 x="93"
-						 y="70"/>
-			<s:ComboBox id="cmbPesquisaStatus"
-						x="317"
-						y="69"/>
-			<s:ComboBox id="cmbPesquisaPerfil"
-						x="317"
-						y="40"/>
-			<s:Label x="28"
-					 y="14"
-					 text="Nome"
-					 id="lblPesquisaNome"/>
-			<s:Label x="28"
-					 y="49"
-					 text="CPF"
-					 id="lblPesquisaCPF"/>
-			<s:Label x="26"
-					 y="76"
-					 text="Municipio"/>
-			<s:Label x="271"
-					 y="46"
-					 text="Perfil"
-					 id="lblPesquisaPerfil"/>
-			<s:Label x="270"
-					 y="74"
-					 text="Status"/>
 		</s:Panel>
-		<s:Panel id="panelResultado"
-				 title="Resultado"
-				 width="100%"
-				 height="100%"
-				 visible="false">
-			<mx:AdvancedDataGrid id="gridUsuario"
-								 designViewDataType="flat"
-								 left="5"
-								 right="5"
-								 top="5"
-								 bottom="5">
+		<s:Panel id="panelResultado" title="Resultado" width="100%" height="100%" visible="false">
+			<mx:AdvancedDataGrid id="gridUsuario" designViewDataType="flat" left="5" right="5" top="5" bottom="5">
 				<mx:columns>
-					<mx:AdvancedDataGridColumn headerText="Nome"
-											   dataField="col1"/>
-					<mx:AdvancedDataGridColumn headerText="CPF"
-											   dataField="col2"/>
-					<mx:AdvancedDataGridColumn headerText="Perfil"
-											   dataField="col3"/>
-					<mx:AdvancedDataGridColumn headerText="Status"
-											   dataField="col4"/>
+					<mx:AdvancedDataGridColumn headerText="Nome" dataField="nome" textAlign="left"/>
+					<mx:AdvancedDataGridColumn headerText="CPF" dataField="cpf" textAlign="center"/>
+					<mx:AdvancedDataGridColumn headerText="Perfil" dataField="perfil" textAlign="center"/>
+					<mx:AdvancedDataGridColumn headerText="Status" dataField="status" textAlign="center"/>
 				</mx:columns>
 			</mx:AdvancedDataGrid>
 
