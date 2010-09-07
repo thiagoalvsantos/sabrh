@@ -1,7 +1,7 @@
 package br.pucpr.sabrh.entity
 {
 
-	[RemoteClass(alias="br.pucpr.sabrh.entity.EstadoImpl")]
+	[RemoteClass(alias="br.pucpr.sabrh.entity.Estado")]
 	[Bindable]
 	public class Estado
 	{
