@@ -13,9 +13,9 @@ import javax.persistence.Table;
 /**
  * Class Estado.
  */
-@Entity(name="Estado")
+@Entity
 @Table(name = "TB_ESTADO")
-public class EstadoImpl implements Estado, Serializable {
+public class Estado implements  Serializable {
 
 	/**
 	 * 
@@ -31,46 +31,52 @@ public class EstadoImpl implements Estado, Serializable {
 	@Column(name = "TX_DESCRICAO", length = 30, nullable = false)
 	private String descricao;
 
-	/**
-	 * Get sigla.
-	 * 
-	 * @return the sigla
-	 * @see Estado#sigla.
-	 */
 	public String getSigla() {
 		return sigla;
 	}
 
-	/**
-	 * Set sigla.
-	 * 
-	 * @param sigla
-	 *            - sigla.
-	 * @see Estado#sigla.
-	 */
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
 
-	/**
-	 * Get descricao.
-	 * 
-	 * @return the descricao
-	 * @see Estado#descricao.
-	 */
 	public String getDescricao() {
 		return descricao;
 	}
 
-	/**
-	 * Set descricao.
-	 * 
-	 * @param descricao
-	 *            - descricao.
-	 * @see Estado#descricao.
-	 */
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((sigla == null) ? 0 : sigla.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Estado other = (Estado) obj;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (sigla == null) {
+			if (other.sigla != null)
+				return false;
+		} else if (!sigla.equals(other.sigla))
+			return false;
+		return true;
 	}
 
 }

@@ -17,9 +17,9 @@ import javax.persistence.Table;
 /**
  * Class Municipio.
  */
-@Entity(name = "Municipio")
+@Entity
 @Table(name = "TB_MUNICIPIO")
-public class MunicipioImpl implements Municipio, Serializable {
+public class Municipio implements Serializable {
 
 	/**
 	 * 
@@ -37,66 +37,67 @@ public class MunicipioImpl implements Municipio, Serializable {
 	private String descricao;
 
 	/** O atributo estado. */
-	@ManyToOne(targetEntity = EstadoImpl.class)
+	@ManyToOne(targetEntity = Estado.class)
 	@JoinColumn(name = "TX_ESTADO", referencedColumnName = "TX_SIGLA")
 	private Estado estado;
 
-	/**
-	 * Get codigo.
-	 * 
-	 * @return the codigo
-	 * @see Municipio#codigo.
-	 */
 	public int getCodigo() {
 		return codigo;
 	}
 
-	/**
-	 * Set codigo.
-	 * 
-	 * @param codigo
-	 *            - codigo.
-	 * @see Municipio#codigo.
-	 */
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 
-	/**
-	 * Get descricao.
-	 * 
-	 * @return the descricao
-	 * @see Municipio#descricao.
-	 */
 	public String getDescricao() {
 		return descricao;
 	}
 
-	/**
-	 * Set descricao.
-	 * 
-	 * @param descricao
-	 *            - descricao.
-	 * @see Municipio#descricao.
-	 */
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 
-	/**
-	 * Get estado.
-	 * 
-	 * @return the estado
-	 * @see Municipio#estado.
-	 */
 	public Estado getEstado() {
 		return estado;
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + codigo;
+		result = prime * result
+				+ ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Municipio other = (Municipio) obj;
+		if (codigo != other.codigo)
+			return false;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (estado == null) {
+			if (other.estado != null)
+				return false;
+		} else if (!estado.equals(other.estado))
+			return false;
+		return true;
+	}
+
 	public void setEstado(Estado estado) {
 		this.estado = estado;
-
 	}
 
 }

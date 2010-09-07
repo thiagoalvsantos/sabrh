@@ -10,7 +10,10 @@ import javax.ejb.Remote;
 import br.pucpr.sabrh.entity.Usuario;
 
 /**
- * The Interface UsuarioService.
+ * Interface de serviço da camada core relacionado ao componente Usuario.
+ * 
+ * @author Thiago
+ * @version 1
  */
 @Remote
 public interface UsuarioService {
@@ -19,19 +22,56 @@ public interface UsuarioService {
 	 * Autenticar.
 	 * 
 	 * @param usuario
-	 *            the usuario
-	 * @return true, if successful
+	 *            - usuario
+	 * @return usuario
+	 * @throws Exception
+	 *             the exception
 	 */
-	public Usuario autenticar(Usuario usuario);
+	public Usuario autenticar(Usuario usuario) throws Exception;
 
+	/**
+	 * Buscar usuario.
+	 * 
+	 * @param usuario
+	 *            - usuario
+	 * @return usuario
+	 */
 	public Usuario buscarUsuario(Usuario usuario);
 
+	/**
+	 * Inserir usuario.
+	 * 
+	 * @param usuario
+	 *            - usuario
+	 * @return usuario
+	 */
 	public Usuario inserirUsuario(Usuario usuario);
 
+	/**
+	 * Excluir usuario.
+	 * 
+	 * @param usuario
+	 *            - usuario.
+	 * @return verdadeiro, se bem sucedido.
+	 */
 	public boolean excluirUsuario(Usuario usuario);
 
+	/**
+	 * Alterar usuario.
+	 * 
+	 * @param usuario
+	 *            - usuario
+	 * @return usuario
+	 */
 	public Usuario alterarUsuario(Usuario usuario);
 
-	public List<Usuario> listarUsuarios();
+	/**
+	 * Listar usuarios.
+	 * 
+	 * @return list
+	 * @throws Exception
+	 *             the exception
+	 */
+	public List<Usuario> listarUsuarios() throws Exception;
 
 }

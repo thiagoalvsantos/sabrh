@@ -3,16 +3,17 @@
  */
 package br.pucpr.sabrh.persistence.impl;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import br.pucpr.sabrh.common.persistence.CrudDAO;
-import br.pucpr.sabrh.common.persistence.impl.CrudDAOImpl;
+import org.hibernate.Session;
+
 import br.pucpr.sabrh.entity.Usuario;
-import br.pucpr.sabrh.entity.UsuarioImpl;
 import br.pucpr.sabrh.persistence.UsuarioDAO;
 
 /**
@@ -46,10 +47,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		this.entityManager = entityManager;
 	}
 
-	public CrudDAO<Usuario, Long> getUsuarioDAO() {
-		return new CrudDAOImpl<Usuario, Long>(UsuarioImpl.class, getEntityManager());
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -74,6 +71,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		} catch (Exception e) {
 			return null;
 		}
+
+	}
+
+	@Override
+	public List<Usuario> listar() throws Exception {
+		Session session = (Session) entityManager.getDelegate();
+		return session.createCriteria(Usuario.class).list();
+
 	}
 
 }
