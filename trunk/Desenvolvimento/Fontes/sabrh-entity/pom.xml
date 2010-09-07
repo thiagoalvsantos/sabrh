@@ -13,10 +13,6 @@
 	<name>sabrh-entity</name>
 	<dependencies>
 		<dependency>
-			<groupId>br.pucpr.sabrh</groupId>
-			<artifactId>sabrh-service</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>
 		</dependency>

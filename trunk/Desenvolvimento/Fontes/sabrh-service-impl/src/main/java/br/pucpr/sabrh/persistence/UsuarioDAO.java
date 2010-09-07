@@ -3,19 +3,17 @@
  */
 package br.pucpr.sabrh.persistence;
 
-import javax.ejb.Remote;
-import javax.persistence.NoResultException;
+import java.util.List;
 
-import br.pucpr.sabrh.common.persistence.CrudDAO;
+import javax.ejb.Remote;
+
 import br.pucpr.sabrh.entity.Usuario;
 
 /**
  * The Interface UsuarioDAO.
  */
-@Remote(UsuarioDAO.class)
+@Remote
 public interface UsuarioDAO {
-
-	CrudDAO<Usuario, Long> getUsuarioDAO();
 
 	/**
 	 * Autenticar.
@@ -24,6 +22,8 @@ public interface UsuarioDAO {
 	 *            the usuario
 	 * @return true, if successful
 	 */
-	Usuario autenticar(Usuario usuario) throws NoResultException;
+	Usuario autenticar(Usuario usuario) throws Exception;
+
+	List<Usuario> listar() throws Exception;
 
 }

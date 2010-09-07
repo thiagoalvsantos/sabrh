@@ -2,8 +2,6 @@ package br.pucpr.sabrh.common.persistence;
 
 import java.util.List;
 
-import br.pucpr.sabrh.common.persistence.exception.DAOException;
-
 /**
  * Interface representando as acoes basicas que podem ser executadas com objetos
  * persistidos.
@@ -14,117 +12,32 @@ import br.pucpr.sabrh.common.persistence.exception.DAOException;
  * @param <PK>
  *            Tipo da chave primeira da entidade.
  */
-public interface CrudDAO<ENTITY, PK> {
+public interface CrudDAO<T> {
 
-	/**
-	 * Busca todos os objetos persistidos.
-	 * 
-	 * @throws DAOException
-	 *             A exceção de persitência.
+	/*
+	 * Ações possíveis feita com CRUD. Os métodos cujos parâmetros são do tipo
+	 * java.util.List, são enviados em massa, ou seja, os dados são processados
+	 * e armazenados e apenas no final o aplicativo lança o commit. Para grande
+	 * massa de dados é mais viável pois o tempo de processo é muito maior
+	 * quando abre apenas uma conexão e aplica apenas uma ação de persistencia
 	 */
-	List<ENTITY> findAll() throws DAOException;
+	public T remove(T object) throws Exception;
 
-	/**
-	 * Busca o objeto entidade por sua chave.
-	 * 
-	 * @param pk
-	 *            A chave primária do objeto persistido.
-	 * @return A entidade populada.
-	 * @throws DAOException
-	 *             A exceção de persitência.
-	 */
-	ENTITY findById(PK pk) throws DAOException;
+	public T persist(T object) throws Exception;
 
-	/**
-	 * Persiste um objeto.
-	 * 
-	 * @param entity
-	 *            Template do objeto a ser persistido.
-	 * @throws DAOException
-	 *             A exceção de persitência.
-	 */
-	ENTITY create(ENTITY entity) throws DAOException;
+	public T update(T object) throws Exception;
 
-	/**
-	 * Remove um objeto persistido.
-	 * 
-	 * @param entity
-	 *            Template do objeto a ser removido.
-	 * @throws DAOException
-	 *             A exceção de persitência.
-	 */
-	void remove(ENTITY entity) throws DAOException;
+	public List<T> update(List<T> object) throws Exception;
 
-	/**
-	 * Atualiza as informacoes de um objeto persistido.
-	 * 
-	 * @param entity
-	 *            Template do objeto a ser atualizado.
-	 * @throws DAOException
-	 *             A exceção de persitência.
-	 */
-	void update(ENTITY entity) throws DAOException;
+	public List<T> persist(List<T> list) throws Exception;
 
-	/**
-	 * Retorna o total de objetos persistidos.
-	 * 
-	 * @return Total de objetos persistidos.
-	 * @throws DAOException
-	 *             A exceção de persitência.
-	 */
-	Long count() throws DAOException;
+	public List<T> remove(List<T> object) throws Exception;
 
-	/**
-	 * Busca através de uma namedQuery.
-	 * 
-	 * @param namedQuery
-	 *            Nome da NamedQuery.
-	 * @param parametros
-	 *            Valores dos parâmetros.
-	 * @return A entidade populada ou null.
-	 * @throws DAOException
-	 *             A exceção de persitência.
+	/*
+	 * Aqui se aplica todos os tipos de buscas possível para se fazer dentro de
+	 * uma aplicação padrão.
 	 */
-	ENTITY querySingle(String namedQuery, Object... parametros)
-			throws DAOException;
+	public List<T> findAll() throws Exception;
 
-	/**
-	 * Busca por namedQuery sem passagem de parâmetros.
-	 * 
-	 * @param namedQuery
-	 *            Nome da NamedQuery.
-	 * @param numMax
-	 * @param offset
-	 * @return Lista de entidade populada ou lista vazia.
-	 * @throws DAOException
-	 *             A exceção de persitência.
-	 */
-	List<ENTITY> queryList(String namedQuery, int numMax, int offset)
-			throws DAOException;
-
-	/**
-	 * Busca por namedQuery com a passagem de parâmetros.
-	 * 
-	 * @param namedQuery
-	 *            Nome da NamedQuery.
-	 * @return Lista de entidade populada ou lista vazia.
-	 * @throws DAOException
-	 *             A exceção de persitência.
-	 */
-	List<ENTITY> queryList(String namedQuery, Object... parametros)
-			throws DAOException;
-
-	/**
-	 * Busca por namedQuery com a passagem de parâmetros e paginação.
-	 * 
-	 * @param namedQuery
-	 *            Nome da NamedQuery.
-	 * @param numMax
-	 * @param offset
-	 * @return Lista de entidade populada ou lista vazia.
-	 * @throws DAOException
-	 *             A exceção de persitência.
-	 */
-	List<ENTITY> queryList(String namedQuery, int numMax, int offset,
-			Object... parametros) throws DAOException;
+	// public T load(Object obj) throws Exception;
 }

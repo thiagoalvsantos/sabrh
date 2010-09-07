@@ -10,13 +10,12 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import br.pucpr.sabrh.common.persistence.exception.DAOException;
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.UsuarioDAO;
 import br.pucpr.sabrh.services.UsuarioService;
 
 /**
- * Implementacao abstrata da interface de fachada UsuarioService.
+ * Implementação abstrata da interface de fachada UsuarioService.
  * 
  * @author Thiago
  * @version 1
@@ -24,8 +23,9 @@ import br.pucpr.sabrh.services.UsuarioService;
  */
 @Stateless(name = "UsuarioService")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-public abstract class UsuarioBusiness implements UsuarioService {
+public class UsuarioBusiness implements UsuarioService {
 
+	/** O atributo usuario dao. */
 	@EJB
 	private UsuarioDAO usuarioDAO;
 
@@ -33,7 +33,9 @@ public abstract class UsuarioBusiness implements UsuarioService {
 	 * @return the usuarioDAO
 	 */
 	public UsuarioDAO getUsuarioDAO() {
+
 		return usuarioDAO;
+
 	}
 
 	/**
@@ -41,7 +43,9 @@ public abstract class UsuarioBusiness implements UsuarioService {
 	 *            the usuarioDAO to set
 	 */
 	public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
+
 		this.usuarioDAO = usuarioDAO;
+
 	}
 
 	/*
@@ -51,40 +55,75 @@ public abstract class UsuarioBusiness implements UsuarioService {
 	 * br.pucpr.sabrh.services.UsuarioService#autenticar(br.pucpr.br.entity.
 	 * Usuario)
 	 */
-	public Usuario autenticar(Usuario usuario) {
+	@Override
+	public Usuario autenticar(Usuario usuario) throws Exception {
 
 		return usuarioDAO.autenticar(usuario);
+
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.UsuarioService#buscarUsuario(br.pucpr.sabrh.entity
+	 * .Usuario)
+	 */
 	@Override
 	public Usuario buscarUsuario(Usuario usuario) {
-
+		// TODO Implementar busca de usuário
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.UsuarioService#inserirUsuario(br.pucpr.sabrh.
+	 * entity.Usuario)
+	 */
 	@Override
 	public Usuario inserirUsuario(Usuario usuario) {
 
-		return usuarioDAO.getUsuarioDAO().create(usuario);
+		// TODO Implementar inclusão de usuário
+		return null;
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.UsuarioService#excluirUsuario(br.pucpr.sabrh.
+	 * entity.Usuario)
+	 */
 	@Override
 	public boolean excluirUsuario(Usuario usuario) {
-
-		usuarioDAO.getUsuarioDAO().remove(usuario);
+		// TODO Implementar exclusão de usuário
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.UsuarioService#alterarUsuario(br.pucpr.sabrh.
+	 * entity.Usuario)
+	 */
 	@Override
 	public Usuario alterarUsuario(Usuario usuario) {
-		usuarioDAO.getUsuarioDAO().update(usuario);
-		return usuario;
+		// TODO Implementar alteração de usuário
+		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.pucpr.sabrh.services.UsuarioService#listarUsuarios()
+	 */
 	@Override
-	public List<Usuario> listarUsuarios() throws DAOException{
-		return usuarioDAO.getUsuarioDAO().findAll();
+	public List<Usuario> listarUsuarios() throws Exception {
+		return usuarioDAO.listar();
 	}
 
 }

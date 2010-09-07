@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,9 +19,9 @@ import javax.persistence.Table;
 /**
  * The Class Usuario.
  */
-@Entity(name = "Usuario")
+@Entity
 @Table(name = "TB_USUARIO")
-public class UsuarioImpl implements Usuario, Serializable {
+public class Usuario implements Serializable {
 
 	/**
 	 * 
@@ -28,7 +30,7 @@ public class UsuarioImpl implements Usuario, Serializable {
 
 	/** The codigo. */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "CD_CODIGO", length = 8)
 	private Long codigo;
 
@@ -41,12 +43,14 @@ public class UsuarioImpl implements Usuario, Serializable {
 	private String senha;
 
 	/** The status. */
-	@Column(name = "IN_STATUS", length = 1, nullable = false)
-	private char status;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "IN_STATUS", length = 20, nullable = false)
+	private TipoStatus status;
 
 	/** The perfil. */
-	@Column(name = "IN_PERFIL", length = 1, nullable = false)
-	private char perfil;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "IN_PERFIL", length = 20, nullable = false)
+	private TipoPerfil perfil;
 
 	@Column(name = "TX_CPF", length = 11, nullable = false)
 	private String cpf;
@@ -54,9 +58,37 @@ public class UsuarioImpl implements Usuario, Serializable {
 	@Column(name = "TX_NOME", length = 255, nullable = false)
 	private String nome;
 
-	@ManyToOne(targetEntity = MunicipioImpl.class)
+	@ManyToOne(targetEntity = Municipio.class)
 	@JoinColumn(name = "CD_MUNICIPIO", referencedColumnName = "CD_CODIGO")
 	private Municipio municipio;
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	
+
+	
 
 	public String getCpf() {
 		return cpf;
@@ -78,105 +110,25 @@ public class UsuarioImpl implements Usuario, Serializable {
 		return municipio;
 	}
 
-	/**
-	 * Gets the codigo.
-	 * 
-	 * @return the codigo
-	 */
-	public Long getCodigo() {
-		return codigo;
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
 	}
 
-	/**
-	 * Sets the codigo.
-	 * 
-	 * @param codigo
-	 *            the new codigo
-	 */
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
-	}
-
-	/**
-	 * Gets the login.
-	 * 
-	 * @return the login
-	 */
-	public String getLogin() {
-		return login;
-	}
-
-	/**
-	 * Sets the login.
-	 * 
-	 * @param login
-	 *            the new login
-	 */
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	/**
-	 * Gets the senha.
-	 * 
-	 * @return the senha
-	 */
-	public String getSenha() {
-		return senha;
-	}
-
-	/**
-	 * Sets the senha.
-	 * 
-	 * @param senha
-	 *            the new senha
-	 */
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	/**
-	 * Gets the status.
-	 * 
-	 * @return the status
-	 */
-	public char getStatus() {
+	public TipoStatus getStatus() {
 		return status;
 	}
 
-	/**
-	 * Sets the status.
-	 * 
-	 * @param status
-	 *            the new status
-	 */
-	public void setStatus(char status) {
+	public void setStatus(TipoStatus status) {
 		this.status = status;
 	}
 
-	/**
-	 * Gets the perfil.
-	 * 
-	 * @return the perfil
-	 */
-	public char getPerfil() {
+	public TipoPerfil getPerfil() {
 		return perfil;
 	}
 
-	/**
-	 * Sets the perfil.
-	 * 
-	 * @param perfil
-	 *            the new perfil
-	 */
-	public void setPerfil(char perfil) {
+	public void setPerfil(TipoPerfil perfil) {
 		this.perfil = perfil;
 	}
 
-	@Override
-	public void setMunicipio(Municipio municipio) {
-		this.municipio = municipio;
-
-	}
-
+	
 }
