@@ -25,5 +25,7 @@ public interface UsuarioDAO {
 	Usuario autenticar(Usuario usuario) throws Exception;
 
 	List<Usuario> listar() throws Exception;
+	
+	Usuario inserir(Usuario usuario) throws Exception;
 
 }

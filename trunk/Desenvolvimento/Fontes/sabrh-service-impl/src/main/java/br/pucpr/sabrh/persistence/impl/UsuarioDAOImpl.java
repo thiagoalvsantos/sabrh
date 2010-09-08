@@ -74,11 +74,18 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Usuario> listar() throws Exception {
 		Session session = (Session) entityManager.getDelegate();
 		return session.createCriteria(Usuario.class).list();
 
+	}
+
+	@Override
+	public Usuario inserir(Usuario usuario) throws Exception {
+		entityManager.persist(usuario);
+		return usuario;
 	}
 
 }
