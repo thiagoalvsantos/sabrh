@@ -17,5 +17,33 @@
             <source>sabrh-ear-1.0/UsuarioService/remote</source>
         </properties>
 	</destination>
+	
+	<destination id="MunicipioService">
+        <properties>
+          	<factory>ejb3</factory>
+            <source>sabrh-ear-1.0/MunicipioService/remote</source>
+        </properties>
+	</destination>
+	
+	<destination id="EstadoService">
+        <properties>
+          	<factory>ejb3</factory>
+            <source>sabrh-ear-1.0/EstadoService/remote</source>
+        </properties>
+	</destination>
+	
+	<destination id="PerfilService">
+        <properties>
+          	<factory>ejb3</factory>
+            <source>sabrh-ear-1.0/PerfilService/remote</source>
+        </properties>
+	</destination>
+	
+	<destination id="StatusService">
+        <properties>
+          	<factory>ejb3</factory>
+            <source>sabrh-ear-1.0/StatusService/remote</source>
+        </properties>
+	</destination>
 
 </service>

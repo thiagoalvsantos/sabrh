@@ -1,21 +1,26 @@
+/*
+ * Todos os direitos reservados a TR Consulting.
+ */
 package br.pucpr.sabrh.persistence.impl;
 
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import br.pucpr.sabrh.entity.Estado;
-import br.pucpr.sabrh.entity.Municipio;
-import br.pucpr.sabrh.persistence.MunicipioDAO;
+import br.pucpr.sabrh.persistence.EstadoDAO;
 
 @Stateless
-public class MunicipioDAOImpl implements MunicipioDAO {
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
+public class EstadoDAOImpl implements EstadoDAO {
 
 	/** O atributo entity manager. */
 	@PersistenceContext(unitName = "SABRH")
@@ -42,23 +47,18 @@ public class MunicipioDAOImpl implements MunicipioDAO {
 		this.entityManager = entityManager;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.pucpr.sabrh.persistence.EstadoDAO#listarEstado()
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Municipio> listarMunicipios() {
+	public List<Estado> listarEstado() {
 
 		Session session = (Session) entityManager.getDelegate();
-		return session.createCriteria(Municipio.class)
-				.addOrder(Order.asc("descricao")).list();
 
-	}
+		Criteria c = session.createCriteria(Estado.class);
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Municipio> listarMunicipios(Estado estado) {
-		Session session = (Session) entityManager.getDelegate();
-		return session.createCriteria(Municipio.class)
-				.add(Restrictions.eq("estado", estado))
-				.addOrder(Order.asc("descricao")).list();
+		return c.addOrder(Order.asc("descricao")).list();
 	}
 
 }

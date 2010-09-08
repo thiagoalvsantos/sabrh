@@ -45,7 +45,7 @@ public interface UsuarioService {
 	 *            - usuario
 	 * @return usuario
 	 */
-	public Usuario inserirUsuario(Usuario usuario);
+	public Usuario inserirUsuario(Usuario usuario) throws Exception;
 
 	/**
 	 * Excluir usuario.

@@ -83,9 +83,9 @@ public class UsuarioBusiness implements UsuarioService {
 	 * entity.Usuario)
 	 */
 	@Override
-	public Usuario inserirUsuario(Usuario usuario) {
+	public Usuario inserirUsuario(Usuario usuario) throws Exception {
 
-		// TODO Implementar inclusão de usuário
+		usuarioDAO.inserir(usuario);
 		return null;
 
 	}
