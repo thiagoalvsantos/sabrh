@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:view="br.pucpr.sabrh.view.*" pageTitle="..:: SABRH ::.." initialize="init()" visible="false" xmlns:entity="br.pucpr.sabrh.entity.*">
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:view="br.pucpr.sabrh.view.*" pageTitle="..:: SABRH ::.." xmlns:entity="br.pucpr.sabrh.entity.*">
+
+	<!-- initialize="init()" visible="false"-->
 
 	<fx:Style source="assets/yflexskin.css"/>
 	<fx:Script source="controller/index.as"/>
