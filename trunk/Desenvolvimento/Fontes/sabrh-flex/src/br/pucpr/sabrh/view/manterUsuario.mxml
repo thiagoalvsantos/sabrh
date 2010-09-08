@@ -1,43 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Manutenção de Usuários ::.." close="fechar(event)" width="900" initialize="init(event)">
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Manutenção de Usuários ::.." close="fechar(event)" width="900" creationComplete="init(event)">
+
+
+
+
 	<fx:Script source="../controller/manterUsuario.as"/>
 
 	<fx:Declarations>
 		<s:RemoteObject id="usuarioService" fault="onFault(event)" destination="UsuarioService" showBusyCursor="true">
 			<s:method result="{listarUsuariosResult(event)}" name="listarUsuarios"/>
+			<s:method result="{inserirUsuarioResult(event)}" name="inserirUsuario"/>
 		</s:RemoteObject>
 		<s:RemoteObject id="municipioService" fault="onFault(event)" destination="MunicipioService" showBusyCursor="true">
 			<s:method result="{listarMunicipiosResult(event)}" name="listarMunicipios"/>
 		</s:RemoteObject>
+		<s:RemoteObject id="estadoService" fault="onFault(event)" destination="EstadoService" showBusyCursor="true">
+			<s:method result="{listarEstadosResult(event)}" name="listarEstados"/>
+		</s:RemoteObject>
+		<s:RemoteObject id="statusService" fault="onFault(event)" destination="StatusService" showBusyCursor="true">
+			<s:method result="{listarStatusResult(event)}" name="listarStatus"/>
+		</s:RemoteObject>
+		<s:RemoteObject id="perfilService" fault="onFault(event)" destination="PerfilService" showBusyCursor="true">
+			<s:method result="{listarPerfilResult(event)}" name="listarPerfil"/>
+		</s:RemoteObject>
 	</fx:Declarations>
-	<s:VGroup left="5" right="5" top="5" bottom="5">
 
-		<s:Panel id="panelPesquisa" top="5" left="5" right="5" title="Pesquisa" bottom="243" width="100%" height="100%">
-			<s:Label text="Nome" id="lblPesquisaNome" x="10" y="15"/>
-			<s:Label text="Municipio" id="lblPesquisaMunicipio" x="245" y="45"/>
-			<s:Label text="Status" id="lblPesquisaStatus" x="245" y="75"/>
-			<s:Label text="Perfil" id="lblPesquisaPerfil" x="10" y="75"/>
-			<s:TextInput id="txtPesquisaNome" x="60" y="10" width="514"/>
-			<s:ComboBox id="cmbPesquisaMunicipio" labelField="descricao" x="310" y="40" width="264"/>
-			<s:ComboBox id="cmbPesquisaStatus" x="310" y="70" width="264"/>
-			<s:ComboBox id="cmbPesquisaPerfil" x="60" y="70" width="171"/>
-			<s:Label x="10" y="45" text="Estado" id="lblPesquisaEstado"/>
-			<s:ComboBox x="60" y="40" id="cmbPesquisaEstado" width="171"/>
-			<s:controlBarContent>
-				<s:Button label="Pesquisar" click="{pesquisar()}"/>
-				<s:Button label="Novo"/>
-			</s:controlBarContent>
-		</s:Panel>
-		<s:Panel id="panelResultado" title="Resultado" width="100%" height="100%" visible="false">
-			<mx:AdvancedDataGrid id="gridUsuario" designViewDataType="flat" left="5" right="5" top="5" bottom="5">
-				<mx:columns>
-					<mx:AdvancedDataGridColumn headerText="Nome" dataField="nome" textAlign="left"/>
-					<mx:AdvancedDataGridColumn headerText="CPF" dataField="cpf" textAlign="center"/>
-					<mx:AdvancedDataGridColumn headerText="Perfil" dataField="perfil" textAlign="center"/>
-					<mx:AdvancedDataGridColumn headerText="Status" dataField="status" textAlign="center"/>
-				</mx:columns>
-			</mx:AdvancedDataGrid>
+	<mx:ViewStack id="viewStackUsuario" left="0" right="0" top="0" bottom="0" selectedIndex="0">
+		<s:NavigatorContent id="vsPesquisa" label="Pesquisa" width="100%" height="100%">
+			<s:VGroup left="5" right="5" top="5" bottom="5">
 
-		</s:Panel>
-	</s:VGroup>
+				<s:Panel id="panelPesquisa" top="5" left="5" right="5" title="Pesquisa" bottom="243" width="100%" height="100%">
+					<s:Label text="Nome" id="lblPesquisaNome" x="10" y="15"/>
+					<s:Label text="Municipio" id="lblPesquisaMunicipio" x="245" y="45"/>
+					<s:Label text="Status" id="lblPesquisaStatus" x="245" y="75"/>
+					<s:Label text="Perfil" id="lblPesquisaPerfil" x="10" y="75"/>
+					<s:TextInput id="txtPesquisaNome" x="60" y="10" width="514"/>
+					<s:ComboBox id="cmbPesquisaMunicipio" labelField="descricao" x="310" y="40" width="264" enabled="false"/>
+					<s:ComboBox id="cmbPesquisaStatus" x="310" y="70" width="264"/>
+					<s:ComboBox id="cmbPesquisaPerfil" x="60" y="70" width="171"/>
+					<s:Label x="10" y="45" text="Estado" id="lblPesquisaEstado"/>
+					<s:ComboBox x="60" y="40" id="cmbPesquisaEstado" labelField="descricao" width="171" change="selecionaEstado(event)"/>
+					<s:controlBarContent>
+						<s:Button label="Pesquisar" click="{pesquisar()}"/>
+						<s:Button label="Novo" click="actionNovoUsuario(event)"/>
+					</s:controlBarContent>
+				</s:Panel>
+				<s:Panel id="panelResultado" title="Resultado" width="100%" height="100%" visible="false">
+					<mx:AdvancedDataGrid id="gridUsuario" designViewDataType="flat" left="5" right="5" top="5" bottom="5">
+						<mx:columns>
+							<mx:AdvancedDataGridColumn headerText="Nome" dataField="nome" textAlign="left"/>
+							<mx:AdvancedDataGridColumn headerText="CPF" dataField="cpf" textAlign="center"/>
+							<mx:AdvancedDataGridColumn headerText="Perfil" dataField="perfil" textAlign="center"/>
+							<mx:AdvancedDataGridColumn headerText="Status" dataField="status" textAlign="center"/>
+						</mx:columns>
+					</mx:AdvancedDataGrid>
+
+				</s:Panel>
+			</s:VGroup>
+		</s:NavigatorContent>
+		<s:NavigatorContent id="vsNovo" label="Novo" width="100%" height="100%">
+			<s:VGroup left="5" right="5" top="5" bottom="5">
+				<s:Panel id="panelNovo" top="5" left="5" right="5" title="Novo" bottom="243" width="100%" height="100%">
+					<s:Label text="Nome" id="lblNovoNome" x="10" y="15"/>
+					<s:Label text="Municipio" id="lblNovoMunicipio" x="245" y="45"/>
+					<s:Label text="Status" id="lblNovoStatus" x="245" y="75"/>
+					<s:Label text="Perfil" id="lblNovoPerfil" x="10" y="75"/>
+					<s:TextInput id="txtNovoNome" x="60" y="10" width="514"/>
+					<s:ComboBox id="cmbNovoMunicipio" labelField="descricao" x="310" y="40" width="264" enabled="false"/>
+					<s:ComboBox id="cmbNovoStatus" x="310" y="70" width="264"/>
+					<s:ComboBox id="cmbNovoPerfil" x="60" y="70" width="171"/>
+					<s:Label x="10" y="45" text="Estado" id="lblNovoEstado"/>
+					<s:ComboBox x="60" y="40" id="cmbNovoEstado" labelField="descricao" width="171" change="selecionaEstado(event)"/>
+					<s:controlBarContent>
+						<s:Button label="Salvar" click="{salvarUsuario()}"/>
+						<s:Button label="Limpar" click="actionNovoUsuario(event)"/>
+					</s:controlBarContent>
+				</s:Panel>
+			</s:VGroup>
+		</s:NavigatorContent>
+	</mx:ViewStack>
 </s:TitleWindow>

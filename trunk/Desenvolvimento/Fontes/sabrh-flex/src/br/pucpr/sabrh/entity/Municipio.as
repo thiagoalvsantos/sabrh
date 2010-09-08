@@ -11,5 +11,6 @@ package br.pucpr.sabrh.entity
 			public var codigo:Number;
 			public var descricao:String;
 			public var estado:Estado;
+			
 	}
 }

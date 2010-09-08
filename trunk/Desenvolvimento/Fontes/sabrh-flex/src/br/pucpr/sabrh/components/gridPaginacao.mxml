@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" horizontalAlign="center">
+
+	<fx:Declarations>
+		<mx:Metadata>
+		[ExcludeClass]
+	</mx:Metadata>
+	</fx:Declarations>
+
+	<mx:Button id="bpPaginaAnterior" toggle="false" icon="@Embed(source='/assets/anterior.png')" useHandCursor="true" buttonMode="true"/>
+	<mx:HBox id="containerBpIntermadiarios"/>
+	<mx:Button id="bpProximaPagina" toggle="false" icon="@Embed(source='/assets/proxima.png')" useHandCursor="true" buttonMode="true"/>
+	<mx:ComboBox id="cbIntevalo" width="60">
+		<mx:dataProvider>
+			<mx:Object label="5" value="5"/>
+			<mx:Object label="10" value="10"/>
+			<mx:Object label="15" value="15"/>
+		</mx:dataProvider>
+	</mx:ComboBox>
+
+</mx:HBox>
