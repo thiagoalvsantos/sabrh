@@ -4,16 +4,10 @@
 package br.pucpr.sabrh.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -37,22 +31,51 @@ public class Estado implements Serializable {
 	@Column(name = "TX_DESCRICAO", length = 30, nullable = false)
 	private String descricao;
 
+	/**
+	 * Get sigla.
+	 * 
+	 * @return the sigla
+	 * @see Estado#sigla.
+	 */
 	public String getSigla() {
 		return sigla;
 	}
 
+	/**
+	 * Set sigla.
+	 * 
+	 * @param sigla
+	 *            - sigla.
+	 * @see Estado#sigla.
+	 */
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
 
+	/**
+	 * Get descricao.
+	 * 
+	 * @return the descricao
+	 * @see Estado#descricao.
+	 */
 	public String getDescricao() {
 		return descricao;
 	}
 
+	/**
+	 * Set descricao.
+	 * 
+	 * @param descricao
+	 *            - descricao.
+	 * @see Estado#descricao.
+	 */
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -63,6 +86,9 @@ public class Estado implements Serializable {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

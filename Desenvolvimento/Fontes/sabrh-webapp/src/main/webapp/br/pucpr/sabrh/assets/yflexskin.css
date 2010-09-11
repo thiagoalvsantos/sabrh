@@ -1,5 +1,6 @@
 @namespace s "library://ns.adobe.com/flex/spark";
 @namespace mx "library://ns.adobe.com/flex/mx";
+@namespace spark "spark.skins.spark.*";
 /*
 //------------------------------
 //  global
@@ -11,9 +12,9 @@ global
    fontFamily: Tahoma;
    fontSize: 12px;
    themeColor: #99CDFF;
+   
 }
 	
-
 /*
 //------------------------------
 //  AccordionHeader
@@ -395,8 +396,8 @@ s|Panel
 	closeButtonUpSkin: Embed(source="yflexskin.swf",symbol="Panel_closeButtonUpSkin");
 	/*
 	Removed due to incompatibilities with Flex 3
-	borderSkin: Embed(source="yflexskin.swf", symbol="Panel_borderSkin");
 	*/	
+	borderSkin: Embed(source="yflexskin.swf", symbol="Panel_borderSkin");
 	titleBackgroundSkin: Embed(source="yflexskin.swf", symbol="Panel_titleBackgroundSkin");
 	borderThicknessLeft: 0;
 	borderThicknessRight: 0;
@@ -604,10 +605,17 @@ mx|TabNavigator
 */
 mx|ToolTip
 {
-
 	borderSkin: Embed(source="yflexskin.swf", symbol="ToolTip_borderSkin");
-
+	
 }
+
+.errorTip 
+{ 
+	color: #4d4d4d;
+	
+}
+
+
 
 /*
 //------------------------------

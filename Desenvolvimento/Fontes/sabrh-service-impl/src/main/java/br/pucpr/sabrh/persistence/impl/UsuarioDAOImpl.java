@@ -11,7 +11,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Example;
 
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.UsuarioDAO;
@@ -57,12 +59,16 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	@Override
 	public Usuario autenticar(Usuario usuario) throws NoResultException {
 
-		Query q = entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.login = ?1 AND u.senha = ?2");
-		q.setParameter(1, usuario.getLogin());
-		q.setParameter(2, usuario.getSenha());
+		// Query q = entityManager
+		// .createQuery("SELECT u FROM Usuario u WHERE u.login = ?1 AND u.senha = ?2");
+		// q.setParameter(1, usuario.getLogin());
+		// q.setParameter(2, usuario.getSenha());
+		Session s = (Session) entityManager.getDelegate();
+		Criteria c = s.createCriteria(Usuario.class);
+		c.add(Example.create(usuario));
+
 		try {
-			Usuario result = (Usuario) q.getSingleResult();
+			Usuario result = (Usuario) c.uniqueResult();
 
 			return result;
 		} catch (NoResultException e) {
@@ -84,8 +90,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
 	public Usuario inserir(Usuario usuario) throws Exception {
-		entityManager.persist(usuario);
-		return usuario;
+
+		return entityManager.merge(usuario);
 	}
 
 }
