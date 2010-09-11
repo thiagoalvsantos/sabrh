@@ -1,8 +1,6 @@
 // login
 import br.pucpr.sabrh.entity.Usuario;
 
-import flash.display.DisplayObject;
-
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.events.CloseEvent;
@@ -17,9 +15,11 @@ import spark.events.IndexChangeEvent;
 
 public function init(event:FlexEvent):void
 {
+
     estadoService.listarEstados();
     statusService.listarStatus();
     perfilService.listarPerfil();
+
 }
 
 /**
@@ -202,7 +202,7 @@ protected function salvarUsuario():void
 
         //retira mascara cpf
         usuario.cpf = usuario.cpf.replace(".", "");
-		usuario.cpf = usuario.cpf.replace(".", "");
+        usuario.cpf = usuario.cpf.replace(".", "");
         usuario.cpf = usuario.cpf.replace("-", "");
 
 
@@ -213,11 +213,8 @@ protected function salvarUsuario():void
 
 protected function validar():Boolean
 {
-    var val:ArrayCollection = new ArrayCollection();
-   
-
     //executa todos os validadores
-    var errors:Array = Validator.validateAll(val.toArray());
+    var errors:Array = Validator.validateAll(val);
 
     //se não existem erros 
     if (errors.length == 0)
