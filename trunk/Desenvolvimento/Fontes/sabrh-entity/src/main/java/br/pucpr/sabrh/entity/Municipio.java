@@ -41,26 +41,65 @@ public class Municipio implements Serializable {
 	@JoinColumn(name = "TX_ESTADO", referencedColumnName = "TX_SIGLA")
 	private Estado estado;
 
+	/**
+	 * Get codigo.
+	 * 
+	 * @return the codigo
+	 * @see Municipio#codigo.
+	 */
 	public int getCodigo() {
 		return codigo;
 	}
 
+	/**
+	 * Set codigo.
+	 * 
+	 * @param codigo
+	 *            - codigo.
+	 * @see Municipio#codigo.
+	 */
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 
+	/**
+	 * Get descricao.
+	 * 
+	 * @return the descricao
+	 * @see Municipio#descricao.
+	 */
 	public String getDescricao() {
 		return descricao;
 	}
 
+	/**
+	 * Set descricao.
+	 * 
+	 * @param descricao
+	 *            - descricao.
+	 * @see Municipio#descricao.
+	 */
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 
+	/**
+	 * Get estado.
+	 * 
+	 * @return the estado
+	 * @see Municipio#estado.
+	 */
 	public Estado getEstado() {
 		return estado;
 	}
 
+	/**
+	 * Set estado.
+	 * 
+	 * @param estado
+	 *            - estado.
+	 * @see Municipio#estado.
+	 */
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
