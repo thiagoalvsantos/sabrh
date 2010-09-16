@@ -25,11 +25,10 @@ package br.pucpr.sabrh.components.validator
 			{
 				return ValidatorResults;
 			}
-			/////////////////////////////////
 
-				inputValue=inputValue.replace('.', '');
-				inputValue=inputValue.replace('.', '');
-				inputValue=inputValue.replace('-', '');
+			inputValue=inputValue.replace('.', '');
+			inputValue=inputValue.replace('.', '');
+			inputValue=inputValue.replace('-', '');
 			if (inputValue.length == 11)
 			{
 
@@ -59,7 +58,7 @@ package br.pucpr.sabrh.components.validator
 						return ValidatorResults;
 					}
 
-					var a:Array=new Array();
+					a=new Array();
 					var b:Number=new Number();
 					var c:Number=11;
 
@@ -95,12 +94,11 @@ package br.pucpr.sabrh.components.validator
 					{
 						a[10]=11 - x;
 					}
-	
+
 					if ((inputValue.charAt(9) != a[9]) || (inputValue.charAt(10) != a[10]))
 					{
 						ValidatorResults.push(new ValidationResult(true, null, "CPF Inválido", "Número de CPF inválido"));
 						return ValidatorResults;
-
 					}
 				}
 			}
@@ -112,15 +110,6 @@ package br.pucpr.sabrh.components.validator
 					ValidatorResults.push(new ValidationResult(true, null, "CPF Inválido", "Número de CPF inválido"));
 				return ValidatorResults;
 			}
-
-
-			return ValidatorResults;
-
-
-
-			/////////////////////////////////
-
-
 
 			return ValidatorResults;
 

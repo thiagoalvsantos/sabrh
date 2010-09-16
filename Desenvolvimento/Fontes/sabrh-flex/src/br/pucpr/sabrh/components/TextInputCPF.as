@@ -6,6 +6,7 @@ package br.pucpr.sabrh.components
 	import flash.events.KeyboardEvent;
 
 	import mx.controls.Alert;
+	import mx.events.Request;
 
 	import spark.components.TextInput;
 
@@ -18,6 +19,8 @@ package br.pucpr.sabrh.components
 		{
 			super();
 			maxChars=11;
+			restrict="0-9";
+
 		}
 
 		override protected function focusOutHandler(event:FocusEvent):void
@@ -45,10 +48,6 @@ package br.pucpr.sabrh.components
 		}
 
 
-		override protected function keyDownHandler(event:KeyboardEvent):void
-		{
-			Alert.show("opa");
-		}
 
 
 	}
