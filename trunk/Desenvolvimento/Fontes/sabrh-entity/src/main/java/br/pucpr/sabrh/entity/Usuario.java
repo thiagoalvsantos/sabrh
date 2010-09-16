@@ -61,11 +61,37 @@ public class Usuario implements Serializable {
 	/** O atributo nome. */
 	@Column(name = "TX_NOME", length = 255, nullable = false)
 	private String nome;
+	
+	/** O atributo email. */
+	@Column(name = "TX_EMAIL", length = 255, nullable = false)
+	private String email;
 
 	/** O atributo municipio. */
 	@ManyToOne(targetEntity = Municipio.class)
 	@JoinColumn(name = "CD_MUNICIPIO", referencedColumnName = "CD_CODIGO")
 	private Municipio municipio;
+
+	
+	/**
+	 * Get email.
+	 * 
+	 * @return the email
+	 * @see Usuario#email.
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * Set email.
+	 * 
+	 * @param email
+	 *            - email.
+	 * @see Usuario#email.
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	/**
 	 * Get codigo.

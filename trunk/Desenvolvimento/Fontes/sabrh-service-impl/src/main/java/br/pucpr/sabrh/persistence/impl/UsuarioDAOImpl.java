@@ -9,11 +9,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.UsuarioDAO;
@@ -59,10 +60,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	@Override
 	public Usuario autenticar(Usuario usuario) throws NoResultException {
 
-		// Query q = entityManager
-		// .createQuery("SELECT u FROM Usuario u WHERE u.login = ?1 AND u.senha = ?2");
-		// q.setParameter(1, usuario.getLogin());
-		// q.setParameter(2, usuario.getSenha());
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(Usuario.class);
 		c.add(Example.create(usuario));
@@ -92,6 +89,17 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	public Usuario inserir(Usuario usuario) throws Exception {
 
 		return entityManager.merge(usuario);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Usuario> pesquisar(Usuario usuario) throws Exception {
+		Session s = (Session) entityManager.getDelegate();
+		Criteria c = s.createCriteria(Usuario.class);
+		c.add(Example.create(usuario).enableLike().ignoreCase());
+		List<Usuario> result = c.list();
+		return result;
+
 	}
 
 }

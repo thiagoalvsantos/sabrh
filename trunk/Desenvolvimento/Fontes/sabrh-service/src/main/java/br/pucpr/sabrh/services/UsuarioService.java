@@ -63,7 +63,7 @@ public interface UsuarioService {
 	 *            - usuario
 	 * @return usuario
 	 */
-	public Usuario alterarUsuario(Usuario usuario);
+	public Usuario alterarUsuario(Usuario usuario); 
 
 	/**
 	 * Listar usuarios.
@@ -73,5 +73,17 @@ public interface UsuarioService {
 	 *             the exception
 	 */
 	public List<Usuario> listarUsuarios() throws Exception;
+	
+	
+	/**
+	 * Perquisar usuarios.
+	 * 
+	 * @param usuario
+	 *            - usuario
+	 * @return list
+	 * @throws Exception
+	 *             the exception
+	 */
+	public List<Usuario> perquisarUsuarios(Usuario usuario) throws Exception;
 
 }
