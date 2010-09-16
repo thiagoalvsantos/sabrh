@@ -21,5 +21,7 @@ package br.pucpr.sabrh.entity
 
 		public var municipio:Municipio;
 
+		public var email:String;
+
 	}
 }
