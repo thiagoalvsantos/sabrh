@@ -126,4 +126,10 @@ public class UsuarioBusiness implements UsuarioService {
 		return usuarioDAO.listar();
 	}
 
+	@Override
+	public List<Usuario> perquisarUsuarios(Usuario usuario) throws Exception {
+
+		return usuarioDAO.pesquisar(usuario);
+	}
+
 }

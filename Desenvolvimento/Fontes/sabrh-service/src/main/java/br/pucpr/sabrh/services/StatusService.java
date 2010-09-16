@@ -11,7 +11,7 @@ import br.pucpr.sabrh.entity.TipoStatus;
 
 /**
  * Interface de serviço da camada core relacionado ao componente Status.
- * 
+ *  
  * @author Thiago
  * @version 1
  */
