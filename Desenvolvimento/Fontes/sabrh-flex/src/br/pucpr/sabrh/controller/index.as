@@ -1,4 +1,5 @@
 import br.pucpr.sabrh.view.login;
+import br.pucpr.sabrh.view.manterPropriedade;
 import br.pucpr.sabrh.view.manterUsuario;
 
 import mx.controls.Image;
@@ -59,6 +60,16 @@ public function abrirManterUsuario():void
 	var popUpManterUsuario:manterUsuario=manterUsuario(PopUpManager.createPopUp(this,manterUsuario, true));
 	PopUpManager.centerPopUp(popUpManterUsuario);
 	popUpEffect.target=popUpManterUsuario;
+	popUpEffect.play();
+}
+
+
+//Função para abrir a tela de Manuntenção de Usuários.
+public function abrirManterPropriedade():void
+{
+	var popUpManterPropriedade:manterPropriedade=manterPropriedade(PopUpManager.createPopUp(this,manterPropriedade, true));
+	PopUpManager.centerPopUp(popUpManterPropriedade);
+	popUpEffect.target=popUpManterPropriedade;
 	popUpEffect.play();
 }
 
