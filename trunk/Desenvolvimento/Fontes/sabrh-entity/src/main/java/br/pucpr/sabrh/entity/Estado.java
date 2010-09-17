@@ -17,9 +17,7 @@ import javax.persistence.Table;
 @Table(name = "TB_ESTADO")
 public class Estado implements Serializable {
 
-	/**
-	 * 
-	 */
+	/** SerialVersionUID */
 	private static final long serialVersionUID = -8990519106816482238L;
 
 	/** O atributo sigla. */
@@ -73,7 +71,9 @@ public class Estado implements Serializable {
 		this.descricao = descricao;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -86,7 +86,9 @@ public class Estado implements Serializable {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
