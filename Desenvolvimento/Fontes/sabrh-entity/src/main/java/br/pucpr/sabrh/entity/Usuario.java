@@ -24,32 +24,30 @@ import javax.persistence.Table;
 @Table(name = "TB_USUARIO")
 public class Usuario implements Serializable {
 
-	/**
-	 * 
-	 */
+	/** O atributo serial version uid. */
 	private static final long serialVersionUID = -1112671402804675927L;
 
-	/** The codigo. */
+	/** O atributo codigo. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(initialValue=0,sequenceName="SEQ_USUARIO",name="codigo")
 	@Column(name = "CD_CODIGO", length = 8)
 	private Long codigo;
 
-	/** The login. */
+	/** O atributo login. */
 	@Column(name = "TX_LOGIN", length = 50, unique = true, nullable = false)
 	private String login;
 
-	/** The senha. */
+	/** O atributo senha. */
 	@Column(name = "TX_SENHA", length = 50, nullable = false)
 	private String senha;
 
-	/** The status. */
+	/** O atributo status. */
 	@Enumerated(EnumType.STRING)
 	@Column(name = "IN_STATUS", length = 20, nullable = false)
 	private TipoStatus status;
 
-	/** The perfil. */
+	/** O atributo perfil. */
 	@Enumerated(EnumType.STRING)
 	@Column(name = "IN_PERFIL", length = 20, nullable = false)
 	private TipoPerfil perfil;
