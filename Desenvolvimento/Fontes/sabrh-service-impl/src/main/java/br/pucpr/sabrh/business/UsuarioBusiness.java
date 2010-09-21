@@ -66,54 +66,14 @@ public class UsuarioBusiness implements UsuarioService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.pucpr.sabrh.services.UsuarioService#buscarUsuario(br.pucpr.sabrh.entity
-	 * .Usuario)
-	 */
-	@Override
-	public Usuario buscarUsuario(Usuario usuario) {
-		// TODO Implementar busca de usuário
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * br.pucpr.sabrh.services.UsuarioService#inserirUsuario(br.pucpr.sabrh.
 	 * entity.Usuario)
 	 */
 	@Override
 	public Usuario inserirUsuario(Usuario usuario) throws Exception {
 
-		usuarioDAO.inserir(usuario);
-		return null;
+		return usuarioDAO.inserir(usuario);
 
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.pucpr.sabrh.services.UsuarioService#excluirUsuario(br.pucpr.sabrh.
-	 * entity.Usuario)
-	 */
-	@Override
-	public boolean excluirUsuario(Usuario usuario) {
-		// TODO Implementar exclusão de usuário
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.pucpr.sabrh.services.UsuarioService#alterarUsuario(br.pucpr.sabrh.
-	 * entity.Usuario)
-	 */
-	@Override
-	public Usuario alterarUsuario(Usuario usuario) {
-		// TODO Implementar alteração de usuário
-		return null;
 	}
 
 	/*
@@ -127,7 +87,7 @@ public class UsuarioBusiness implements UsuarioService {
 	}
 
 	@Override
-	public List<Usuario> perquisarUsuarios(Usuario usuario) throws Exception {
+	public List<Usuario> pesquisar(Usuario usuario) throws Exception {
 
 		return usuarioDAO.pesquisar(usuario);
 	}

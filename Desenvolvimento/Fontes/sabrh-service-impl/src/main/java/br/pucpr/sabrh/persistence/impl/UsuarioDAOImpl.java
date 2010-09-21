@@ -13,7 +13,10 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 
+import br.pucpr.sabrh.entity.Estado;
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.UsuarioDAO;
 
@@ -85,16 +88,29 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
 	public Usuario inserir(Usuario usuario) throws Exception {
-
-		return entityManager.merge(usuario);
+		Usuario result = entityManager.merge(usuario);
+		return result;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Usuario> pesquisar(Usuario usuario) throws Exception {
+
 		Session s = (Session) entityManager.getDelegate();
-		Criteria c = s.createCriteria(Usuario.class);
-		c.add(Example.create(usuario).enableLike().ignoreCase());
+		Criteria c = s.createCriteria(Usuario.class, "usu");
+		c.createCriteria("municipio", "mun");
+		c.add(Example.create(usuario).enableLike(MatchMode.ANYWHERE)
+				.ignoreCase());
+		if (usuario.getMunicipio() != null) {
+			if (usuario.getMunicipio().getCodigo() != 0) {
+				c.add(Restrictions.eq("municipio", usuario.getMunicipio()));
+			} else {
+				Criteria q = s.createCriteria(Estado.class);
+				q.add(Example.create(usuario.getMunicipio().getEstado()));
+				c.add(Restrictions.eq("mun.estado", q.uniqueResult()));
+			}
+
+		}
 		List<Usuario> result = c.list();
 		return result;
 
