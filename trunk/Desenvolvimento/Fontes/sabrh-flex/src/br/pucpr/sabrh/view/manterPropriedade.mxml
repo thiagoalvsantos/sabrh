@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:TitleWindow width="900" creationComplete="init(event)" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Manutenção de Propriedades ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
 
-
 	<fx:Script source="../controller/manterPropriedade.as"/>
 
 	<fx:Declarations>
 		<s:RemoteObject id="usuarioService" fault="onFault(event)" destination="UsuarioService" showBusyCursor="true">
-			<s:method name="perquisarUsuarios" result="{pesquisarUsuariosResult(event)}"/>
-			<s:method name="inserirUsuario" result="{inserirUsuarioResult(event)}"/>
+
 		</s:RemoteObject>
 		<s:RemoteObject id="municipioService" fault="onFault(event)" destination="MunicipioService" showBusyCursor="true">
 			<s:method name="listarMunicipios" result="{listarMunicipiosResult(event)}"/>
@@ -15,28 +13,21 @@
 		<s:RemoteObject id="estadoService" fault="onFault(event)" destination="EstadoService" showBusyCursor="true">
 			<s:method name="listarEstados" result="{listarEstadosResult(event)}"/>
 		</s:RemoteObject>
-		<s:RemoteObject id="statusService" fault="onFault(event)" destination="StatusService" showBusyCursor="true">
-			<s:method name="listarStatus" result="{listarStatusResult(event)}"/>
-		</s:RemoteObject>
-		<s:RemoteObject id="perfilService" fault="onFault(event)" destination="PerfilService" showBusyCursor="true">
-			<s:method name="listarPerfil" result="{listarPerfilResult(event)}"/>
+		<s:RemoteObject id="propriedadeService" fault="onFault(event)" destination="PropriedadeService" showBusyCursor="true">
+			<s:method name="listar" result="{pesquisarPropriedadesResult(event)}"/>
 		</s:RemoteObject>
 
 		<fx:Array id="val">
 			<mx:StringValidator id="strValNome" source="{txtNovoNome}" property="text" required="true" minLength="5" maxLength="255"/>
 			<mx:NumberValidator id="numValEstado" source="{cmbNovoEstado}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:NumberValidator id="numValMunicipio" source="{cmbNovoMunicipio}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
-			<mx:NumberValidator id="numValPerfil" source="{cmbNovoPerfil}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
-			<validator:CpfValidator id="cpfValidator" source="{txtNovoCPF}" property="text" required="true"/>
-			<mx:StringValidator id="strValLogin" source="{txtNovoLogin}" property="text" required="true" minLength="5" maxLength="50"/>
-			<mx:StringValidator id="strValSenha" source="{txtNovoSenha}" property="text" required="true" minLength="5" maxLength="50"/>
-			<mx:StringValidator id="strValConfSenha" source="{txtNovoConfirmarSenha}" property="text" required="true" minLength="5" maxLength="50"/>
-			<mx:EmailValidator id="emailValEMail" source="{txtNovoEmail}" property="text" required="true"/>
+			<mx:StringValidator id="strValTelefone" source="{txtNovoTelefone}" property="text" required="true" minLength="10" maxLength="10"/>
+			<mx:StringValidator id="strValProprietario" source="{txtNovoProprietario}" property="text" required="true" minLength="5" maxLength="50"/>
 		</fx:Array>
 
 		<formatter:CpfCnpjFormatter id="cpfFormatter"/>
 
-		<entity:Usuario id="usuarioSelecionado"/>
+		<entity:Propriedade id="propriedadeSelecionada"/>
 
 	</fx:Declarations>
 
@@ -54,33 +45,55 @@
 	<s:VGroup id="groupPesquisa" left="5" right="5" top="5" bottom="5" includeIn="statePesquisa,stateResultado">
 		<s:Panel id="panelPesquisa" width="100%" height="100%" title="Pesquisa" includeIn="statePesquisa,stateResultado">
 			<mx:Canvas left="5" right="5" top="5" bottom="5">
-				<s:Label id="lblPesquisaNome" x="10" y="15" text="Nome"/>
+				<s:Label id="lblPesquisaNome" x="10" y="15" text="Nome Propriedade"/>
 				<s:Label id="lblPesquisaEstado" x="10" y="45" text="Estado"/>
-				<s:Label id="lblPesquisaMunicipio" x="245" y="45" text="Municipio"/>
-				<s:Label id="lblPesquisaPerfil" x="10" y="75" text="Perfil"/>
-				<s:Label id="lblPesquisaStatus" x="245" y="75" text="Status"/>
-				<s:TextInput id="txtPesquisaNome" x="60" y="10" width="514" tabIndex.statePesquisa="1"/>
-				<s:DropDownList id="cmbPesquisaEstado" x="60" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex.statePesquisa="2"/>
-				<s:DropDownList id="cmbPesquisaMunicipio" x="310" y="40" width="264" enabled="false" labelField="descricao" tabIndex.statePesquisa="3"/>
-				<s:DropDownList id="cmbPesquisaPerfil" x="60" y="70" width="171" tabIndex.statePesquisa="4"/>
-				<s:DropDownList id="cmbPesquisaStatus" x="310" y="70" width="264" tabIndex.statePesquisa="5"/>
+				<s:Label id="lblPesquisaMunicipio" x="305" y="45" text="Municipio"/>
+				<s:Label id="lblPesquisaProprietario" x="10" y="75" text="Proprietario"/>
+				<s:TextInput id="txtPesquisaNome" width="514" tabIndex="1" x="120" y="10"/>
+				<s:DropDownList id="cmbPesquisaEstado" labelField="descricao" change="cbmEstadoChange()" tabIndex="2" x="120" y="40" width="171"/>
+				<s:DropDownList id="cmbPesquisaMunicipio" width="264" enabled="false" labelField="descricao" tabIndex="3" x="370" y="40"/>
+				<s:TextInput id="cmbPesquisaProprietario" width="171" tabIndex="4" x="120" y="70"/>
 			</mx:Canvas>
 			<s:controlBarContent>
-				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex.statePesquisa="6"/>
-				<s:Button label="Novo" click="{actionBtnNovo()}" tabIndex.statePesquisa="7"/>
-				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex.statePesquisa="8"/>
+				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex="6"/>
+				<s:Button label="Novo" click="{actionBtnNovo()}" tabIndex="7"/>
+				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex="8"/>
 			</s:controlBarContent>
 		</s:Panel>
 		<!--//////////////////////////
 			 //	RESULTADO
 			 /////////////////////////////-->
 		<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
-			<mx:AdvancedDataGrid id="gridUsuario" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridUsuarioItemClick(event)">
+			<mx:AdvancedDataGrid id="gridProprietario" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridUsuarioItemClick(event)">
 				<mx:columns>
-					<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" sortable="true" dataField="nome"/>
-					<mx:AdvancedDataGridColumn textAlign="center" headerText="CPF" dataField="cpf" sortable="true" labelFunction="cpflabelFunc"/>
-					<mx:AdvancedDataGridColumn textAlign="center" headerText="Perfil" dataField="perfil" sortable="true"/>
-					<mx:AdvancedDataGridColumn textAlign="center" headerText="Status" dataField="status" sortable="true"/>
+					<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" dataField="nome" sortable="true"/>
+					<mx:AdvancedDataGridColumn textAlign="center" headerText="Estado" dataField="" sortable="true">
+						<mx:itemRenderer>
+							<fx:Component>
+								<mx:Canvas>
+									<s:Label text="{data.municipio.estado.descricao}" horizontalCenter="0" verticalCenter="0"/>
+								</mx:Canvas>
+							</fx:Component>
+						</mx:itemRenderer>
+					</mx:AdvancedDataGridColumn>
+					<mx:AdvancedDataGridColumn textAlign="center" headerText="Municipio" dataField="municipio.descricao" sortable="true">
+						<mx:itemRenderer>
+							<fx:Component>
+								<mx:Canvas>
+									<s:Label text="{data.municipio.descricao}" horizontalCenter="0" verticalCenter="0"/>
+								</mx:Canvas>
+							</fx:Component>
+						</mx:itemRenderer>
+					</mx:AdvancedDataGridColumn>
+					<mx:AdvancedDataGridColumn textAlign="center" headerText="Propriedade" dataField="proprietario.nome" sortable="true">
+						<mx:itemRenderer>
+							<fx:Component>
+								<mx:Canvas>
+									<s:Label text="{data.proprietario.nome}" horizontalCenter="0" verticalCenter="0"/>
+								</mx:Canvas>
+							</fx:Component>
+						</mx:itemRenderer>
+					</mx:AdvancedDataGridColumn>
 				</mx:columns>
 			</mx:AdvancedDataGrid>
 		</s:Panel>
@@ -93,24 +106,14 @@
 			<mx:Canvas left="5" right="5" top="5" bottom="5" currentStateChange.stateNovo="{actionBtnLimparNovo()}">
 				<s:Label id="lblNovoNome" x="10" y="15" text="Nome"/>
 				<s:Label id="lblNovoEstado" x="10" y="45" text="Estado"/>
-				<s:Label id="lblNovoMunicipio" x="245" y="45" text="Municipio"/>
-				<s:Label id="lblNovoPerfil" x="10" y="75" text="Perfil"/>
-				<s:Label id="lblNovoCPF" x="10" y="105" text="CPF"/>
-				<s:Label id="lblNovoLogin" x="10" y="135" text="Login"/>
-				<s:Label id="lblNovoStatus" x="245" y="135" text="Status" includeIn="stateEditar"/>
-				<s:Label id="lblNovoSenha" x="10" y="165" text="Senha"/>
-				<s:Label id="lblNovoConfirmacaoSenha" x="245" y="165" text="Confirmar Senha"/>
-				<s:Label id="lblNovoEmail" x="10" y="195" text="E-mail"/>
-				<s:TextInput id="txtNovoNome" x="60" y="10" width="514" maxChars="255" tabIndex="1"/>
-				<s:DropDownList id="cmbNovoEstado" x="60" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
-				<s:DropDownList id="cmbNovoMunicipio" x="310" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
-				<s:DropDownList id="cmbNovoPerfil" x="60" y="70" width="171" tabIndex="4"/>
-				<components:TextInputCPF id="txtNovoCPF" x="60" y="100" width="171" tabIndex="5"/>
-				<s:TextInput id="txtNovoLogin" x="60" y="130" width="171" maxChars="50" tabIndex="6"/>
-				<s:DropDownList id="cmbNovoStatus" x="343" y="131" width="231" tabIndex="7" includeIn="stateEditar"/>
-				<s:TextInput id="txtNovoSenha" x="60" y="160" width="171" displayAsPassword="true" maxChars="50" tabIndex="8"/>
-				<s:TextInput id="txtNovoConfirmarSenha" x="343" y="160" width="231" displayAsPassword="true" maxChars="50" tabIndex="9"/>
-				<s:TextInput id="txtNovoEmail" x="60" y="190" width="514" tabIndex="10" maxChars="255"/>
+				<s:Label id="lblNovoMunicipio" x="270" y="45" text="Municipio"/>
+				<s:Label id="lblNovoTelefone" x="10" y="75" text="Telefone"/>
+				<s:Label id="lblNovoPropritario" x="10" y="105" text="Proprietario"/>
+				<s:TextInput id="txtNovoNome" x="90" y="10" width="514" maxChars="255" tabIndex="1"/>
+				<s:DropDownList id="cmbNovoEstado" x="90" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
+				<s:DropDownList id="cmbNovoMunicipio" x="340" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
+				<s:TextInput id="txtNovoTelefone" x="90" y="70" width="171" tabIndex="4"/>
+				<s:TextInput id="txtNovoProprietario" x="90" y="100" width="171" maxChars="50" tabIndex="5"/>
 			</mx:Canvas>
 
 			<s:controlBarContent>
@@ -129,18 +132,14 @@
 				<s:Label id="lblDetalheNome" x="10" y="15" text="Nome"/>
 				<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado"/>
 				<s:Label id="lblDetalheMunicipio" x="245" y="45" text="Municipio"/>
-				<s:Label id="lblDetalhePerfil" x="10" y="75" text="Perfil"/>
-				<s:Label id="lblDetalheCPF" x="10" y="105" text="CPF"/>
-				<s:Label id="lblDetalheLogin" x="10" y="135" text="Login"/>
-				<s:Label id="lblDetalheEmail" x="10" y="165" text="E-mail"/>
+				<s:Label id="lblDetalheTelefone" x="10" y="135" text="Telefone"/>
+				<s:Label id="lblDetalheProprietario" x="10" y="165" text="Proprietario"/>
 				<!-- DADOS -->
 				<s:Label id="txtDetalheNome" x="60" y="15" width="514"/>
 				<s:Label id="cmbDetalheEstado" x="60" y="45" width="171"/>
 				<s:Label id="cmbDetalheMunicipio" x="310" y="45" width="264"/>
-				<s:Label id="cmbDetalhePerfil" x="60" y="75" width="171"/>
-				<s:Label id="txtDetalheCPF" x="60" y="105" width="171"/>
-				<s:Label id="txtDetalheLogin" x="60" y="135" width="171"/>
-				<s:Label id="txtDetalheEmail" x="60" y="165" width="514"/>
+				<s:Label id="txtDetalheTelefone" x="60" y="105" width="171"/>
+				<s:Label id="txtDetalheProprietario" x="60" y="135" width="171"/>
 			</mx:Canvas>
 
 			<s:controlBarContent>
