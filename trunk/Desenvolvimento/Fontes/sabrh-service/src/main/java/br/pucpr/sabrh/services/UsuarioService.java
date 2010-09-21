@@ -30,15 +30,6 @@ public interface UsuarioService {
 	public Usuario autenticar(Usuario usuario) throws Exception;
 
 	/**
-	 * Buscar usuario.
-	 * 
-	 * @param usuario
-	 *            - usuario
-	 * @return usuario
-	 */
-	public Usuario buscarUsuario(Usuario usuario);
-
-	/**
 	 * Inserir usuario.
 	 * 
 	 * @param usuario
@@ -48,24 +39,6 @@ public interface UsuarioService {
 	public Usuario inserirUsuario(Usuario usuario) throws Exception;
 
 	/**
-	 * Excluir usuario.
-	 * 
-	 * @param usuario
-	 *            - usuario.
-	 * @return verdadeiro, se bem sucedido.
-	 */
-	public boolean excluirUsuario(Usuario usuario);
-
-	/**
-	 * Alterar usuario.
-	 * 
-	 * @param usuario
-	 *            - usuario
-	 * @return usuario
-	 */
-	public Usuario alterarUsuario(Usuario usuario); 
-
-	/**
 	 * Listar usuarios.
 	 * 
 	 * @return list
@@ -73,10 +46,9 @@ public interface UsuarioService {
 	 *             the exception
 	 */
 	public List<Usuario> listarUsuarios() throws Exception;
-	
-	
+
 	/**
-	 * Perquisar usuarios.
+	 * Pesquisar usuarios.
 	 * 
 	 * @param usuario
 	 *            - usuario
@@ -84,6 +56,6 @@ public interface UsuarioService {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public List<Usuario> perquisarUsuarios(Usuario usuario) throws Exception;
+	public List<Usuario> pesquisar(Usuario usuario) throws Exception;
 
 }
