@@ -1,4 +1,5 @@
 // login
+import br.pucpr.sabrh.entity.Municipio;
 import br.pucpr.sabrh.entity.Usuario;
 
 import mx.collections.ArrayCollection;
@@ -61,14 +62,24 @@ protected function actionBtnPesquisar():void
 	var usr:Usuario=new Usuario();
 	if (StringUtil.trim(txtPesquisaNome.text) != "")
 	{
-		usr.nome='%' + StringUtil.trim(txtPesquisaNome.text) + '%';
+		usr.nome=StringUtil.trim(txtPesquisaNome.text);
 	}
 
-	usr.municipio=cmbPesquisaMunicipio.selectedItem;
+	if (cmbPesquisaMunicipio.selectedIndex == 0 && cmbPesquisaEstado.selectedIndex != 0)
+	{
+		var mun:Municipio=new Municipio;
+		mun.estado=cmbPesquisaEstado.selectedItem;
+		usr.municipio=mun;
+	}
+
+	if (cmbPesquisaMunicipio.selectedIndex != 0)
+	{
+		usr.municipio=cmbPesquisaMunicipio.selectedItem;
+	}
 	usr.perfil=cmbPesquisaPerfil.selectedItem;
 	usr.status=cmbPesquisaStatus.selectedItem;
 
-	usuarioService.perquisarUsuarios(usr);
+	usuarioService.pesquisar(usr);
 }
 
 /**
@@ -162,7 +173,6 @@ protected function editarUsuario():void
 	perfilService.listarPerfil();
 	statusService.listarStatus();
 
-
 	PopUpManager.centerPopUp(this);
 
 }
@@ -195,7 +205,6 @@ protected function actionBtnSalvarUsuario():void
 		usuario.email=txtNovoEmail.text;
 		usuario.status="ATIVO";
 
-
 		//retira mascara cpf
 		usuario.cpf=usuario.cpf.replace(".", "");
 		usuario.cpf=usuario.cpf.replace(".", "");
@@ -204,6 +213,7 @@ protected function actionBtnSalvarUsuario():void
 		if (currentState == 'stateEditar')
 		{
 			usuario.codigo=usuarioSelecionado.codigo;
+			usuario.status=cmbNovoStatus.selectedItem;
 		}
 
 		usuarioSelecionado=usuario;
@@ -265,6 +275,8 @@ protected function inserirUsuarioResult(event:ResultEvent):void
 	}
 
 	currentState='stateDetalhe';
+
+	usuarioSelecionado=event.result as Usuario;
 
 	txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
 	txtDetalheEmail.text=usuarioSelecionado.email;
@@ -339,7 +351,6 @@ protected function listarEstadosResult(event:ResultEvent):void
 		cmbNovoEstado.selectedIndex=-1;
 		cmbNovoEstado.selectedIndex=0;
 
-
 		if (currentState == 'stateEditar')
 		{
 			for (var i:Number=1; i < cmbNovoEstado.dataProvider.length; i++)
@@ -349,14 +360,11 @@ protected function listarEstadosResult(event:ResultEvent):void
 					cmbNovoEstado.selectedIndex=i;
 				}
 			}
-
 		}
 		cbmEstadoChange();
 		cmbNovoEstado.errorString=null;
 	}
-
 }
-
 
 /**
  * Resultado da listagem de perfil.
@@ -374,8 +382,6 @@ protected function listarPerfilResult(event:ResultEvent):void
 		cmbPesquisaPerfil.dataProvider=listaPerfil;
 		cmbPesquisaPerfil.selectedIndex=-1;
 		cmbPesquisaPerfil.selectedIndex=0;
-
-
 	}
 	else
 	{
@@ -389,7 +395,6 @@ protected function listarPerfilResult(event:ResultEvent):void
 		}
 		cmbNovoPerfil.errorString=null;
 	}
-
 }
 
 /**
@@ -422,10 +427,6 @@ protected function listarStatusResult(event:ResultEvent):void
 		}
 		cmbNovoStatus.errorString=null;
 	}
-
-
-
-
 }
 
 /**
@@ -528,14 +529,11 @@ protected function validar():Boolean
 		}
 		else
 		{
-
 			Alert.show("Senhas não coicidem.");
 		}
 	}
 	return false;
 }
-
-
 
 /**
  *

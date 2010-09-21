@@ -6,7 +6,7 @@
 
 	<fx:Declarations>
 		<s:RemoteObject id="usuarioService" fault="onFault(event)" destination="UsuarioService" showBusyCursor="true">
-			<s:method name="perquisarUsuarios" result="{pesquisarUsuariosResult(event)}"/>
+			<s:method name="pesquisar" result="{pesquisarUsuariosResult(event)}"/>
 			<s:method name="inserirUsuario" result="{inserirUsuarioResult(event)}"/>
 		</s:RemoteObject>
 		<s:RemoteObject id="municipioService" fault="onFault(event)" destination="MunicipioService" showBusyCursor="true">
