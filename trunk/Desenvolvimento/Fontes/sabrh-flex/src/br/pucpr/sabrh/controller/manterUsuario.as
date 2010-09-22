@@ -79,7 +79,7 @@ protected function actionBtnPesquisar():void
 	usr.perfil=cmbPesquisaPerfil.selectedItem;
 	usr.status=cmbPesquisaStatus.selectedItem;
 
-	usuarioService.pesquisar(usr);
+	usuarioService.listar();
 }
 
 /**
