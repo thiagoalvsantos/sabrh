@@ -42,7 +42,7 @@ public interface UsuarioDAO {
 	 * @throws Exception
 	 *             the exception
 	 */
-	Usuario inserir(Usuario usuario) throws Exception;
+	Usuario salvar(Usuario usuario) throws Exception;
 
 	/**
 	 * Pesquisar.
