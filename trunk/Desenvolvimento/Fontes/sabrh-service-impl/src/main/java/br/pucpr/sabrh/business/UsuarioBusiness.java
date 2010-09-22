@@ -70,9 +70,9 @@ public class UsuarioBusiness implements UsuarioService {
 	 * entity.Usuario)
 	 */
 	@Override
-	public Usuario inserirUsuario(Usuario usuario) throws Exception {
+	public Usuario inserir(Usuario usuario) throws Exception {
 
-		return usuarioDAO.inserir(usuario);
+		return usuarioDAO.salvar(usuario);
 
 	}
 
@@ -82,7 +82,7 @@ public class UsuarioBusiness implements UsuarioService {
 	 * @see br.pucpr.sabrh.services.UsuarioService#listarUsuarios()
 	 */
 	@Override
-	public List<Usuario> listarUsuarios() throws Exception {
+	public List<Usuario> listar() throws Exception {
 		return usuarioDAO.listar();
 	}
 

@@ -87,7 +87,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public Usuario inserir(Usuario usuario) throws Exception {
+	public Usuario salvar(Usuario usuario) throws Exception {
 		Usuario result = entityManager.merge(usuario);
 		return result;
 	}

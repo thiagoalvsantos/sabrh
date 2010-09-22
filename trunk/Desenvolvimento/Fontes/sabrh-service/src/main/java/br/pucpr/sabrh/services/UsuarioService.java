@@ -36,7 +36,7 @@ public interface UsuarioService {
 	 *            - usuario
 	 * @return usuario
 	 */
-	public Usuario inserirUsuario(Usuario usuario) throws Exception;
+	public Usuario inserir(Usuario usuario) throws Exception;
 
 	/**
 	 * Listar usuarios.
@@ -45,7 +45,7 @@ public interface UsuarioService {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public List<Usuario> listarUsuarios() throws Exception;
+	public List<Usuario> listar() throws Exception;
 
 	/**
 	 * Pesquisar usuarios.
