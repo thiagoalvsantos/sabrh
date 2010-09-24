@@ -218,7 +218,7 @@ protected function actionBtnSalvarUsuario():void
 
 		usuarioSelecionado=usuario;
 
-		usuarioService.inserirUsuario(usuario);
+		usuarioService.inserir(usuario);
 
 	}
 }
