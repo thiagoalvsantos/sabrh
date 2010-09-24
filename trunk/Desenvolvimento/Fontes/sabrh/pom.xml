@@ -20,7 +20,7 @@
 		<myJbossVersion>5</myJbossVersion>
 		<myUnpack>false</myUnpack>
 		<myDialect>org.hibernate.dialect.Oracle10gDialect</myDialect>
-		<myHbm2ddlAuto>create-drop</myHbm2ddlAuto>
+		<myHbm2ddlAuto>update</myHbm2ddlAuto>
 		<myJdbcUrl>jdbc:oracle:thin:@localhost:1521:${myDatabaseInstance}</myJdbcUrl>
 		<myJdbcDriver>oracle.jdbc.driver.OracleDriver</myJdbcDriver>
 		<myJdbcUser>sabrh</myJdbcUser>
@@ -195,6 +195,56 @@
 				<version>1.0</version>
 				<type>jar</type>
 			</dependency>
+			<!-- Testes unitários -->
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>5.9</version>
+				<classifier>jdk15</classifier>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>1.8.0.10</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
+				<artifactId>unitils-dbunit</artifactId>
+				<version>3.1</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
+				<artifactId>unitils-orm</artifactId>
+				<version>3.1</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
+				<artifactId>unitils-dbmaintainer</artifactId>
+				<version>3.1</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
+				<artifactId>unitils-easymock</artifactId>
+				<version>3.1</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
+				<artifactId>unitils-testng</artifactId>
+				<version>3.1</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.unitils</groupId>
+				<artifactId>unitils-inject</artifactId>
+				<version>3.1</version>
+				<scope>test</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -309,7 +359,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>jboss-maven-plugin</artifactId>
-					<version>1.4</version>
+					<version>1.4.1</version>
 					<configuration>
 						<jbossHome>${myJbossHome}</jbossHome>
 						<serverName>default</serverName>
@@ -389,6 +439,14 @@
 						</archive>
 					</configuration>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.5</version>
+					<configuration>
+						<groups>unittest</groups>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -466,12 +524,8 @@
 			<url>http://repos.zeroturnaround.com/maven2</url>
 		</repository>
 	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>repo.release.codehaus</id>
-			<url>http://repository.codehaus.org</url>
-		</pluginRepository>
-	</pluginRepositories>
+	<!-- <pluginRepositories> <pluginRepository> <id>repo.release.codehaus</id> 
+		<url>http://repository.codehaus.org</url> </pluginRepository> </pluginRepositories> -->
 	<scm>
 		<url>svn://200.169.74.144/svn/CampinasCompartilhado/trunk/Desenvolvimento/Projetos/siad
 		</url>
