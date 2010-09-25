@@ -30,7 +30,7 @@ public class Usuario implements Serializable {
 	/** O atributo codigo. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(initialValue=0,sequenceName="SEQ_USUARIO",name="codigo")
+	@SequenceGenerator(initialValue = 0, sequenceName = "SEQ_USUARIO", name = "codigo")
 	@Column(name = "CD_CODIGO", length = 8)
 	private Long codigo;
 
@@ -59,7 +59,7 @@ public class Usuario implements Serializable {
 	/** O atributo nome. */
 	@Column(name = "TX_NOME", length = 255, nullable = false)
 	private String nome;
-	
+
 	/** O atributo email. */
 	@Column(name = "TX_EMAIL", length = 255, nullable = false)
 	private String email;
@@ -69,7 +69,6 @@ public class Usuario implements Serializable {
 	@JoinColumn(name = "CD_MUNICIPIO", referencedColumnName = "CD_CODIGO")
 	private Municipio municipio;
 
-	
 	/**
 	 * Get email.
 	 * 
@@ -153,10 +152,6 @@ public class Usuario implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-
-	
-
-	
 
 	/**
 	 * Get cpf.
@@ -263,5 +258,4 @@ public class Usuario implements Serializable {
 		this.perfil = perfil;
 	}
 
-	
 }
