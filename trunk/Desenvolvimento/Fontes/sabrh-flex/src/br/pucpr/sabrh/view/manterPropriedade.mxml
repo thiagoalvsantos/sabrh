@@ -53,6 +53,7 @@
 				<s:DropDownList id="cmbPesquisaEstado" labelField="descricao" change="cbmEstadoChange()" tabIndex="2" x="120" y="40" width="171"/>
 				<s:DropDownList id="cmbPesquisaMunicipio" width="264" enabled="false" labelField="descricao" tabIndex="3" x="370" y="40"/>
 				<s:TextInput id="cmbPesquisaProprietario" width="171" tabIndex="4" x="120" y="70"/>
+				<s:Button  x="300" y="70" label="Buscar"/>
 			</mx:Canvas>
 			<s:controlBarContent>
 				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex="6"/>

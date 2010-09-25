@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Consultar Usuário ::.." close="fechar(event)">
+	<fx:Declarations>
+		<s:RemoteObject id="usuarioService" fault="onFault(event)" destination="UsuarioService" showBusyCursor="true">
+			<s:method name="pesquisar" result="{pesquisarUsuariosResult(event)}"/>
+		</s:RemoteObject>
+	</fx:Declarations>
+	<s:states>
+		<s:State name="statePesquisa"/>
+		<s:State name="stateResultado"/>
+	</s:states>
+
+	<!--//////////////////////////
+		 //	PESQUISA
+		 /////////////////////////////-->
+	<s:VGroup id="groupPesquisa" left="5" right="5" top="5" bottom="5" includeIn="statePesquisa,stateResultado">
+		<s:Panel id="panelPesquisa" width="100%" height="100%" title="Pesquisa" includeIn="statePesquisa,stateResultado">
+			<mx:Canvas left="5" right="5" top="5" bottom="5">
+				<s:Label id="lblPesquisaNome" x="10" y="15" text="Nome"/>
+				<s:Label id="lblPesquisaEstado" x="10" y="45" text="Estado"/>
+				<s:Label id="lblPesquisaMunicipio" x="245" y="45" text="Municipio"/>
+				<s:Label id="lblPesquisaPerfil" x="10" y="75" text="Perfil"/>
+				<s:Label id="lblPesquisaStatus" x="245" y="75" text="Status"/>
+				<s:TextInput id="txtPesquisaNome" x="60" y="10" width="514" tabIndex.statePesquisa="1"/>
+				<s:DropDownList id="cmbPesquisaEstado" x="60" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex.statePesquisa="2"/>
+				<s:DropDownList id="cmbPesquisaMunicipio" x="310" y="40" width="264" enabled="false" labelField="descricao" tabIndex.statePesquisa="3"/>
+				<s:DropDownList id="cmbPesquisaPerfil" x="60" y="70" width="171" tabIndex.statePesquisa="4"/>
+				<s:DropDownList id="cmbPesquisaStatus" x="310" y="70" width="264" tabIndex.statePesquisa="5"/>
+			</mx:Canvas>
+			<s:controlBarContent>
+				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex.statePesquisa="6"/>
+				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex.statePesquisa="8"/>
+			</s:controlBarContent>
+		</s:Panel>
+		<!--//////////////////////////
+			 //	RESULTADO
+			 /////////////////////////////-->
+		<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
+			<mx:AdvancedDataGrid id="gridUsuario" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridUsuarioItemClick(event)">
+				<mx:columns>
+					<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" sortable="true" dataField="nome"/>
+					<mx:AdvancedDataGridColumn textAlign="center" headerText="CPF" dataField="cpf" sortable="true" labelFunction="cpflabelFunc"/>
+					<mx:AdvancedDataGridColumn textAlign="center" headerText="Perfil" dataField="perfil" sortable="true"/>
+					<mx:AdvancedDataGridColumn textAlign="center" headerText="Status" dataField="status" sortable="true"/>
+				</mx:columns>
+			</mx:AdvancedDataGrid>
+		</s:Panel>
+	</s:VGroup>
+</s:TitleWindow>
