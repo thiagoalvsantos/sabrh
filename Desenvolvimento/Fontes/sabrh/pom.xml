@@ -20,7 +20,7 @@
 		<myJbossVersion>5</myJbossVersion>
 		<myUnpack>false</myUnpack>
 		<myDialect>org.hibernate.dialect.Oracle10gDialect</myDialect>
-		<myHbm2ddlAuto>update</myHbm2ddlAuto>
+		<myHbm2ddlAuto>create-drop</myHbm2ddlAuto>
 		<myJdbcUrl>jdbc:oracle:thin:@localhost:1521:${myDatabaseInstance}</myJdbcUrl>
 		<myJdbcDriver>oracle.jdbc.driver.OracleDriver</myJdbcDriver>
 		<myJdbcUser>sabrh</myJdbcUser>
