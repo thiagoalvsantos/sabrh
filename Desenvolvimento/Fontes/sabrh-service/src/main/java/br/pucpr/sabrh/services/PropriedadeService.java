@@ -25,7 +25,7 @@ public interface PropriedadeService {
 	 *            - propriedade
 	 * @return list
 	 */
-	List<Propriedade> listar(Propriedade propriedade);
+	List<Propriedade> pesquisar(Propriedade propriedade);
 
 	/**
 	 * Salvar.
