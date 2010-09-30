@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ForeignKey;
+
 /**
  * Class Propriedade.
  */
@@ -29,12 +31,13 @@ public class Propriedade implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(initialValue = 0, sequenceName = "SEQ_PROPRIEDADE", name = "codigo")
-	@Column(name = "CD_CODIGO", length = 8)
+	@Column(name = "CD_PROPRIEDADE", length = 8)
 	private long codigo;
 
 	/** O atributo proprietario. */
 	@ManyToOne(targetEntity = Usuario.class)
 	@JoinColumn(name = "CD_PROPRIETARIO", referencedColumnName = "CD_CODIGO")
+	@ForeignKey(name = "FK_PROPRIEDADE_PROPRIETARIO")
 	private Usuario proprietario;
 
 	/** O atributo nome. */
@@ -44,6 +47,7 @@ public class Propriedade implements Serializable {
 	/** O atributo municipio. */
 	@ManyToOne(targetEntity = Municipio.class)
 	@JoinColumn(name = "CD_MUNICIPIO", referencedColumnName = "CD_CODIGO")
+	@ForeignKey(name = "FK_PROPRIEDADE_MUNICIPIO")
 	private Municipio municipio;
 
 	/** O atributo telefone. */

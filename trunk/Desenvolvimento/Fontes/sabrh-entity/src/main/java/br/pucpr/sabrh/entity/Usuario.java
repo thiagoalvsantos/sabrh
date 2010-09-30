@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ForeignKey;
+
 /**
  * The Class Usuario.
  */
@@ -67,6 +69,7 @@ public class Usuario implements Serializable {
 	/** O atributo municipio. */
 	@ManyToOne(targetEntity = Municipio.class)
 	@JoinColumn(name = "CD_MUNICIPIO", referencedColumnName = "CD_CODIGO")
+	@ForeignKey(name = "FK_USUARIO_MUNICIPIO")
 	private Municipio municipio;
 
 	/**
