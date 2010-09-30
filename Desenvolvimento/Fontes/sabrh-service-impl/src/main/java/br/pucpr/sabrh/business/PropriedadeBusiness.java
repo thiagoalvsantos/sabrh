@@ -34,7 +34,7 @@ public class PropriedadeBusiness implements PropriedadeService {
 	 * .Propriedade)
 	 */
 	@Override
-	public List<Propriedade> listar(Propriedade propriedade) {
+	public List<Propriedade> pesquisar(Propriedade propriedade) {
 
 		return propriedadeDAO.listar(propriedade);
 	}
