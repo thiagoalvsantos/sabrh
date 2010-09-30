@@ -1,11 +1,15 @@
 // login
+import br.pucpr.sabrh.entity.Municipio;
 import br.pucpr.sabrh.entity.Propriedade;
 import br.pucpr.sabrh.entity.Usuario;
+import br.pucpr.sabrh.view.consultarUsuario;
 
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
 import mx.controls.dataGridClasses.DataGridColumn;
+import mx.core.Application;
+import mx.core.FlexGlobals;
 import mx.events.CloseEvent;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
@@ -16,7 +20,10 @@ import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
 
+import spark.components.TextInput;
 import spark.events.IndexChangeEvent;
+
+
 
 
 /**
@@ -65,10 +72,24 @@ protected function actionBtnPesquisar():void
 		prop.nome=StringUtil.trim(txtPesquisaNome.text);
 	}
 
-	prop.municipio=cmbPesquisaMunicipio.selectedItem;
+	if (cmbPesquisaMunicipio.selectedIndex == 0 && cmbPesquisaEstado.selectedIndex != 0)
+	{
+		var mun:Municipio=new Municipio;
+		mun.estado=cmbPesquisaEstado.selectedItem;
+		prop.municipio=mun;
+	}
 
+	if (cmbPesquisaMunicipio.selectedIndex != 0)
+	{
+		prop.municipio=cmbPesquisaMunicipio.selectedItem;
+	}
 
-	propriedadeService.listar(prop);
+	if (txtPesquisaProprietario.text != "")
+	{
+		prop.proprietario=usuarioPesquisa;
+	}
+
+	propriedadeService.pesquisar(prop);
 }
 
 /**
@@ -162,7 +183,7 @@ protected function voltarPesquisa():void
 /**
  * Ação do botão salvar usuário.
  */
-protected function actionBtnSalvarUsuario():void
+protected function actionBtnSalvarPropriedade():void
 {
 	if (validar())
 	{
@@ -170,8 +191,8 @@ protected function actionBtnSalvarUsuario():void
 		propriedade.municipio=cmbNovoMunicipio.selectedItem;
 		propriedade.nome=txtNovoNome.text;
 		var usuario:Usuario=new Usuario();
-		usuario.codigo = 10;
-		propriedade.proprietario= usuario;
+		usuario.codigo=10;
+		propriedade.proprietario=usuarioNovo;
 		propriedade.telefone=txtNovoTelefone.text;
 
 		if (currentState == 'stateEditar')
@@ -441,4 +462,17 @@ protected function validar():Boolean
 protected function cpflabelFunc(item:Object, column:AdvancedDataGridColumn):String
 {
 	return cpfFormatter.format(item.cpf);
+}
+
+
+//Função para abrir a tela de Manuntenção de Usuários.
+public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
+{
+	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
+	popUpConsultarUsuario.janelaOrigem=this;
+	popUpConsultarUsuario.tipoConsulta=tipoConsulta;
+	popUpConsultarUsuario.atributoDestino=atributo;
+	PopUpManager.centerPopUp(popUpConsultarUsuario);
+	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
+	FlexGlobals.topLevelApplication.popUpEffect.play();
 }

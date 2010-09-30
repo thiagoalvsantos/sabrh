@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Consultar Usuário ::.." close="fechar(event)">
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Consultar Usuário ::.." close="fechar(event)" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" creationComplete="init(event)" xmlns:entity="br.pucpr.sabrh.entity.*">
+	<fx:Script source="../controller/consultarUsuario.as"/>
+
 	<fx:Declarations>
 		<s:RemoteObject id="usuarioService" fault="onFault(event)" destination="UsuarioService" showBusyCursor="true">
 			<s:method name="pesquisar" result="{pesquisarUsuariosResult(event)}"/>
 		</s:RemoteObject>
+		<s:RemoteObject id="municipioService" fault="onFault(event)" destination="MunicipioService" showBusyCursor="true">
+			<s:method name="listarMunicipios" result="{listarMunicipiosResult(event)}"/>
+		</s:RemoteObject>
+		<s:RemoteObject id="estadoService" fault="onFault(event)" destination="EstadoService" showBusyCursor="true">
+			<s:method name="listarEstados" result="{listarEstadosResult(event)}"/>
+		</s:RemoteObject>
+		<s:RemoteObject id="statusService" fault="onFault(event)" destination="StatusService" showBusyCursor="true">
+			<s:method name="listarStatus" result="{listarStatusResult(event)}"/>
+		</s:RemoteObject>
+		<s:RemoteObject id="perfilService" fault="onFault(event)" destination="PerfilService" showBusyCursor="true">
+			<s:method name="listarPerfil" result="{listarPerfilResult(event)}"/>
+		</s:RemoteObject>
+		<formatter:CpfCnpjFormatter id="cpfFormatter"/>
+		<fx:Object id="janelaOrigem"/>
+		<s:TextInput id="atributoDestino"/>
+		<fx:String id="tipoConsulta"/>
+		
+
 	</fx:Declarations>
 	<s:states>
 		<s:State name="statePesquisa"/>
