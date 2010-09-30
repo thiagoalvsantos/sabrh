@@ -3,16 +3,18 @@
  */
 package br.pucpr.sabrh.persistence;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
-import br.pucpr.br.entity.Usuario;
+import br.pucpr.sabrh.entity.Usuario;
 
 /**
  * The Interface UsuarioDAO.
  */
-@Remote(UsuarioDAO.class)
+@Remote
 public interface UsuarioDAO {
-	
+
 	/**
 	 * Autenticar.
 	 * 
@@ -20,6 +22,37 @@ public interface UsuarioDAO {
 	 *            the usuario
 	 * @return true, if successful
 	 */
-	Usuario autenticar(Usuario usuario);
+	Usuario autenticar(Usuario usuario) throws Exception;
+
+	/**
+	 * Listar.
+	 * 
+	 * @return list
+	 * @throws Exception
+	 *             the exception
+	 */
+	List<Usuario> listar() throws Exception;
+
+	/**
+	 * Inserir.
+	 * 
+	 * @param usuario
+	 *            - usuario
+	 * @return usuario
+	 * @throws Exception
+	 *             the exception
+	 */
+	Usuario salvar(Usuario usuario) throws Exception;
+
+	/**
+	 * Pesquisar.
+	 * 
+	 * @param usuario
+	 *            - usuario
+	 * @return list
+	 * @throws Exception
+	 *             the exception
+	 */
+	List<Usuario> pesquisar(Usuario usuario) throws Exception;
 
 }
