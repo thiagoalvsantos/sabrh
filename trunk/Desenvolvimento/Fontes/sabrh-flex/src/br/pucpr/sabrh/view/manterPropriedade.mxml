@@ -14,7 +14,7 @@
 			<s:method name="listarEstados" result="{listarEstadosResult(event)}"/>
 		</s:RemoteObject>
 		<s:RemoteObject id="propriedadeService" fault="onFault(event)" destination="PropriedadeService" showBusyCursor="true">
-			<s:method name="listar" result="{pesquisarPropriedadesResult(event)}"/>
+			<s:method name="pesquisar" result="{pesquisarPropriedadesResult(event)}"/>
 		</s:RemoteObject>
 
 		<fx:Array id="val">
@@ -28,6 +28,10 @@
 		<formatter:CpfCnpjFormatter id="cpfFormatter"/>
 
 		<entity:Propriedade id="propriedadeSelecionada"/>
+
+		<entity:Usuario id="usuarioPesquisa"/>
+
+		<entity:Usuario id="usuarioNovo"/>
 
 	</fx:Declarations>
 
@@ -52,8 +56,8 @@
 				<s:TextInput id="txtPesquisaNome" width="514" tabIndex="1" x="120" y="10"/>
 				<s:DropDownList id="cmbPesquisaEstado" labelField="descricao" change="cbmEstadoChange()" tabIndex="2" x="120" y="40" width="171"/>
 				<s:DropDownList id="cmbPesquisaMunicipio" width="264" enabled="false" labelField="descricao" tabIndex="3" x="370" y="40"/>
-				<s:TextInput id="cmbPesquisaProprietario" width="171" tabIndex="4" x="120" y="70"/>
-				<s:Button  x="300" y="70" label="Buscar"/>
+				<s:TextInput id="txtPesquisaProprietario" tabIndex="4" x="120" y="70" width="440" editable="false"/>
+				<s:Button label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="570" y="70"/>
 			</mx:Canvas>
 			<s:controlBarContent>
 				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex="6"/>
@@ -114,11 +118,12 @@
 				<s:DropDownList id="cmbNovoEstado" x="90" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
 				<s:DropDownList id="cmbNovoMunicipio" x="340" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
 				<s:TextInput id="txtNovoTelefone" x="90" y="70" width="171" tabIndex="4"/>
-				<s:TextInput id="txtNovoProprietario" x="90" y="100" width="171" maxChars="50" tabIndex="5"/>
+				<s:TextInput id="txtNovoProprietario" x="90" y="100" maxChars="50" tabIndex="5" width="435" editable="false"/>
+				<s:Button label="Buscar" click="{abrirConsultarUsuario(txtNovoProprietario,'novo')}" x="535" y="100"/>
 			</mx:Canvas>
 
 			<s:controlBarContent>
-				<s:Button label="Salvar" click="{actionBtnSalvarUsuario()}"/>
+				<s:Button label="Salvar" click="{actionBtnSalvarPropriedade()}"/>
 				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click="{actionBtnLimparNovo()}"/>
 				<s:Button label="Voltar" click="{voltarPesquisa()}"/>
 			</s:controlBarContent>
