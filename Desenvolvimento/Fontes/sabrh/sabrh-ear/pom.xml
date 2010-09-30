@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>br.pucpr.sabrh</groupId>
 			<artifactId>sabrh-service</artifactId>
-		</dependency>		
+		</dependency>
 	</dependencies>
 
 	<build>
