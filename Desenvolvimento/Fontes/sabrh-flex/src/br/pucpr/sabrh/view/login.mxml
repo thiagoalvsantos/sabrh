@@ -17,7 +17,7 @@
 
 	</fx:Declarations>
 
-	<mx:HBox horizontalCenter="0" verticalCenter="0" horizontalAlign="center" verticalAlign="middle">
+	<mx:HBox horizontalCenter="0" verticalCenter="0" horizontalAlign="center" verticalAlign="middle" defaultButton="{btnEntrar}">
 
 		<mx:Form horizontalCenter="0" verticalCenter="0" dropShadowVisible="true">
 			<mx:FormItem label="Usuário">
@@ -27,6 +27,6 @@
 				<mx:TextInput displayAsPassword="true" id="txtSenha" text="123456"/>
 			</mx:FormItem>
 		</mx:Form>
-		<s:Button label="Entrar" click="autenticar()" x="295" y="112" height="50"/>
+		<s:Button id="btnEntrar" label="Entrar" click="autenticar()" x="295" y="112" height="50"/>
 	</mx:HBox>
 </mx:Panel>
