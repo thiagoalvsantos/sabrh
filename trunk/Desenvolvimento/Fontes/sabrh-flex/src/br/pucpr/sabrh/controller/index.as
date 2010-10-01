@@ -2,7 +2,11 @@ import br.pucpr.sabrh.view.login;
 import br.pucpr.sabrh.view.manterPropriedade;
 import br.pucpr.sabrh.view.manterUsuario;
 
+import flash.events.Event;
+
+import mx.controls.Alert;
 import mx.controls.Image;
+import mx.events.CloseEvent;
 import mx.managers.PopUpManager;
 
 [Bindable]
@@ -64,7 +68,7 @@ public function abrirManterUsuario():void
 }
 
 
-//Função para abrir a tela de Manuntenção de Usuários.
+//Função para abrir a tela de Manuntenção de Propriedades.
 public function abrirManterPropriedade():void
 {
 	var popUpManterPropriedade:manterPropriedade=manterPropriedade(PopUpManager.createPopUp(this,manterPropriedade, true));
@@ -73,6 +77,23 @@ public function abrirManterPropriedade():void
 	popUpEffect.play();
 }
 
+//Função para fazer logoff da aplicação.
+public function fazerLogoff():void
+{
+	Alert.show("Tem certeza de sair da aplicação?", "Logoff", Alert.YES | Alert.NO, this, encerrar);
+}
+
+//Função para setar o encerramento da aplicação.
+public function encerrar(event:CloseEvent):void
+{	
+	if (event.detail == Alert.YES){
+		// remove usuário da aplicação
+		user = null;
+		
+		init();
+		this.visible = false;
+	}
+}
 
 public function iconMoveDown(id:Image):void
 {

@@ -83,7 +83,7 @@ public function autenticarResult(event:ResultEvent):void
 	}
 	else
 	{
-		Alert.show("Erro ao autenticar usuário!");
+		Alert.show("Usuário e/ou senha inválidos!", ".:: Login ::.");
 	}
 }
 
