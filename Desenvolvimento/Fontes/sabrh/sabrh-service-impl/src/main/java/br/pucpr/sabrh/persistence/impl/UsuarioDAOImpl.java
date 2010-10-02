@@ -99,11 +99,11 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 			if (ConstraintViolationException.class.isInstance(e.getCause())) {
 				throw new RuntimeException(
-						"Erro ao salvar. Dados já foram cadastrados para outro usuário.");
+						"Erro ao salvar.\n Dados já foram cadastrados para outro usuário.");
 			} else {
 				if (EntityExistsException.class.isInstance(e.getCause())) {
 					throw new RuntimeException(
-							"Erro ao salvar. Usuário já cadastrado.");
+							"Erro ao salvar.\n Usuário já cadastrado.");
 				}
 			}
 
