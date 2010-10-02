@@ -8,8 +8,8 @@
 	<fx:Script source="controller/index.as"/>
 	<s:BitmapImage width="100%" height="100%" source="@Embed(source='assets/yflexskin.swf',symbol='BackgroundImage')" fillMode="scale"/>
 
-	<mx:Image id="iconeManterUsuario" x="10" y="10" source="@Embed(source='assets/img/manterusuario.png')" toolTip="Manutenção de Usuários" click="{abrirManterUsuario()}" mouseDown="{iconMD(iconeManterUsuario)}" mouseOut="{iconMoveUp(iconeManterUsuario)}" mouseOver="{iconMoveDown(iconeManterUsuario)}" mouseUp="{iconMU(iconeManterUsuario)}" buttonMode="true"/>
-	<mx:Image id="iconeManterPropriedade" x="10" y="80" source="@Embed(source='assets/img/propriedade.png')" toolTip="Manutenção de Usuários" click="{abrirManterPropriedade()}" mouseDown="{iconMD(iconeManterPropriedade)}" mouseOut="{iconMoveUp(iconeManterPropriedade)}" mouseOver="{iconMoveDown(iconeManterPropriedade)}" mouseUp="{iconMU(iconeManterPropriedade)}" buttonMode="true"/>
+	<mx:Image id="iconeManterUsuario" x="10" y="10" source="@Embed(source='assets/img/btn-usuarios.png')" toolTip="Manutenção de Usuários" click="{abrirManterUsuario()}" mouseDown="{iconMD(iconeManterUsuario)}" mouseOut="{iconMoveUp(iconeManterUsuario)}" mouseOver="{iconMoveDown(iconeManterUsuario)}" mouseUp="{iconMU(iconeManterUsuario)}" buttonMode="true"/>
+	<mx:Image id="iconeManterPropriedade" x="10" y="80" source="@Embed(source='assets/img/btn-propriedades.png')" toolTip="Manutenção de Usuários" click="{abrirManterPropriedade()}" mouseDown="{iconMD(iconeManterPropriedade)}" mouseOut="{iconMoveUp(iconeManterPropriedade)}" mouseOver="{iconMoveDown(iconeManterPropriedade)}" mouseUp="{iconMU(iconeManterPropriedade)}" buttonMode="true"/>
 	<mx:Image id="iconeLogoff" bottom="10" right="10" source="@Embed(source='assets/img/logoff.png')" toolTip="Logoff" click="{fazerLogoff()}" mouseDown="{iconMD(iconeLogoff)}" mouseOut="{iconMoveUp(iconeLogoff)}" mouseOver="{iconMoveDown(iconeLogoff)}" mouseUp="{iconMU(iconeLogoff)}" buttonMode="true"/>
 	<fx:Declarations>
 		<mx:DateFormatter id="df" formatString="DD/MM/YYYY"/>
