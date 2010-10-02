@@ -41,6 +41,7 @@ public class Municipio implements Serializable {
 	/** O atributo estado. */
 	@ManyToOne(targetEntity = Estado.class)
 	@JoinColumn(name = "TX_ESTADO", referencedColumnName = "TX_SIGLA")
+	@ForeignKey(name="FK_MUNICIPIO_ESTADO")
 	private Estado estado;
 
 	/**
