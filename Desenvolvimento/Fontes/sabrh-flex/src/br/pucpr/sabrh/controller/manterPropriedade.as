@@ -158,15 +158,15 @@ protected function actionBtnLimparNovo():void
 }
 
 /**
- * Ação do botão editar usuario.
+ * Ação do botão editar propriedade.
  * @param event
  */
-protected function editarUsuario():void
+protected function editarPropriedade():void
 {
 	currentState="stateEditar";
 	txtNovoNome.text=propriedadeSelecionada.nome;
 	txtNovoProprietario.text=propriedadeSelecionada.proprietario.nome;
-	txtNovoTelefone.text=propriedadeSelecionada.telefone;
+	txtNovoTelefone.text=telefoneFormatter.format(propriedadeSelecionada.telefone);
 	estadoService.listarEstados();
 	PopUpManager.centerPopUp(this);
 }
@@ -196,6 +196,11 @@ protected function actionBtnSalvarPropriedade():void
 		usuario.codigo=10;
 		propriedade.proprietario=usuarioNovo;
 		propriedade.telefone=txtNovoTelefone.text;
+		
+		//retira mascara telefone
+		propriedade.telefone=propriedade.telefone.replace("(", "");
+		propriedade.telefone=propriedade.telefone.replace(")", "");
+		propriedade.telefone=propriedade.telefone.replace("-", "");
 
 		if (currentState == 'stateEditar')
 		{
@@ -398,14 +403,14 @@ protected function cbmEstadoChange():void
  *
  * @param event
  */
-protected function gridUsuarioItemClick(event:ListEvent):void
+protected function gridPropriedadeItemClick(event:ListEvent):void
 {
 	currentState='stateDetalhe';
 
 	propriedadeSelecionada=event.currentTarget.selectedItem;
 	txtDetalheNome.text=propriedadeSelecionada.nome;
 	txtDetalheProprietario.text=propriedadeSelecionada.proprietario.nome;
-	txtDetalheTelefone.text=propriedadeSelecionada.telefone;
+	txtDetalheTelefone.text=telefoneFormatter.format(propriedadeSelecionada.telefone);
 	cmbDetalheEstado.text=propriedadeSelecionada.municipio.estado.descricao;
 	cmbDetalheMunicipio.text=propriedadeSelecionada.municipio.descricao;
 

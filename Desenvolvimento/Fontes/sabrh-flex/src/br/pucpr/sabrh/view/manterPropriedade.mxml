@@ -69,7 +69,7 @@
 			 //	RESULTADO
 			 /////////////////////////////-->
 		<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
-			<mx:AdvancedDataGrid id="gridProprietario" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridUsuarioItemClick(event)">
+			<mx:AdvancedDataGrid id="gridProprietario" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridPropriedadeItemClick(event)">
 				<mx:columns>
 					<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" dataField="nome" sortable="true"/>
 					<mx:AdvancedDataGridColumn textAlign="center" headerText="Estado" dataField="" sortable="true">
@@ -149,7 +149,7 @@
 			</mx:Canvas>
 
 			<s:controlBarContent>
-				<s:Button label="Editar" click="{editarUsuario()}"/>
+				<s:Button label="Editar" click="{editarPropriedade()}"/>
 				<s:Button label="Voltar" click="{voltarPesquisa()}"/>
 			</s:controlBarContent>
 		</s:Panel>

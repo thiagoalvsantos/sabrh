@@ -115,7 +115,7 @@
 
 			<s:controlBarContent>
 				<s:Button label="Salvar" click="{actionBtnSalvarUsuario()}"/>
-				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click="{actionBtnLimparNovo()}"/>
+				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="novoConfirmacao()" click.stateNovo="{actionBtnLimparNovo()}"/>
 				<s:Button label="Voltar" click="{voltarPesquisa()}"/>
 			</s:controlBarContent>
 		</s:Panel>
