@@ -34,14 +34,24 @@ mx|AccordionHeader
 
 /*
 //------------------------------
-//  AccordionHeader
+//  Alert
 //------------------------------
 */
+.titleAlert
+{
+	text-align:left;
+	font-weight:bold;
+	
+}
 
 mx|Alert
 {
 	text-align:center;
+	title-style-name :titleAlert;
+	
 }
+
+
 /*
 //------------------------------
 //  Application

@@ -3,6 +3,7 @@ import br.pucpr.sabrh.view.manterPropriedade;
 import br.pucpr.sabrh.view.manterUsuario;
 
 import flash.events.Event;
+import flash.external.ExternalInterface;
 
 import mx.controls.Alert;
 import mx.controls.Image;
@@ -39,6 +40,7 @@ public function incrementa(event:TimerEvent):void
  */
 public function init():void
 {
+	ExternalInterface.call('window.document.index.focus()');
 	this.timer=new Timer(1000 * 1);
 	timer.addEventListener("timer", incrementa);
 	timer.start();
