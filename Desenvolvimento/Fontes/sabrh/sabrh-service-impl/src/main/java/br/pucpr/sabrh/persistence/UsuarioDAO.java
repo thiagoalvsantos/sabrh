@@ -22,7 +22,7 @@ public interface UsuarioDAO {
 	 *            the usuario
 	 * @return true, if successful
 	 */
-	Usuario autenticar(Usuario usuario) throws Exception;
+	Usuario autenticar(Usuario usuario);
 
 	/**
 	 * Listar.
@@ -42,7 +42,7 @@ public interface UsuarioDAO {
 	 * @throws Exception
 	 *             the exception
 	 */
-	Usuario salvar(Usuario usuario) throws Exception;
+	Usuario salvar(Usuario usuario);
 
 	/**
 	 * Pesquisar.

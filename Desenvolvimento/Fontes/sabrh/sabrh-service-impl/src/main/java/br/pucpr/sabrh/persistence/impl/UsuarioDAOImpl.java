@@ -10,6 +10,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -89,16 +90,25 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public Usuario salvar(Usuario usuario) throws Exception {
+	public Usuario salvar(Usuario usuario) {
 		Usuario result = null;
 		try {
 			result = entityManager.merge(usuario);
-		} catch (ConstraintViolationException e) {
-			throw new RuntimeException(
-					"Erro ao salvar usuário. Dados já foram cadastrados para outro usuário.");
-		} catch (EntityExistsException e) {
-			throw new RuntimeException(
-					"Erro ao salvar usuário. Usuário ja foi cadastrado.");
+			entityManager.flush();
+		} catch (PersistenceException e) {
+
+			if (ConstraintViolationException.class.isInstance(e.getCause())) {
+				throw new RuntimeException(
+						"Erro ao salvar. Dados já foram cadastrados para outro usuário.");
+			} else {
+				if (EntityExistsException.class.isInstance(e.getCause())) {
+					throw new RuntimeException(
+							"Erro ao salvar. Usuário já cadastrado.");
+				}
+			}
+
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao salvar usuário.");
 		}
 		return result;
 	}
