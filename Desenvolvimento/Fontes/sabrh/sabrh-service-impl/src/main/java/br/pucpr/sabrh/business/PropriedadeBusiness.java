@@ -30,13 +30,13 @@ public class PropriedadeBusiness implements PropriedadeService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.pucpr.sabrh.services.PropriedadeService#listar(br.pucpr.sabrh.entity
+	 * br.pucpr.sabrh.services.PropriedadeService#pesquisar(br.pucpr.sabrh.entity
 	 * .Propriedade)
 	 */
 	@Override
 	public List<Propriedade> pesquisar(Propriedade propriedade) {
 
-		return propriedadeDAO.listar(propriedade);
+		return propriedadeDAO.pesquisar(propriedade);
 	}
 
 	/*

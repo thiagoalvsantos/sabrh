@@ -35,7 +35,7 @@ public class PropriedadeDAOImpl implements PropriedadeDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Propriedade> listar(Propriedade propriedade) {
+	public List<Propriedade> pesquisar(Propriedade propriedade) {
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(Propriedade.class);
 		c.add(Example.create(propriedade).enableLike().ignoreCase());
