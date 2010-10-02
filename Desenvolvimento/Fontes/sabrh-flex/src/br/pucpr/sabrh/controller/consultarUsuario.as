@@ -29,6 +29,7 @@ protected function init(event:FlexEvent):void
 {
 
 	estadoService.listarEstados();
+	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 }
 
 /**
@@ -74,6 +75,9 @@ protected function actionBtnPesquisar():void
 	{
 		usr.municipio=cmbPesquisaMunicipio.selectedItem;
 	}
+	
+	usr.perfil="PRODUTOR";
+	usr.status="ATIVO";
 
 	usuarioService.pesquisar(usr);
 }
@@ -96,6 +100,7 @@ protected function actionBtnLimparPesquisa():void
 	{
 		gridUsuario.dataProvider=null;
 	}
+	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
 }
 
