@@ -13,6 +13,9 @@ public enum TipoPerfil {
 
 	/** O atributo ESPECIALISTA. */
 	ESPECIALISTA('e', "Especialista"),
+	
+	/** O atributo ESPECIALISTA. */
+	EMPRESA('b', "Empresa"),
 
 	/** O atributo PRODUTOR. */
 	PRODUTOR('p', "Produtor");
