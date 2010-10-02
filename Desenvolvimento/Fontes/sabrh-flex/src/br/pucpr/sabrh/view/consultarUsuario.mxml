@@ -28,7 +28,7 @@
 		 //	PESQUISA
 		 /////////////////////////////-->
 	<s:VGroup id="groupPesquisa" left="5" right="5" top="5" bottom="5" includeIn="statePesquisa,stateResultado">
-		<s:Panel id="panelPesquisa" width="100%" height="100%" title="Pesquisa" includeIn="statePesquisa,stateResultado">
+		<s:Panel id="panelPesquisa" title="Pesquisa" includeIn="statePesquisa,stateResultado" >
 			<mx:Canvas left="5" right="5" top="5" bottom="5">
 				<s:Label id="lblPesquisaNome" x="10" y="15" text="Nome"/>
 				<s:Label id="lblPesquisaEstado" x="10" y="45" text="Estado"/>
