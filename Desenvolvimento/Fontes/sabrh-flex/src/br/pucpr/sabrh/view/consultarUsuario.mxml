@@ -12,12 +12,6 @@
 		<s:RemoteObject id="estadoService" fault="onFault(event)" destination="EstadoService" showBusyCursor="true">
 			<s:method name="listarEstados" result="{listarEstadosResult(event)}"/>
 		</s:RemoteObject>
-		<s:RemoteObject id="statusService" fault="onFault(event)" destination="StatusService" showBusyCursor="true">
-			<s:method name="listarStatus" result="{listarStatusResult(event)}"/>
-		</s:RemoteObject>
-		<s:RemoteObject id="perfilService" fault="onFault(event)" destination="PerfilService" showBusyCursor="true">
-			<s:method name="listarPerfil" result="{listarPerfilResult(event)}"/>
-		</s:RemoteObject>
 		<formatter:CpfCnpjFormatter id="cpfFormatter"/>
 		<fx:Object id="janelaOrigem"/>
 		<s:TextInput id="atributoDestino"/>
@@ -39,17 +33,13 @@
 				<s:Label id="lblPesquisaNome" x="10" y="15" text="Nome"/>
 				<s:Label id="lblPesquisaEstado" x="10" y="45" text="Estado"/>
 				<s:Label id="lblPesquisaMunicipio" x="245" y="45" text="Municipio"/>
-				<s:Label id="lblPesquisaPerfil" x="10" y="75" text="Perfil"/>
-				<s:Label id="lblPesquisaStatus" x="245" y="75" text="Status"/>
 				<s:TextInput id="txtPesquisaNome" x="60" y="10" width="514" tabIndex.statePesquisa="1"/>
 				<s:DropDownList id="cmbPesquisaEstado" x="60" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex.statePesquisa="2"/>
 				<s:DropDownList id="cmbPesquisaMunicipio" x="310" y="40" width="264" enabled="false" labelField="descricao" tabIndex.statePesquisa="3"/>
-				<s:DropDownList id="cmbPesquisaPerfil" x="60" y="70" width="171" tabIndex.statePesquisa="4"/>
-				<s:DropDownList id="cmbPesquisaStatus" x="310" y="70" width="264" tabIndex.statePesquisa="5"/>
 			</mx:Canvas>
 			<s:controlBarContent>
-				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex.statePesquisa="6"/>
-				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex.statePesquisa="8"/>
+				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex.statePesquisa="4"/>
+				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex.statePesquisa="5"/>
 			</s:controlBarContent>
 		</s:Panel>
 		<!--//////////////////////////

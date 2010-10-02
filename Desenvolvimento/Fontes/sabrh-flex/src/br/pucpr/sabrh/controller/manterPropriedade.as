@@ -183,6 +183,22 @@ protected function voltarPesquisa():void
 	PopUpManager.centerPopUp(this);
 }
 
+/**
+ * Ação do botão novo na tela de edição.
+ * @param event
+ */
+protected function novoConfirmacao():void
+{
+	Alert.show("Tem certeza de sair sem salvar as alterações?", "Manutenção de Propriedades", Alert.YES | Alert.NO, this, novoConfirmacaoResult);
+}
+
+//Função para recuperar o resultado da confirmação.
+protected function novoConfirmacaoResult(event:CloseEvent):void
+{	
+	if (event.detail == Alert.YES){
+		actionBtnLimparNovo();
+	}
+}
 
 /**
  * Ação do botão salvar usuário.
@@ -271,7 +287,7 @@ protected function salvarPropriedadeResult(event:ResultEvent):void
 
 	txtDetalheNome.text=propriedadeSelecionada.nome;
 	txtDetalheProprietario.text=propriedadeSelecionada.proprietario.nome;
-	txtDetalheTelefone.text=propriedadeSelecionada.telefone;
+	txtDetalheTelefone.text=telefoneFormatter.format(propriedadeSelecionada.telefone);
 	cmbDetalheEstado.text=propriedadeSelecionada.municipio.estado.descricao;
 	cmbDetalheMunicipio.text=propriedadeSelecionada.municipio.descricao;
 
