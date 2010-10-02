@@ -123,6 +123,8 @@ protected function actionBtnLimparPesquisa():void
 	cmbPesquisaMunicipio.selectedIndex=-1;
 	cmbPesquisaMunicipio.selectedIndex=0;
 	cmbPesquisaMunicipio.enabled=false;
+	txtPesquisaProprietario.text="";
+	usuarioPesquisa=null;
 
 	if (gridProprietario != null)
 	{
@@ -449,19 +451,6 @@ protected function validar():Boolean
 	{
 		return false;
 	}
-}
-
-
-
-/**
- *
- * @param item
- * @param column
- * @return
- */
-protected function cpflabelFunc(item:Object, column:AdvancedDataGridColumn):String
-{
-	return cpfFormatter.format(item.cpf);
 }
 
 
