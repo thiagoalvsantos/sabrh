@@ -52,8 +52,8 @@
 			<mx:Canvas left="5" right="5" top="5" bottom="5">
 				<s:Label id="lblPesquisaNome" x="10" y="15" text="Nome Propriedade"/>
 				<s:Label id="lblPesquisaEstado" x="10" y="45" text="Estado"/>
-				<s:Label id="lblPesquisaMunicipio" x="305" y="45" text="Municipio"/>
-				<s:Label id="lblPesquisaProprietario" x="10" y="75" text="Proprietario"/>
+				<s:Label id="lblPesquisaMunicipio" x="305" y="45" text="Município"/>
+				<s:Label id="lblPesquisaProprietario" x="10" y="75" text="Proprietário"/>
 				<s:TextInput id="txtPesquisaNome" width="514" tabIndex="1" x="120" y="10"/>
 				<s:DropDownList id="cmbPesquisaEstado" labelField="descricao" change="cbmEstadoChange()" tabIndex="2" x="120" y="40" width="171"/>
 				<s:DropDownList id="cmbPesquisaMunicipio" width="264" enabled="false" labelField="descricao" tabIndex="3" x="370" y="40"/>
@@ -82,7 +82,7 @@
 							</fx:Component>
 						</mx:itemRenderer>
 					</mx:AdvancedDataGridColumn>
-					<mx:AdvancedDataGridColumn textAlign="center" headerText="Municipio" dataField="municipio.descricao" sortable="true">
+					<mx:AdvancedDataGridColumn textAlign="center" headerText="Município" dataField="municipio.descricao" sortable="true">
 						<mx:itemRenderer>
 							<fx:Component>
 								<mx:Canvas>
@@ -111,10 +111,15 @@
 		<s:Panel id="panelNovo" width="100%" height="100%" title.stateNovo="Novo" title.stateEditar="Editar">
 			<mx:Canvas left="5" right="5" top="5" bottom="5" currentStateChange.stateNovo="{actionBtnLimparNovo()}">
 				<s:Label id="lblNovoNome" x="10" y="15" text="Nome"/>
+					<s:Label text="*" color="#FF0000" x="42" y="15"/>
 				<s:Label id="lblNovoEstado" x="10" y="45" text="Estado"/>
-				<s:Label id="lblNovoMunicipio" x="270" y="45" text="Municipio"/>
+					<s:Label text="*" color="#FF0000" x="47" y="45"/>
+				<s:Label id="lblNovoMunicipio" x="270" y="45" text="Município"/>
+					<s:Label text="*" color="#FF0000" x="319" y="45"/>
 				<s:Label id="lblNovoTelefone" x="10" y="75" text="Telefone"/>
-				<s:Label id="lblNovoPropritario" x="10" y="105" text="Proprietario"/>
+					<s:Label text="*" color="#FF0000" x="58" y="75"/>
+				<s:Label id="lblNovoPropritario" x="10" y="105" text="Proprietário"/>
+					<s:Label text="*" color="#FF0000" x="72" y="105"/>
 				<s:TextInput id="txtNovoNome" x="90" y="10" width="514" maxChars="255" tabIndex="1" focusEnabled="true"/>
 				<s:DropDownList id="cmbNovoEstado" x="90" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
 				<s:DropDownList id="cmbNovoMunicipio" x="340" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
@@ -136,17 +141,17 @@
 	<s:VGroup id="groupDetalhe" left="5" right="5" top="5" bottom="5" includeIn="stateDetalhe">
 		<s:Panel id="panelDetalhe" width="100%" height="100%" title="Detalhe">
 			<mx:Canvas left="5" right="5" top="5" bottom="5">
-				<s:Label id="lblDetalheNome" x="10" y="15" text="Nome"/>
-				<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado"/>
-				<s:Label id="lblDetalheMunicipio" x="255" y="45" text="Municipio"/>
-				<s:Label id="lblDetalheTelefone" x="10" y="75" text="Telefone"/>
-				<s:Label id="lblDetalheProprietario" x="10" y="105" text="Proprietario"/>
+				<s:Label id="lblDetalheNome" x="10" y="15" text="Nome" fontWeight="bold"/>
+				<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado" fontWeight="bold"/>
+				<s:Label id="lblDetalheMunicipio" x="255" y="45" text="Município" fontWeight="bold"/>
+				<s:Label id="lblDetalheTelefone" x="10" y="75" text="Telefone" fontWeight="bold"/>
+				<s:Label id="lblDetalheProprietario" x="10" y="105" text="Proprietário" fontWeight="bold"/>
 				<!-- DADOS -->
-				<s:Label id="txtDetalheNome" x="80" y="15" width="514"/>
-				<s:Label id="cmbDetalheEstado" x="80" y="45" width="171"/>
+				<s:Label id="txtDetalheNome" x="90" y="15" width="514"/>
+				<s:Label id="cmbDetalheEstado" x="90" y="45" width="171"/>
 				<s:Label id="cmbDetalheMunicipio" x="320" y="45" width="264"/>
-				<s:Label id="txtDetalheTelefone" x="80" y="75" width="171"/>
-				<s:Label id="txtDetalheProprietario" x="80" y="105" width="171"/>
+				<s:Label id="txtDetalheTelefone" x="90" y="75" width="171"/>
+				<s:Label id="txtDetalheProprietario" x="90" y="105" width="171"/>
 			</mx:Canvas>
 
 			<s:controlBarContent>
