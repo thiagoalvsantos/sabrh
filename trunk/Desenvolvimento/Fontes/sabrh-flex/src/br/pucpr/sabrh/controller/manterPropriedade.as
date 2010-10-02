@@ -35,7 +35,7 @@ protected function init(event:FlexEvent):void
 {
 
 	estadoService.listarEstados();
-
+	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 
 }
 
@@ -155,6 +155,8 @@ protected function actionBtnLimparNovo():void
 	{
 		currentState="stateNovo";
 	}
+	
+	txtNovoNome.focusManager.setFocus(txtNovoNome);
 }
 
 /**
@@ -254,7 +256,7 @@ protected function pesquisarPropriedadesResult(event:ResultEvent):void
  *
  * @param event
  */
-protected function inserirUsuarioResult(event:ResultEvent):void
+protected function salvarPropriedadeResult(event:ResultEvent):void
 {
 	if (currentState == 'stateNovo')
 	{
@@ -413,6 +415,7 @@ protected function gridPropriedadeItemClick(event:ListEvent):void
 	txtDetalheTelefone.text=telefoneFormatter.format(propriedadeSelecionada.telefone);
 	cmbDetalheEstado.text=propriedadeSelecionada.municipio.estado.descricao;
 	cmbDetalheMunicipio.text=propriedadeSelecionada.municipio.descricao;
+	txtDetalheProprietario.text=propriedadeSelecionada.proprietario.nome;
 
 	PopUpManager.centerPopUp(this);
 }
