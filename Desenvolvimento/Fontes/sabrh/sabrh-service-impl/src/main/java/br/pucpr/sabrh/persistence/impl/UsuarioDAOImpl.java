@@ -6,6 +6,7 @@ package br.pucpr.sabrh.persistence.impl;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -15,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.ConstraintViolationException;
 
 import br.pucpr.sabrh.entity.Estado;
 import br.pucpr.sabrh.entity.Usuario;
@@ -88,7 +90,16 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
 	public Usuario salvar(Usuario usuario) throws Exception {
-		Usuario result = entityManager.merge(usuario);
+		Usuario result = null;
+		try {
+			result = entityManager.merge(usuario);
+		} catch (ConstraintViolationException e) {
+			throw new RuntimeException(
+					"Erro ao salvar usuário. Dados já foram cadastrados para outro usuário.");
+		} catch (EntityExistsException e) {
+			throw new RuntimeException(
+					"Erro ao salvar usuário. Usuário ja foi cadastrado.");
+		}
 		return result;
 	}
 
