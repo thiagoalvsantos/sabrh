@@ -29,9 +29,6 @@ protected function init(event:FlexEvent):void
 {
 
 	estadoService.listarEstados();
-	statusService.listarStatus();
-	perfilService.listarPerfil();
-
 }
 
 /**
@@ -77,8 +74,6 @@ protected function actionBtnPesquisar():void
 	{
 		usr.municipio=cmbPesquisaMunicipio.selectedItem;
 	}
-	usr.perfil=cmbPesquisaPerfil.selectedItem;
-	usr.status=cmbPesquisaStatus.selectedItem;
 
 	usuarioService.pesquisar(usr);
 }
@@ -97,10 +92,6 @@ protected function actionBtnLimparPesquisa():void
 	cmbPesquisaMunicipio.selectedIndex=-1;
 	cmbPesquisaMunicipio.selectedIndex=0;
 	cmbPesquisaMunicipio.enabled=false;
-	cmbPesquisaPerfil.selectedIndex=-1;
-	cmbPesquisaPerfil.selectedIndex=0;
-	cmbPesquisaStatus.selectedIndex=-1;
-	cmbPesquisaStatus.selectedIndex=0;
 	if (gridUsuario != null)
 	{
 		gridUsuario.dataProvider=null;
@@ -175,38 +166,6 @@ protected function listarEstadosResult(event:ResultEvent):void
 	cmbPesquisaEstado.selectedIndex=-1;
 	cmbPesquisaEstado.selectedIndex=0;
 	cmbPesquisaEstado.errorString=null;
-}
-
-/**
- * Resultado da listagem de perfil.
- *
- * @param event
- */
-protected function listarPerfilResult(event:ResultEvent):void
-{
-	var listaPerfil:ArrayCollection=new ArrayCollection();
-	listaPerfil.addItem("Selecione...");
-	listaPerfil.addAll(event.result as ArrayCollection);
-
-	cmbPesquisaPerfil.dataProvider=listaPerfil;
-	cmbPesquisaPerfil.selectedIndex=-1;
-	cmbPesquisaPerfil.selectedIndex=0;
-}
-
-/**
- * Resultado da listagem de status.
- *
- * @param event
- */
-protected function listarStatusResult(event:ResultEvent):void
-{
-	var listaStatus:ArrayCollection=new ArrayCollection();
-	listaStatus.addItem("Selecione...");
-	listaStatus.addAll(event.result as ArrayCollection);
-
-	cmbPesquisaStatus.dataProvider=listaStatus;
-	cmbPesquisaStatus.selectedIndex=-1;
-	cmbPesquisaStatus.selectedIndex=0
 }
 
 /**
