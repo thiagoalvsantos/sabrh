@@ -21,7 +21,7 @@
 			<mx:StringValidator id="strValNome" source="{txtNovoNome}" property="text" required="true" minLength="5" maxLength="255"/>
 			<mx:NumberValidator id="numValEstado" source="{cmbNovoEstado}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:NumberValidator id="numValMunicipio" source="{cmbNovoMunicipio}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
-			<mx:StringValidator id="strValTelefone" source="{txtNovoTelefone}" property="text" required="true" minLength="10" maxLength="10" />
+			<mx:StringValidator id="strValTelefone" source="{txtNovoTelefone}" property="text" required="true" minLength="10" maxLength="13" />
 			<mx:StringValidator id="strValProprietario" source="{txtNovoProprietario}" property="text" required="true" minLength="5" maxLength="50"/>
 		</fx:Array>
 
