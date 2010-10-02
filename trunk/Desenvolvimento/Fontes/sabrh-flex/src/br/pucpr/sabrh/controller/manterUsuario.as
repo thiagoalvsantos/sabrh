@@ -30,6 +30,7 @@ protected function init(event:FlexEvent):void
 	estadoService.listarEstados();
 	statusService.listarStatus();
 	perfilService.listarPerfil();
+	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 
 }
 
@@ -92,7 +93,6 @@ protected function actionBtnNovo():void
 
 	currentState="stateNovo";
 	actionBtnLimparNovo();
-
 	PopUpManager.centerPopUp(this);
 
 }
@@ -148,6 +148,7 @@ protected function actionBtnLimparNovo():void
 	cmbNovoMunicipio.errorString=null;
 	cmbNovoEstado.errorString=null;
 	cmbNovoPerfil.errorString=null;
+	txtNovoNome.focusManager.setFocus(txtNovoNome);
 
 	if (currentState != "stateNovo")
 	{
@@ -183,7 +184,12 @@ protected function editarUsuario():void
  */
 protected function voltarPesquisa():void
 {
-	currentState='statePesquisa';
+	if (gridUsuario == null){
+		currentState='statePesquisa';
+	} else {		
+		currentState='stateResultado';
+	}
+	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
 }
 
@@ -198,8 +204,9 @@ protected function novoConfirmacao():void
 
 //Função para recuperar o resultado da confirmação.
 protected function novoConfirmacaoResult(event:CloseEvent):void
-{	
-	if (event.detail == Alert.YES){
+{
+	if (event.detail == Alert.YES)
+	{
 		actionBtnLimparNovo();
 	}
 }
@@ -256,22 +263,10 @@ protected function actionBtnSalvarUsuario():void
 protected function pesquisarUsuariosResult(event:ResultEvent):void
 {
 	var listaUsuarios:ArrayCollection=event.result as ArrayCollection;
-	if (listaUsuarios != null && listaUsuarios.length != 0)
-	{
-		currentState='stateResultado';
-		gridUsuario.dataProvider=listaUsuarios;
-		PopUpManager.centerPopUp(this);
-	}
-	else
-	{
-		currentState="statePesquisa";
-		if (gridUsuario != null)
-		{
-			gridUsuario.dataProvider=null;
-		}
-		PopUpManager.centerPopUp(this);
-		Alert.show("Não foram encontrados resultados com os parâmentros informados", "Erro");
-	}
+	currentState='stateResultado';
+	gridUsuario.dataProvider=listaUsuarios;
+	panelResultado.title="Resultado      -      Registros encontrados " + listaUsuarios.length;
+	PopUpManager.centerPopUp(this);
 }
 
 /**

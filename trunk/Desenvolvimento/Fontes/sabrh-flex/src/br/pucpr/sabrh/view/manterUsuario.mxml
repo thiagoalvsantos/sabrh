@@ -27,8 +27,9 @@
 			<mx:NumberValidator id="numValEstado" source="{cmbNovoEstado}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:NumberValidator id="numValMunicipio" source="{cmbNovoMunicipio}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:NumberValidator id="numValPerfil" source="{cmbNovoPerfil}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
-			<validator:CpfValidator id="cpfValidator" source="{txtNovoCPF}" property="text" required="true"/>
+			<validator:CpfValidator id="cpfValidator" source="{txtNovoCPF}" property="text" required="true"/>			
 			<mx:StringValidator id="strValLogin" source="{txtNovoLogin}" property="text" required="true" minLength="5" maxLength="50"/>
+			<mx:NumberValidator id="numValStatus" source="{cmbNovoStatus}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:StringValidator id="strValSenha" source="{txtNovoSenha}" property="text" required="true" minLength="5" maxLength="50"/>
 			<mx:StringValidator id="strValConfSenha" source="{txtNovoConfirmarSenha}" property="text" required="true" minLength="5" maxLength="50"/>
 			<mx:EmailValidator id="emailValEMail" source="{txtNovoEmail}" property="text" required="true"/>
@@ -56,7 +57,7 @@
 			<mx:Canvas left="5" right="5" top="5" bottom="5">
 				<s:Label id="lblPesquisaNome" x="10" y="15" text="Nome"/>
 				<s:Label id="lblPesquisaEstado" x="10" y="45" text="Estado"/>
-				<s:Label id="lblPesquisaMunicipio" x="245" y="45" text="Municipio"/>
+				<s:Label id="lblPesquisaMunicipio" x="245" y="45" text="Município"/>
 				<s:Label id="lblPesquisaPerfil" x="10" y="75" text="Perfil"/>
 				<s:Label id="lblPesquisaStatus" x="245" y="75" text="Status"/>
 				<s:TextInput id="txtPesquisaNome" x="60" y="10" width="514" tabIndex.statePesquisa="1"/>
@@ -92,15 +93,25 @@
 		<s:Panel id="panelNovo" width="100%" height="100%" title.stateNovo="Novo" title.stateEditar="Editar">
 			<mx:Canvas left="5" right="5" top="5" bottom="5" currentStateChange.stateNovo="{actionBtnLimparNovo()}">
 				<s:Label id="lblNovoNome" x="10" y="15" text="Nome"/>
+					<s:Label text="*" color="#FF0000" x="42" y="15"/>
 				<s:Label id="lblNovoEstado" x="10" y="45" text="Estado"/>
-				<s:Label id="lblNovoMunicipio" x="245" y="45" text="Municipio"/>
+					<s:Label text="*" color="#FF0000" x="47" y="45"/>
+				<s:Label id="lblNovoMunicipio" x="245" y="45" text="Município"/>
+					<s:Label text="*" color="#FF0000" x="294" y="45"/>
 				<s:Label id="lblNovoPerfil" x="10" y="75" text="Perfil"/>
+					<s:Label text="*" color="#FF0000" x="37" y="75"/>
 				<s:Label id="lblNovoCPF" x="10" y="105" text="CPF"/>
+					<s:Label text="*" color="#FF0000" x="31" y="105"/>
 				<s:Label id="lblNovoLogin" x="10" y="135" text="Login"/>
+					<s:Label text="*" color="#FF0000" x="39" y="135"/>
 				<s:Label id="lblNovoStatus" x="245" y="135" text="Status" includeIn="stateEditar"/>
+					<s:Label x="281" y="135" text="*" color="#FF0000" includeIn="stateEditar"/>
 				<s:Label id="lblNovoSenha" x="10" y="165" text="Senha"/>
+					<s:Label text="*" color="#FF0000" x="44" y="165"/>
 				<s:Label id="lblNovoConfirmacaoSenha" x="245" y="165" text="Confirmar Senha"/>
+					<s:Label text="*" color="#FF0000" x="334" y="165"/>
 				<s:Label id="lblNovoEmail" x="10" y="195" text="E-mail"/>
+					<s:Label text="*" color="#FF0000" x="42" y="195"/>
 				<s:TextInput id="txtNovoNome" x="60" y="10" width="514" maxChars="255" tabIndex="1"/>
 				<s:DropDownList id="cmbNovoEstado" x="60" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
 				<s:DropDownList id="cmbNovoMunicipio" x="310" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
@@ -126,13 +137,13 @@
 	<s:VGroup id="groupDetalhe" left="5" right="5" top="5" bottom="5" includeIn="stateDetalhe">
 		<s:Panel id="panelDetalhe" width="100%" height="100%" title="Detalhe">
 			<mx:Canvas left="5" right="5" top="5" bottom="5">
-				<s:Label id="lblDetalheNome" x="10" y="15" text="Nome"/>
-				<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado"/>
-				<s:Label id="lblDetalheMunicipio" x="245" y="45" text="Municipio"/>
-				<s:Label id="lblDetalhePerfil" x="10" y="75" text="Perfil"/>
-				<s:Label id="lblDetalheCPF" x="10" y="105" text="CPF"/>
-				<s:Label id="lblDetalheLogin" x="10" y="135" text="Login"/>
-				<s:Label id="lblDetalheEmail" x="10" y="165" text="E-mail"/>
+				<s:Label id="lblDetalheNome" x="10" y="15" text="Nome" fontWeight="bold"/>
+				<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado" fontWeight="bold"/>
+				<s:Label id="lblDetalheMunicipio" x="245" y="45" text="Município" fontWeight="bold"/>
+				<s:Label id="lblDetalhePerfil" x="10" y="75" text="Perfil" fontWeight="bold"/>
+				<s:Label id="lblDetalheCPF" x="10" y="105" text="CPF" fontWeight="bold"/>
+				<s:Label id="lblDetalheLogin" x="10" y="135" text="Login" fontWeight="bold"/>
+				<s:Label id="lblDetalheEmail" x="10" y="165" text="E-mail" fontWeight="bold"/>
 				<!-- DADOS -->
 				<s:Label id="txtDetalheNome" x="60" y="15" width="514"/>
 				<s:Label id="cmbDetalheEstado" x="60" y="45" width="171"/>

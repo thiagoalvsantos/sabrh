@@ -180,7 +180,11 @@ protected function editarPropriedade():void
  */
 protected function voltarPesquisa():void
 {
-	currentState='statePesquisa';
+	if (gridProprietario == null){
+		currentState='statePesquisa';
+	} else {		
+		currentState='stateResultado';
+	}
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
 }
@@ -250,23 +254,11 @@ protected function actionBtnSalvarPropriedade():void
  */
 protected function pesquisarPropriedadesResult(event:ResultEvent):void
 {
-	var listaPrprietarios:ArrayCollection=event.result as ArrayCollection;
-	if (listaPrprietarios != null && listaPrprietarios.length != 0)
-	{
-		currentState='stateResultado';
-		gridProprietario.dataProvider=listaPrprietarios;
-		PopUpManager.centerPopUp(this);
-	}
-	else
-	{
-		currentState="statePesquisa";
-		if (gridProprietario != null)
-		{
-			gridProprietario.dataProvider=null;
-		}
-		PopUpManager.centerPopUp(this);
-		Alert.show("Não foram encontrados resultados com os parâmentros informados", "Erro");
-	}
+	var listaProprietarios:ArrayCollection=event.result as ArrayCollection;
+	currentState='stateResultado';
+	gridProprietario.dataProvider=listaProprietarios;
+	panelResultado.title="Resultado      -      Registros encontrados " + listaProprietarios.length;
+	PopUpManager.centerPopUp(this);
 }
 
 /**
