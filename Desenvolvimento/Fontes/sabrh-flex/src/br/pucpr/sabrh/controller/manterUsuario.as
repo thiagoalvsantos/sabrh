@@ -187,6 +187,22 @@ protected function voltarPesquisa():void
 	PopUpManager.centerPopUp(this);
 }
 
+/**
+ * Ação do botão novo na tela de edição.
+ * @param event
+ */
+protected function novoConfirmacao():void
+{
+	Alert.show("Tem certeza de sair sem salvar as alterações?", "Manutenção de Usuários", Alert.YES | Alert.NO, this, novoConfirmacaoResult);
+}
+
+//Função para recuperar o resultado da confirmação.
+protected function novoConfirmacaoResult(event:CloseEvent):void
+{	
+	if (event.detail == Alert.YES){
+		actionBtnLimparNovo();
+	}
+}
 
 /**
  * Ação do botão salvar usuário.
@@ -529,7 +545,7 @@ protected function validar():Boolean
 		}
 		else
 		{
-			Alert.show("Senhas não coicidem.");
+			Alert.show("Senhas não coicidem.", "Manutenção de Usuários");
 		}
 	}
 	return false;
