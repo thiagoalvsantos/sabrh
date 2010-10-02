@@ -15,13 +15,14 @@
 		</s:RemoteObject>
 		<s:RemoteObject id="propriedadeService" fault="onFault(event)" destination="PropriedadeService" showBusyCursor="true">
 			<s:method name="pesquisar" result="{pesquisarPropriedadesResult(event)}"/>
+			<s:method name="salvar" result="{salvarPropriedadeResult(event)}"/>
 		</s:RemoteObject>
 
 		<fx:Array id="val">
 			<mx:StringValidator id="strValNome" source="{txtNovoNome}" property="text" required="true" minLength="5" maxLength="255"/>
 			<mx:NumberValidator id="numValEstado" source="{cmbNovoEstado}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:NumberValidator id="numValMunicipio" source="{cmbNovoMunicipio}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
-			<mx:StringValidator id="strValTelefone" source="{txtNovoTelefone}" property="text" required="true" minLength="10" maxLength="13" />
+			<mx:StringValidator id="strValTelefone" source="{txtNovoTelefone}" property="text" required="true" minLength="10" maxLength="13" tooShortError="O campo deve conter 10 caracteres. Ex: (99)9999-9999" />
 			<mx:StringValidator id="strValProprietario" source="{txtNovoProprietario}" property="text" required="true" minLength="5" maxLength="50"/>
 		</fx:Array>
 
@@ -114,7 +115,7 @@
 				<s:Label id="lblNovoMunicipio" x="270" y="45" text="Municipio"/>
 				<s:Label id="lblNovoTelefone" x="10" y="75" text="Telefone"/>
 				<s:Label id="lblNovoPropritario" x="10" y="105" text="Proprietario"/>
-				<s:TextInput id="txtNovoNome" x="90" y="10" width="514" maxChars="255" tabIndex="1"/>
+				<s:TextInput id="txtNovoNome" x="90" y="10" width="514" maxChars="255" tabIndex="1" focusEnabled="true"/>
 				<s:DropDownList id="cmbNovoEstado" x="90" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
 				<s:DropDownList id="cmbNovoMunicipio" x="340" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
 				<components:TextInputTelefone id="txtNovoTelefone" x="90" y="70" width="171" tabIndex="4" maxChars="10"/> 
@@ -137,15 +138,15 @@
 			<mx:Canvas left="5" right="5" top="5" bottom="5">
 				<s:Label id="lblDetalheNome" x="10" y="15" text="Nome"/>
 				<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado"/>
-				<s:Label id="lblDetalheMunicipio" x="245" y="45" text="Municipio"/>
-				<s:Label id="lblDetalheTelefone" x="10" y="135" text="Telefone"/>
-				<s:Label id="lblDetalheProprietario" x="10" y="165" text="Proprietario"/>
+				<s:Label id="lblDetalheMunicipio" x="255" y="45" text="Municipio"/>
+				<s:Label id="lblDetalheTelefone" x="10" y="75" text="Telefone"/>
+				<s:Label id="lblDetalheProprietario" x="10" y="105" text="Proprietario"/>
 				<!-- DADOS -->
-				<s:Label id="txtDetalheNome" x="60" y="15" width="514"/>
-				<s:Label id="cmbDetalheEstado" x="60" y="45" width="171"/>
-				<s:Label id="cmbDetalheMunicipio" x="310" y="45" width="264"/>
-				<s:Label id="txtDetalheTelefone" x="60" y="105" width="171"/>
-				<s:Label id="txtDetalheProprietario" x="60" y="135" width="171"/>
+				<s:Label id="txtDetalheNome" x="80" y="15" width="514"/>
+				<s:Label id="cmbDetalheEstado" x="80" y="45" width="171"/>
+				<s:Label id="cmbDetalheMunicipio" x="320" y="45" width="264"/>
+				<s:Label id="txtDetalheTelefone" x="80" y="75" width="171"/>
+				<s:Label id="txtDetalheProprietario" x="80" y="105" width="171"/>
 			</mx:Canvas>
 
 			<s:controlBarContent>
