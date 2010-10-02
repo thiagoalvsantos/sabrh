@@ -72,7 +72,8 @@ public class UsuarioBusiness implements UsuarioService {
 	@Override
 	public Usuario inserir(Usuario usuario) throws Exception {
 
-		return usuarioDAO.salvar(usuario);
+		usuario = usuarioDAO.salvar(usuario);
+		return usuario;
 
 	}
 
