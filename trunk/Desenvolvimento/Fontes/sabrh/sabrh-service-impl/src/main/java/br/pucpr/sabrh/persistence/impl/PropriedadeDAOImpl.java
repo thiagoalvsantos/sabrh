@@ -12,7 +12,10 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 
+import br.pucpr.sabrh.entity.Estado;
 import br.pucpr.sabrh.entity.Propriedade;
 import br.pucpr.sabrh.persistence.PropriedadeDAO;
 
@@ -37,8 +40,24 @@ public class PropriedadeDAOImpl implements PropriedadeDAO {
 	@Override
 	public List<Propriedade> pesquisar(Propriedade propriedade) {
 		Session s = (Session) entityManager.getDelegate();
-		Criteria c = s.createCriteria(Propriedade.class);
-		c.add(Example.create(propriedade).enableLike().ignoreCase());
+		Criteria c = s.createCriteria(Propriedade.class, "propri");
+		c.createCriteria("municipio", "mun");
+		c.createCriteria("proprietario", "prop");
+		c.add(Example.create(propriedade).enableLike(MatchMode.ANYWHERE)
+				.ignoreCase());
+		if (propriedade.getMunicipio() != null) {
+			if (propriedade.getMunicipio().getCodigo() != 0) {
+				c.add(Restrictions.eq("municipio", propriedade.getMunicipio()));
+			} else {
+				Criteria q = s.createCriteria(Estado.class);
+				q.add(Example.create(propriedade.getMunicipio().getEstado()));
+				c.add(Restrictions.eq("mun.estado", q.uniqueResult()));
+			}
+
+		}
+		if (propriedade.getProprietario() != null){
+			c.add(Restrictions.eq("proprietario", propriedade.getProprietario()));
+		}
 		List<Propriedade> result = c.list();
 		return result;
 	}
