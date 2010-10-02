@@ -16,13 +16,13 @@ import br.pucpr.sabrh.entity.Propriedade;
 public interface PropriedadeDAO {
 
 	/**
-	 * Listar.
+	 * Pesquisar.
 	 * 
 	 * @param propriedade
 	 *            - propriedade
 	 * @return list
 	 */
-	List<Propriedade> listar(Propriedade propriedade);
+	List<Propriedade> pesquisar(Propriedade propriedade);
 
 	/**
 	 * Salvar.
