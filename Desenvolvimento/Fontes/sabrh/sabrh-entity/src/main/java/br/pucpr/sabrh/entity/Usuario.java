@@ -55,7 +55,7 @@ public class Usuario implements Serializable {
 	private TipoPerfil perfil;
 
 	/** O atributo cpf. */
-	@Column(name = "TX_CPF", length = 11, nullable = false)
+	@Column(name = "TX_CPF", length = 11, nullable = false, unique=true)
 	private String cpf;
 
 	/** O atributo nome. */
