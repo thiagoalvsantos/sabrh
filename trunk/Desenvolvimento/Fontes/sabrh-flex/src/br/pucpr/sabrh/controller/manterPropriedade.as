@@ -130,6 +130,7 @@ protected function actionBtnLimparPesquisa():void
 	{
 		gridProprietario.dataProvider=null;
 	}
+	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
 }
 
@@ -180,6 +181,7 @@ protected function editarPropriedade():void
 protected function voltarPesquisa():void
 {
 	currentState='statePesquisa';
+	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
 }
 
