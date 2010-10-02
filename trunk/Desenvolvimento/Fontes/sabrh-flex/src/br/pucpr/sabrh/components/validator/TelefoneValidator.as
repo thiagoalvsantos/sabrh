@@ -4,9 +4,9 @@ package br.pucpr.sabrh.components.validator
 	import mx.validators.ValidationResult;
 	import mx.validators.Validator;
 
-	public class CpfValidator extends Validator
+	public class TelefoneValidator extends Validator
 	{
-		public function CpfValidator()
+		public function TelefoneValidator()
 		{
 			super();
 		}

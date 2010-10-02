@@ -21,7 +21,7 @@
 			<mx:StringValidator id="strValNome" source="{txtNovoNome}" property="text" required="true" minLength="5" maxLength="255"/>
 			<mx:NumberValidator id="numValEstado" source="{cmbNovoEstado}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:NumberValidator id="numValMunicipio" source="{cmbNovoMunicipio}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
-			<formatter:TelefoneFormatter id="telefoneValidator" source="{txtNovoTelefone}" property="text" required="true"/>
+			<mx:StringValidator id="strValTelefone" source="{txtNovoTelefone}" property="text" required="true" minLength="10" maxLength="10" />
 			<mx:StringValidator id="strValProprietario" source="{txtNovoProprietario}" property="text" required="true" minLength="5" maxLength="50"/>
 		</fx:Array>
 
@@ -117,7 +117,7 @@
 				<s:TextInput id="txtNovoNome" x="90" y="10" width="514" maxChars="255" tabIndex="1"/>
 				<s:DropDownList id="cmbNovoEstado" x="90" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
 				<s:DropDownList id="cmbNovoMunicipio" x="340" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
-				<components:TextInputTelefone id="txtNovoTelefone" x="90" y="70" width="171" tabIndex="4"/> 
+				<components:TextInputTelefone id="txtNovoTelefone" x="90" y="70" width="171" tabIndex="4" maxChars="10"/> 
 				<s:TextInput id="txtNovoProprietario" x="90" y="100" maxChars="50" tabIndex="5" width="435" editable="false"/>
 				<s:Button label="Buscar" click="{abrirConsultarUsuario(txtNovoProprietario,'novo')}" x="535" y="100"/>
 			</mx:Canvas>
