@@ -29,7 +29,7 @@
 			<mx:NumberValidator id="numValPerfil" source="{cmbNovoPerfil}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<validator:CpfValidator id="cpfValidator" source="{txtNovoCPF}" property="text" required="true"/>			
 			<mx:StringValidator id="strValLogin" source="{txtNovoLogin}" property="text" required="true" minLength="5" maxLength="50"/>
-			<mx:NumberValidator id="numValStatus" source="{cmbNovoStatus}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
+			<mx:NumberValidator id="numValStatus" includeIn="stateEditar" source.stateEditar="{cmbNovoStatus}" property.stateEditar="selectedIndex" required.stateEditar="true" minValue.stateEditar="1" lowerThanMinError.stateEditar="Este campo é obrigatório" triggerEvent.stateEditar="change"/>
 			<mx:StringValidator id="strValSenha" source="{txtNovoSenha}" property="text" required="true" minLength="5" maxLength="50"/>
 			<mx:StringValidator id="strValConfSenha" source="{txtNovoConfirmarSenha}" property="text" required="true" minLength="5" maxLength="50"/>
 			<mx:EmailValidator id="emailValEMail" source="{txtNovoEmail}" property="text" required="true"/>
