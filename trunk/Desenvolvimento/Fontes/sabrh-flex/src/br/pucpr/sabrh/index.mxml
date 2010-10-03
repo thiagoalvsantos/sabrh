@@ -38,11 +38,11 @@
 
 	<s:controlBarContent>
 		<s:Label width="100%" color="#3f3f3f" fontSize="15" fontWeight="bold" enabled="true" text=":: Sistema de Acasalamento Bovino da Raça Holandesa ::"/>
-		<s:Label color="#3f3f3f" text="Usuario Logado"/>
+		<s:Label color="#3f3f3f" text="Usuario Logado" fontWeight="bold"/>
 		<s:Label id="usuarioLogado" text="{user.nome} ({user.perfil})" alpha="0.77"/>
-		<s:Label color="#3f3f3f" text="Data do Sistema"/>
+		<s:Label color="#3f3f3f" text="Data do Sistema" fontWeight="bold"/>
 		<s:Label text="{ df.format( new Date() ) }"/>
-		<s:Label color="#3f3f3f" text="Hora do Sistema"/>
+		<s:Label color="#3f3f3f" text="Hora do Sistema" fontWeight="bold"/>
 		<s:Label id="txthora" text="{ hora }"/>
 	</s:controlBarContent>
 
