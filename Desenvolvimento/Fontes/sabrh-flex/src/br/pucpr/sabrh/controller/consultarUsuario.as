@@ -121,22 +121,10 @@ protected function actionBtnLimparPesquisa():void
 protected function pesquisarUsuariosResult(event:ResultEvent):void
 {
 	var listaUsuarios:ArrayCollection=event.result as ArrayCollection;
-	if (listaUsuarios != null && listaUsuarios.length != 0)
-	{
-		currentState='stateResultado';
-		gridUsuario.dataProvider=listaUsuarios;
-		PopUpManager.centerPopUp(this);
-	}
-	else
-	{
-		currentState="statePesquisa";
-		if (gridUsuario != null)
-		{
-			gridUsuario.dataProvider=null;
-		}
-		PopUpManager.centerPopUp(this);
-		Alert.show("Não foram encontrados resultados com os parâmentros informados", "Erro");
-	}
+	currentState='stateResultado';
+	gridUsuario.dataProvider=listaUsuarios;
+	panelResultado.title="Resultado      -      Registros encontrados " + listaUsuarios.length;
+	PopUpManager.centerPopUp(this);
 }
 
 /**

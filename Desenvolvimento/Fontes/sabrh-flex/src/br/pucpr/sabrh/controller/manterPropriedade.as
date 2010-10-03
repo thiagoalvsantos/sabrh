@@ -184,6 +184,7 @@ protected function voltarPesquisa():void
 		currentState='statePesquisa';
 	} else {		
 		currentState='stateResultado';
+		actionBtnPesquisar();
 	}
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);

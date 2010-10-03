@@ -130,14 +130,14 @@ protected function actionBtnLimparPesquisa():void
  */
 protected function actionBtnLimparNovo():void
 {
+	estadoService.listarEstados();
+	perfilService.listarPerfil();
 	txtNovoNome.text="";
 	txtNovoConfirmarSenha.text="";
 	txtNovoCPF.text="";
 	txtNovoLogin.text="";
 	txtNovoSenha.text="";
 	txtNovoEmail.text="";
-	estadoService.listarEstados();
-	perfilService.listarPerfil();
 
 	txtNovoNome.errorString=null;
 	txtNovoConfirmarSenha.errorString=null;
@@ -188,6 +188,7 @@ protected function voltarPesquisa():void
 		currentState='statePesquisa';
 	} else {		
 		currentState='stateResultado';
+		actionBtnPesquisar();
 	}
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
