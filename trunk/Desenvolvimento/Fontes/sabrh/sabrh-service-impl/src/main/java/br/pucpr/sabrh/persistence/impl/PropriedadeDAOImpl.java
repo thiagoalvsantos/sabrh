@@ -13,6 +13,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.pucpr.sabrh.entity.Estado;
@@ -55,16 +56,20 @@ public class PropriedadeDAOImpl implements PropriedadeDAO {
 			}
 
 		}
-		if (propriedade.getProprietario() != null){
+		if (propriedade.getProprietario() != null) {
 			c.add(Restrictions.eq("proprietario", propriedade.getProprietario()));
 		}
+		c.addOrder(Order.asc("nome"));
 		List<Propriedade> result = c.list();
 		return result;
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see br.pucpr.sabrh.persistence.PropriedadeDAO#salvar(br.pucpr.sabrh.entity.Propriedade)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.persistence.PropriedadeDAO#salvar(br.pucpr.sabrh.entity
+	 * .Propriedade)
 	 */
 	@Override
 	public Propriedade salvar(Propriedade propriedade) {
