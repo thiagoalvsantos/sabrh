@@ -455,7 +455,7 @@
 				<artifactId>javarebel-maven-plugin</artifactId>
 				<version>1.0.5</version>
 				<configuration>
-					<classesDirectory>${basedir}/target</classesDirectory>
+					<classesDirectory>${basedir}/target/classes</classesDirectory>
 				</configuration>
 				<executions>
 					<execution>
