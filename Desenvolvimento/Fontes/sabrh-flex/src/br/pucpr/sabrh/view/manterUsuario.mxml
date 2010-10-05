@@ -93,25 +93,25 @@
 		<s:Panel id="panelNovo" width="100%" height="100%" title.stateNovo="Novo" title.stateEditar="Editar">
 			<mx:Canvas left="5" right="5" top="5" bottom="5" currentStateChange.stateNovo="{actionBtnLimparNovo()}">
 				<s:Label id="lblNovoNome" x="10" y="15" text="Nome"/>
-					<s:Label text="*" color="#FF0000" x="42" y="15"/>
+					<s:Label text="*" color="#B22222" fontWeight="bold" x="42" y="15"/>
 				<s:Label id="lblNovoEstado" x="10" y="45" text="Estado"/>
-					<s:Label text="*" color="#FF0000" x="47" y="45"/>
+					<s:Label text="*" color="#B22222" fontWeight="bold" x="47" y="45"/>
 				<s:Label id="lblNovoMunicipio" x="245" y="45" text="Município"/>
-					<s:Label text="*" color="#FF0000" x="294" y="45"/>
+					<s:Label text="*" color="#B22222" fontWeight="bold" x="294" y="45"/>
 				<s:Label id="lblNovoPerfil" x="10" y="75" text="Perfil"/>
-					<s:Label text="*" color="#FF0000" x="37" y="75"/>
+					<s:Label text="*" color="#B22222" fontWeight="bold" x="37" y="75"/>
 				<s:Label id="lblNovoCPF" x="10" y="105" text="CPF"/>
-					<s:Label text="*" color="#FF0000" x="31" y="105"/>
+					<s:Label text="*" color="#B22222" fontWeight="bold" x="31" y="105"/>
 				<s:Label id="lblNovoLogin" x="10" y="135" text="Login"/>
-					<s:Label text="*" color="#FF0000" x="39" y="135"/>
+					<s:Label text="*" color="#B22222" fontWeight="bold" x="39" y="135"/>
 				<s:Label id="lblNovoStatus" x="245" y="135" text="Status" includeIn="stateEditar"/>
-					<s:Label x="281" y="135" text="*" color="#FF0000" includeIn="stateEditar"/>
+					<s:Label x="281" y="135" text="*" color="#B22222" fontWeight="bold" includeIn="stateEditar"/>
 				<s:Label id="lblNovoSenha" x="10" y="165" text="Senha"/>
-					<s:Label text="*" color="#FF0000" x="44" y="165"/>
+					<s:Label text="*" color="#B22222" fontWeight="bold" x="44" y="165"/>
 				<s:Label id="lblNovoConfirmacaoSenha" x="245" y="165" text="Confirmar Senha"/>
-					<s:Label text="*" color="#FF0000" x="334" y="165"/>
+					<s:Label text="*" color="#B22222" fontWeight="bold" x="334" y="165"/>
 				<s:Label id="lblNovoEmail" x="10" y="195" text="E-mail"/>
-					<s:Label text="*" color="#FF0000" x="42" y="195"/>
+					<s:Label text="*" color="#B22222" fontWeight="bold" x="42" y="195"/>
 				<s:TextInput id="txtNovoNome" x="60" y="10" width="514" maxChars="255" tabIndex="1"/>
 				<s:DropDownList id="cmbNovoEstado" x="60" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
 				<s:DropDownList id="cmbNovoMunicipio" x="310" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
@@ -137,21 +137,21 @@
 	<s:VGroup id="groupDetalhe" left="5" right="5" top="5" bottom="5" includeIn="stateDetalhe">
 		<s:Panel id="panelDetalhe" width="100%" height="100%" title="Detalhe">
 			<mx:Canvas left="5" right="5" top="5" bottom="5">
-				<s:Label id="lblDetalheNome" x="10" y="15" text="Nome" fontWeight="bold"/>
-				<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado" fontWeight="bold"/>
-				<s:Label id="lblDetalheMunicipio" x="245" y="45" text="Município" fontWeight="bold"/>
-				<s:Label id="lblDetalhePerfil" x="10" y="75" text="Perfil" fontWeight="bold"/>
-				<s:Label id="lblDetalheCPF" x="10" y="105" text="CPF" fontWeight="bold"/>
-				<s:Label id="lblDetalheLogin" x="10" y="135" text="Login" fontWeight="bold"/>
-				<s:Label id="lblDetalheEmail" x="10" y="165" text="E-mail" fontWeight="bold"/>
+				<s:Label id="lblDetalheNome" x="10" y="15" text="Nome"/>
+				<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado"/>
+				<s:Label id="lblDetalheMunicipio" x="245" y="45" text="Município"/>
+				<s:Label id="lblDetalhePerfil" x="10" y="75" text="Perfil"/>
+				<s:Label id="lblDetalheCPF" x="10" y="105" text="CPF"/>
+				<s:Label id="lblDetalheLogin" x="10" y="135" text="Login"/>
+				<s:Label id="lblDetalheEmail" x="10" y="165" text="E-mail"/>
 				<!-- DADOS -->
-				<s:Label id="txtDetalheNome" x="60" y="15" width="514"/>
-				<s:Label id="cmbDetalheEstado" x="60" y="45" width="171"/>
-				<s:Label id="cmbDetalheMunicipio" x="310" y="45" width="264"/>
-				<s:Label id="cmbDetalhePerfil" x="60" y="75" width="171"/>
-				<s:Label id="txtDetalheCPF" x="60" y="105" width="171"/>
-				<s:Label id="txtDetalheLogin" x="60" y="135" width="171"/>
-				<s:Label id="txtDetalheEmail" x="60" y="165" width="514"/>
+				<s:TextInput id="txtDetalheNome" x="60" y="10" width="514" editable="false" borderColor="#D3D3D3"/>
+				<s:TextInput id="cmbDetalheEstado" x="60" y="40" width="171" editable="false" borderColor="#D3D3D3"/>
+				<s:TextInput id="cmbDetalheMunicipio" x="310" y="40" width="264" editable="false" borderColor="#D3D3D3"/>
+				<s:TextInput id="cmbDetalhePerfil" x="60" y="70" width="171" editable="false" borderColor="#D3D3D3"/>
+				<s:TextInput id="txtDetalheCPF" x="60" y="100" width="171" editable="false" borderColor="#D3D3D3"/>
+				<s:TextInput id="txtDetalheLogin" x="60" y="130" width="171" editable="false" borderColor="#D3D3D3"/>
+				<s:TextInput id="txtDetalheEmail" x="60" y="160" width="514" editable="false" borderColor="#D3D3D3"/>
 			</mx:Canvas>
 
 			<s:controlBarContent>

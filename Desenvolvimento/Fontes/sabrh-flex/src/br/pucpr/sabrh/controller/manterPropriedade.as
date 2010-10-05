@@ -217,8 +217,8 @@ protected function actionBtnSalvarPropriedade():void
 		var propriedade:Propriedade=new Propriedade();
 		propriedade.municipio=cmbNovoMunicipio.selectedItem;
 		propriedade.nome=txtNovoNome.text;
-		var usuario:Usuario=new Usuario();
-		usuario.codigo=10;
+//		var usuario:Usuario=new Usuario();
+//		usuario.codigo=10;
 		propriedade.proprietario=usuarioNovo;
 		propriedade.telefone=txtNovoTelefone.text;
 		
@@ -426,7 +426,8 @@ protected function gridPropriedadeItemClick(event:ListEvent):void
 	txtDetalheTelefone.text=telefoneFormatter.format(propriedadeSelecionada.telefone);
 	cmbDetalheEstado.text=propriedadeSelecionada.municipio.estado.descricao;
 	cmbDetalheMunicipio.text=propriedadeSelecionada.municipio.descricao;
-	txtDetalheProprietario.text=propriedadeSelecionada.proprietario.nome;
+	usuarioNovo=propriedadeSelecionada.proprietario;
+	txtDetalheProprietario.text=usuarioNovo.nome;
 
 	PopUpManager.centerPopUp(this);
 }
