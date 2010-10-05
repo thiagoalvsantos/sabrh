@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
+import br.pucpr.sabrh.entity.TipoStatus;
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.UsuarioDAO;
 import br.pucpr.sabrh.services.UsuarioService;
@@ -58,6 +59,7 @@ public class UsuarioBusiness implements UsuarioService {
 	@Override
 	public Usuario autenticar(Usuario usuario) throws Exception {
 
+		usuario.setStatus(TipoStatus.ATIVO);
 		return usuarioDAO.autenticar(usuario);
 
 	}

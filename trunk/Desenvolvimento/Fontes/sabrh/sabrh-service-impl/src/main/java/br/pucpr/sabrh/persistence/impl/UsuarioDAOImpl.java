@@ -16,6 +16,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -132,6 +133,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			}
 
 		}
+		c.addOrder(Order.asc("nome"));
 		List<Usuario> result = c.list();
 		return result;
 
