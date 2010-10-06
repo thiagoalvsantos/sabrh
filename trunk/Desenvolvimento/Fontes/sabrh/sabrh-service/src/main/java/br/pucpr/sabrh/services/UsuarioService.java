@@ -37,6 +37,15 @@ public interface UsuarioService {
 	 * @return usuario
 	 */
 	public Usuario inserir(Usuario usuario) throws Exception;
+	
+	/**
+	 * Criptografar senha do usuario.
+	 * 
+	 * @param usuario
+	 *            - usuario
+	 * @return usuario
+	 */
+	public String criptografar(String senha1, String senha2) throws Exception;
 
 	/**
 	 * Listar usuarios.
