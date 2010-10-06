@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
+import br.pucpr.sabrh.common.utils.CriptografiaUtil;
 import br.pucpr.sabrh.entity.TipoStatus;
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.UsuarioDAO;
@@ -59,6 +60,7 @@ public class UsuarioBusiness implements UsuarioService {
 	@Override
 	public Usuario autenticar(Usuario usuario) throws Exception {
 
+		usuario.setSenha(CriptografiaUtil.criptografar(usuario.getSenha()));
 		usuario.setStatus(TipoStatus.ATIVO);
 		return usuarioDAO.autenticar(usuario);
 
@@ -77,6 +79,22 @@ public class UsuarioBusiness implements UsuarioService {
 		usuario = usuarioDAO.salvar(usuario);
 		return usuario;
 
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.pucpr.sabrh.services.UsuarioService#criptografar(br.pucpr.sabrh.
+	 * entity.Usuario)
+	 */
+	@Override
+	public String criptografar(String senha1, String senha2) throws Exception {
+		
+		if (CriptografiaUtil.isEqual(senha1.getBytes(), senha2.getBytes())){
+			return senha1;
+		} else {			
+			return CriptografiaUtil.criptografar(senha1);
+		}
+		
 	}
 
 	/*
