@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow width="900" creationComplete="init(event)" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Animais ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
+
+	<fx:Script source="../controller/manterAnimal.as"/>
+
+	<fx:Declarations>
+		<s:RemoteObject id="municipioService" fault="onFault(event)" destination="MunicipioService" showBusyCursor="true">
+			<s:method name="listarMunicipios" result="{listarMunicipiosResult(event)}"/>
+		</s:RemoteObject>
+		<s:RemoteObject id="estadoService" fault="onFault(event)" destination="EstadoService" showBusyCursor="true">
+			<s:method name="listarEstados" result="{listarEstadosResult(event)}"/>
+		</s:RemoteObject>
+		<s:RemoteObject id="propriedadeService" fault="onFault(event)" destination="PropriedadeService" showBusyCursor="true">
+			<s:method name="pesquisar" result="{pesquisarPropriedadesResult(event)}"/>
+			<s:method name="salvar" result="{salvarPropriedadeResult(event)}"/>
+		</s:RemoteObject>
+
+		<fx:Array id="val">
+			<mx:StringValidator id="strValNome" source="{txtNovoNome}" property="text" required="true" minLength="5" maxLength="255"/>
+			<mx:NumberValidator id="numValEstado" source="{cmbNovoEstado}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
+			<mx:NumberValidator id="numValMunicipio" source="{cmbNovoMunicipio}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
+			<mx:StringValidator id="strValTelefone" source="{txtNovoTelefone}" property="text" required="true" minLength="10" maxLength="13" tooShortError="O campo deve conter 10 caracteres. Ex: (99)9999-9999"/>
+			<mx:StringValidator id="strValProprietario" source="{txtNovoProprietario}" property="text" required="true" minLength="5" maxLength="50"/>
+		</fx:Array>
+
+		<formatter:TelefoneFormatter id="telefoneFormatter"/>
+
+		<entity:Propriedade id="propriedadeSelecionada"/>
+
+		<entity:Usuario id="usuarioPesquisa"/>
+
+		<entity:Usuario id="usuarioNovo"/>
+
+	</fx:Declarations>
+
+	<s:states>
+		<s:State name="statePesquisa"/>
+		<s:State name="stateNovo"/>
+		<s:State name="stateResultado"/>
+		<s:State name="stateDetalhe"/>
+		<s:State name="stateEditar"/>
+	</s:states>
+
+	<!--//////////////////////////
+		 //	PESQUISA
+		 /////////////////////////////-->
+	<s:VGroup id="groupPesquisa" left="5" right="5" top="5" bottom="5" includeIn="statePesquisa,stateResultado">
+		<s:Panel id="panelPesquisa" width="100%" height="100%" title="Pesquisa" includeIn="statePesquisa,stateResultado">
+			<mx:Canvas left="5" right="5" top="5" bottom="5">
+				<s:Label id="lblPesquisaNome" x="10" y="15" text="Nome Propriedade"/>
+				<s:Label id="lblPesquisaEstado" x="10" y="45" text="Estado"/>
+				<s:Label id="lblPesquisaMunicipio" x="305" y="45" text="Município"/>
+				<s:Label id="lblPesquisaProprietario" x="10" y="75" text="Proprietário"/>
+				<s:TextInput id="txtPesquisaNome" width="514" tabIndex="1" x="120" y="10"/>
+				<s:DropDownList id="cmbPesquisaEstado" labelField="descricao" change="cbmEstadoChange()" tabIndex="2" x="120" y="40" width="171"/>
+				<s:DropDownList id="cmbPesquisaMunicipio" width="264" enabled="false" labelField="descricao" tabIndex="3" x="370" y="40"/>
+				<s:TextInput id="txtPesquisaProprietario" tabIndex="4" x="120" y="70" width="440" editable="false"/>
+				<s:Button label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="570" y="70"/>
+			</mx:Canvas>
+			<s:controlBarContent>
+				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex="6"/>
+				<s:Button label="Novo" click="{actionBtnNovo()}" tabIndex="7"/>
+				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex="8"/>
+			</s:controlBarContent>
+		</s:Panel>
+		<!--//////////////////////////
+			 //	RESULTADO
+			 /////////////////////////////-->
+		<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
+			<mx:AdvancedDataGrid id="gridProprietario" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridPropriedadeItemClick(event)">
+				<mx:columns>
+					<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" dataField="nome" sortable="true"/>
+					<mx:AdvancedDataGridColumn textAlign="center" headerText="Estado" dataField="" sortable="true">
+						<mx:itemRenderer>
+							<fx:Component>
+								<mx:Canvas>
+									<s:Label text="{data.municipio.estado.descricao}" horizontalCenter="0" verticalCenter="0"/>
+								</mx:Canvas>
+							</fx:Component>
+						</mx:itemRenderer>
+					</mx:AdvancedDataGridColumn>
+					<mx:AdvancedDataGridColumn textAlign="center" headerText="Município" dataField="municipio.descricao" sortable="true">
+						<mx:itemRenderer>
+							<fx:Component>
+								<mx:Canvas>
+									<s:Label text="{data.municipio.descricao}" horizontalCenter="0" verticalCenter="0"/>
+								</mx:Canvas>
+							</fx:Component>
+						</mx:itemRenderer>
+					</mx:AdvancedDataGridColumn>
+					<mx:AdvancedDataGridColumn textAlign="center" headerText="Propriedade" dataField="proprietario.nome" sortable="true">
+						<mx:itemRenderer>
+							<fx:Component>
+								<mx:Canvas>
+									<s:Label text="{data.proprietario.nome}" horizontalCenter="0" verticalCenter="0"/>
+								</mx:Canvas>
+							</fx:Component>
+						</mx:itemRenderer>
+					</mx:AdvancedDataGridColumn>
+				</mx:columns>
+			</mx:AdvancedDataGrid>
+		</s:Panel>
+	</s:VGroup>
+	<!--//////////////////////////
+		 //	NOVO
+		 /////////////////////////////-->
+	<s:VGroup id="groupNovo" left="5" right="5" top="5" bottom="5" includeIn="stateNovo,stateEditar">
+		<s:Panel id="panelNovo" width="100%" height="100%" title.stateNovo="Novo" title.stateEditar="Editar">
+			<mx:Canvas left="5" right="5" top="5" bottom="5" currentStateChange.stateNovo="{actionBtnLimparNovo()}">
+				<s:Label id="lblNovoNome" x="10" y="15" text="Nome"/>
+				<s:Label text="*" color="#FF0000" x="42" y="15"/>
+				<s:Label id="lblNovoEstado" x="10" y="45" text="Estado"/>
+				<s:Label text="*" color="#FF0000" x="47" y="45"/>
+				<s:Label id="lblNovoMunicipio" x="270" y="45" text="Município"/>
+				<s:Label text="*" color="#FF0000" x="319" y="45"/>
+				<s:Label id="lblNovoTelefone" x="10" y="75" text="Telefone"/>
+				<s:Label text="*" color="#FF0000" x="58" y="75"/>
+				<s:Label id="lblNovoPropritario" x="10" y="105" text="Proprietário"/>
+				<s:Label text="*" color="#FF0000" x="72" y="105"/>
+				<s:TextInput id="txtNovoNome" x="90" y="10" width="514" maxChars="255" tabIndex="1" focusEnabled="true"/>
+				<s:DropDownList id="cmbNovoEstado" x="90" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
+				<s:DropDownList id="cmbNovoMunicipio" x="340" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
+				<components:TextInputTelefone id="txtNovoTelefone" x="90" y="70" width="171" tabIndex="4" maxChars="10"/>
+				<s:TextInput id="txtNovoProprietario" x="90" y="100" maxChars="50" tabIndex="5" width="435" editable="false"/>
+				<s:Button label="Buscar" click="{abrirConsultarUsuario(txtNovoProprietario,'novo')}" x="535" y="100"/>
+			</mx:Canvas>
+
+			<s:controlBarContent>
+				<s:Button label="Salvar" click="{actionBtnSalvarPropriedade()}"/>
+				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="novoConfirmacao()" click.stateNovo="{actionBtnLimparNovo()}"/>
+				<s:Button label="Voltar" click="{voltarPesquisa()}"/>
+			</s:controlBarContent>
+		</s:Panel>
+	</s:VGroup>
+	<!--//////////////////////////
+		 //	DETALHE
+		 /////////////////////////////-->
+	<s:VGroup id="groupDetalhe" left="5" right="5" top="5" bottom="5" includeIn="stateDetalhe">
+		<s:Panel id="panelDetalhe" width="100%" height="100%" title="Detalhe">
+			<mx:Canvas left="5" right="5" top="5" bottom="5">
+				<s:Label id="lblDetalheNome" x="10" y="15" text="Nome" fontWeight="bold"/>
+				<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado" fontWeight="bold"/>
+				<s:Label id="lblDetalheMunicipio" x="255" y="45" text="Município" fontWeight="bold"/>
+				<s:Label id="lblDetalheTelefone" x="10" y="75" text="Telefone" fontWeight="bold"/>
+				<s:Label id="lblDetalheProprietario" x="10" y="105" text="Proprietário" fontWeight="bold"/>
+				<!-- DADOS -->
+				<s:Label id="txtDetalheNome" x="90" y="15" width="514"/>
+				<s:Label id="cmbDetalheEstado" x="90" y="45" width="171"/>
+				<s:Label id="cmbDetalheMunicipio" x="320" y="45" width="264"/>
+				<s:Label id="txtDetalheTelefone" x="90" y="75" width="171"/>
+				<s:Label id="txtDetalheProprietario" x="90" y="105" width="171"/>
+			</mx:Canvas>
+
+			<s:controlBarContent>
+				<s:Button label="Editar" click="{editarPropriedade()}"/>
+				<s:Button label="Voltar" click="{voltarPesquisa()}"/>
+			</s:controlBarContent>
+		</s:Panel>
+	</s:VGroup>
+
+</s:TitleWindow>

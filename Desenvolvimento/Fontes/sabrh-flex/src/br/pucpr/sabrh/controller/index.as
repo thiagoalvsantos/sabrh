@@ -1,4 +1,5 @@
 import br.pucpr.sabrh.view.login;
+import br.pucpr.sabrh.view.manterAnimal;
 import br.pucpr.sabrh.view.manterPropriedade;
 import br.pucpr.sabrh.view.manterUsuario;
 
@@ -76,6 +77,16 @@ public function abrirManterPropriedade():void
 	var popUpManterPropriedade:manterPropriedade=manterPropriedade(PopUpManager.createPopUp(this,manterPropriedade, true));
 	PopUpManager.centerPopUp(popUpManterPropriedade);
 	popUpEffect.target=popUpManterPropriedade;
+	popUpEffect.play();
+}
+
+
+//Função para abrir a tela de Manuntenção de Animais.
+public function abrirManterAnimais():void
+{
+	var popUpManterAnimal:manterAnimal=manterAnimal(PopUpManager.createPopUp(this,manterAnimal, true));
+	PopUpManager.centerPopUp(popUpManterAnimal);
+	popUpEffect.target=popUpManterAnimal;
 	popUpEffect.play();
 }
 
