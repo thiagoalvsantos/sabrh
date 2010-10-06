@@ -1,15 +1,11 @@
 // login
 import br.pucpr.sabrh.entity.Municipio;
-import br.pucpr.sabrh.entity.Propriedade;
 import br.pucpr.sabrh.entity.Usuario;
-import br.pucpr.sabrh.view.consultarUsuario;
 
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
 import mx.controls.dataGridClasses.DataGridColumn;
-import mx.core.Application;
-import mx.core.FlexGlobals;
 import mx.events.CloseEvent;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
@@ -20,11 +16,9 @@ import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
 
-import spark.components.TextInput;
 import spark.events.IndexChangeEvent;
 
-
-
+private var usuarioSalvar:Usuario;
 
 /**
  * Preenche as combos ai iniciar.
@@ -33,10 +27,12 @@ import spark.events.IndexChangeEvent;
  */
 protected function init(event:FlexEvent):void
 {
-
+	
 	estadoService.listarEstados();
-	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
-
+	statusService.listarStatus();
+	perfilService.listarPerfil();
+	txtPesquisaNomeAnimal.focusManager.setFocus(txtPesquisaNomeAnimal);
+	
 }
 
 /**
@@ -57,39 +53,22 @@ protected function fechar(event:CloseEvent):void
  *
  * //////////////////////////////////////////////////////
  * /
-
-   /**
+ 
+/**
  *	Evento botão de pesquisar usuários.
  *
  * @param event
  */
 protected function actionBtnPesquisar():void
 {
-	var prop:Propriedade=new Propriedade();
-
-	if (StringUtil.trim(txtPesquisaNome.text) != "")
+	var usr:Usuario=new Usuario();
+	if (StringUtil.trim(txtPesquisaNomeAnimal.text) != "")
 	{
-		prop.nome=StringUtil.trim(txtPesquisaNome.text);
+		usr.nome=StringUtil.trim(txtPesquisaNomeAnimal.text);
 	}
-
-	if (cmbPesquisaMunicipio.selectedIndex == 0 && cmbPesquisaEstado.selectedIndex != 0)
-	{
-		var mun:Municipio=new Municipio;
-		mun.estado=cmbPesquisaEstado.selectedItem;
-		prop.municipio=mun;
-	}
-
-	if (cmbPesquisaMunicipio.selectedIndex != 0)
-	{
-		prop.municipio=cmbPesquisaMunicipio.selectedItem;
-	}
-
-	if (txtPesquisaProprietario.text != "")
-	{
-		prop.proprietario=usuarioPesquisa;
-	}
-
-	propriedadeService.pesquisar(prop);
+	
+	
+	usuarioService.pesquisar(usr);
 }
 
 /**
@@ -99,12 +78,11 @@ protected function actionBtnPesquisar():void
  */
 protected function actionBtnNovo():void
 {
-
+	
 	currentState="stateNovo";
 	actionBtnLimparNovo();
-
 	PopUpManager.centerPopUp(this);
-
+	
 }
 
 
@@ -117,20 +95,17 @@ protected function actionBtnNovo():void
 protected function actionBtnLimparPesquisa():void
 {
 	currentState='statePesquisa';
-	txtPesquisaNome.text="";
-	cmbPesquisaEstado.selectedIndex=-1;
-	cmbPesquisaEstado.selectedIndex=0;
-	cmbPesquisaMunicipio.selectedIndex=-1;
-	cmbPesquisaMunicipio.selectedIndex=0;
-	cmbPesquisaMunicipio.enabled=false;
-	txtPesquisaProprietario.text="";
-	usuarioPesquisa=null;
-
-	if (gridProprietario != null)
+	txtPesquisaNomeAnimal.text="";
+	txtPesquisaNomeMae.text="";
+	txtPesquisaNomePai.text="";
+	txtPesquisaRegistroAnimal.text="";
+	txtPesquisaRegistroMae.text="";
+	txtPesquisaRegistroPai.text="";
+		
+	if (gridUsuario != null)
 	{
-		gridProprietario.dataProvider=null;
+		gridUsuario.dataProvider=null;
 	}
-	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
 }
 
@@ -140,38 +115,52 @@ protected function actionBtnLimparPesquisa():void
  */
 protected function actionBtnLimparNovo():void
 {
-	txtNovoNome.text="";
-	txtNovoTelefone.text="";
-	txtNovoProprietario.text="";
-
 	estadoService.listarEstados();
-
+	perfilService.listarPerfil();
+	txtNovoNome.text="";
+	txtNovoConfirmarSenha.text="";
+	txtNovoCPF.text="";
+	txtNovoLogin.text="";
+	txtNovoSenha.text="";
+	txtNovoEmail.text="";
+	
 	txtNovoNome.errorString=null;
-	txtNovoTelefone.errorString=null;
-	txtNovoProprietario.errorString=null;
+	txtNovoConfirmarSenha.errorString=null;
+	txtNovoCPF.errorString=null;
+	txtNovoLogin.errorString=null;
+	txtNovoSenha.errorString=null;
+	txtNovoEmail.errorString=null;
 	cmbNovoMunicipio.errorString=null;
 	cmbNovoEstado.errorString=null;
-
+	cmbNovoPerfil.errorString=null;
+	txtNovoNome.focusManager.setFocus(txtNovoNome);
+	
 	if (currentState != "stateNovo")
 	{
 		currentState="stateNovo";
 	}
-	
-	txtNovoNome.focusManager.setFocus(txtNovoNome);
 }
 
 /**
- * Ação do botão editar propriedade.
+ * Ação do botão editar usuario.
  * @param event
  */
-protected function editarPropriedade():void
+protected function editarUsuario():void
 {
 	currentState="stateEditar";
-	txtNovoNome.text=propriedadeSelecionada.nome;
-	txtNovoProprietario.text=propriedadeSelecionada.proprietario.nome;
-	txtNovoTelefone.text=telefoneFormatter.format(propriedadeSelecionada.telefone);
+	txtNovoCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
+	txtNovoConfirmarSenha.text=usuarioSelecionado.senha;
+	txtNovoEmail.text=usuarioSelecionado.email;
+	txtNovoLogin.text=usuarioSelecionado.login;
+	txtNovoSenha.text=usuarioSelecionado.senha;
+	txtNovoNome.text=usuarioSelecionado.nome;
+	
 	estadoService.listarEstados();
+	perfilService.listarPerfil();
+	statusService.listarStatus();
+	
 	PopUpManager.centerPopUp(this);
+	
 }
 
 /**
@@ -180,13 +169,13 @@ protected function editarPropriedade():void
  */
 protected function voltarPesquisa():void
 {
-	if (gridProprietario == null){
+	if (gridUsuario == null){
 		currentState='statePesquisa';
 	} else {		
 		currentState='stateResultado';
 		actionBtnPesquisar();
 	}
-	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
+	txtPesquisaNomeAnimal.focusManager.setFocus(txtPesquisaNomeAnimal);
 	PopUpManager.centerPopUp(this);
 }
 
@@ -196,13 +185,14 @@ protected function voltarPesquisa():void
  */
 protected function novoConfirmacao():void
 {
-	Alert.show("Tem certeza de sair sem salvar as alterações?", "Manutenção de Propriedades", Alert.YES | Alert.NO, this, novoConfirmacaoResult);
+	Alert.show("Tem certeza de sair sem salvar as alterações?", "Manutenção de Usuários", Alert.YES | Alert.NO, this, novoConfirmacaoResult);
 }
 
 //Função para recuperar o resultado da confirmação.
 protected function novoConfirmacaoResult(event:CloseEvent):void
-{	
-	if (event.detail == Alert.YES){
+{
+	if (event.detail == Alert.YES)
+	{
 		actionBtnLimparNovo();
 	}
 }
@@ -210,32 +200,39 @@ protected function novoConfirmacaoResult(event:CloseEvent):void
 /**
  * Ação do botão salvar usuário.
  */
-protected function actionBtnSalvarPropriedade():void
+protected function actionBtnSalvarUsuario():void
 {
 	if (validar())
 	{
-		var propriedade:Propriedade=new Propriedade();
-		propriedade.municipio=cmbNovoMunicipio.selectedItem;
-		propriedade.nome=txtNovoNome.text;
-		var usuario:Usuario=new Usuario();
-		usuario.codigo=10;
-		propriedade.proprietario=usuarioNovo;
-		propriedade.telefone=txtNovoTelefone.text;
+		usuarioSalvar=new Usuario();
+		usuarioSalvar.cpf=txtNovoCPF.text;
+		usuarioSalvar.login=txtNovoLogin.text;
+		usuarioSalvar.municipio=cmbNovoMunicipio.selectedItem;
+		usuarioSalvar.nome=txtNovoNome.text;
+		usuarioSalvar.senha=txtNovoSenha.text;
+		usuarioSalvar.perfil=cmbNovoPerfil.selectedItem;
+		usuarioSalvar.email=txtNovoEmail.text;
+		usuarioSalvar.status="ATIVO";
 		
-		//retira mascara telefone
-		propriedade.telefone=propriedade.telefone.replace("(", "");
-		propriedade.telefone=propriedade.telefone.replace(")", "");
-		propriedade.telefone=propriedade.telefone.replace("-", "");
-
+		//retira mascara cpf
+		usuarioSalvar.cpf=usuarioSalvar.cpf.replace(".", "");
+		usuarioSalvar.cpf=usuarioSalvar.cpf.replace(".", "");
+		usuarioSalvar.cpf=usuarioSalvar.cpf.replace("-", "");
+		
 		if (currentState == 'stateEditar')
 		{
-			propriedade.codigo=propriedadeSelecionada.codigo;
+			usuarioSalvar.codigo=usuarioSelecionado.codigo;
+			usuarioSalvar.status=cmbNovoStatus.selectedItem;
+			
 		}
-
-		propriedadeSelecionada=propriedade;
-
-		propriedadeService.salvar(propriedade);
-
+		
+		if (usuarioSelecionado.senha == null)
+		{
+			usuarioSelecionado.senha="";
+		}
+		
+		usuarioService.criptografar(usuarioSalvar.senha, usuarioSelecionado.senha);
+		
 	}
 }
 
@@ -246,19 +243,19 @@ protected function actionBtnSalvarPropriedade():void
  *
  * //////////////////////////////////////////////////////
  * /
-
-   /**
+ 
+/**
  *
  *	Resultado da pesquisa de usuários.
  *
  * @param event
  */
-protected function pesquisarPropriedadesResult(event:ResultEvent):void
+protected function pesquisarUsuariosResult(event:ResultEvent):void
 {
-	var listaProprietarios:ArrayCollection=event.result as ArrayCollection;
+	var listaUsuarios:ArrayCollection=event.result as ArrayCollection;
 	currentState='stateResultado';
-	gridProprietario.dataProvider=listaProprietarios;
-	panelResultado.title="Resultado      -      Registros encontrados " + listaProprietarios.length;
+	gridUsuario.dataProvider=listaUsuarios;
+	panelResultado.title="Resultado      -      Registros encontrados " + listaUsuarios.length;
 	PopUpManager.centerPopUp(this);
 }
 
@@ -267,26 +264,46 @@ protected function pesquisarPropriedadesResult(event:ResultEvent):void
  *
  * @param event
  */
-protected function salvarPropriedadeResult(event:ResultEvent):void
+protected function inserirUsuarioResult(event:ResultEvent):void
 {
 	if (currentState == 'stateNovo')
 	{
-		Alert.show("Propriedade inserida com sucesso!", "Sucesso");
+		Alert.show("Usuário inserido com sucesso!", "Sucesso");
 	}
 	else if (currentState == 'stateEditar')
 	{
-		Alert.show("Propriedade alterada com sucesso!", "Sucesso");
+		Alert.show("Usuário alterado com sucesso!", "Sucesso");
 	}
-
+	
 	currentState='stateDetalhe';
-
-	txtDetalheNome.text=propriedadeSelecionada.nome;
-	txtDetalheProprietario.text=propriedadeSelecionada.proprietario.nome;
-	txtDetalheTelefone.text=telefoneFormatter.format(propriedadeSelecionada.telefone);
-	cmbDetalheEstado.text=propriedadeSelecionada.municipio.estado.descricao;
-	cmbDetalheMunicipio.text=propriedadeSelecionada.municipio.descricao;
-
+	
+	usuarioSelecionado=event.result as Usuario;
+	
+	txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
+	txtDetalheEmail.text=usuarioSelecionado.email;
+	txtDetalheLogin.text=usuarioSelecionado.login;
+	txtDetalheNome.text=usuarioSelecionado.nome;
+	cmbDetalheEstado.text=usuarioSelecionado.municipio.estado.descricao;
+	cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
+	cmbDetalhePerfil.text=usuarioSelecionado.perfil;
+	
 	PopUpManager.centerPopUp(this);
+}
+
+/**
+ * Resultado da criptografia da senha do usuário
+ *
+ * @param event
+ */
+protected function criptografarUsuarioResult(event:ResultEvent):void
+{
+	var senhaCriptografada:String=event.result as String;
+	
+	usuarioSalvar.senha=senhaCriptografada;
+	
+	usuarioSelecionado=usuarioSalvar;
+	
+	usuarioService.inserir(usuarioSalvar);
 }
 
 /**
@@ -298,15 +315,15 @@ protected function listarMunicipiosResult(event:ResultEvent):void
 	var listaMunicipios:ArrayCollection=new ArrayCollection();
 	listaMunicipios.addItem("Selecione...");
 	listaMunicipios.addAll(event.result as ArrayCollection);
-
-
+	
+	
 	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
 	{
-		cmbPesquisaMunicipio.dataProvider=listaMunicipios;
-		cmbPesquisaMunicipio.selectedIndex=-1;
-		cmbPesquisaMunicipio.selectedIndex=0;
-		cmbPesquisaMunicipio.enabled=true;
-		cmbPesquisaMunicipio.errorString=null;
+//		cmbPesquisaMunicipio.dataProvider=listaMunicipios;
+//		cmbPesquisaMunicipio.selectedIndex=-1;
+//		cmbPesquisaMunicipio.selectedIndex=0;
+//		cmbPesquisaMunicipio.enabled=true;
+//		cmbPesquisaMunicipio.errorString=null;
 	}
 	else
 	{
@@ -318,7 +335,7 @@ protected function listarMunicipiosResult(event:ResultEvent):void
 		{
 			for (var i:Number=1; i < cmbNovoMunicipio.dataProvider.length; i++)
 			{
-				if (cmbNovoMunicipio.dataProvider.getItemAt(i).codigo == propriedadeSelecionada.municipio.codigo)
+				if (cmbNovoMunicipio.dataProvider.getItemAt(i).codigo == usuarioSelecionado.municipio.codigo)
 				{
 					cmbNovoMunicipio.selectedIndex=i;
 				}
@@ -340,35 +357,94 @@ protected function listarEstadosResult(event:ResultEvent):void
 	listaEstados.addAll(event.result as ArrayCollection);
 	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
 	{
-		cmbPesquisaEstado.dataProvider=listaEstados;
-		cmbPesquisaEstado.selectedIndex=-1;
-		cmbPesquisaEstado.selectedIndex=0;
-		cmbPesquisaEstado.errorString=null;
+//		cmbPesquisaEstado.dataProvider=listaEstados;
+//		cmbPesquisaEstado.selectedIndex=-1;
+//		cmbPesquisaEstado.selectedIndex=0;
+//		cmbPesquisaEstado.errorString=null;
 	}
 	else
 	{
 		cmbNovoEstado.dataProvider=listaEstados;
 		cmbNovoEstado.selectedIndex=-1;
 		cmbNovoEstado.selectedIndex=0;
-
-
+		
 		if (currentState == 'stateEditar')
 		{
 			for (var i:Number=1; i < cmbNovoEstado.dataProvider.length; i++)
 			{
-				if (cmbNovoEstado.dataProvider.getItemAt(i).sigla == propriedadeSelecionada.municipio.estado.sigla)
+				if (cmbNovoEstado.dataProvider.getItemAt(i).sigla == usuarioSelecionado.municipio.estado.sigla)
 				{
 					cmbNovoEstado.selectedIndex=i;
 				}
 			}
-
 		}
 		cbmEstadoChange();
 		cmbNovoEstado.errorString=null;
 	}
-
 }
 
+/**
+ * Resultado da listagem de perfil.
+ *
+ * @param event
+ */
+protected function listarPerfilResult(event:ResultEvent):void
+{
+	var listaPerfil:ArrayCollection=new ArrayCollection();
+	listaPerfil.addItem("Selecione...");
+	listaPerfil.addAll(event.result as ArrayCollection);
+	
+	if (currentState == 'statePesquisa')
+	{
+//		cmbPesquisaPerfil.dataProvider=listaPerfil;
+//		cmbPesquisaPerfil.selectedIndex=-1;
+//		cmbPesquisaPerfil.selectedIndex=0;
+	}
+	else
+	{
+		cmbNovoPerfil.dataProvider=listaPerfil;
+		cmbNovoPerfil.selectedIndex=-1;
+		cmbNovoPerfil.selectedIndex=0;
+		
+		if (currentState == 'stateEditar')
+		{
+			cmbNovoPerfil.selectedItem=usuarioSelecionado.perfil;
+		}
+		cmbNovoPerfil.errorString=null;
+	}
+}
+
+/**
+ * Resultado da listagem de status.
+ *
+ * @param event
+ */
+protected function listarStatusResult(event:ResultEvent):void
+{
+	var listaStatus:ArrayCollection=new ArrayCollection();
+	listaStatus.addItem("Selecione...");
+	listaStatus.addAll(event.result as ArrayCollection);
+	
+	if (currentState == 'statePesquisa')
+	{
+//		cmbPesquisaStatus.dataProvider=listaStatus;
+//		cmbPesquisaStatus.selectedIndex=-1;
+//		cmbPesquisaStatus.selectedIndex=0
+		
+	}
+	else
+	{
+		cmbNovoStatus.dataProvider=listaStatus;
+		cmbNovoStatus.selectedIndex=-1;
+		cmbNovoStatus.selectedIndex=0;
+		
+		if (currentState == 'stateEditar')
+		{
+			cmbNovoStatus.selectedItem=usuarioSelecionado.status;
+		}
+		cmbNovoStatus.errorString=null;
+	}
+}
 
 /**
  * //////////////////////////////////////////////////////
@@ -377,8 +453,8 @@ protected function listarEstadosResult(event:ResultEvent):void
  *
  * //////////////////////////////////////////////////////
  * /
-
-   /**
+ 
+/**
  * Evento de seleção de estado
  *
  * @param event
@@ -387,15 +463,15 @@ protected function cbmEstadoChange():void
 {
 	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
 	{
-		if (cmbPesquisaEstado.selectedIndex != 0)
-		{
-			municipioService.listarMunicipios(cmbPesquisaEstado.selectedItem);
-		}
-		else
-		{
-			cmbPesquisaMunicipio.enabled=false;
-			cmbPesquisaMunicipio.dataProvider=null;
-		}
+//		if (cmbPesquisaEstado.selectedIndex != 0)
+//		{
+//			municipioService.listarMunicipios(cmbPesquisaEstado.selectedItem);
+//		}
+//		else
+//		{
+//			cmbPesquisaMunicipio.enabled=false;
+//			cmbPesquisaMunicipio.dataProvider=null;
+//		}
 	}
 	else
 	{
@@ -409,25 +485,26 @@ protected function cbmEstadoChange():void
 			cmbNovoMunicipio.dataProvider=null;
 		}
 	}
-
+	
 }
 
 /**
  *
  * @param event
  */
-protected function gridPropriedadeItemClick(event:ListEvent):void
+protected function gridUsuarioItemClick(event:ListEvent):void
 {
 	currentState='stateDetalhe';
-
-	propriedadeSelecionada=event.currentTarget.selectedItem;
-	txtDetalheNome.text=propriedadeSelecionada.nome;
-	txtDetalheProprietario.text=propriedadeSelecionada.proprietario.nome;
-	txtDetalheTelefone.text=telefoneFormatter.format(propriedadeSelecionada.telefone);
-	cmbDetalheEstado.text=propriedadeSelecionada.municipio.estado.descricao;
-	cmbDetalheMunicipio.text=propriedadeSelecionada.municipio.descricao;
-	txtDetalheProprietario.text=propriedadeSelecionada.proprietario.nome;
-
+	
+	usuarioSelecionado=event.currentTarget.selectedItem;
+	txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
+	txtDetalheEmail.text=usuarioSelecionado.email;
+	txtDetalheLogin.text=usuarioSelecionado.login;
+	txtDetalheNome.text=usuarioSelecionado.nome;
+	cmbDetalheEstado.text=usuarioSelecionado.municipio.estado.descricao;
+	cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
+	cmbDetalhePerfil.text=usuarioSelecionado.perfil;
+	
 	PopUpManager.centerPopUp(this);
 }
 
@@ -438,9 +515,9 @@ protected function gridPropriedadeItemClick(event:ListEvent):void
  *
  * //////////////////////////////////////////////////////
  * /
-
-
-   /**
+ 
+ 
+/**
  * Falha ao invocar serviço
  *
  * @param event
@@ -459,28 +536,29 @@ protected function validar():Boolean
 {
 	//executa todos os validadores
 	var errors:Array=Validator.validateAll(val);
-
+	
 	//se não existem erros 
 	if (errors.length == 0)
 	{
-		return true;
-
+		if (txtNovoConfirmarSenha.text == txtNovoSenha.text)
+		{
+			return true;
+		}
+		else
+		{
+			Alert.show("Senhas não coicidem.", "Manutenção de Usuários");
+		}
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
-
-//Função para abrir a tela de Manuntenção de Usuários.
-public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
+/**
+ *
+ * @param item
+ * @param column
+ * @return
+ */
+protected function cpflabelFunc(item:Object, column:AdvancedDataGridColumn):String
 {
-	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
-	popUpConsultarUsuario.janelaOrigem=this;
-	popUpConsultarUsuario.tipoConsulta=tipoConsulta;
-	popUpConsultarUsuario.atributoDestino=atributo;
-	PopUpManager.centerPopUp(popUpConsultarUsuario);
-	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
-	FlexGlobals.topLevelApplication.popUpEffect.play();
+	return cpfFormatter.format(item.cpf);
 }
