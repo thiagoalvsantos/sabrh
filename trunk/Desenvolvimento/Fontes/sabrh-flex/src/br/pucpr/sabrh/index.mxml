@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" initialize="init()" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:view="br.pucpr.sabrh.view.*" pageTitle="..:: SABRH ::.." xmlns:entity="br.pucpr.sabrh.entity.*">
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" visible="false" initialize="init()" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:view="br.pucpr.sabrh.view.*" pageTitle="..:: SABRH ::.." xmlns:entity="br.pucpr.sabrh.entity.*">
 
 	<!--
-		 visible="false"
+		 
 	-->
 	<fx:Style source="assets/yflexskin.css"/>
 	<fx:Script source="controller/index.as"/>
 	<s:BitmapImage width="100%" height="100%" source="@Embed(source='assets/yflexskin.swf',symbol='BackgroundImage')" fillMode="scale"/>
 <s:HGroup horizontalCenter="0" top="100" gap="30">
-	
 	<mx:Image id="iconeManterUsuario" x="228.35" y="46.75" source="@Embed(source='assets/img/btn-usuarios.png')" toolTip="Manutenção de Usuários" click="{abrirManterUsuario()}" mouseDown="{iconMD(iconeManterUsuario)}" mouseOut="{iconMoveUp(iconeManterUsuario)}" mouseOver="{iconMoveDown(iconeManterUsuario)}" mouseUp="{iconMU(iconeManterUsuario)}" buttonMode="true"/>
 	<mx:Image id="iconeManterPropriedade" x="319.2" y="46.35" source="@Embed(source='assets/img/btn-propriedades.png')" toolTip="Manutenção de Propriedades" click="{abrirManterPropriedade()}" mouseDown="{iconMD(iconeManterPropriedade)}" mouseOut="{iconMoveUp(iconeManterPropriedade)}" mouseOver="{iconMoveDown(iconeManterPropriedade)}" mouseUp="{iconMU(iconeManterPropriedade)}" buttonMode="true"/>
-	<mx:Image id="iconeManterAnimal" x="421.25" y="45.4" source="@Embed(source='assets/img/btn-animal.png')" toolTip="Manutenção de Animais" click="{abrirManterPropriedade()}" mouseDown="{iconMD(iconeManterAnimal)}" mouseOut="{iconMoveUp(iconeManterAnimal)}" mouseOver="{iconMoveDown(iconeManterAnimal)}" mouseUp="{iconMU(iconeManterAnimal)}" buttonMode="true"/>
+	<mx:Image id="iconeManterAnimal" x="421.25" y="45.4" source="@Embed(source='assets/img/btn-animal.png')" toolTip="Manutenção de Animais" click="{abrirManterAnimais()}" mouseDown="{iconMD(iconeManterAnimal)}" mouseOut="{iconMoveUp(iconeManterAnimal)}" mouseOver="{iconMoveDown(iconeManterAnimal)}" mouseUp="{iconMU(iconeManterAnimal)}" buttonMode="true"/>
 	<mx:Image id="iconeRelatorios" x="421.25" y="45.4" source="@Embed(source='assets/img/btn-graficos.png')" toolTip="Relatórios" click="{abrirManterPropriedade()}" mouseDown="{iconMD(iconeRelatorios)}" mouseOut="{iconMoveUp(iconeRelatorios)}" mouseOver="{iconMoveDown(iconeRelatorios)}" mouseUp="{iconMU(iconeRelatorios)}" buttonMode="true"/>
 </s:HGroup>
 	<mx:Image id="iconeLogoff" bottom="10" right="10" source="@Embed(source='assets/img/btn-logout.png')" toolTip="Sair" click="{fazerLogoff()}" mouseDown="{iconMD(iconeLogoff)}" mouseOut="{iconMoveUp(iconeLogoff)}" mouseOver="{iconMoveDown(iconeLogoff)}" mouseUp="{iconMU(iconeLogoff)}" buttonMode="true"/>
