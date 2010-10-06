@@ -18,6 +18,7 @@ import mx.validators.Validator;
 
 import spark.events.IndexChangeEvent;
 
+private var usuarioSalvar:Usuario;
 
 /**
  * Preenche as combos ai iniciar.
@@ -219,30 +220,34 @@ protected function actionBtnSalvarUsuario():void
 {
 	if (validar())
 	{
-		var usuario:Usuario=new Usuario();
-		usuario.cpf=txtNovoCPF.text;
-		usuario.login=txtNovoLogin.text;
-		usuario.municipio=cmbNovoMunicipio.selectedItem;
-		usuario.nome=txtNovoNome.text;
-		usuario.senha=txtNovoSenha.text;
-		usuario.perfil=cmbNovoPerfil.selectedItem;
-		usuario.email=txtNovoEmail.text;
-		usuario.status="ATIVO";
+		usuarioSalvar=new Usuario();
+		usuarioSalvar.cpf=txtNovoCPF.text;
+		usuarioSalvar.login=txtNovoLogin.text;
+		usuarioSalvar.municipio=cmbNovoMunicipio.selectedItem;
+		usuarioSalvar.nome=txtNovoNome.text;
+		usuarioSalvar.senha=txtNovoSenha.text;
+		usuarioSalvar.perfil=cmbNovoPerfil.selectedItem;
+		usuarioSalvar.email=txtNovoEmail.text;
+		usuarioSalvar.status="ATIVO";
 
 		//retira mascara cpf
-		usuario.cpf=usuario.cpf.replace(".", "");
-		usuario.cpf=usuario.cpf.replace(".", "");
-		usuario.cpf=usuario.cpf.replace("-", "");
+		usuarioSalvar.cpf=usuarioSalvar.cpf.replace(".", "");
+		usuarioSalvar.cpf=usuarioSalvar.cpf.replace(".", "");
+		usuarioSalvar.cpf=usuarioSalvar.cpf.replace("-", "");
 
 		if (currentState == 'stateEditar')
 		{
-			usuario.codigo=usuarioSelecionado.codigo;
-			usuario.status=cmbNovoStatus.selectedItem;
+			usuarioSalvar.codigo=usuarioSelecionado.codigo;
+			usuarioSalvar.status=cmbNovoStatus.selectedItem;
+			
+		}
+		
+		if (usuarioSelecionado.senha == null)
+		{
+			usuarioSelecionado.senha="";
 		}
 
-		usuarioSelecionado=usuario;
-
-		usuarioService.inserir(usuario);
+		usuarioService.criptografar(usuarioSalvar.senha, usuarioSelecionado.senha);
 
 	}
 }
@@ -299,6 +304,22 @@ protected function inserirUsuarioResult(event:ResultEvent):void
 	cmbDetalhePerfil.text=usuarioSelecionado.perfil;
 
 	PopUpManager.centerPopUp(this);
+}
+
+/**
+ * Resultado da criptografia da senha do usuário
+ *
+ * @param event
+ */
+protected function criptografarUsuarioResult(event:ResultEvent):void
+{
+	var senhaCriptografada:String=event.result as String;
+	
+	usuarioSalvar.senha=senhaCriptografada;
+	
+	usuarioSelecionado=usuarioSalvar;
+	
+	usuarioService.inserir(usuarioSalvar);
 }
 
 /**

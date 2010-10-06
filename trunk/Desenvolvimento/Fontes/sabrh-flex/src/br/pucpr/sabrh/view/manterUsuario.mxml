@@ -8,6 +8,7 @@
 		<s:RemoteObject id="usuarioService" fault="onFault(event)" destination="UsuarioService" showBusyCursor="true">
 			<s:method name="pesquisar" result="{pesquisarUsuariosResult(event)}"/>
 			<s:method name="inserir" result="{inserirUsuarioResult(event)}"/>
+			<s:method name="criptografar" result="{criptografarUsuarioResult(event)}"/>
 		</s:RemoteObject>
 		<s:RemoteObject id="municipioService" fault="onFault(event)" destination="MunicipioService" showBusyCursor="true">
 			<s:method name="listarMunicipios" result="{listarMunicipiosResult(event)}"/>
