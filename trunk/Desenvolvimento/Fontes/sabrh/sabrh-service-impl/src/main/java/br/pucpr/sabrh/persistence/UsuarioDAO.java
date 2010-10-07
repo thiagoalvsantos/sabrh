@@ -10,7 +10,7 @@ import javax.ejb.Remote;
 import br.pucpr.sabrh.entity.Usuario;
 
 /**
- * The Interface UsuarioDAO.
+ * Interface UsuarioDAO.
  */
 @Remote
 public interface UsuarioDAO {
