@@ -625,14 +625,23 @@ mx|TabNavigator
 */
 mx|ToolTip
 {
-	borderSkin: Embed(source="yflexskin.swf", symbol="ToolTip_borderSkin");
+	/*borderSkin: Embed(source="yflexskin.swf", symbol="ToolTip_borderSkin");*/
 	
 }
 
 .errorTip 
 { 
-	color: #4d4d4d;
-	
+	/*color: #4d4d4d;*/
+	color: #FFFFFF; 
+	fontSize: 9; 
+	fontWeight: "bold"; 
+	shadowColor: #000000; 
+	borderColor: #CE2929; 
+	borderStyle: "errorTipRight"; 
+	paddingBottom: 4; 
+	paddingLeft: 4; 
+	paddingRight: 4; 
+	paddingTop: 4; 	
 }
 
 
