@@ -1,22 +1,33 @@
 // login
+import br.pucpr.sabrh.components.ToolTipUtil;
 import br.pucpr.sabrh.entity.Municipio;
 import br.pucpr.sabrh.entity.Usuario;
 
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
-import mx.controls.dataGridClasses.DataGridColumn;
+import mx.core.UIComponent;
 import mx.events.CloseEvent;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
+import mx.events.ValidationResultEvent;
 import mx.managers.PopUpManager;
-import mx.messaging.errors.NoChannelAvailableError;
 import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
 
-import spark.events.IndexChangeEvent;
+[Embed(source="../assets/img/icon-info.png")]
+[Bindable]
+private var iconInf:Class;
+
+[Embed(source="../assets/img/icon-help.png")]
+[Bindable]
+private var iconHelp:Class;
+
+[Embed(source="../assets/img/icon-baloom.png")]
+[Bindable]
+private var iconBaloom:Class;
 
 private var usuarioSalvar:Usuario;
 
@@ -541,7 +552,13 @@ protected function gridUsuarioItemClick(event:ListEvent):void
 protected function onFault(event:FaultEvent):void
 {
 	//Ocorreu uma falha ao chamar o servico. 
-	Alert.show(event.fault.rootCause.message);
+	if (event.fault.rootCause.message == "Erro ao salvar.\n Dados já foram cadastrados para outro usuário.")
+	{
+		ToolTipUtil.createToolTip(txtNovoCPF,"Dados já foram cadastrados para outro usuário", iconInf, true, ToolTipUtil.RIGHT, 5000);
+		ToolTipUtil.createToolTip(txtNovoLogin,"Dados já foram cadastrados para outro usuário", iconInf, true, ToolTipUtil.RIGHT, 5000);
+	} else {
+		Alert.show(event.fault.rootCause.message);
+	}
 }
 
 /**
@@ -562,9 +579,13 @@ protected function validar():Boolean
 		}
 		else
 		{
-			Alert.show("Senhas não coicidem.", "Manutenção de Usuários");
+			ToolTipUtil.createToolTip(txtNovoConfirmarSenha,"Senhas não coicidem", iconHelp, true, ToolTipUtil.RIGHT, 5000);
+			//Alert.show("Senhas não coicidem.", "Manutenção de Usuários");
 		}
 	}
+	else
+		ToolTipUtil.createToolTip(UIComponent(errors[0].target.source),errors[0].message, iconHelp, true, ToolTipUtil.RIGHT, 5000);
+		
 	return false;
 }
 
