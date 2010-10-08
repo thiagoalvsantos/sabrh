@@ -162,6 +162,8 @@ protected function actionBtnLimparNovo():void
 	cmbNovoEstado.errorString=null;
 	cmbNovoPerfil.errorString=null;
 	txtNovoNome.focusManager.setFocus(txtNovoNome);
+	
+	panelError.visible=false;
 
 	if (currentState != "stateNovo")
 	{
@@ -589,6 +591,8 @@ protected function validar():Boolean
 	else
 		//ToolTipUtil.createToolTip(UIComponent(errors[0].target.source),errors[0].message, iconHelp, true, ToolTipUtil.RIGHT, 5000);
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
+		panelError.visible=true;
+	
 	return false;
 }
 
