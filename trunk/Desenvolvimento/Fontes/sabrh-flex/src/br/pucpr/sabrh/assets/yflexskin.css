@@ -626,14 +626,13 @@ mx|TabNavigator
 mx|ToolTip
 {
 	/*borderSkin: Embed(source="yflexskin.swf", symbol="ToolTip_borderSkin");*/
+	
 }
 
 .errorTip 
 { 
-	/*
+	/*color: #4d4d4d;*/
 	color: #FFFFFF; 
-*/
-	color: #4d4d4d;
 	fontSize: 9; 
 	fontWeight: "bold"; 
 	shadowColor: #000000; 
@@ -671,5 +670,6 @@ mx|Tree
 	borderColor: #CE2929; 
 	borderStyle: "errorTipRight"; 	
 }
+
 
 
