@@ -28,7 +28,7 @@
 			<mx:NumberValidator id="numValEstado" source="{cmbNovoEstado}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:NumberValidator id="numValMunicipio" source="{cmbNovoMunicipio}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:NumberValidator id="numValPerfil" source="{cmbNovoPerfil}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
-			<validator:CpfValidator id="cpfValidator" source="{txtNovoCPF}" property="text" required="true"/>			
+			<validator:CpfValidator id="cpfValidator" source="{txtNovoCPF}" property="text" required="true"/>
 			<mx:StringValidator id="strValLogin" source="{txtNovoLogin}" property="text" required="true" minLength="5" maxLength="50"/>
 			<mx:NumberValidator id="numValStatus" includeIn="stateEditar" source.stateEditar="{cmbNovoStatus}" property.stateEditar="selectedIndex" required.stateEditar="true" minValue.stateEditar="1" lowerThanMinError.stateEditar="Este campo é obrigatório" triggerEvent.stateEditar="change"/>
 			<mx:StringValidator id="strValSenha" source="{txtNovoSenha}" property="text" required="true" minLength="5" maxLength="50"/>
@@ -39,6 +39,16 @@
 		<formatter:CpfCnpjFormatter id="cpfFormatter"/>
 
 		<entity:Usuario id="usuarioSelecionado"/>
+
+		<s:Parallel id="exibeMensagemParallel">
+			<s:Fade alphaFrom="0" alphaTo="1" />
+			<s:Resize heightFrom="0" heightTo="40"/>
+		</s:Parallel>
+
+		<s:Parallel id="escondeMensagemParallel">
+			<s:Fade alphaFrom="1" alphaTo="0"/>
+			<s:Resize heightFrom="40" heightTo="0"/>
+		</s:Parallel>
 
 	</fx:Declarations>
 
@@ -92,44 +102,43 @@
 		 /////////////////////////////-->
 	<s:VGroup id="groupNovo" left="5" right="5" top="5" bottom="5" includeIn="stateNovo,stateEditar">
 		<s:Panel id="panelNovo" width="100%" height="100%" title.stateNovo="Novo" title.stateEditar="Editar">
-			<s:VGroup width="100%" height="100%" paddingTop.stateNovo="5" paddingLeft.stateNovo="5" paddingRight.stateNovo="5">
-				
-			<s:BorderContainer width.stateNovo="100%" height.stateNovo="40" styleName="panelError">
-				<s:Label text="Erro ao incluir usuário. Verificar campos em vermelho." left="50" verticalCenter="0"  left.stateNovo="50" verticalCenter.stateNovo="0"/>
-				<mx:Image includeIn="stateNovo" source="@Embed(source='../assets/img/error.png')" verticalCenter="0" left="10"/>
-			</s:BorderContainer>
-			<mx:Canvas left="5" right="5" top="5" bottom="5" currentStateChange.stateNovo="{actionBtnLimparNovo()}">
-				<s:Label id="lblNovoNome" x="10" y="15" text="Nome"/>
+			<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5">
+				<s:BorderContainer id="panelError" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelError" visible="false">
+					<s:Label text="Erro ao incluir usuário. Verificar campos em vermelho." left="50" verticalCenter="0"/>
+					<mx:Image source="@Embed(source='../assets/img/error.png')" verticalCenter="0" left="10"/>
+				</s:BorderContainer>
+				<mx:Canvas left="5" right="5" top="5" bottom="5" currentStateChange.stateNovo="{actionBtnLimparNovo()}">
+					<s:Label id="lblNovoNome" x="10" y="15" text="Nome"/>
 					<s:Label text="*" color="#B22222" fontWeight="bold" x="42" y="15"/>
-				<s:Label id="lblNovoEstado" x="10" y="45" text="Estado"/>
+					<s:Label id="lblNovoEstado" x="10" y="45" text="Estado"/>
 					<s:Label text="*" color="#B22222" fontWeight="bold" x="47" y="45"/>
-				<s:Label id="lblNovoMunicipio" x="245" y="45" text="Município"/>
+					<s:Label id="lblNovoMunicipio" x="245" y="45" text="Município"/>
 					<s:Label text="*" color="#B22222" fontWeight="bold" x="294" y="45"/>
-				<s:Label id="lblNovoPerfil" x="10" y="75" text="Perfil"/>
+					<s:Label id="lblNovoPerfil" x="10" y="75" text="Perfil"/>
 					<s:Label text="*" color="#B22222" fontWeight="bold" x="37" y="75"/>
-				<s:Label id="lblNovoCPF" x="10" y="105" text="CPF"/>
+					<s:Label id="lblNovoCPF" x="10" y="105" text="CPF"/>
 					<s:Label text="*" color="#B22222" fontWeight="bold" x="31" y="105"/>
-				<s:Label id="lblNovoLogin" x="10" y="135" text="Login"/>
+					<s:Label id="lblNovoLogin" x="10" y="135" text="Login"/>
 					<s:Label text="*" color="#B22222" fontWeight="bold" x="39" y="135"/>
-				<s:Label id="lblNovoStatus" x="245" y="135" text="Status" includeIn="stateEditar"/>
+					<s:Label id="lblNovoStatus" x="245" y="135" text="Status" includeIn="stateEditar"/>
 					<s:Label x="281" y="135" text="*" color="#B22222" fontWeight="bold" includeIn="stateEditar"/>
-				<s:Label id="lblNovoSenha" x="10" y="165" text="Senha"/>
+					<s:Label id="lblNovoSenha" x="10" y="165" text="Senha"/>
 					<s:Label text="*" color="#B22222" fontWeight="bold" x="44" y="165"/>
-				<s:Label id="lblNovoConfirmacaoSenha" x="245" y="165" text="Confirmar Senha"/>
+					<s:Label id="lblNovoConfirmacaoSenha" x="245" y="165" text="Confirmar Senha"/>
 					<s:Label text="*" color="#B22222" fontWeight="bold" x="334" y="165"/>
-				<s:Label id="lblNovoEmail" x="10" y="195" text="E-mail"/>
+					<s:Label id="lblNovoEmail" x="10" y="195" text="E-mail"/>
 					<s:Label text="*" color="#B22222" fontWeight="bold" x="42" y="195"/>
-				<s:TextInput id="txtNovoNome" x="60" y="10" width="514" maxChars="255" tabIndex="1"/>
-				<s:DropDownList id="cmbNovoEstado" x="60" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
-				<s:DropDownList id="cmbNovoMunicipio" x="310" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
-				<s:DropDownList id="cmbNovoPerfil" x="60" y="70" width="171" tabIndex="4"/>
-				<components:TextInputCPF id="txtNovoCPF" x="60" y="100" width="171" tabIndex="5" enabled.stateEditar="false"/>
-				<s:TextInput id="txtNovoLogin" x="60" y="130" width="171" maxChars="50" tabIndex="6" enabled.stateEditar="false"/>
-				<s:DropDownList id="cmbNovoStatus" x="343" y="131" width="231" tabIndex="7" includeIn="stateEditar"/>
-				<s:TextInput id="txtNovoSenha" x="60" y="160" width="171" displayAsPassword="true" maxChars="50" tabIndex="8"/>
-				<s:TextInput id="txtNovoConfirmarSenha" x="343" y="160" width="231" displayAsPassword="true" maxChars="50" tabIndex="9"/>
-				<s:TextInput id="txtNovoEmail" x="60" y="190" width="514" tabIndex="10" maxChars="255"/>
-			</mx:Canvas>
+					<s:TextInput id="txtNovoNome" x="60" y="10" width="514" maxChars="255" tabIndex="1"/>
+					<s:DropDownList id="cmbNovoEstado" x="60" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
+					<s:DropDownList id="cmbNovoMunicipio" x="310" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
+					<s:DropDownList id="cmbNovoPerfil" x="60" y="70" width="171" tabIndex="4"/>
+					<components:TextInputCPF id="txtNovoCPF" x="60" y="100" width="171" tabIndex="5" enabled.stateEditar="false"/>
+					<s:TextInput id="txtNovoLogin" x="60" y="130" width="171" maxChars="50" tabIndex="6" enabled.stateEditar="false"/>
+					<s:DropDownList id="cmbNovoStatus" x="343" y="131" width="231" tabIndex="7" includeIn="stateEditar"/>
+					<s:TextInput id="txtNovoSenha" x="60" y="160" width="171" displayAsPassword="true" maxChars="50" tabIndex="8"/>
+					<s:TextInput id="txtNovoConfirmarSenha" x="343" y="160" width="231" displayAsPassword="true" maxChars="50" tabIndex="9"/>
+					<s:TextInput id="txtNovoEmail" x="60" y="190" width="514" tabIndex="10" maxChars="255"/>
+				</mx:Canvas>
 			</s:VGroup>
 			<s:controlBarContent>
 				<s:Button label="Salvar" click="{actionBtnSalvarUsuario()}"/>
