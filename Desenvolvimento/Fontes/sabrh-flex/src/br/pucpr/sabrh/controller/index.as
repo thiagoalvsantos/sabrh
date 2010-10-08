@@ -104,6 +104,11 @@ public function encerrar(event:CloseEvent):void
 		user = null;
 		
 		init();
+		if (barraIconesPersonalizada.numElements > 0)
+			do{
+				barraIcones.addElement(barraIconesPersonalizada.getElementAt(0));
+			}while(barraIconesPersonalizada.numElements > 0);
+		barraIcones.visible=false;
 		this.visible = false;
 	}
 }
