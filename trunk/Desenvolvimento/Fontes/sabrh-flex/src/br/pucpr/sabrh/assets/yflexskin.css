@@ -626,13 +626,14 @@ mx|TabNavigator
 mx|ToolTip
 {
 	/*borderSkin: Embed(source="yflexskin.swf", symbol="ToolTip_borderSkin");*/
-	
 }
 
 .errorTip 
 { 
-	/*color: #4d4d4d;*/
+	/*
 	color: #FFFFFF; 
+*/
+	color: #4d4d4d;
 	fontSize: 9; 
 	fontWeight: "bold"; 
 	shadowColor: #000000; 
@@ -658,6 +659,17 @@ mx|Tree
 	disclosureOpenIcon: Embed(source="yflexskin.swf",symbol="Tree_disclosureOpenIcon");
 	folderClosedIcon: Embed(source="yflexskin.swf",symbol="Tree_folderClosedIcon");
 	folderOpenIcon: Embed(source="yflexskin.swf",symbol="Tree_folderOpenIcon");
+}
+
+.panelError
+{
+	background-color:#F8C6C6;
+	color: #A22323; 
+	fontSize: 10; 
+	fontWeight: "bold"; 
+	shadowColor: #F8C6C6; 
+	borderColor: #CE2929; 
+	borderStyle: "errorTipRight"; 	
 }
 
 
