@@ -162,7 +162,7 @@ protected function actionBtnLimparNovo():void
 	cmbNovoEstado.errorString=null;
 	cmbNovoPerfil.errorString=null;
 	txtNovoNome.focusManager.setFocus(txtNovoNome);
-	
+
 	panelError.visible=false;
 
 	if (currentState != "stateNovo")
@@ -200,15 +200,26 @@ protected function editarUsuario():void
  */
 protected function voltarPesquisa():void
 {
-	if (gridUsuario == null){
+	if (gridUsuario == null)
+	{
 		currentState='statePesquisa';
-	} else {		
+	}
+	else
+	{
 		currentState='stateResultado';
 		actionBtnPesquisar();
 	}
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
-	panelSucesso.visible=false;
+	if (panelError!= null)
+	{
+		panelError.visible=false;
+	}
+	
+	if (panelSucesso != null)
+	{
+		panelSucesso.visible=false;
+	}
 }
 
 /**
@@ -218,6 +229,7 @@ protected function voltarPesquisa():void
 protected function novoConfirmacao():void
 {
 	Alert.show("Tem certeza de sair sem salvar as alterações?", "Manutenção de Usuários", Alert.YES | Alert.NO, this, novoConfirmacaoResult);
+
 }
 
 //Função para recuperar o resultado da confirmação.
@@ -234,8 +246,10 @@ protected function novoConfirmacaoResult(event:CloseEvent):void
  */
 protected function actionBtnSalvarUsuario():void
 {
+
 	if (validar())
 	{
+		panelError.visible=false;
 		usuarioSalvar=new Usuario();
 		usuarioSalvar.cpf=txtNovoCPF.text;
 		usuarioSalvar.login=txtNovoLogin.text;
@@ -255,9 +269,9 @@ protected function actionBtnSalvarUsuario():void
 		{
 			usuarioSalvar.codigo=usuarioSelecionado.codigo;
 			usuarioSalvar.status=cmbNovoStatus.selectedItem;
-			
+
 		}
-		
+
 		if (usuarioSelecionado.senha == null)
 		{
 			usuarioSelecionado.senha="";
@@ -299,7 +313,7 @@ protected function pesquisarUsuariosResult(event:ResultEvent):void
 protected function inserirUsuarioResult(event:ResultEvent):void
 {
 	currentState='stateDetalhe';
-	
+
 	panelSucesso.visible=true;
 
 	usuarioSelecionado=event.result as Usuario;
@@ -323,11 +337,11 @@ protected function inserirUsuarioResult(event:ResultEvent):void
 protected function criptografarUsuarioResult(event:ResultEvent):void
 {
 	var senhaCriptografada:String=event.result as String;
-	
+
 	usuarioSalvar.senha=senhaCriptografada;
-	
+
 	usuarioSelecionado=usuarioSalvar;
-	
+
 	usuarioService.inserir(usuarioSalvar);
 }
 
@@ -552,9 +566,11 @@ protected function onFault(event:FaultEvent):void
 	//Ocorreu uma falha ao chamar o servico. 
 	if (event.fault.rootCause.message == "Erro ao salvar.\n Dados já foram cadastrados para outro usuário.")
 	{
-		ToolTipUtil.createToolTip(txtNovoCPF,"Dados já foram cadastrados para outro usuário", iconInf, true, ToolTipUtil.RIGHT, 5000);
-		ToolTipUtil.createToolTip(txtNovoLogin,"Dados já foram cadastrados para outro usuário", iconInf, true, ToolTipUtil.RIGHT, 5000);
-	} else {
+		ToolTipUtil.createToolTip(txtNovoCPF, "Dados já foram cadastrados para outro usuário", iconInf, true, ToolTipUtil.RIGHT, 5000);
+		ToolTipUtil.createToolTip(txtNovoLogin, "Dados já foram cadastrados para outro usuário", iconInf, true, ToolTipUtil.RIGHT, 5000);
+	}
+	else
+	{
 		Alert.show(event.fault.rootCause.message);
 	}
 }
@@ -579,15 +595,15 @@ protected function validar():Boolean
 		{
 			//ToolTipUtil.createToolTip(txtNovoConfirmarSenha,"Senhas não coicidem", iconHelp, true, ToolTipUtil.RIGHT, 5000);
 			//Alert.show("Senhas não coicidem.", "Manutenção de Usuários");
-			txtNovoConfirmarSenha.errorString = "Senhas não coicidem";
+			txtNovoConfirmarSenha.errorString="Senhas não coicidem";
 			txtNovoConfirmarSenha.focusManager.setFocus(txtNovoConfirmarSenha);
 		}
 	}
 	else
 		//ToolTipUtil.createToolTip(UIComponent(errors[0].target.source),errors[0].message, iconHelp, true, ToolTipUtil.RIGHT, 5000);
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
-		panelError.visible=true;
-	
+	panelError.visible=true;
+
 	return false;
 }
 
