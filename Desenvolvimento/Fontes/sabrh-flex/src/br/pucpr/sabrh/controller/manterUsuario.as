@@ -191,6 +191,7 @@ protected function editarUsuario():void
 
 	PopUpManager.centerPopUp(this);
 
+	panelSucesso.visible=false;
 }
 
 /**
@@ -207,6 +208,7 @@ protected function voltarPesquisa():void
 	}
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
+	panelSucesso.visible=false;
 }
 
 /**
@@ -296,16 +298,9 @@ protected function pesquisarUsuariosResult(event:ResultEvent):void
  */
 protected function inserirUsuarioResult(event:ResultEvent):void
 {
-	if (currentState == 'stateNovo')
-	{
-		Alert.show("Usuário inserido com sucesso!", "Sucesso");
-	}
-	else if (currentState == 'stateEditar')
-	{
-		Alert.show("Usuário alterado com sucesso!", "Sucesso");
-	}
-
 	currentState='stateDetalhe';
+	
+	panelSucesso.visible=true;
 
 	usuarioSelecionado=event.result as Usuario;
 
