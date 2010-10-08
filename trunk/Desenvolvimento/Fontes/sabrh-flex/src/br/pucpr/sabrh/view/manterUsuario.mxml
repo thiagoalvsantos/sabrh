@@ -41,7 +41,7 @@
 		<entity:Usuario id="usuarioSelecionado"/>
 
 		<s:Parallel id="exibeMensagemParallel">
-			<s:Fade alphaFrom="0" alphaTo="1" />
+			<s:Fade alphaFrom="0" alphaTo="1"/>
 			<s:Resize heightFrom="0" heightTo="40"/>
 		</s:Parallel>
 
@@ -152,24 +152,29 @@
 		 /////////////////////////////-->
 	<s:VGroup id="groupDetalhe" left="5" right="5" top="5" bottom="5" includeIn="stateDetalhe">
 		<s:Panel id="panelDetalhe" width="100%" height="100%" title="Detalhe">
-			<mx:Canvas left="5" right="5" top="5" bottom="5">
-				<s:Label id="lblDetalheNome" x="10" y="15" text="Nome"/>
-				<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado"/>
-				<s:Label id="lblDetalheMunicipio" x="245" y="45" text="Município"/>
-				<s:Label id="lblDetalhePerfil" x="10" y="75" text="Perfil"/>
-				<s:Label id="lblDetalheCPF" x="10" y="105" text="CPF"/>
-				<s:Label id="lblDetalheLogin" x="10" y="135" text="Login"/>
-				<s:Label id="lblDetalheEmail" x="10" y="165" text="E-mail"/>
-				<!-- DADOS -->
-				<s:TextInput id="txtDetalheNome" x="60" y="10" width="514" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="cmbDetalheEstado" x="60" y="40" width="171" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="cmbDetalheMunicipio" x="310" y="40" width="264" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="cmbDetalhePerfil" x="60" y="70" width="171" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="txtDetalheCPF" x="60" y="100" width="171" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="txtDetalheLogin" x="60" y="130" width="171" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="txtDetalheEmail" x="60" y="160" width="514" editable="false" borderColor="#D3D3D3"/>
-			</mx:Canvas>
-
+			<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5">
+				<s:BorderContainer id="panelSucesso" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelSuccess" visible="false">
+					<s:Label text="Usuário gravado com sucesso." left="50" verticalCenter="0"/>
+					<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
+				</s:BorderContainer>
+				<mx:Canvas left="5" right="5" top="5" bottom="5">
+					<s:Label id="lblDetalheNome" x="10" y="15" text="Nome"/>
+					<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado"/>
+					<s:Label id="lblDetalheMunicipio" x="245" y="45" text="Município"/>
+					<s:Label id="lblDetalhePerfil" x="10" y="75" text="Perfil"/>
+					<s:Label id="lblDetalheCPF" x="10" y="105" text="CPF"/>
+					<s:Label id="lblDetalheLogin" x="10" y="135" text="Login"/>
+					<s:Label id="lblDetalheEmail" x="10" y="165" text="E-mail"/>
+					<!-- DADOS -->
+					<s:TextInput id="txtDetalheNome" x="60" y="10" width="514" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="cmbDetalheEstado" x="60" y="40" width="171" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="cmbDetalheMunicipio" x="310" y="40" width="264" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="cmbDetalhePerfil" x="60" y="70" width="171" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="txtDetalheCPF" x="60" y="100" width="171" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="txtDetalheLogin" x="60" y="130" width="171" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="txtDetalheEmail" x="60" y="160" width="514" editable="false" borderColor="#D3D3D3"/>
+				</mx:Canvas>
+			</s:VGroup>
 			<s:controlBarContent>
 				<s:Button label="Editar" click="{editarUsuario()}"/>
 				<s:Button label="Voltar" click="{voltarPesquisa()}"/>

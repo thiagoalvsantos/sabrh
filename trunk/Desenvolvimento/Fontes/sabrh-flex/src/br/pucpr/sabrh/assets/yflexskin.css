@@ -668,9 +668,15 @@ mx|Tree
 	color: #A22323; 
 	fontSize: 10; 
 	fontWeight: "bold"; 
-	shadowColor: #F8C6C6; 
-	borderColor: #CE2929; 
-	borderStyle: "errorTipRight"; 	
+}
+
+
+.panelSuccess
+{
+	background-color:#B6FCB4;
+	color: #195A17; 
+	fontSize: 10; 
+	fontWeight: "bold"; 
 }
 
 
