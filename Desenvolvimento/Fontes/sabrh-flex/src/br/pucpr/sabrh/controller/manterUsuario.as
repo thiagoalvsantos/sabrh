@@ -11,6 +11,7 @@ import mx.events.CloseEvent;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
 import mx.events.ValidationResultEvent;
+import mx.managers.FocusManager;
 import mx.managers.PopUpManager;
 import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
@@ -579,13 +580,15 @@ protected function validar():Boolean
 		}
 		else
 		{
-			ToolTipUtil.createToolTip(txtNovoConfirmarSenha,"Senhas não coicidem", iconHelp, true, ToolTipUtil.RIGHT, 5000);
+			//ToolTipUtil.createToolTip(txtNovoConfirmarSenha,"Senhas não coicidem", iconHelp, true, ToolTipUtil.RIGHT, 5000);
 			//Alert.show("Senhas não coicidem.", "Manutenção de Usuários");
+			txtNovoConfirmarSenha.errorString = "Senhas não coicidem";
+			txtNovoConfirmarSenha.focusManager.setFocus(txtNovoConfirmarSenha);
 		}
 	}
 	else
-		ToolTipUtil.createToolTip(UIComponent(errors[0].target.source),errors[0].message, iconHelp, true, ToolTipUtil.RIGHT, 5000);
-		
+		//ToolTipUtil.createToolTip(UIComponent(errors[0].target.source),errors[0].message, iconHelp, true, ToolTipUtil.RIGHT, 5000);
+		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
 	return false;
 }
 
