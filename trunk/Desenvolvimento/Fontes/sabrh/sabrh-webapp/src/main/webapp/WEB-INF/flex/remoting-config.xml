@@ -52,5 +52,12 @@
 			<source>sabrh-ear-1.0/PropriedadeService/remote</source>
 		</properties>
 	</destination>
+	
+	<destination id="AnimalService">
+		<properties>
+			<factory>ejb3</factory>
+			<source>sabrh-ear-1.0/AnimalService/remote</source>
+		</properties>
+	</destination>
 
 </service>

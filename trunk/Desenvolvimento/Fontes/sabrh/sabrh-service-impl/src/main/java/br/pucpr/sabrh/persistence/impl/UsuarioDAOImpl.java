@@ -99,8 +99,18 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		} catch (PersistenceException e) {
 
 			if (ConstraintViolationException.class.isInstance(e.getCause())) {
-				throw new RuntimeException(
-						"Erro ao salvar.\n Dados já foram cadastrados para outro usuário.");
+				Session s = (Session) entityManager.getDelegate();
+				Criteria c = s.createCriteria(Usuario.class);
+				c.add(Restrictions.eq("cpf", usuario.getCpf()));
+
+				if (c.uniqueResult() != null) {
+					throw new RuntimeException(
+							"Erro ao salvar.\n CPF  já está cadastrado para um outro usuário.");
+				} else {
+					throw new RuntimeException(
+							"Erro ao salvar.\n Login já está cadastrado para um outro usuário.");
+				}
+
 			} else {
 				if (EntityExistsException.class.isInstance(e.getCause())) {
 					throw new RuntimeException(
