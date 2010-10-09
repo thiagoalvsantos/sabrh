@@ -66,7 +66,7 @@ public class AnimalDAOImpl implements AnimalDAO {
 		Criteria c = s.createCriteria(Animal.class);
 		c.add(Example.create(animal).enableLike(MatchMode.ANYWHERE)
 				.ignoreCase());
-		c.addOrder(Order.asc("nome"));
+		c.addOrder(Order.asc("registro"));
 		List<Animal> result = c.list();
 		return result;
 	}
