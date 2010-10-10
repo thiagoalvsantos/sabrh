@@ -3,6 +3,7 @@ import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.index;
 import br.pucpr.sabrh.view.manterUsuario;
 
+import flash.display.InteractiveObject;
 import flash.events.MouseEvent;
 import flash.utils.flash_proxy;
 
@@ -156,7 +157,8 @@ private function criarIcone(id:String, classe:Class, toolTip:String):Image
 	icone.id=id;
 	icone.source=classe;
 	icone.toolTip=toolTip;
-	
+	icone.buttonMode=true;
+		
 	return icone;
 }
 

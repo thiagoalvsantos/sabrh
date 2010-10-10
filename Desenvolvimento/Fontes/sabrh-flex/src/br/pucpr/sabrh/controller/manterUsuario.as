@@ -1,34 +1,22 @@
 // login
-import br.pucpr.sabrh.components.ToolTipUtil;
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Municipio;
 import br.pucpr.sabrh.entity.Usuario;
+
+import flash.events.MouseEvent;
 
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
-import mx.core.UIComponent;
+import mx.core.FlexGlobals;
 import mx.events.CloseEvent;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
-import mx.events.ValidationResultEvent;
-import mx.managers.FocusManager;
 import mx.managers.PopUpManager;
 import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
-
-[Embed(source="../assets/img/icon-info.png")]
-[Bindable]
-private var iconInf:Class;
-
-[Embed(source="../assets/img/icon-help.png")]
-[Bindable]
-private var iconHelp:Class;
-
-[Embed(source="../assets/img/icon-baloom.png")]
-[Bindable]
-private var iconBaloom:Class;
 
 private var usuarioSalvar:Usuario;
 
@@ -39,11 +27,17 @@ private var usuarioSalvar:Usuario;
  */
 protected function init(event:FlexEvent):void
 {
-
-	estadoService.listarEstados();
-	statusService.listarStatus();
-	perfilService.listarPerfil();
-	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
+	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	{
+		setStateDetalheProdutor();
+	}
+	else
+	{
+		estadoService.listarEstados();
+		statusService.listarStatus();
+		perfilService.listarPerfil();
+		txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
+	}
 
 }
 
@@ -143,31 +137,38 @@ protected function actionBtnLimparPesquisa():void
  */
 protected function actionBtnLimparNovo():void
 {
-	estadoService.listarEstados();
-	perfilService.listarPerfil();
-	txtNovoNome.text="";
-	txtNovoConfirmarSenha.text="";
-	txtNovoCPF.text="";
-	txtNovoLogin.text="";
-	txtNovoSenha.text="";
-	txtNovoEmail.text="";
 
-	txtNovoNome.errorString=null;
-	txtNovoConfirmarSenha.errorString=null;
-	txtNovoCPF.errorString=null;
-	txtNovoLogin.errorString=null;
-	txtNovoSenha.errorString=null;
-	txtNovoEmail.errorString=null;
-	cmbNovoMunicipio.errorString=null;
-	cmbNovoEstado.errorString=null;
-	cmbNovoPerfil.errorString=null;
-	txtNovoNome.focusManager.setFocus(txtNovoNome);
-
-	panelError.visible=false;
-
-	if (currentState != "stateNovo")
+	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
 	{
-		currentState="stateNovo";
+		setStateDetalheProdutor();
+	}
+	else
+	{
+		estadoService.listarEstados();
+		perfilService.listarPerfil();
+		txtNovoNome.text="";
+		txtNovoConfirmarSenha.text="";
+		txtNovoCPF.text="";
+		txtNovoLogin.text="";
+		txtNovoSenha.text="";
+		txtNovoEmail.text="";
+
+		txtNovoNome.errorString=null;
+		txtNovoConfirmarSenha.errorString=null;
+		txtNovoCPF.errorString=null;
+		txtNovoLogin.errorString=null;
+		txtNovoSenha.errorString=null;
+		txtNovoEmail.errorString=null;
+		cmbNovoMunicipio.errorString=null;
+		cmbNovoEstado.errorString=null;
+		cmbNovoPerfil.errorString=null;
+		txtNovoNome.focusManager.setFocus(txtNovoNome);
+
+		if (currentState != "stateNovo")
+		{
+			currentState="stateNovo";
+		}
+		panelError.visible=false;
 	}
 }
 
@@ -184,6 +185,13 @@ protected function editarUsuario():void
 	txtNovoLogin.text=usuarioSelecionado.login;
 	txtNovoSenha.text=usuarioSelecionado.senha;
 	txtNovoNome.text=usuarioSelecionado.nome;
+	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	{
+		cmbNovoPerfil.enabled=false;
+		cmbNovoStatus.enabled=false;
+		btnNovoLimpar.label="Voltar";
+		btnNovoVoltar.visible=false;
+	}
 
 	estadoService.listarEstados();
 	perfilService.listarPerfil();
@@ -211,11 +219,11 @@ protected function voltarPesquisa():void
 	}
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
-	if (panelError!= null)
+	if (panelError != null)
 	{
 		panelError.visible=false;
 	}
-	
+
 	if (panelSucesso != null)
 	{
 		panelSucesso.visible=false;
@@ -301,7 +309,7 @@ protected function pesquisarUsuariosResult(event:ResultEvent):void
 	var listaUsuarios:ArrayCollection=event.result as ArrayCollection;
 	currentState='stateResultado';
 	gridUsuario.dataProvider=listaUsuarios;
-	panelResultado.title="Resultado      -      Registros encontrados " + listaUsuarios.length;
+	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaUsuarios.length;
 	PopUpManager.centerPopUp(this);
 }
 
@@ -327,6 +335,11 @@ protected function inserirUsuarioResult(event:ResultEvent):void
 	cmbDetalhePerfil.text=usuarioSelecionado.perfil;
 
 	PopUpManager.centerPopUp(this);
+
+	if (FlexGlobals.topLevelApplication.user.codigo == usuarioSelecionado.codigo)
+	{
+		FlexGlobals.topLevelApplication.user=usuarioSelecionado;
+	}
 }
 
 /**
@@ -566,8 +579,8 @@ protected function onFault(event:FaultEvent):void
 	//Ocorreu uma falha ao chamar o servico. 
 	if (event.fault.rootCause.message == "Erro ao salvar.\n Dados já foram cadastrados para outro usuário.")
 	{
-		ToolTipUtil.createToolTip(txtNovoCPF, "Dados já foram cadastrados para outro usuário", iconInf, true, ToolTipUtil.RIGHT, 5000);
-		ToolTipUtil.createToolTip(txtNovoLogin, "Dados já foram cadastrados para outro usuário", iconInf, true, ToolTipUtil.RIGHT, 5000);
+		//ToolTipUtil.createToolTip(txtNovoCPF, "Dados já foram cadastrados para outro usuário", iconInf, true, ToolTipUtil.RIGHT, 5000);
+		//ToolTipUtil.createToolTip(txtNovoLogin, "Dados já foram cadastrados para outro usuário", iconInf, true, ToolTipUtil.RIGHT, 5000);
 	}
 	else
 	{
@@ -605,6 +618,28 @@ protected function validar():Boolean
 	panelError.visible=true;
 
 	return false;
+}
+
+/**
+ *
+ * @param item
+ * @param column
+ * @return
+ */
+protected function setStateDetalheProdutor():void
+{
+	currentState='stateDetalhe';
+
+	usuarioSelecionado=FlexGlobals.topLevelApplication.user;
+	txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
+	txtDetalheEmail.text=usuarioSelecionado.email;
+	txtDetalheLogin.text=usuarioSelecionado.login;
+	txtDetalheNome.text=usuarioSelecionado.nome;
+	cmbDetalheEstado.text=usuarioSelecionado.municipio.estado.descricao;
+	cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
+	cmbDetalhePerfil.text=usuarioSelecionado.perfil;
+	btnDetalheVoltar.visible=false;
+	PopUpManager.centerPopUp(this);
 }
 
 /**
