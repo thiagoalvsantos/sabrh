@@ -3,11 +3,13 @@ import br.pucpr.sabrh.view.manterAnimal;
 import br.pucpr.sabrh.view.manterPropriedade;
 import br.pucpr.sabrh.view.manterUsuario;
 
+import flash.display.InteractiveObject;
 import flash.events.Event;
 import flash.external.ExternalInterface;
 
 import mx.controls.Alert;
 import mx.controls.Image;
+import mx.core.IVisualElement;
 import mx.events.CloseEvent;
 import mx.managers.PopUpManager;
 
@@ -106,7 +108,11 @@ public function encerrar(event:CloseEvent):void
 		init();
 		if (barraIconesPersonalizada.numElements > 0)
 			do{
-				barraIcones.addElement(barraIconesPersonalizada.getElementAt(0));
+				var elemento:InteractiveObject=barraIconesPersonalizada.getElementAt(0) as InteractiveObject;
+				if (barraIcones.numElements > elemento.tabIndex)
+					barraIcones.addElementAt(barraIconesPersonalizada.getElementAt(0), elemento.tabIndex);
+				else
+					barraIcones.addElementAt(barraIconesPersonalizada.getElementAt(0), barraIcones.numElements);
 			}while(barraIconesPersonalizada.numElements > 0);
 		barraIcones.visible=false;
 		this.visible = false;

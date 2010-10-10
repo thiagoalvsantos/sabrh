@@ -631,8 +631,8 @@ mx|ToolTip
 
 .errorTip 
 { 
-	color: #4d4d4d;
-	/*
+	/*color: #4d4d4d;*/
+	
 	color: #FFFFFF; 
 	fontSize: 9; 
 	fontWeight: "bold"; 
@@ -643,7 +643,7 @@ mx|ToolTip
 	paddingLeft: 4; 
 	paddingRight: 4; 
 	paddingTop: 4; 	
-	*/
+	
 }
 
 
