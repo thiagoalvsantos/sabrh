@@ -17,47 +17,32 @@ import br.pucpr.sabrh.entity.Municipio;
 import br.pucpr.sabrh.entity.Usuario;
 import spark.events.IndexChangeEvent;
 
-
 /**
  * Limpa dados de novo.
  *
  */
-protected function actionBtnLimparNovo():void
+protected function btnClickLimparNovo():void
 {
-    txtNovoNome.text="";
-    txtNovoConfirmarSenha.text="";
-    txtNovoCPF.text="";
-    txtNovoLogin.text="";
-    txtNovoSenha.text="";
-    txtNovoEmail.text="";
+	txtNovoApelido.text="";
+	txtNovoMae.text="";
+	txtNovoNome.text="";
+	txtNovoPai.text="";
+	txtNovoPropriedade.text="";
+	txtNovoRegistro.text="";
 
-    txtNovoNome.errorString=null;
-    txtNovoConfirmarSenha.errorString=null;
-    txtNovoCPF.errorString=null;
-    txtNovoLogin.errorString=null;
-    txtNovoSenha.errorString=null;
-    txtNovoEmail.errorString=null;
-    cmbNovoMunicipio.errorString=null;
-    cmbNovoEstado.errorString=null;
-    cmbNovoPerfil.errorString=null;
-    txtNovoNome.focusManager.setFocus(txtNovoNome);
+	txtNovoApelido.errorString=null;
+	txtNovoMae.errorString=null;
+	txtNovoNome.errorString=null;
+	txtNovoPai.errorString=null;
+	txtNovoPropriedade.errorString=null;
+	txtNovoRegistro.errorString=null;
 
-    if (currentState != "stateNovo")
-    {
-        currentState="stateNovo";
-    }
-}
+	txtNovoRegistro.focusManager.setFocus(txtNovoRegistro);
 
-/**
- * Evento botão de inserir usuário.
- *
- * @param event
- */
-protected function btnClickNovo():void
-{
-    currentState="stateNovo";
-    actionBtnLimparNovo();
-    PopUpManager.centerPopUp(this);
+	if (currentState != "stateNovo")
+	{
+		currentState="stateNovo";
+	}
 }
 
 
@@ -69,19 +54,33 @@ protected function btnClickNovo():void
  */
 protected function btnClickLimparPesquisa():void
 {
-    currentState='statePesquisa';
-    txtPesquisaNomeAnimal.text="";
-    txtPesquisaNomeMae.text="";
-    txtPesquisaNomePai.text="";
-    txtPesquisaRegistroAnimal.text="";
-    txtPesquisaRegistroMae.text="";
-    txtPesquisaRegistroPai.text="";
+	currentState='statePesquisa';
+	txtPesquisaNomeAnimal.text="";
+	txtPesquisaNomeMae.text="";
+	txtPesquisaNomePai.text="";
+	txtPesquisaRegistroAnimal.text="";
+	txtPesquisaRegistroMae.text="";
+	txtPesquisaRegistroPai.text="";
+	checkBoxFemea.selected=false;
+	checkBoxMacho.selected=false;
 
-    if (dataGridResultado != null)
-    {
-        dataGridResultado.dataProvider=null;
-    }
-    PopUpManager.centerPopUp(this);
+	if (dataGridResultado != null)
+	{
+		dataGridResultado.dataProvider=null;
+	}
+	PopUpManager.centerPopUp(this);
+}
+
+/**
+ * Evento botão de inserir usuário.
+ *
+ * @param event
+ */
+protected function btnClickNovo():void
+{
+	currentState="stateNovo";
+	btnClickLimparNovo();
+	PopUpManager.centerPopUp(this);
 }
 
 
@@ -92,14 +91,14 @@ protected function btnClickLimparPesquisa():void
  */
 protected function btnClickPesquisar():void
 {
-    var animal:Animal=new Animal();
-    if (StringUtil.trim(txtPesquisaNomeAnimal.text) != "")
-    {
-        animal.nome=StringUtil.trim(txtPesquisaNomeAnimal.text);
-    }
+	var animal:Animal=new Animal();
+	if (StringUtil.trim(txtPesquisaNomeAnimal.text) != "")
+	{
+		animal.nome=StringUtil.trim(txtPesquisaNomeAnimal.text);
+	}
 
 
-    animalService.pesquisar(animal);
+	animalService.pesquisar(animal);
 }
 
 /**
@@ -117,8 +116,8 @@ protected function btnClickPesquisar():void
  */
 protected function cbmEstadoChange():void
 {
-    if (currentState == 'statePesquisa' || currentState == 'stateResultado')
-    {
+	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
+	{
 //		if (cmbPesquisaEstado.selectedIndex != 0)
 //		{
 //			municipioService.listarMunicipios(cmbPesquisaEstado.selectedItem);
@@ -128,9 +127,9 @@ protected function cbmEstadoChange():void
 //			cmbPesquisaMunicipio.enabled=false;
 //			cmbPesquisaMunicipio.dataProvider=null;
 //		}
-    }
-    else
-    {
+	}
+	else
+	{
 //        if (cmbNovoEstado.selectedIndex != 0)
 //        {
 //            municipioService.listarMunicipios(cmbNovoEstado.selectedItem);
@@ -140,7 +139,7 @@ protected function cbmEstadoChange():void
 //            cmbNovoMunicipio.enabled=false;
 //            cmbNovoMunicipio.dataProvider=null;
 //        }
-    }
+	}
 
 }
 
@@ -166,7 +165,7 @@ protected function editarUsuario():void
 //    perfilService.listarPerfil();
 //    statusService.listarStatus();
 
-    PopUpManager.centerPopUp(this);
+	PopUpManager.centerPopUp(this);
 
 }
 
@@ -177,8 +176,8 @@ protected function editarUsuario():void
  */
 protected function fechar(event:CloseEvent):void
 {
-    // fecha janela atual.
-    PopUpManager.removePopUp(this);
+	// fecha janela atual.
+	PopUpManager.removePopUp(this);
 }
 
 /**
@@ -187,7 +186,7 @@ protected function fechar(event:CloseEvent):void
  */
 protected function gridUsuarioItemClick(event:ListEvent):void
 {
-    currentState='stateDetalhe';
+	currentState='stateDetalhe';
 
 //    usuarioSelecionado=event.currentTarget.selectedItem;
 //    txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
@@ -198,7 +197,7 @@ protected function gridUsuarioItemClick(event:ListEvent):void
 //    cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
 //    cmbDetalhePerfil.text=usuarioSelecionado.perfil;
 
-    PopUpManager.centerPopUp(this);
+	PopUpManager.centerPopUp(this);
 }
 
 /**
@@ -209,7 +208,7 @@ protected function gridUsuarioItemClick(event:ListEvent):void
 protected function init(event:FlexEvent):void
 {
 
-    txtPesquisaNomeAnimal.focusManager.setFocus(txtPesquisaNomeAnimal);
+	txtPesquisaNomeAnimal.focusManager.setFocus(txtPesquisaNomeAnimal);
 
 }
 
@@ -220,16 +219,16 @@ protected function init(event:FlexEvent):void
  */
 protected function inserirUsuarioResult(event:ResultEvent):void
 {
-    if (currentState == 'stateNovo')
-    {
-        Alert.show("Usuário inserido com sucesso!", "Sucesso");
-    }
-    else if (currentState == 'stateEditar')
-    {
-        Alert.show("Usuário alterado com sucesso!", "Sucesso");
-    }
+	if (currentState == 'stateNovo')
+	{
+		Alert.show("Usuário inserido com sucesso!", "Sucesso");
+	}
+	else if (currentState == 'stateEditar')
+	{
+		Alert.show("Usuário alterado com sucesso!", "Sucesso");
+	}
 
-    currentState='stateDetalhe';
+	currentState='stateDetalhe';
 
 //    usuarioSelecionado=event.result as Usuario;
 //
@@ -241,7 +240,7 @@ protected function inserirUsuarioResult(event:ResultEvent):void
 //    cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
 //    cmbDetalhePerfil.text=usuarioSelecionado.perfil;
 
-    PopUpManager.centerPopUp(this);
+	PopUpManager.centerPopUp(this);
 }
 
 /**
@@ -251,24 +250,24 @@ protected function inserirUsuarioResult(event:ResultEvent):void
  */
 protected function listarEstadosResult(event:ResultEvent):void
 {
-    var listaEstados:ArrayCollection=new ArrayCollection();
-    listaEstados.addItem("Selecione...");
-    listaEstados.addAll(event.result as ArrayCollection);
-    if (currentState == 'statePesquisa' || currentState == 'stateResultado')
-    {
+	var listaEstados:ArrayCollection=new ArrayCollection();
+	listaEstados.addItem("Selecione...");
+	listaEstados.addAll(event.result as ArrayCollection);
+	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
+	{
 //		cmbPesquisaEstado.dataProvider=listaEstados;
 //		cmbPesquisaEstado.selectedIndex=-1;
 //		cmbPesquisaEstado.selectedIndex=0;
 //		cmbPesquisaEstado.errorString=null;
-    }
-    else
-    {
-        cmbNovoEstado.dataProvider=listaEstados;
-        cmbNovoEstado.selectedIndex=-1;
-        cmbNovoEstado.selectedIndex=0;
+	}
+	else
+	{
+//        cmbNovoEstado.dataProvider=listaEstados;
+//        cmbNovoEstado.selectedIndex=-1;
+//        cmbNovoEstado.selectedIndex=0;
 
-        if (currentState == 'stateEditar')
-        {
+		if (currentState == 'stateEditar')
+		{
 //            for (var i:Number=1; i < cmbNovoEstado.dataProvider.length; i++)
 //            {
 //                if (cmbNovoEstado.dataProvider.getItemAt(i).sigla == usuarioSelecionado.municipio.estado.sigla)
@@ -276,10 +275,10 @@ protected function listarEstadosResult(event:ResultEvent):void
 //                    cmbNovoEstado.selectedIndex=i;
 //                }
 //            }
-        }
-        cbmEstadoChange();
-        cmbNovoEstado.errorString=null;
-    }
+		}
+		cbmEstadoChange();
+//        cmbNovoEstado.errorString=null;
+	}
 }
 
 /**
@@ -289,28 +288,28 @@ protected function listarEstadosResult(event:ResultEvent):void
  */
 protected function listarPerfilResult(event:ResultEvent):void
 {
-    var listaPerfil:ArrayCollection=new ArrayCollection();
-    listaPerfil.addItem("Selecione...");
-    listaPerfil.addAll(event.result as ArrayCollection);
+	var listaPerfil:ArrayCollection=new ArrayCollection();
+	listaPerfil.addItem("Selecione...");
+	listaPerfil.addAll(event.result as ArrayCollection);
 
-    if (currentState == 'statePesquisa')
-    {
+	if (currentState == 'statePesquisa')
+	{
 //		cmbPesquisaPerfil.dataProvider=listaPerfil;
 //		cmbPesquisaPerfil.selectedIndex=-1;
 //		cmbPesquisaPerfil.selectedIndex=0;
-    }
-    else
-    {
-        cmbNovoPerfil.dataProvider=listaPerfil;
-        cmbNovoPerfil.selectedIndex=-1;
-        cmbNovoPerfil.selectedIndex=0;
+	}
+	else
+	{
+//        cmbNovoPerfil.dataProvider=listaPerfil;
+//        cmbNovoPerfil.selectedIndex=-1;
+//        cmbNovoPerfil.selectedIndex=0;
 
-        if (currentState == 'stateEditar')
-        {
-      //      cmbNovoPerfil.selectedItem=usuarioSelecionado.perfil;
-        }
-        cmbNovoPerfil.errorString=null;
-    }
+		if (currentState == 'stateEditar')
+		{
+			//      cmbNovoPerfil.selectedItem=usuarioSelecionado.perfil;
+		}
+//        cmbNovoPerfil.errorString=null;
+	}
 }
 
 /**
@@ -320,29 +319,29 @@ protected function listarPerfilResult(event:ResultEvent):void
  */
 protected function listarStatusResult(event:ResultEvent):void
 {
-    var listaStatus:ArrayCollection=new ArrayCollection();
-    listaStatus.addItem("Selecione...");
-    listaStatus.addAll(event.result as ArrayCollection);
+	var listaStatus:ArrayCollection=new ArrayCollection();
+	listaStatus.addItem("Selecione...");
+	listaStatus.addAll(event.result as ArrayCollection);
 
-    if (currentState == 'statePesquisa')
-    {
+	if (currentState == 'statePesquisa')
+	{
 //		cmbPesquisaStatus.dataProvider=listaStatus;
 //		cmbPesquisaStatus.selectedIndex=-1;
 //		cmbPesquisaStatus.selectedIndex=0
 
-    }
-    else
-    {
-        cmbNovoStatus.dataProvider=listaStatus;
-        cmbNovoStatus.selectedIndex=-1;
-        cmbNovoStatus.selectedIndex=0;
+	}
+	else
+	{
+//        cmbNovoStatus.dataProvider=listaStatus;
+//        cmbNovoStatus.selectedIndex=-1;
+//        cmbNovoStatus.selectedIndex=0;
 
-        if (currentState == 'stateEditar')
-        {
-        //    cmbNovoStatus.selectedItem=usuarioSelecionado.status;
-        }
-        cmbNovoStatus.errorString=null;
-    }
+		if (currentState == 'stateEditar')
+		{
+			//    cmbNovoStatus.selectedItem=usuarioSelecionado.status;
+		}
+//        cmbNovoStatus.errorString=null;
+	}
 }
 
 /**
@@ -351,7 +350,7 @@ protected function listarStatusResult(event:ResultEvent):void
  */
 protected function novoConfirmacao():void
 {
-    Alert.show("Tem certeza de sair sem salvar as alterações?", "Manutenção de Usuários", Alert.YES | Alert.NO, this, novoConfirmacaoResult);
+	Alert.show("Tem certeza de sair sem salvar as alterações?", "Manutenção de Usuários", Alert.YES | Alert.NO, this, novoConfirmacaoResult);
 }
 
 //Função para recuperar o resultado da confirmação.
@@ -361,10 +360,10 @@ protected function novoConfirmacao():void
  */
 protected function novoConfirmacaoResult(event:CloseEvent):void
 {
-    if (event.detail == Alert.YES)
-    {
-        actionBtnLimparNovo();
-    }
+	if (event.detail == Alert.YES)
+	{
+		btnClickLimparNovo();
+	}
 }
 
 /**
@@ -383,8 +382,8 @@ protected function novoConfirmacaoResult(event:CloseEvent):void
  */
 protected function onFault(event:FaultEvent):void
 {
-    //Ocorreu uma falha ao chamar o servico. 
-    Alert.show(event.fault.rootCause.message);
+	//Ocorreu uma falha ao chamar o servico. 
+	Alert.show(event.fault.rootCause.message);
 }
 
 
@@ -406,18 +405,18 @@ protected function onFault(event:FaultEvent):void
 
 protected function serviceResultAnimalListar(event:ResultEvent):void
 {
-    // Recupera lista de animais
-    var listaAnimais:ArrayCollection=event.result as ArrayCollection;
+	// Recupera lista de animais
+	var listaAnimais:ArrayCollection=event.result as ArrayCollection;
 
-    // Altera estado da tela para "RESULTADO"
-    currentState='stateResultado';
+	// Altera estado da tela para "RESULTADO"
+	currentState='stateResultado';
 
-    // Atribui a lista de animais para a grid de resultado
-    dataGridResultado.dataProvider=listaAnimais;
+	// Atribui a lista de animais para a grid de resultado
+	dataGridResultado.dataProvider=listaAnimais;
 
-    // Informa o número de registros encontrados 
-    panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaAnimais.length;
-    PopUpManager.centerPopUp(this);
+	// Informa o número de registros encontrados 
+	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaAnimais.length;
+	PopUpManager.centerPopUp(this);
 
 }
 
@@ -427,22 +426,15 @@ protected function serviceResultAnimalListar(event:ResultEvent):void
  */
 protected function validar():Boolean
 {
-    //executa todos os validadores
-    var errors:Array=Validator.validateAll(val);
+	//executa todos os validadores
+	var errors:Array=Validator.validateAll(val);
 
-    //se não existem erros 
-    if (errors.length == 0)
-    {
-        if (txtNovoConfirmarSenha.text == txtNovoSenha.text)
-        {
-            return true;
-        }
-        else
-        {
-            Alert.show("Senhas não coicidem.", "Manutenção de Usuários");
-        }
-    }
-    return false;
+	//se não existem erros 
+	if (errors.length == 0)
+	{
+		return true;
+	}
+	return false;
 }
 ///**
 // * Ação do botão voltar da pesquisa.
