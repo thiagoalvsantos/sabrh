@@ -621,7 +621,8 @@ protected function validar():Boolean
 }
 
 /**
- *
+ * Metodo para setar apenas a visualização de Detalhes para usuário com perfil de Produtor
+ * 
  * @param item
  * @param column
  * @return
@@ -641,6 +642,7 @@ protected function setStateDetalheProdutor():void
 	btnDetalheVoltar.visible=false;
 	PopUpManager.centerPopUp(this);
 }
+
 
 /**
  *

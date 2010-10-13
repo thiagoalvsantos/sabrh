@@ -1,4 +1,5 @@
 // login
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Municipio;
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.view.manterPropriedade;
@@ -123,7 +124,7 @@ protected function pesquisarUsuariosResult(event:ResultEvent):void
 	var listaUsuarios:ArrayCollection=event.result as ArrayCollection;
 	currentState='stateResultado';
 	gridUsuario.dataProvider=listaUsuarios;
-	panelResultado.title="Resultado      -      Registros encontrados " + listaUsuarios.length;
+	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaUsuarios.length;
 	PopUpManager.centerPopUp(this);
 }
 
