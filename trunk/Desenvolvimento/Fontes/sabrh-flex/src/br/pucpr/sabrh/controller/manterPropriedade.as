@@ -1,4 +1,5 @@
 // login
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Municipio;
 import br.pucpr.sabrh.entity.Propriedade;
 import br.pucpr.sabrh.entity.Usuario;
@@ -33,6 +34,13 @@ import spark.events.IndexChangeEvent;
  */
 protected function init(event:FlexEvent):void
 {
+	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	{
+		usuarioNovo=FlexGlobals.topLevelApplication.user;
+		usuarioPesquisa=FlexGlobals.topLevelApplication.user;
+		btnPesquisaBuscar.enabled=false;
+		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
+	}
 
 	estadoService.listarEstados();
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
@@ -102,7 +110,7 @@ protected function actionBtnNovo():void
 
 	currentState="stateNovo";
 	actionBtnLimparNovo();
-
+	
 	PopUpManager.centerPopUp(this);
 
 }
@@ -130,6 +138,13 @@ protected function actionBtnLimparPesquisa():void
 	{
 		gridProprietario.dataProvider=null;
 	}
+	
+	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	{
+		btnPesquisaBuscar.enabled=false;
+		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
+	}
+	
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
 }
@@ -157,6 +172,14 @@ protected function actionBtnLimparNovo():void
 		currentState="stateNovo";
 	}
 	
+	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	{
+		btnNovoBuscar.enabled=false;
+		txtNovoProprietario.text=FlexGlobals.topLevelApplication.user.nome;
+	}
+	
+	panelError.visible=false;
+	
 	txtNovoNome.focusManager.setFocus(txtNovoNome);
 }
 
@@ -170,8 +193,13 @@ protected function editarPropriedade():void
 	txtNovoNome.text=propriedadeSelecionada.nome;
 	txtNovoProprietario.text=propriedadeSelecionada.proprietario.nome;
 	txtNovoTelefone.text=telefoneFormatter.format(propriedadeSelecionada.telefone);
+	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	{
+		btnNovoBuscar.enabled=false;
+	}
 	estadoService.listarEstados();
 	PopUpManager.centerPopUp(this);
+	panelSucesso.visible=false;
 }
 
 /**
@@ -188,6 +216,15 @@ protected function voltarPesquisa():void
 	}
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
+	if (panelError != null)
+	{
+		panelError.visible=false;
+	}
+	
+	if (panelSucesso != null)
+	{
+		panelSucesso.visible=false;
+	}
 }
 
 /**
@@ -214,6 +251,7 @@ protected function actionBtnSalvarPropriedade():void
 {
 	if (validar())
 	{
+		panelError.visible=false;
 		var propriedade:Propriedade=new Propriedade();
 		propriedade.municipio=cmbNovoMunicipio.selectedItem;
 		propriedade.nome=txtNovoNome.text;
@@ -258,7 +296,7 @@ protected function pesquisarPropriedadesResult(event:ResultEvent):void
 	var listaProprietarios:ArrayCollection=event.result as ArrayCollection;
 	currentState='stateResultado';
 	gridProprietario.dataProvider=listaProprietarios;
-	panelResultado.title="Resultado      -      Registros encontrados " + listaProprietarios.length;
+	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaProprietarios.length;
 	PopUpManager.centerPopUp(this);
 }
 
@@ -269,16 +307,9 @@ protected function pesquisarPropriedadesResult(event:ResultEvent):void
  */
 protected function salvarPropriedadeResult(event:ResultEvent):void
 {
-	if (currentState == 'stateNovo')
-	{
-		Alert.show("Propriedade inserida com sucesso!", "Sucesso");
-	}
-	else if (currentState == 'stateEditar')
-	{
-		Alert.show("Propriedade alterada com sucesso!", "Sucesso");
-	}
-
 	currentState='stateDetalhe';
+	
+	panelSucesso.visible=true;
 
 	txtDetalheNome.text=propriedadeSelecionada.nome;
 	txtDetalheProprietario.text=propriedadeSelecionada.proprietario.nome;
@@ -469,6 +500,7 @@ protected function validar():Boolean
 	}
 	else
 	{
+		panelError.visible=true;
 		return false;
 	}
 }

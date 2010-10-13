@@ -19,38 +19,6 @@ import mx.validators.Validator;
 private var usuario:Usuario;
 
 /**
- * Cria elemento com a imagem de Manter Usuário
- * 
- **/
-[Embed(source="../assets/img/btn-usuarios.png")]
-[Bindable]
-private var iconeManterUsuario:Class;
-
-/**
- * Cria elemento com a imagem de Manter Propriedade
- * 
- **/
-[Embed(source="../assets/img/btn-propriedades.png")]
-[Bindable]
-private var iconeManterPropriedade:Class;
-
-/**
- * Cria elemento com a imagem de Manter Animal
- * 
- **/
-[Embed(source="../assets/img/btn-animal.png")]
-[Bindable]
-private var iconeManterAnimal:Class;
-
-/**
- * Cria elemento com a imagem de Relatório
- * 
- **/
-[Embed(source="../assets/img/btn-graficos.png")]
-[Bindable]
-private var iconeRelatorio:Class;
-
-/**
  * Realiza a autenticação do usuário
  */
 protected function autenticar():void
@@ -140,29 +108,6 @@ public function autenticarResult(event:ResultEvent):void
 		Alert.show("Usuário e/ou senha inválidos!", ".:: Login ::.");
 	}
 }
-
-/**
- * Método para criar o elemento icone automático
- * 
- * @param:id:String
- * @param imagem:Class
- * @param toolTip:String
- * 
- * 
- * @return icone:Image
- */
-private function criarIcone(id:String, classe:Class, toolTip:String):Image
-{
-	var icone:Image=new Image();
-	icone.id=id;
-	icone.source=classe;
-	icone.toolTip=toolTip;
-	icone.buttonMode=true;
-		
-	return icone;
-}
-
-
 
 /**
  * Falha ao invocar serviço

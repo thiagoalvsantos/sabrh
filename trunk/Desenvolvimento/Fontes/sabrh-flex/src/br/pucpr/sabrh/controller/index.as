@@ -3,13 +3,12 @@ import br.pucpr.sabrh.view.manterAnimal;
 import br.pucpr.sabrh.view.manterPropriedade;
 import br.pucpr.sabrh.view.manterUsuario;
 
+import flash.display.DisplayObject;
 import flash.display.InteractiveObject;
-import flash.events.Event;
 import flash.external.ExternalInterface;
 
 import mx.controls.Alert;
 import mx.controls.Image;
-import mx.core.IVisualElement;
 import mx.events.CloseEvent;
 import mx.managers.PopUpManager;
 
@@ -106,17 +105,30 @@ public function encerrar(event:CloseEvent):void
 		user = null;
 		
 		init();
-		if (barraIconesPersonalizada.numElements > 0)
-			do{
-				var elemento:InteractiveObject=barraIconesPersonalizada.getElementAt(0) as InteractiveObject;
-				if (barraIcones.numElements > elemento.tabIndex)
-					barraIcones.addElementAt(barraIconesPersonalizada.getElementAt(0), elemento.tabIndex);
-				else
-					barraIcones.addElementAt(barraIconesPersonalizada.getElementAt(0), barraIcones.numElements);
-			}while(barraIconesPersonalizada.numElements > 0);
-		barraIcones.visible=false;
+		
+		resetIcones();
+		
 		this.visible = false;
 	}
+}
+
+
+/**
+ * Metodo para resetar os dados dos icones principais.
+ * 
+ */
+protected function resetIcones():void
+{	
+	if (barraIconesPersonalizada.numElements > 0)
+		do{
+			var elemento:InteractiveObject=barraIconesPersonalizada.getElementAt(0) as InteractiveObject;
+			if (barraIcones.numElements > elemento.tabIndex)
+				barraIcones.addElementAt(barraIconesPersonalizada.getElementAt(0), elemento.tabIndex);
+			else
+				barraIcones.addElementAt(barraIconesPersonalizada.getElementAt(0), barraIcones.numElements);
+		}while(barraIconesPersonalizada.numElements > 0);
+	iconeManterUsuario.toolTip="Manutenção de Usuários";
+	barraIcones.visible=false;
 }
 
 public function iconMoveDown(id:Image):void
