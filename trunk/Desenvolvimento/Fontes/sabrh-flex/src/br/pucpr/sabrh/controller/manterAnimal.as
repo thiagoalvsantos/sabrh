@@ -1,24 +1,19 @@
 import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.Municipio;
-import br.pucpr.sabrh.entity.Usuario;
+import br.pucpr.sabrh.view.consultarPropriedade;
 
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.DateField;
-import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
-import mx.controls.dataGridClasses.DataGridColumn;
+import mx.core.FlexGlobals;
 import mx.events.CloseEvent;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
 import mx.managers.PopUpManager;
-import mx.messaging.errors.NoChannelAvailableError;
 import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
-
-import spark.events.IndexChangeEvent;
 
 /**
  * Limpa dados de novo.
@@ -328,6 +323,19 @@ protected function onFault(event:FaultEvent):void
 {
 	//Ocorreu uma falha ao chamar o servico. 
 	Alert.show(event.fault.rootCause.message);
+}
+
+
+//Função para abrir a tela de Consulta de Propriedade.
+public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
+{
+	var popUpConsultarPropriedade:consultarPropriedade=consultarPropriedade(PopUpManager.createPopUp(this.parent, consultarPropriedade, true));
+	popUpConsultarPropriedade.janelaOrigem=this;
+	popUpConsultarPropriedade.tipoConsulta=tipoConsulta;
+	popUpConsultarPropriedade.atributoDestino=atributo;
+	PopUpManager.centerPopUp(popUpConsultarPropriedade);
+	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarPropriedade;
+	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
 

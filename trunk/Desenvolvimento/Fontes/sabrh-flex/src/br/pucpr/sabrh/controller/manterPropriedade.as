@@ -36,8 +36,8 @@ protected function init(event:FlexEvent):void
 {
 	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
 	{
-		usuarioNovo=FlexGlobals.topLevelApplication.user;
-		usuarioPesquisa=FlexGlobals.topLevelApplication.user;
+		proprietarioNovo=FlexGlobals.topLevelApplication.user;
+		proprietarioPesquisa=FlexGlobals.topLevelApplication.user;
 		btnPesquisaBuscar.enabled=false;
 		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
 	}
@@ -94,7 +94,7 @@ protected function actionBtnPesquisar():void
 
 	if (txtPesquisaProprietario.text != "")
 	{
-		prop.proprietario=usuarioPesquisa;
+		prop.proprietario=proprietarioPesquisa;
 	}
 
 	propriedadeService.pesquisar(prop);
@@ -132,11 +132,11 @@ protected function actionBtnLimparPesquisa():void
 	cmbPesquisaMunicipio.selectedIndex=0;
 	cmbPesquisaMunicipio.enabled=false;
 	txtPesquisaProprietario.text="";
-	usuarioPesquisa=null;
+	proprietarioPesquisa=null;
 
-	if (gridProprietario != null)
+	if (gridPropriedade != null)
 	{
-		gridProprietario.dataProvider=null;
+		gridPropriedade.dataProvider=null;
 	}
 	
 	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
@@ -208,7 +208,7 @@ protected function editarPropriedade():void
  */
 protected function voltarPesquisa():void
 {
-	if (gridProprietario == null){
+	if (gridPropriedade == null){
 		currentState='statePesquisa';
 	} else {		
 		currentState='stateResultado';
@@ -255,9 +255,7 @@ protected function actionBtnSalvarPropriedade():void
 		var propriedade:Propriedade=new Propriedade();
 		propriedade.municipio=cmbNovoMunicipio.selectedItem;
 		propriedade.nome=txtNovoNome.text;
-//		var usuario:Usuario=new Usuario();
-//		usuario.codigo=10;
-		propriedade.proprietario=usuarioNovo;
+		propriedade.proprietario=proprietarioNovo;
 		propriedade.telefone=txtNovoTelefone.text;
 		
 		//retira mascara telefone
@@ -293,10 +291,10 @@ protected function actionBtnSalvarPropriedade():void
  */
 protected function pesquisarPropriedadesResult(event:ResultEvent):void
 {
-	var listaProprietarios:ArrayCollection=event.result as ArrayCollection;
+	var listaPropriedades:ArrayCollection=event.result as ArrayCollection;
 	currentState='stateResultado';
-	gridProprietario.dataProvider=listaProprietarios;
-	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaProprietarios.length;
+	gridPropriedade.dataProvider=listaPropriedades;
+	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaPropriedades.length;
 	PopUpManager.centerPopUp(this);
 }
 
@@ -457,8 +455,8 @@ protected function gridPropriedadeItemClick(event:ListEvent):void
 	txtDetalheTelefone.text=telefoneFormatter.format(propriedadeSelecionada.telefone);
 	cmbDetalheEstado.text=propriedadeSelecionada.municipio.estado.descricao;
 	cmbDetalheMunicipio.text=propriedadeSelecionada.municipio.descricao;
-	usuarioNovo=propriedadeSelecionada.proprietario;
-	txtDetalheProprietario.text=usuarioNovo.nome;
+	proprietarioNovo=propriedadeSelecionada.proprietario;
+	txtDetalheProprietario.text=proprietarioNovo.nome;
 
 	PopUpManager.centerPopUp(this);
 }
