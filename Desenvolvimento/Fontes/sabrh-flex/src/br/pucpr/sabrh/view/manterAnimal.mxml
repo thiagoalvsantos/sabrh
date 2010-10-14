@@ -21,6 +21,10 @@
 		</fx:Array>
 
 		<s:RadioButtonGroup id="radiogroupNovoSexo"/>
+		
+		<entity:Propriedade id="propriedadePesquisa"/>
+		
+		<entity:Propriedade id="propriedadeNovo"/>
 
 		<s:Parallel id="exibeMensagemParallel">
 			<s:Fade alphaFrom="0" alphaTo="1"/>
@@ -66,7 +70,7 @@
 				<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false"/>
 				<s:Button label="Buscar" click="" x="580" y="100" tabIndex="7"/>
 				<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false"/>
-				<s:Button label="Buscar" click="" x="580" y="130" tabIndex="8"/>
+				<s:Button label="Buscar" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8"/>
 				<s:CheckBox id="checkBoxMacho" x="705" y="10" label="Macho"/>
 				<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea"/>
 			</mx:Canvas>
@@ -135,7 +139,7 @@
 						<s:TextInput id="txtNovoApelido" width="370" tabIndex="3"/>
 						<s:HGroup>
 							<s:TextInput id="txtNovoPropriedade" width="370" editable="false" tabFocusEnabled="false"/>
-							<s:Button label="Buscar" tabIndex="4"/>
+							<s:Button label="Buscar" tabIndex="4" click="{abrirConsultarPropriedade(txtNovoPropriedade,'novo')}"/>
 						</s:HGroup>
 						<s:HGroup>
 							<s:TextInput id="txtNovoPai" width="370" editable="false" tabFocusEnabled="false"/>
