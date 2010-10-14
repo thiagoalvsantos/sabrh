@@ -1,5 +1,11 @@
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.Municipio;
+import br.pucpr.sabrh.entity.Usuario;
+
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
+import mx.controls.DateField;
 import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
 import mx.controls.dataGridClasses.DataGridColumn;
 import mx.events.CloseEvent;
@@ -11,10 +17,7 @@ import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.Municipio;
-import br.pucpr.sabrh.entity.Usuario;
+
 import spark.events.IndexChangeEvent;
 
 /**
@@ -44,8 +47,6 @@ protected function btnClickLimparNovo():void
 		currentState="stateNovo";
 	}
 }
-
-
 
 /**
  * Limpa dados de pesquisa.
@@ -101,47 +102,22 @@ protected function btnClickPesquisar():void
 	animalService.pesquisar(animal);
 }
 
-/**
- * //////////////////////////////////////////////////////
- *
- * 	Eventos de componentes.
- *
- * //////////////////////////////////////////////////////
- * /
-
-   /**
- * Evento de seleção de estado
- *
- * @param event
- */
-protected function cbmEstadoChange():void
+protected function btnClickSalvar():void
 {
-	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
+	if (validar())
 	{
-//		if (cmbPesquisaEstado.selectedIndex != 0)
-//		{
-//			municipioService.listarMunicipios(cmbPesquisaEstado.selectedItem);
-//		}
-//		else
-//		{
-//			cmbPesquisaMunicipio.enabled=false;
-//			cmbPesquisaMunicipio.dataProvider=null;
-//		}
-	}
-	else
-	{
-//        if (cmbNovoEstado.selectedIndex != 0)
-//        {
-//            municipioService.listarMunicipios(cmbNovoEstado.selectedItem);
-//        }
-//        else
-//        {
-//            cmbNovoMunicipio.enabled=false;
-//            cmbNovoMunicipio.dataProvider=null;
-//        }
+		var animal:Animal=new Animal;
+
+		animal.apelido=StringUtil.trim(txtNovoApelido.text);
+		animal.dataNascimento=DateField.stringToDate(txtNovoDataNascimento.text, "DD/MM/YYYY");
+		animal.mae=null;
+		animal.pai=null;
+		animal.propriedade=null;
+		animal.registro=txtNovoRegistro.text;
 	}
 
 }
+
 
 
 
@@ -213,37 +189,6 @@ protected function init(event:FlexEvent):void
 }
 
 /**
- * Resultado da inserção de usuários
- *
- * @param event
- */
-protected function inserirUsuarioResult(event:ResultEvent):void
-{
-	if (currentState == 'stateNovo')
-	{
-		Alert.show("Usuário inserido com sucesso!", "Sucesso");
-	}
-	else if (currentState == 'stateEditar')
-	{
-		Alert.show("Usuário alterado com sucesso!", "Sucesso");
-	}
-
-	currentState='stateDetalhe';
-
-//    usuarioSelecionado=event.result as Usuario;
-//
-//    txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
-//    txtDetalheEmail.text=usuarioSelecionado.email;
-//    txtDetalheLogin.text=usuarioSelecionado.login;
-//    txtDetalheNome.text=usuarioSelecionado.nome;
-//    cmbDetalheEstado.text=usuarioSelecionado.municipio.estado.descricao;
-//    cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
-//    cmbDetalhePerfil.text=usuarioSelecionado.perfil;
-
-	PopUpManager.centerPopUp(this);
-}
-
-/**
  * Resultado da listagem de estados
  *
  * @param event
@@ -276,7 +221,6 @@ protected function listarEstadosResult(event:ResultEvent):void
 //                }
 //            }
 		}
-		cbmEstadoChange();
 //        cmbNovoEstado.errorString=null;
 	}
 }
@@ -403,7 +347,7 @@ protected function onFault(event:FaultEvent):void
 //    PopUpManager.centerPopUp(this);
 //}
 
-protected function serviceResultAnimalListar(event:ResultEvent):void
+protected function serviceResultAnimalPesquisar(event:ResultEvent):void
 {
 	// Recupera lista de animais
 	var listaAnimais:ArrayCollection=event.result as ArrayCollection;
@@ -421,6 +365,39 @@ protected function serviceResultAnimalListar(event:ResultEvent):void
 }
 
 /**
+ * Resultado da inserção de usuários
+ *
+ * @param event
+ */
+protected function serviceResultAnimalSalvar(event:ResultEvent):void
+{
+	// Exibe mensagem de sucesso
+	if (currentState == 'stateNovo')
+	{
+		Alert.show("Animal inserido com sucesso!", "Sucesso");
+	}
+	else if (currentState == 'stateEditar')
+	{
+		Alert.show("Animal alterado com sucesso!", "Sucesso");
+	}
+
+	currentState='stateDetalhe';
+
+
+//    usuarioSelecionado=event.result as Usuario;
+//
+//    txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
+//    txtDetalheEmail.text=usuarioSelecionado.email;
+//    txtDetalheLogin.text=usuarioSelecionado.login;
+//    txtDetalheNome.text=usuarioSelecionado.nome;
+//    cmbDetalheEstado.text=usuarioSelecionado.municipio.estado.descricao;
+//    cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
+//    cmbDetalhePerfil.text=usuarioSelecionado.perfil;
+
+	PopUpManager.centerPopUp(this);
+}
+
+/**
  * Validar formulário.
  * @return
  */
@@ -434,6 +411,12 @@ protected function validar():Boolean
 	{
 		return true;
 	}
+	else
+	{
+		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
+	}
+	panelError.visible=true;
+
 	return false;
 }
 ///**

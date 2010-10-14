@@ -606,15 +606,14 @@ protected function validar():Boolean
 		}
 		else
 		{
-			//ToolTipUtil.createToolTip(txtNovoConfirmarSenha,"Senhas não coicidem", iconHelp, true, ToolTipUtil.RIGHT, 5000);
-			//Alert.show("Senhas não coicidem.", "Manutenção de Usuários");
 			txtNovoConfirmarSenha.errorString="Senhas não coicidem";
 			txtNovoConfirmarSenha.focusManager.setFocus(txtNovoConfirmarSenha);
 		}
 	}
 	else
-		//ToolTipUtil.createToolTip(UIComponent(errors[0].target.source),errors[0].message, iconHelp, true, ToolTipUtil.RIGHT, 5000);
+	{
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
+	}
 	panelError.visible=true;
 
 	return false;
@@ -622,7 +621,7 @@ protected function validar():Boolean
 
 /**
  * Metodo para setar apenas a visualização de Detalhes para usuário com perfil de Produtor
- * 
+ *
  * @param item
  * @param column
  * @return

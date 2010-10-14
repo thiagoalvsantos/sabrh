@@ -7,7 +7,8 @@
 	<fx:Declarations>
 
 		<s:RemoteObject id="animalService" fault="onFault(event)" destination="AnimalService" showBusyCursor="true">
-			<s:method name="pesquisar" result="{serviceResultAnimalListar(event)}"/>
+			<s:method name="pesquisar" result="{serviceResultAnimalPesquisar(event)}"/>
+			<s:method name="salvar" result="{serviceResultAnimalSalvar(event)}"/>
 		</s:RemoteObject>
 
 		<fx:Array id="val">
@@ -16,9 +17,20 @@
 			<mx:StringValidator id="strValApelido" source="{txtNovoApelido}" property="text" required="true" minLength="5" maxLength="255"/>
 			<mx:StringValidator id="strValPropriedade" source="{txtNovoPropriedade}" property="text" required="true"/>
 			<mx:DateValidator id="dateValDataNascimento" source="{txtNovoDataNascimento}" property="text" required="true" allowedFormatChars="/"/>
+
 		</fx:Array>
-		
+
 		<s:RadioButtonGroup id="radiogroupNovoSexo"/>
+
+		<s:Parallel id="exibeMensagemParallel">
+			<s:Fade alphaFrom="0" alphaTo="1"/>
+			<s:Resize heightFrom="0" heightTo="40"/>
+		</s:Parallel>
+
+		<s:Parallel id="escondeMensagemParallel">
+			<s:Fade alphaFrom="1" alphaTo="0"/>
+			<s:Resize heightFrom="40" heightTo="0"/>
+		</s:Parallel>
 
 	</fx:Declarations>
 
@@ -83,64 +95,68 @@
 		 /////////////////////////////-->
 	<s:VGroup id="groupNovo" left="5" right="5" top="5" bottom="5" includeIn="stateNovo,stateEditar">
 		<s:Panel id="panelNovo" width="100%" height="100%" title.stateNovo="Novo" title.stateEditar="Editar">
-			<mx:Canvas left="5" right="5" top="5" bottom="5">
-				<s:VGroup x="10" y="15" gap="16">
-					<s:HGroup>
-						<s:Label id="lblNovoRegistro" text="Registro"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold"/>
-					</s:HGroup>
-
-					<s:HGroup>
-						<s:Label id="lblNovoNome" text="Nome"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold"/>
-					</s:HGroup>
-					<s:HGroup>
-						<s:Label id="lblNovoApelido" text="Apelido"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold"/>
-					</s:HGroup>
-					<s:HGroup>
-						<s:Label id="lblNovoPropriedade" text="Propriedade"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold"/>
-					</s:HGroup>
-					<s:Label id="lblNovoPai" text="Pai"/>
-					<s:Label id="lblNovoMae" text="Mãe"/>
-					<s:HGroup>
-						<s:Label id="lblNovoDataNascimento" text="Data Nascimento"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold"/>
-					</s:HGroup>
-					<s:HGroup>
-						<s:Label id="lblNovoSexo" text="Sexo"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold"/>
-					</s:HGroup>
-				</s:VGroup>
-				<s:VGroup y="10" x="120">
-					<s:TextInput id="txtNovoRegistro" width="150" maxChars="20" tabIndex="1"/>
-					<s:TextInput id="txtNovoNome" width="370"/>
-					<s:TextInput id="txtNovoApelido" width="370"/>
-					<s:HGroup>
-						<s:TextInput id="txtNovoPropriedade" width="370"/>
-						<s:Button label="Buscar"/>
-					</s:HGroup>
-					<s:HGroup>
-						<s:TextInput id="txtNovoPai" width="370"/>
-						<s:Button label="Buscar"/>
-					</s:HGroup>
-					<s:HGroup>
-						<s:TextInput id="txtNovoMae" width="370"/>
-						<s:Button label="Buscar"/>
-					</s:HGroup>
-					<mx:DateField id="txtNovoDataNascimento" width="170"/>
-					<s:HGroup>
-						<s:RadioButton includeIn="stateNovo" label="Macho" groupName="radiogroupNovoSexo"/>
-						<s:RadioButton includeIn="stateNovo" label="Fêmea" groupName="radiogroupNovoSexo"/>
-					</s:HGroup>
-				</s:VGroup>
-			</mx:Canvas>
-
+			<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
+				<s:BorderContainer id="panelError" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelError" visible="false">
+					<s:Label text="Erro ao incluir usuário. Verificar campos em vermelho." left="50" verticalCenter="0"/>
+					<mx:Image source="@Embed(source='../assets/img/error.png')" verticalCenter="0" left="10"/>
+				</s:BorderContainer>
+				<mx:Canvas left="5" right="5" top="5" bottom="5">
+					<s:VGroup x="10" y="15" gap="16">
+						<s:HGroup>
+							<s:Label id="lblNovoRegistro" text="Registro"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Label id="lblNovoNome" text="Nome"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Label id="lblNovoApelido" text="Apelido"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Label id="lblNovoPropriedade" text="Propriedade"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						</s:HGroup>
+						<s:Label id="lblNovoPai" text="Pai"/>
+						<s:Label id="lblNovoMae" text="Mãe"/>
+						<s:HGroup>
+							<s:Label id="lblNovoDataNascimento" text="Data Nascimento"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Label id="lblNovoSexo" text="Sexo"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						</s:HGroup>
+					</s:VGroup>
+					<s:VGroup y="10" x="120">
+						<s:TextInput id="txtNovoRegistro" width="150" maxChars="20" tabIndex="1"/>
+						<s:TextInput id="txtNovoNome" width="370" tabIndex="2"/>
+						<s:TextInput id="txtNovoApelido" width="370" tabIndex="3"/>
+						<s:HGroup>
+							<s:TextInput id="txtNovoPropriedade" width="370" editable="false" tabFocusEnabled="false"/>
+							<s:Button label="Buscar" tabIndex="4"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:TextInput id="txtNovoPai" width="370" editable="false" tabFocusEnabled="false"/>
+							<s:Button label="Buscar" tabIndex="5"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:TextInput id="txtNovoMae" width="370" editable="false" tabFocusEnabled="false"/>
+							<s:Button label="Buscar" tabIndex="6"/>
+						</s:HGroup>
+						<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
+						<s:HGroup>
+							<s:RadioButton label="Macho" groupName="radiogroupNovoSexo" selected="true" tabIndex="8"/>
+							<s:RadioButton label="Fêmea" groupName="radiogroupNovoSexo" tabIndex="9"/>
+						</s:HGroup>
+					</s:VGroup>
+				</mx:Canvas>
+			</s:VGroup>
 			<s:controlBarContent>
-				<s:Button label="Salvar" click="{}"/>
-				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="{novoConfirmacao()}" click.stateNovo="{btnClickLimparNovo()}"/>
-				<s:Button label="Voltar" click="{}"/>
+				<s:Button label="Salvar" click="{btnClickSalvar()}" tabIndex="10"/>
+				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="{novoConfirmacao()}" click.stateNovo="{btnClickLimparNovo()}" tabIndex="11"/>
+				<s:Button label="Voltar" click="{}" tabIndex="12"/>
 			</s:controlBarContent>
 		</s:Panel>
 	</s:VGroup>
@@ -149,24 +165,28 @@
 		 /////////////////////////////-->
 	<s:VGroup id="groupDetalhe" left="5" right="5" top="5" bottom="5" includeIn="stateDetalhe">
 		<s:Panel id="panelDetalhe" width="100%" height="100%" title="Detalhe">
-			<mx:Canvas left="5" right="5" top="5" bottom="5">
-				<s:Label id="lblDetalheNome" x="10" y="15" text="Nome"/>
-				<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado"/>
-				<s:Label id="lblDetalheMunicipio" x="245" y="45" text="Município"/>
-				<s:Label id="lblDetalhePerfil" x="10" y="75" text="Perfil"/>
-				<s:Label id="lblDetalheCPF" x="10" y="105" text="CPF"/>
-				<s:Label id="lblDetalheLogin" x="10" y="135" text="Login"/>
-				<s:Label id="lblDetalheEmail" x="10" y="165" text="E-mail"/>
-				<!-- DADOS -->
-				<s:TextInput id="txtDetalheNome" x="60" y="10" width="514" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="cmbDetalheEstado" x="60" y="40" width="171" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="cmbDetalheMunicipio" x="310" y="40" width="264" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="cmbDetalhePerfil" x="60" y="70" width="171" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="txtDetalheCPF" x="60" y="100" width="171" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="txtDetalheLogin" x="60" y="130" width="171" editable="false" borderColor="#D3D3D3"/>
-				<s:TextInput id="txtDetalheEmail" x="60" y="160" width="514" editable="false" borderColor="#D3D3D3"/>
-			</mx:Canvas>
-
+			<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
+				<s:BorderContainer id="panelSucesso" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelSuccess" visible="false">
+					<s:Label text="Usuário gravado com sucesso." left="50" verticalCenter="0"/>
+					<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
+				</s:BorderContainer>
+				<mx:Canvas left="5" right="5" top="5" bottom="5">
+					<s:Label id="lblDetalheNome" x="10" y="15" text="Nome"/>
+					<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado"/>
+					<s:Label id="lblDetalheMunicipio" x="245" y="45" text="Município"/>
+					<s:Label id="lblDetalhePerfil" x="10" y="75" text="Perfil"/>
+					<s:Label id="lblDetalheCPF" x="10" y="105" text="CPF"/>
+					<s:Label id="lblDetalheLogin" x="10" y="135" text="Login"/>
+					<s:Label id="lblDetalheEmail" x="10" y="165" text="E-mail"/>
+					<s:TextInput id="txtDetalheNome" x="60" y="10" width="514" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="cmbDetalheEstado" x="60" y="40" width="171" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="cmbDetalheMunicipio" x="310" y="40" width="264" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="cmbDetalhePerfil" x="60" y="70" width="171" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="txtDetalheCPF" x="60" y="100" width="171" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="txtDetalheLogin" x="60" y="130" width="171" editable="false" borderColor="#D3D3D3"/>
+					<s:TextInput id="txtDetalheEmail" x="60" y="160" width="514" editable="false" borderColor="#D3D3D3"/>
+				</mx:Canvas>
+			</s:VGroup>
 			<s:controlBarContent>
 				<s:Button label="Editar" click="{editarUsuario()}"/>
 				<s:Button label="Voltar" click="{}"/>
