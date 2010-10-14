@@ -78,9 +78,9 @@
 				<s:DropDownList id="cmbPesquisaStatus" x="310" y="70" width="264" tabIndex.statePesquisa="5"/>
 			</mx:Canvas>
 			<s:controlBarContent>
-				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex.statePesquisa="6"/>
-				<s:Button label="Novo" click="{actionBtnNovo()}" tabIndex.statePesquisa="7"/>
-				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex.statePesquisa="8"/>
+				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex.statePesquisa="6" buttonMode="true"/>
+				<s:Button label="Novo" click="{actionBtnNovo()}" tabIndex.statePesquisa="7" buttonMode="true"/>
+				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex.statePesquisa="8" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 		<!--//////////////////////////
@@ -141,9 +141,9 @@
 				</mx:Canvas>
 			</s:VGroup>
 			<s:controlBarContent>
-				<s:Button label="Salvar" click="{actionBtnSalvarUsuario()}"/>
-				<s:Button id="btnNovoLimpar" label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="novoConfirmacao()" click.stateNovo="{actionBtnLimparNovo()}"/>
-				<s:Button id="btnNovoVoltar" label="Voltar" click="{voltarPesquisa()}"/>
+				<s:Button label="Salvar" click="{actionBtnSalvarUsuario()}" buttonMode="true"/>
+				<s:Button id="btnNovoLimpar" label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="novoConfirmacao()" click.stateNovo="{actionBtnLimparNovo()}" buttonMode="true"/>
+				<s:Button id="btnNovoVoltar" label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 	</s:VGroup>
@@ -176,8 +176,8 @@
 				</mx:Canvas>
 			</s:VGroup>
 			<s:controlBarContent>
-				<s:Button label="Editar" click="{editarUsuario()}"/>
-				<s:Button id="btnDetalheVoltar" label="Voltar" click="{voltarPesquisa()}"/>
+				<s:Button label="Editar" click="{editarUsuario()}" buttonMode="true"/>
+				<s:Button id="btnDetalheVoltar" label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 	</s:VGroup>

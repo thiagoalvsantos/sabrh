@@ -20,7 +20,7 @@
 
 		</fx:Array>
 
-		<s:RadioButtonGroup id="radiogroupNovoSexo"/>
+		<s:RadioButtonGroup id="radioGroupNovoSexo"/>
 		
 		<entity:Propriedade id="propriedadePesquisa"/>
 		
@@ -151,8 +151,8 @@
 						</s:HGroup>
 						<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
 						<s:HGroup>
-							<s:RadioButton label="Macho" groupName="radiogroupNovoSexo" selected="true" tabIndex="8"/>
-							<s:RadioButton label="Fêmea" groupName="radiogroupNovoSexo" tabIndex="9"/>
+							<s:RadioButton label="Macho" groupName="radioGroupNovoSexo" selected="true" tabIndex="8"/>
+							<s:RadioButton label="Fêmea" groupName="radioGroupNovoSexo" tabIndex="9"/>
 						</s:HGroup>
 					</s:VGroup>
 				</mx:Canvas>
