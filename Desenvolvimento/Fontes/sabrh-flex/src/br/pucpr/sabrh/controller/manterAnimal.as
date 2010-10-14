@@ -27,6 +27,8 @@ protected function btnClickLimparNovo():void
 	txtNovoPai.text="";
 	txtNovoPropriedade.text="";
 	txtNovoRegistro.text="";
+	txtNovoDataNascimento.text="";
+	radioGroupNovoSexo.selectedValue="Macho";
 
 	txtNovoApelido.errorString=null;
 	txtNovoMae.errorString=null;
@@ -34,6 +36,7 @@ protected function btnClickLimparNovo():void
 	txtNovoPai.errorString=null;
 	txtNovoPropriedade.errorString=null;
 	txtNovoRegistro.errorString=null;
+	txtNovoDataNascimento.errorString=null;
 
 	txtNovoRegistro.focusManager.setFocus(txtNovoRegistro);
 
@@ -41,6 +44,8 @@ protected function btnClickLimparNovo():void
 	{
 		currentState="stateNovo";
 	}
+	
+	panelError.visible=false;
 }
 
 /**

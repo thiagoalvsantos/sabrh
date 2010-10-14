@@ -68,12 +68,12 @@
 				<s:DropDownList id="cmbPesquisaEstado" labelField="descricao" change="cbmEstadoChange()" tabIndex="2" x="120" y="40" width="171"/>
 				<s:DropDownList id="cmbPesquisaMunicipio" width="264" enabled="false" labelField="descricao" tabIndex="3" x="370" y="40"/>
 				<s:TextInput id="txtPesquisaProprietario" tabIndex="4" x="120" y="70" width="440" editable="false"/>
-				<s:Button id="btnPesquisaBuscar" label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="570" y="70"/>
+				<s:Button id="btnPesquisaBuscar" label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="570" y="70" buttonMode="true"/>
 			</mx:Canvas>
 			<s:controlBarContent>
-				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex="6"/>
-				<s:Button label="Novo" click="{actionBtnNovo()}" tabIndex="7"/>
-				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex="8"/>
+				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex="6" buttonMode="true"/>
+				<s:Button label="Novo" click="{actionBtnNovo()}" tabIndex="7" buttonMode="true"/>
+				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex="8" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 		<!--//////////////////////////
@@ -140,14 +140,14 @@
 					<s:DropDownList id="cmbNovoMunicipio" x="340" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
 					<components:TextInputTelefone id="txtNovoTelefone" x="90" y="70" width="171" tabIndex="4" maxChars="10"/> 
 					<s:TextInput id="txtNovoProprietario" x="90" y="100" maxChars="50" tabIndex="5" width="435" editable="false"/>
-					<s:Button id="btnNovoBuscar" label="Buscar" click="{abrirConsultarUsuario(txtNovoProprietario,'novo')}" x="535" y="100"/>
+					<s:Button id="btnNovoBuscar" label="Buscar" click="{abrirConsultarUsuario(txtNovoProprietario,'novo')}" x="535" y="100" buttonMode="true"/>
 				</mx:Canvas>
 			</s:VGroup>
 
 			<s:controlBarContent>
-				<s:Button label="Salvar" click="{actionBtnSalvarPropriedade()}"/>
-				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="novoConfirmacao()" click.stateNovo="{actionBtnLimparNovo()}"/>
-				<s:Button label="Voltar" click="{voltarPesquisa()}"/>
+				<s:Button label="Salvar" click="{actionBtnSalvarPropriedade()}" buttonMode="true"/>
+				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="novoConfirmacao()" click.stateNovo="{actionBtnLimparNovo()}" buttonMode="true"/>
+				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 	</s:VGroup>
@@ -177,8 +177,8 @@
 			</s:VGroup>
 
 			<s:controlBarContent>
-				<s:Button label="Editar" click="{editarPropriedade()}"/>
-				<s:Button label="Voltar" click="{voltarPesquisa()}"/>
+				<s:Button label="Editar" click="{editarPropriedade()}" buttonMode="true"/>
+				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 	</s:VGroup>

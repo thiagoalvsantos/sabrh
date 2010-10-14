@@ -498,6 +498,7 @@ protected function validar():Boolean
 	}
 	else
 	{
+		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
 		panelError.visible=true;
 		return false;
 	}
