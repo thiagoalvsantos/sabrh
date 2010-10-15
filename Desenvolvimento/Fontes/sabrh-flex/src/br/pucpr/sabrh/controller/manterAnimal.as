@@ -1,5 +1,6 @@
 import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.Propriedade;
 import br.pucpr.sabrh.view.consultarPropriedade;
 
 import mx.collections.ArrayCollection;
@@ -64,6 +65,10 @@ protected function btnClickLimparPesquisa():void
 	txtPesquisaRegistroPai.text="";
 	checkBoxFemea.selected=false;
 	checkBoxMacho.selected=false;
+	txtPesquisaPropriedade.text="";
+	propriedadePesquisa=null;
+	txtPesquisaProprietario.text="";
+	proprietarioPesquisa=null;
 
 	if (dataGridResultado != null)
 	{
@@ -93,11 +98,31 @@ protected function btnClickNovo():void
 protected function btnClickPesquisar():void
 {
 	var animal:Animal=new Animal();
+	if (StringUtil.trim(txtPesquisaRegistroAnimal.text) != "")
+	{
+		animal.registro=StringUtil.trim(txtPesquisaRegistroAnimal.text);
+	}
+	
 	if (StringUtil.trim(txtPesquisaNomeAnimal.text) != "")
 	{
 		animal.nome=StringUtil.trim(txtPesquisaNomeAnimal.text);
 	}
-
+	
+	if (checkBoxFemea.selected && checkBoxMacho.selected == false)
+		animal.sexo="FEMEA";
+	else if (checkBoxMacho.selected && checkBoxFemea.selected == false)
+		animal.sexo="MACHO";
+		
+	if (txtPesquisaPropriedade.text != "")
+	{
+		animal.propriedade=propriedadePesquisa;
+	}
+	else if (txtPesquisaProprietario.text != "")
+	{
+		var prop:Propriedade=new Propriedade();
+		prop.proprietario=proprietarioPesquisa;
+		animal.propriedade=prop;
+	}
 
 	animalService.pesquisar(animal);
 }
@@ -183,6 +208,12 @@ protected function gridUsuarioItemClick(event:ListEvent):void
  */
 protected function init(event:FlexEvent):void
 {
+	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	{
+		proprietarioPesquisa=FlexGlobals.topLevelApplication.user;
+		btnPesquisaBuscarProprietario.enabled=false;
+		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
+	}
 
 	txtPesquisaNomeAnimal.focusManager.setFocus(txtPesquisaNomeAnimal);
 
@@ -330,6 +361,17 @@ protected function onFault(event:FaultEvent):void
 	Alert.show(event.fault.rootCause.message);
 }
 
+//Função para abrir a tela de Manuntenção de Usuários.
+public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
+{
+	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
+	popUpConsultarUsuario.janelaOrigem=this;
+	popUpConsultarUsuario.tipoConsulta=tipoConsulta;
+	popUpConsultarUsuario.atributoDestino=atributo;
+	PopUpManager.centerPopUp(popUpConsultarUsuario);
+	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
+	FlexGlobals.topLevelApplication.popUpEffect.play();
+}
 
 //Função para abrir a tela de Consulta de Propriedade.
 public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
@@ -338,6 +380,12 @@ public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:Strin
 	popUpConsultarPropriedade.janelaOrigem=this;
 	popUpConsultarPropriedade.tipoConsulta=tipoConsulta;
 	popUpConsultarPropriedade.atributoDestino=atributo;
+	if (txtPesquisaProprietario.text != "")
+	{
+		popUpConsultarPropriedade.proprietarioPesquisa=proprietarioPesquisa;
+		popUpConsultarPropriedade.btnPesquisaBuscar.enabled=false;
+		popUpConsultarPropriedade.txtPesquisaProprietario.text=txtPesquisaProprietario.text;
+	}
 	PopUpManager.centerPopUp(popUpConsultarPropriedade);
 	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarPropriedade;
 	FlexGlobals.topLevelApplication.popUpEffect.play();

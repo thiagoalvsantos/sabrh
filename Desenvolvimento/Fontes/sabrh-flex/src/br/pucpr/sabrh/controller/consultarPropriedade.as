@@ -24,7 +24,6 @@ protected function init(event:FlexEvent):void
 {
 	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
 	{
-		proprietarioNovo=FlexGlobals.topLevelApplication.user;
 		proprietarioPesquisa=FlexGlobals.topLevelApplication.user;
 		btnPesquisaBuscar.enabled=false;
 		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;

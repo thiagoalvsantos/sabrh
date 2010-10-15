@@ -15,8 +15,6 @@
 
 		<entity:Usuario id="proprietarioPesquisa"/>
 		
-		<entity:Usuario id="proprietarioNovo"/>
-
 		<fx:Object id="janelaOrigem"/>
 		<s:TextInput id="atributoDestino"/>
 		<fx:String id="tipoConsulta"/>
