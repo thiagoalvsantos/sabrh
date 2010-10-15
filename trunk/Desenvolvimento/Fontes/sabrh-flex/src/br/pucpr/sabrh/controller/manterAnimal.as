@@ -335,7 +335,7 @@ protected function listarStatusResult(event:ResultEvent):void
  */
 protected function novoConfirmacao():void
 {
-	Alert.show("Tem certeza de sair sem salvar as alterações?", "Manutenção de Usuários", Alert.YES | Alert.NO, this, novoConfirmacaoResult);
+	Alert.show("Tem certeza de sair sem salvar as alterações?", "Manutenção de Animais", Alert.YES | Alert.NO, this, novoConfirmacaoResult);
 }
 
 //Função para recuperar o resultado da confirmação.
@@ -495,21 +495,21 @@ protected function validar():Boolean
 
 	return false;
 }
-///**
-// * Ação do botão voltar da pesquisa.
-// * @param event
-// */
-//protected function voltarPesquisa():void
-//{
-//    if (gridUsuario == null)
-//    {
-//        currentState='statePesquisa';
-//    }
-//    else
-//    {
-//        currentState='stateResultado';
-//        actionBtnPesquisar();
-//    }
-//    txtPesquisaNomeAnimal.focusManager.setFocus(txtPesquisaNomeAnimal);
-//    PopUpManager.centerPopUp(this);
-//}
+/**
+ * Ação do botão voltar da pesquisa.
+ * @param event
+ */
+protected function voltarPesquisa():void
+{
+    if (dataGridResultado == null)
+    {
+        currentState='statePesquisa';
+    }
+    else
+    {
+        currentState='stateResultado';
+		btnClickPesquisar();
+    }
+    txtPesquisaNomeAnimal.focusManager.setFocus(txtPesquisaNomeAnimal);
+    PopUpManager.centerPopUp(this);
+}
