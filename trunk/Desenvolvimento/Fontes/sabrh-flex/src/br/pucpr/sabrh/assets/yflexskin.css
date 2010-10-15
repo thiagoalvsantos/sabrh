@@ -625,7 +625,8 @@ mx|TabNavigator
 */
 mx|ToolTip
 {
-	/*borderSkin: Embed(source="yflexskin.swf", symbol="ToolTip_borderSkin");*/
+	borderSkin: Embed(source="yflexskin.swf", symbol="ToolTip_borderSkin");
+	
 }
 
 .errorTip 
