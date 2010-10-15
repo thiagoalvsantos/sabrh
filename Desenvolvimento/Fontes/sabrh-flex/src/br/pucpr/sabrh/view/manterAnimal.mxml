@@ -17,15 +17,16 @@
 			<mx:StringValidator id="strValApelido" source="{txtNovoApelido}" property="text" required="true" minLength="5" maxLength="255"/>
 			<mx:StringValidator id="strValPropriedade" source="{txtNovoPropriedade}" property="text" required="true"/>
 			<mx:DateValidator id="dateValDataNascimento" source="{txtNovoDataNascimento}" property="text" required="true" allowedFormatChars="/"/>
-
 		</fx:Array>
 
 		<s:RadioButtonGroup id="radioGroupNovoSexo"/>
-		
+
 		<entity:Usuario id="proprietarioPesquisa"/>		
-		
+
 		<entity:Propriedade id="propriedadePesquisa"/>		
 		<entity:Propriedade id="propriedadeNovo"/>
+		<entity:Animal id="maeNovo"/>
+		<entity:Animal id="paiNovo"/>
 
 		<s:Parallel id="exibeMensagemParallel">
 			<s:Fade alphaFrom="0" alphaTo="1"/>
@@ -35,7 +36,7 @@
 		<s:Parallel id="escondeMensagemParallel">
 			<s:Fade alphaFrom="1" alphaTo="0"/>
 			<s:Resize heightFrom="40" heightTo="0"/>
-		</s:Parallel>
+		</s:Parallel> 
 
 	</fx:Declarations>
 
@@ -152,12 +153,12 @@
 						</s:HGroup>
 						<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
 						<s:HGroup>
-							<s:RadioButton label="Macho" groupName="radioGroupNovoSexo" selected="true" tabIndex="8"/>
-							<s:RadioButton label="Fêmea" groupName="radioGroupNovoSexo" tabIndex="9"/>
+							<s:RadioButton label="Macho" groupName="radioGroupNovoSexo" value="MACHO" selected="true" tabIndex="8"/>
+							<s:RadioButton label="Fêmea" groupName="radioGroupNovoSexo" value="FEMEA" tabIndex="9"/>
 						</s:HGroup>
 					</s:VGroup>
 				</mx:Canvas>
-			</s:VGroup>
+			</s:VGroup> 
 			<s:controlBarContent>
 				<s:Button label="Salvar" click="{btnClickSalvar()}" tabIndex="10"/>
 				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="{novoConfirmacao()}" click.stateNovo="{btnClickLimparNovo()}" tabIndex="11"/>

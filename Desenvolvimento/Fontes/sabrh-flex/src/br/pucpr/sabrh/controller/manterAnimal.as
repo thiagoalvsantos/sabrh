@@ -45,7 +45,7 @@ protected function btnClickLimparNovo():void
 	{
 		currentState="stateNovo";
 	}
-	
+
 	panelError.visible=false;
 }
 
@@ -134,11 +134,21 @@ protected function btnClickSalvar():void
 		var animal:Animal=new Animal;
 
 		animal.apelido=StringUtil.trim(txtNovoApelido.text);
-		animal.dataNascimento=DateField.stringToDate(txtNovoDataNascimento.text, "DD/MM/YYYY");
-		animal.mae=null;
-		animal.pai=null;
-		animal.propriedade=null;
+		animal.dataNascimento=txtNovoDataNascimento.selectedDate;
+		animal.propriedade=propriedadeNovo;
 		animal.registro=txtNovoRegistro.text;
+		animal.nome=txtNovoNome.text;
+		animal.sexo=radioGroupNovoSexo.selectedValue as String;
+		if (txtNovoPai.text != null && txtNovoPai.text != "")
+		{
+			animal.pai=paiNovo;
+		}
+		if (txtNovoMae.text != null && txtNovoMae.text != "")
+		{
+			animal.mae=maeNovo;
+		}
+
+		animalService.salvar(animal);
 	}
 
 }
