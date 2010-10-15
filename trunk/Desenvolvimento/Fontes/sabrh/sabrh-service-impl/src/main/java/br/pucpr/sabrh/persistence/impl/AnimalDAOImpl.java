@@ -16,8 +16,11 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.Estado;
+import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.AnimalDAO;
 
 /**
@@ -63,9 +66,23 @@ public class AnimalDAOImpl implements AnimalDAO {
 	@Override
 	public List<Animal> pesquisar(Animal animal) {
 		Session s = (Session) entityManager.getDelegate();
-		Criteria c = s.createCriteria(Animal.class);
+		Criteria c = s.createCriteria(Animal.class, "ani");
+		c.createCriteria("propriedade", "prop");
 		c.add(Example.create(animal).enableLike(MatchMode.ANYWHERE)
 				.ignoreCase());
+		
+		//verifica se existe propriedade para ser pesquisada
+		if (animal.getPropriedade() != null) {
+			//se o nome da propriedade não existir, apenas o produtor será pesquisado
+			if (animal.getPropriedade().getNome() != null) {
+				c.add(Restrictions.eq("propriedade", animal.getPropriedade()));
+			} else {
+				Criteria q = s.createCriteria(Usuario.class);
+				q.add(Example.create(animal.getPropriedade().getProprietario()));
+				c.add(Restrictions.eq("prop.proprietario", q.uniqueResult()));
+			}
+		}
+
 		c.addOrder(Order.asc("registro"));
 		List<Animal> result = c.list();
 		return result;
