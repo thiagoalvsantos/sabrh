@@ -368,6 +368,11 @@ public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):v
 	popUpConsultarUsuario.janelaOrigem=this;
 	popUpConsultarUsuario.tipoConsulta=tipoConsulta;
 	popUpConsultarUsuario.atributoDestino=atributo;
+	if (txtPesquisaPropriedade.text != "")
+	{
+		popUpConsultarUsuario.txtPesquisaNome.text=propriedadePesquisa.proprietario.nome;
+		popUpConsultarUsuario.txtPesquisaNome.enabled=false;
+	}
 	PopUpManager.centerPopUp(popUpConsultarUsuario);
 	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
 	FlexGlobals.topLevelApplication.popUpEffect.play();
