@@ -31,7 +31,7 @@ public class Animal implements Serializable {
 
 	/** O atributo registro. */
 	@Id
-	@Column(name = "TX_REGISTRO", length = 15, nullable = false)
+	@Column(name = "TX_REGISTRO", length = 20, nullable = false)
 	private String registro;
 
 	/** O atributo nome. */
