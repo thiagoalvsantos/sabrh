@@ -17,9 +17,7 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-
 import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.Estado;
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.AnimalDAO;
 
@@ -70,10 +68,11 @@ public class AnimalDAOImpl implements AnimalDAO {
 		c.createCriteria("propriedade", "prop");
 		c.add(Example.create(animal).enableLike(MatchMode.ANYWHERE)
 				.ignoreCase());
-		
-		//verifica se existe propriedade para ser pesquisada
+
+		// verifica se existe propriedade para ser pesquisada
 		if (animal.getPropriedade() != null) {
-			//se o nome da propriedade não existir, apenas o produtor será pesquisado
+			// se o nome da propriedade não existir, apenas o produtor será
+			// pesquisado
 			if (animal.getPropriedade().getNome() != null) {
 				c.add(Restrictions.eq("propriedade", animal.getPropriedade()));
 			} else {
@@ -96,8 +95,12 @@ public class AnimalDAOImpl implements AnimalDAO {
 	 */
 	@Override
 	public Animal salvar(Animal animal) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Animal result = null;
+		result = entityManager.merge(animal);
+		entityManager.flush();
+
+		return result;
 	}
 
 	/*
