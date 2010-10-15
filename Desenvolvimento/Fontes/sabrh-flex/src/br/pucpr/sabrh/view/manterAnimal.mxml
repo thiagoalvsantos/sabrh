@@ -77,9 +77,9 @@
 				<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea"/>
 			</mx:Canvas>
 			<s:controlBarContent>
-				<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="6"/>
-				<s:Button label="Novo" click="{btnClickNovo()}" tabIndex.statePesquisa="7"/>
-				<s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex.statePesquisa="8"/>
+				<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="6" buttonMode="true"/>
+				<s:Button label="Novo" click="{btnClickNovo()}" tabIndex.statePesquisa="7" buttonMode="true"/>
+				<s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex.statePesquisa="8" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 		<!--//////////////////////////
@@ -160,9 +160,9 @@
 				</mx:Canvas>
 			</s:VGroup> 
 			<s:controlBarContent>
-				<s:Button label="Salvar" click="{btnClickSalvar()}" tabIndex="10"/>
-				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="{novoConfirmacao()}" click.stateNovo="{btnClickLimparNovo()}" tabIndex="11"/>
-				<s:Button label="Voltar" click="{}" tabIndex="12"/>
+				<s:Button label="Salvar" click="{btnClickSalvar()}" tabIndex="10" buttonMode="true"/>
+				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="{novoConfirmacao()}" click.stateNovo="{btnClickLimparNovo()}" tabIndex="11" buttonMode="true"/>
+				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true" tabIndex="12"/>
 			</s:controlBarContent>
 		</s:Panel>
 	</s:VGroup>
@@ -194,8 +194,8 @@
 				</mx:Canvas>
 			</s:VGroup>
 			<s:controlBarContent>
-				<s:Button label="Editar" click="{editarUsuario()}"/>
-				<s:Button label="Voltar" click="{}"/>
+				<s:Button label="Editar" click="{editarUsuario()}" buttonMode="true"/>
+				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 	</s:VGroup>
