@@ -1,8 +1,3 @@
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.Propriedade;
-import br.pucpr.sabrh.view.consultarPropriedade;
-
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.DateField;
@@ -15,6 +10,45 @@ import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.Propriedade;
+import br.pucpr.sabrh.view.consultarPropriedade;
+
+//Função para abrir a tela de Consulta de Propriedade.
+public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
+{
+	var popUpConsultarPropriedade:consultarPropriedade=consultarPropriedade(PopUpManager.createPopUp(this.parent, consultarPropriedade, true));
+	popUpConsultarPropriedade.janelaOrigem=this;
+	popUpConsultarPropriedade.tipoConsulta=tipoConsulta;
+	popUpConsultarPropriedade.atributoDestino=atributo;
+	if (txtPesquisaProprietario.text != "")
+	{
+		popUpConsultarPropriedade.proprietarioPesquisa=proprietarioPesquisa;
+		popUpConsultarPropriedade.btnPesquisaBuscar.enabled=false;
+		popUpConsultarPropriedade.txtPesquisaProprietario.text=txtPesquisaProprietario.text;
+	}
+	PopUpManager.centerPopUp(popUpConsultarPropriedade);
+	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarPropriedade;
+	FlexGlobals.topLevelApplication.popUpEffect.play();
+}
+
+//Função para abrir a tela de Manuntenção de Usuários.
+public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
+{
+	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
+	popUpConsultarUsuario.janelaOrigem=this;
+	popUpConsultarUsuario.tipoConsulta=tipoConsulta;
+	popUpConsultarUsuario.atributoDestino=atributo;
+	if (txtPesquisaPropriedade.text != "")
+	{
+		popUpConsultarUsuario.txtPesquisaNome.text=propriedadePesquisa.proprietario.nome;
+		popUpConsultarUsuario.txtPesquisaNome.enabled=false;
+	}
+	PopUpManager.centerPopUp(popUpConsultarUsuario);
+	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
+	FlexGlobals.topLevelApplication.popUpEffect.play();
+}
 
 /**
  * Limpa dados de novo.
@@ -102,17 +136,17 @@ protected function btnClickPesquisar():void
 	{
 		animal.registro=StringUtil.trim(txtPesquisaRegistroAnimal.text);
 	}
-	
+
 	if (StringUtil.trim(txtPesquisaNomeAnimal.text) != "")
 	{
 		animal.nome=StringUtil.trim(txtPesquisaNomeAnimal.text);
 	}
-	
+
 	if (checkBoxFemea.selected && checkBoxMacho.selected == false)
 		animal.sexo="FEMEA";
 	else if (checkBoxMacho.selected && checkBoxFemea.selected == false)
 		animal.sexo="MACHO";
-		
+
 	if (txtPesquisaPropriedade.text != "")
 	{
 		animal.propriedade=propriedadePesquisa;
@@ -195,7 +229,7 @@ protected function fechar(event:CloseEvent):void
  *
  * @param event
  */
-protected function gridUsuarioItemClick(event:ListEvent):void
+protected function gridClickResultado(event:ListEvent):void
 {
 	currentState='stateDetalhe';
 
@@ -369,41 +403,6 @@ protected function onFault(event:FaultEvent):void
 {
 	//Ocorreu uma falha ao chamar o servico. 
 	Alert.show(event.fault.rootCause.message);
-}
-
-//Função para abrir a tela de Manuntenção de Usuários.
-public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
-{
-	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
-	popUpConsultarUsuario.janelaOrigem=this;
-	popUpConsultarUsuario.tipoConsulta=tipoConsulta;
-	popUpConsultarUsuario.atributoDestino=atributo;
-	if (txtPesquisaPropriedade.text != "")
-	{
-		popUpConsultarUsuario.txtPesquisaNome.text=propriedadePesquisa.proprietario.nome;
-		popUpConsultarUsuario.txtPesquisaNome.enabled=false;
-	}
-	PopUpManager.centerPopUp(popUpConsultarUsuario);
-	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
-	FlexGlobals.topLevelApplication.popUpEffect.play();
-}
-
-//Função para abrir a tela de Consulta de Propriedade.
-public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
-{
-	var popUpConsultarPropriedade:consultarPropriedade=consultarPropriedade(PopUpManager.createPopUp(this.parent, consultarPropriedade, true));
-	popUpConsultarPropriedade.janelaOrigem=this;
-	popUpConsultarPropriedade.tipoConsulta=tipoConsulta;
-	popUpConsultarPropriedade.atributoDestino=atributo;
-	if (txtPesquisaProprietario.text != "")
-	{
-		popUpConsultarPropriedade.proprietarioPesquisa=proprietarioPesquisa;
-		popUpConsultarPropriedade.btnPesquisaBuscar.enabled=false;
-		popUpConsultarPropriedade.txtPesquisaProprietario.text=txtPesquisaProprietario.text;
-	}
-	PopUpManager.centerPopUp(popUpConsultarPropriedade);
-	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarPropriedade;
-	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
 

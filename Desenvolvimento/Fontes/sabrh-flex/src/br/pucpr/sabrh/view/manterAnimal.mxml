@@ -21,9 +21,9 @@
 
 		<s:RadioButtonGroup id="radioGroupNovoSexo"/>
 
-		<entity:Usuario id="proprietarioPesquisa"/>		
+		<entity:Usuario id="proprietarioPesquisa"/>
 
-		<entity:Propriedade id="propriedadePesquisa"/>		
+		<entity:Propriedade id="propriedadePesquisa"/>
 		<entity:Propriedade id="propriedadeNovo"/>
 		<entity:Animal id="maeNovo"/>
 		<entity:Animal id="paiNovo"/>
@@ -36,7 +36,7 @@
 		<s:Parallel id="escondeMensagemParallel">
 			<s:Fade alphaFrom="1" alphaTo="0"/>
 			<s:Resize heightFrom="40" heightTo="0"/>
-		</s:Parallel> 
+		</s:Parallel>
 
 	</fx:Declarations>
 
@@ -86,7 +86,7 @@
 			 //	RESULTADO
 			 /////////////////////////////-->
 		<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
-			<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridUsuarioItemClick(event)">
+			<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridClickResultado(event)">
 				<mx:columns>
 					<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="true" dataField="registro"/>
 					<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" sortable="true" dataField="nome"/>
@@ -158,7 +158,7 @@
 						</s:HGroup>
 					</s:VGroup>
 				</mx:Canvas>
-			</s:VGroup> 
+			</s:VGroup>
 			<s:controlBarContent>
 				<s:Button label="Salvar" click="{btnClickSalvar()}" tabIndex="10" buttonMode="true"/>
 				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="{novoConfirmacao()}" click.stateNovo="{btnClickLimparNovo()}" tabIndex="11" buttonMode="true"/>
