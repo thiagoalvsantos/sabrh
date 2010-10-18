@@ -1,3 +1,8 @@
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.Propriedade;
+import br.pucpr.sabrh.view.consultarPropriedade;
+
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.DateField;
@@ -10,10 +15,6 @@ import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.Propriedade;
-import br.pucpr.sabrh.view.consultarPropriedade;
 
 //Função para abrir a tela de Consulta de Propriedade.
 public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
@@ -132,6 +133,8 @@ protected function btnClickNovo():void
 protected function btnClickPesquisar():void
 {
 	var animal:Animal=new Animal();
+	var mae:Animal;
+	var pai:Animal;
 	if (StringUtil.trim(txtPesquisaRegistroAnimal.text) != "")
 	{
 		animal.registro=StringUtil.trim(txtPesquisaRegistroAnimal.text);
@@ -140,6 +143,34 @@ protected function btnClickPesquisar():void
 	if (StringUtil.trim(txtPesquisaNomeAnimal.text) != "")
 	{
 		animal.nome=StringUtil.trim(txtPesquisaNomeAnimal.text);
+	}
+	
+	if (StringUtil.trim(txtPesquisaRegistroMae.text) != "")
+	{
+		if (mae == null)
+			mae=new Animal();
+		mae.registro=StringUtil.trim(txtPesquisaRegistroMae.text);
+	}
+	
+	if (StringUtil.trim(txtPesquisaNomeMae.text) != "")
+	{
+		if (mae == null)
+			mae=new Animal();
+		mae.nome=StringUtil.trim(txtPesquisaNomeMae.text);
+	}
+	
+	if (StringUtil.trim(txtPesquisaRegistroPai.text) != "")
+	{
+		if (pai == null)
+			pai=new Animal();
+		pai.registro=StringUtil.trim(txtPesquisaRegistroPai.text);
+	}
+	
+	if (StringUtil.trim(txtPesquisaNomePai.text) != "")
+	{
+		if (pai == null)
+			pai=new Animal();
+		pai.nome=StringUtil.trim(txtPesquisaNomePai.text);
 	}
 
 	if (checkBoxFemea.selected && checkBoxMacho.selected == false)
@@ -157,6 +188,11 @@ protected function btnClickPesquisar():void
 		prop.proprietario=proprietarioPesquisa;
 		animal.propriedade=prop;
 	}
+	
+	if (mae != null)
+		animal.mae=mae;
+	if (pai != null)
+		animal.pai=pai;
 
 	animalService.pesquisar(animal);
 }
