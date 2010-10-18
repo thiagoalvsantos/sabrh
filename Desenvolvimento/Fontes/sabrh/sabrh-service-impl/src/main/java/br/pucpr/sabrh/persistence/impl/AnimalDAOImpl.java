@@ -82,6 +82,22 @@ public class AnimalDAOImpl implements AnimalDAO {
 			}
 		}
 
+		// verifica se existe dados da mae para ser pesquisado
+		if (animal.getMae() != null) {
+			Criteria q = s.createCriteria(Animal.class);
+			q.add(Example.create(animal.getMae()).enableLike(MatchMode.ANYWHERE)
+					.ignoreCase());
+			c.add(Restrictions.in("mae", q.list()));
+		}
+		
+		// verifica se existe dados do pai para ser pesquisado
+		if (animal.getPai() != null) {
+			Criteria q = s.createCriteria(Animal.class);
+			q.add(Example.create(animal.getPai()).enableLike(MatchMode.ANYWHERE)
+					.ignoreCase());
+			c.add(Restrictions.in("pai", q.list()));
+		}
+
 		c.addOrder(Order.asc("registro"));
 		List<Animal> result = c.list();
 		return result;
