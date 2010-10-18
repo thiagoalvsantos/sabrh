@@ -1,3 +1,4 @@
+
 import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Animal;
 import br.pucpr.sabrh.entity.Propriedade;
@@ -16,7 +17,6 @@ import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
 
-//Função para abrir a tela de Consulta de Propriedade.
 public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarPropriedade:consultarPropriedade=consultarPropriedade(PopUpManager.createPopUp(this.parent, consultarPropriedade, true));
@@ -34,7 +34,6 @@ public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:Strin
 	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
-//Função para abrir a tela de Manuntenção de Usuários.
 public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
@@ -48,6 +47,24 @@ public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):v
 	}
 	PopUpManager.centerPopUp(popUpConsultarUsuario);
 	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
+	FlexGlobals.topLevelApplication.popUpEffect.play();
+}
+
+public function abrirConsultarAnimal(atributo:TextInput, tipoConsulta:String, tipoAnimal:String):void
+{
+	var popUpConsultarAnimal:consultarAnimal=consultarAnimal(PopUpManager.createPopUp(this.parent, consultarAnimal, true));
+	popUpConsultarAnimal.janelaOrigem=this;
+	popUpConsultarAnimal.tipoConsulta=tipoConsulta;
+	popUpConsultarAnimal.atributoDestino=atributo;
+	popUpConsultarAnimal.tipoAnimal=tipoAnimal;
+	/** TODO APLICAR REGRAS */
+//	if (txtPesquisaPropriedade.text != "")
+//	{
+//		popUpConsultarAnimal.txtPesquisaNome.text=propriedadePesquisa.proprietario.nome;
+//		popUpConsultarAnimal.txtPesquisaNome.enabled=false;
+//	}
+	PopUpManager.centerPopUp(popUpConsultarAnimal);
+	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarAnimal;
 	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
@@ -144,28 +161,28 @@ protected function btnClickPesquisar():void
 	{
 		animal.nome=StringUtil.trim(txtPesquisaNomeAnimal.text);
 	}
-	
+
 	if (StringUtil.trim(txtPesquisaRegistroMae.text) != "")
 	{
 		if (mae == null)
 			mae=new Animal();
 		mae.registro=StringUtil.trim(txtPesquisaRegistroMae.text);
 	}
-	
+
 	if (StringUtil.trim(txtPesquisaNomeMae.text) != "")
 	{
 		if (mae == null)
 			mae=new Animal();
 		mae.nome=StringUtil.trim(txtPesquisaNomeMae.text);
 	}
-	
+
 	if (StringUtil.trim(txtPesquisaRegistroPai.text) != "")
 	{
 		if (pai == null)
 			pai=new Animal();
 		pai.registro=StringUtil.trim(txtPesquisaRegistroPai.text);
 	}
-	
+
 	if (StringUtil.trim(txtPesquisaNomePai.text) != "")
 	{
 		if (pai == null)
@@ -188,7 +205,7 @@ protected function btnClickPesquisar():void
 		prop.proprietario=proprietarioPesquisa;
 		animal.propriedade=prop;
 	}
-	
+
 	if (mae != null)
 		animal.mae=mae;
 	if (pai != null)
@@ -530,21 +547,22 @@ protected function validar():Boolean
 
 	return false;
 }
+
 /**
  * Ação do botão voltar da pesquisa.
  * @param event
  */
 protected function voltarPesquisa():void
 {
-    if (dataGridResultado == null)
-    {
-        currentState='statePesquisa';
-    }
-    else
-    {
-        currentState='stateResultado';
+	if (dataGridResultado == null)
+	{
+		currentState='statePesquisa';
+	}
+	else
+	{
+		currentState='stateResultado';
 		btnClickPesquisar();
-    }
-    txtPesquisaNomeAnimal.focusManager.setFocus(txtPesquisaNomeAnimal);
-    PopUpManager.centerPopUp(this);
+	}
+	txtPesquisaNomeAnimal.focusManager.setFocus(txtPesquisaNomeAnimal);
+	PopUpManager.centerPopUp(this);
 }

@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Consultar Propriedade ::.." close="fechar(event)" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" creationComplete="init(event)" xmlns:entity="br.pucpr.sabrh.entity.*">
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Consultar Animal ::.." close="fechar(event)" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" creationComplete="init(event)" xmlns:entity="br.pucpr.sabrh.entity.*">
 	<fx:Script source="../controller/consultarAnimal.as"/>
 
 	<fx:Declarations>
 
-		<s:RemoteObject id="propriedadeService" fault="onFault(event)" destination="PropriedadeService" showBusyCursor="true">
-			<s:method name="pesquisar" result="{pesquisarPropriedadesResult(event)}"/>
-		</s:RemoteObject>
-
-		<s:RemoteObject id="usuarioService" fault="onFault(event)" destination="usuarioService" showBusyCursor="true">
-			<s:method name="pesquisar" result="{pesquisarPropriedadesResult(event)}"/>
+		<s:RemoteObject id="animalService" fault="onFault(event)" destination="AnimalService" showBusyCursor="true">
+			<s:method name="pesquisar" result="{serviceResultPesquisarAnimal(event)}"/>
 		</s:RemoteObject>
 
 		<entity:Animal id="animalPesquisa"/>
+		<entity:Propriedade id="propriedadePesquisa"/>
+		<entity:Usuario id="proprietarioPesquisa"/>
 
 		<fx:Object id="janelaOrigem"/>
 		<s:TextInput id="atributoDestino"/>
 		<fx:String id="tipoConsulta"/>
+		<fx:String id="tipoAnimal"/>
 
 
 	</fx:Declarations>
@@ -47,22 +46,22 @@
 				<s:TextInput id="txtPesquisaRegistroMae" x="100" y="70" width="150" tabIndex="5"/>
 				<s:TextInput id="txtPesquisaNomeMae" x="350" y="70" width="300" tabIndex="6"/>
 				<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false"/>
-				<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="100" tabIndex="7"/>
+				<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{btnClickConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="100" tabIndex="7"/>
 				<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false"/>
 				<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8"/>
 				<s:CheckBox id="checkBoxMacho" x="705" y="10" label="Macho"/>
 				<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea"/>
 			</mx:Canvas>
 			<s:controlBarContent>
-				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex.statePesquisa="4"/>
-				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex.statePesquisa="5"/>
+				<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="4" id="btnPesquisaBuscar"/>
+				<s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex.statePesquisa="5"/>
 			</s:controlBarContent>
 		</s:Panel>
 		<!--//////////////////////////
 			 //	RESULTADO
 			 /////////////////////////////-->
 		<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
-			<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridPropriedadeItemClick(event)">
+			<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridResultadoItemClick(event)">
 				<mx:columns>
 					<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="true" dataField="registro"/>
 					<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" sortable="true" dataField="nome"/>

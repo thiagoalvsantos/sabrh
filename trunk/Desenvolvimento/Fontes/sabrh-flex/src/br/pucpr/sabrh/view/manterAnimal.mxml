@@ -22,7 +22,6 @@
 		<s:RadioButtonGroup id="radioGroupNovoSexo"/>
 
 		<entity:Usuario id="proprietarioPesquisa"/>
-
 		<entity:Propriedade id="propriedadePesquisa"/>
 		<entity:Propriedade id="propriedadeNovo"/>
 		<entity:Animal id="maeNovo"/>
@@ -145,11 +144,11 @@
 						</s:HGroup>
 						<s:HGroup>
 							<s:TextInput id="txtNovoPai" width="370" editable="false" tabFocusEnabled="false"/>
-							<s:Button label="Buscar" tabIndex="5"/>
+							<s:Button label="Buscar" tabIndex="5" click="abrirConsultarAnimal(txtNovoPai,'novo','pai')"/>
 						</s:HGroup>
 						<s:HGroup>
 							<s:TextInput id="txtNovoMae" width="370" editable="false" tabFocusEnabled="false"/>
-							<s:Button label="Buscar" tabIndex="6"/>
+							<s:Button label="Buscar" tabIndex="6" click="abrirConsultarAnimal(txtNovoMae,'novo','mae')"/>
 						</s:HGroup>
 						<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
 						<s:HGroup>
