@@ -66,9 +66,15 @@ public class AnimalDAOImpl implements AnimalDAO {
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(Animal.class, "ani");
 		c.createCriteria("propriedade", "prop");
-		c.add(Example.create(animal).enableLike(MatchMode.ANYWHERE)
-				.ignoreCase());
 
+		//verifica se foi procurado por nome para procurar como apelido tambem
+		if (animal.getNome() != null) {
+			c.add(Restrictions.or(
+					Restrictions.ilike("apelido", animal.getNome(), MatchMode.ANYWHERE),
+					Restrictions.ilike("nome", animal.getNome(), MatchMode.ANYWHERE)));
+			animal.setNome(null);
+		}
+		
 		// verifica se existe propriedade para ser pesquisada
 		if (animal.getPropriedade() != null) {
 			// se o nome da propriedade não existir, apenas o produtor será
@@ -85,6 +91,12 @@ public class AnimalDAOImpl implements AnimalDAO {
 		// verifica se existe dados da mae para ser pesquisado
 		if (animal.getMae() != null) {
 			Criteria q = s.createCriteria(Animal.class);
+			if (animal.getMae().getNome() != null) {
+				q.add(Restrictions.or(
+						Restrictions.ilike("apelido", animal.getMae().getNome(), MatchMode.ANYWHERE),
+						Restrictions.ilike("nome", animal.getMae().getNome(), MatchMode.ANYWHERE)));
+				animal.getMae().setNome(null);
+			}
 			q.add(Example.create(animal.getMae())
 					.enableLike(MatchMode.ANYWHERE).ignoreCase());
 			c.add(Restrictions.in("mae", q.list()));
@@ -93,10 +105,19 @@ public class AnimalDAOImpl implements AnimalDAO {
 		// verifica se existe dados do pai para ser pesquisado
 		if (animal.getPai() != null) {
 			Criteria q = s.createCriteria(Animal.class);
+			if (animal.getPai().getNome() != null) {
+				q.add(Restrictions.or(
+						Restrictions.ilike("apelido", animal.getPai().getNome(), MatchMode.ANYWHERE),
+						Restrictions.ilike("nome", animal.getPai().getNome(), MatchMode.ANYWHERE)));
+				animal.getPai().setNome(null);
+			}
 			q.add(Example.create(animal.getPai())
 					.enableLike(MatchMode.ANYWHERE).ignoreCase());
 			c.add(Restrictions.in("pai", q.list()));
 		}
+		
+		c.add(Example.create(animal).enableLike(MatchMode.ANYWHERE)
+				.ignoreCase());
 
 		c.addOrder(Order.asc("registro"));
 		List<Animal> result = c.list();
