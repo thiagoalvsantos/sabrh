@@ -11,6 +11,7 @@ import mx.core.FlexGlobals;
 import mx.events.CloseEvent;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
+import mx.formatters.DateFormatter;
 import mx.managers.PopUpManager;
 import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
@@ -126,11 +127,14 @@ protected function btnClickLimparPesquisa():void
 	{
 		dataGridResultado.dataProvider=null;
 	}
+	
+	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);
+	
 	PopUpManager.centerPopUp(this);
 }
 
 /**
- * Evento botão de inserir usuário.
+ * Evento botão de inserir Animal.
  *
  * @param event
  */
@@ -240,35 +244,48 @@ protected function btnClickSalvar():void
 
 }
 
-
-
-
-
-
 /**
- * Ação do botão editar usuario.
+ * Ação do botão editar Animal.
  * @param event
  */
-protected function editarUsuario():void
+protected function editarAnimal():void
 {
-//    currentState="stateEditar";
-//    txtNovoCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
-//    txtNovoConfirmarSenha.text=usuarioSelecionado.senha;
-//    txtNovoEmail.text=usuarioSelecionado.email;
-//    txtNovoLogin.text=usuarioSelecionado.login;
-//    txtNovoSenha.text=usuarioSelecionado.senha;
-//    txtNovoNome.text=usuarioSelecionado.nome;
+	currentState="stateEditar";
 
-//    estadoService.listarEstados();
-//    perfilService.listarPerfil();
-//    statusService.listarStatus();
+	txtNovoRegistro.text=animalSelecionado.registro;
+	txtNovoNome.text=animalSelecionado.nome;
+	txtNovoApelido.text=animalSelecionado.apelido;
+	propriedadeNovo=animalSelecionado.propriedade
+	txtNovoPropriedade.text=propriedadeNovo.nome;
+	if (animalSelecionado.pai != null)
+	{
+		paiNovo=animalSelecionado.pai;
+		txtNovoPai.text=paiNovo.nome;
+	}
+	else
+	{
+		txtNovoPai.text="";
+	}
+	if (animalSelecionado.mae != null)
+	{
+		maeNovo=animalSelecionado.mae;
+		txtNovoMae.text=maeNovo.nome;
+	}
+	else
+	{
+		txtNovoMae.text="";
+	}
+
+	txtNovoDataNascimento.selectedDate=animalSelecionado.dataNascimento;
+	radioGroupNovoSexo.selectedValue=animalSelecionado.sexo;
 
 	PopUpManager.centerPopUp(this);
 
+	panelSucesso.visible=false;
 }
 
 /**
- *	Fechar a tela de manter usuário
+ *	Fechar a tela de manter Animal
  *
  * @param event
  */
@@ -286,14 +303,34 @@ protected function gridClickResultado(event:ListEvent):void
 {
 	currentState='stateDetalhe';
 
-//    usuarioSelecionado=event.currentTarget.selectedItem;
-//    txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
-//    txtDetalheEmail.text=usuarioSelecionado.email;
-//    txtDetalheLogin.text=usuarioSelecionado.login;
-//    txtDetalheNome.text=usuarioSelecionado.nome;
-//    cmbDetalheEstado.text=usuarioSelecionado.municipio.estado.descricao;
-//    cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
-//    cmbDetalhePerfil.text=usuarioSelecionado.perfil;
+	animalSelecionado=event.currentTarget.selectedItem;
+	txtDetalheRegistro.text=animalSelecionado.registro;
+	txtDetalheNome.text=animalSelecionado.nome;
+	txtDetalheApelido.text=animalSelecionado.apelido;
+	propriedadeNovo=animalSelecionado.propriedade
+	txtDetalhePropriedade.text=propriedadeNovo.nome;
+	if (animalSelecionado.pai != null)
+	{
+		paiNovo=animalSelecionado.pai;
+		txtDetalhePai.text=paiNovo.nome;
+	}
+	else
+	{
+		txtDetalhePai.text="";
+	}
+	if (animalSelecionado.mae != null)
+	{
+		maeNovo=animalSelecionado.mae;
+		txtDetalheMae.text=maeNovo.nome;
+	}
+	else
+	{
+		txtDetalheMae.text="";
+	}
+	var df:DateFormatter=new DateFormatter();
+	df.formatString="DD/MM/YYYY";
+	txtDetalheDataNascimento.text=df.format(animalSelecionado.dataNascimento);
+	radioGroupDetalheSexo.selectedValue=animalSelecionado.sexo;
 
 	PopUpManager.centerPopUp(this);
 }
@@ -312,108 +349,8 @@ protected function init(event:FlexEvent):void
 		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
 	}
 
-	txtPesquisaNomeAnimal.focusManager.setFocus(txtPesquisaNomeAnimal);
+	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);
 
-}
-
-/**
- * Resultado da listagem de estados
- *
- * @param event
- */
-protected function listarEstadosResult(event:ResultEvent):void
-{
-	var listaEstados:ArrayCollection=new ArrayCollection();
-	listaEstados.addItem("Selecione...");
-	listaEstados.addAll(event.result as ArrayCollection);
-	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
-	{
-//		cmbPesquisaEstado.dataProvider=listaEstados;
-//		cmbPesquisaEstado.selectedIndex=-1;
-//		cmbPesquisaEstado.selectedIndex=0;
-//		cmbPesquisaEstado.errorString=null;
-	}
-	else
-	{
-//        cmbNovoEstado.dataProvider=listaEstados;
-//        cmbNovoEstado.selectedIndex=-1;
-//        cmbNovoEstado.selectedIndex=0;
-
-		if (currentState == 'stateEditar')
-		{
-//            for (var i:Number=1; i < cmbNovoEstado.dataProvider.length; i++)
-//            {
-//                if (cmbNovoEstado.dataProvider.getItemAt(i).sigla == usuarioSelecionado.municipio.estado.sigla)
-//                {
-//                    cmbNovoEstado.selectedIndex=i;
-//                }
-//            }
-		}
-//        cmbNovoEstado.errorString=null;
-	}
-}
-
-/**
- * Resultado da listagem de perfil.
- *
- * @param event
- */
-protected function listarPerfilResult(event:ResultEvent):void
-{
-	var listaPerfil:ArrayCollection=new ArrayCollection();
-	listaPerfil.addItem("Selecione...");
-	listaPerfil.addAll(event.result as ArrayCollection);
-
-	if (currentState == 'statePesquisa')
-	{
-//		cmbPesquisaPerfil.dataProvider=listaPerfil;
-//		cmbPesquisaPerfil.selectedIndex=-1;
-//		cmbPesquisaPerfil.selectedIndex=0;
-	}
-	else
-	{
-//        cmbNovoPerfil.dataProvider=listaPerfil;
-//        cmbNovoPerfil.selectedIndex=-1;
-//        cmbNovoPerfil.selectedIndex=0;
-
-		if (currentState == 'stateEditar')
-		{
-			//      cmbNovoPerfil.selectedItem=usuarioSelecionado.perfil;
-		}
-//        cmbNovoPerfil.errorString=null;
-	}
-}
-
-/**
- * Resultado da listagem de status.
- *
- * @param event
- */
-protected function listarStatusResult(event:ResultEvent):void
-{
-	var listaStatus:ArrayCollection=new ArrayCollection();
-	listaStatus.addItem("Selecione...");
-	listaStatus.addAll(event.result as ArrayCollection);
-
-	if (currentState == 'statePesquisa')
-	{
-//		cmbPesquisaStatus.dataProvider=listaStatus;
-//		cmbPesquisaStatus.selectedIndex=-1;
-//		cmbPesquisaStatus.selectedIndex=0
-
-	}
-	else
-	{
-//        cmbNovoStatus.dataProvider=listaStatus;
-//        cmbNovoStatus.selectedIndex=-1;
-//        cmbNovoStatus.selectedIndex=0;
-
-		if (currentState == 'stateEditar')
-		{
-			//    cmbNovoStatus.selectedItem=usuarioSelecionado.status;
-		}
-//        cmbNovoStatus.errorString=null;
-	}
 }
 
 /**
@@ -460,21 +397,12 @@ protected function onFault(event:FaultEvent):void
 
 
 
-//   /**
-// *
-// *	Resultado da pesquisa de usuários.
-// *
-// * @param event
-// */
-//protected function pesquisarUsuariosResult(event:ResultEvent):void
-//{
-//    var listaUsuarios:ArrayCollection=event.result as ArrayCollection;
-//    currentState='stateResultado';
-//    gridUsuario.dataProvider=listaUsuarios;
-//    panelResultado.title="Resultado      -      Registros encontrados " + listaUsuarios.length;
-//    PopUpManager.centerPopUp(this);
-//}
-
+   /**
+ *
+ *	Resultado da pesquisa de animais.
+ *
+ * @param event
+ */
 protected function serviceResultAnimalPesquisar(event:ResultEvent):void
 {
 	// Recupera lista de animais
@@ -493,34 +421,44 @@ protected function serviceResultAnimalPesquisar(event:ResultEvent):void
 }
 
 /**
- * Resultado da inserção de usuários
+ * Resultado da inserção de animais
  *
  * @param event
  */
 protected function serviceResultAnimalSalvar(event:ResultEvent):void
 {
-	// Exibe mensagem de sucesso
-	if (currentState == 'stateNovo')
-	{
-		Alert.show("Animal inserido com sucesso!", "Sucesso");
-	}
-	else if (currentState == 'stateEditar')
-	{
-		Alert.show("Animal alterado com sucesso!", "Sucesso");
-	}
-
 	currentState='stateDetalhe';
 
+	panelSucesso.visible=true;
 
-//    usuarioSelecionado=event.result as Usuario;
-//
-//    txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
-//    txtDetalheEmail.text=usuarioSelecionado.email;
-//    txtDetalheLogin.text=usuarioSelecionado.login;
-//    txtDetalheNome.text=usuarioSelecionado.nome;
-//    cmbDetalheEstado.text=usuarioSelecionado.municipio.estado.descricao;
-//    cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
-//    cmbDetalhePerfil.text=usuarioSelecionado.perfil;
+	animalSelecionado=event.result as Animal;
+	txtDetalheRegistro.text=animalSelecionado.registro;
+	txtDetalheNome.text=animalSelecionado.nome;
+	txtDetalheApelido.text=animalSelecionado.apelido;
+	propriedadeNovo=animalSelecionado.propriedade
+	txtDetalhePropriedade.text=propriedadeNovo.nome;
+	if (animalSelecionado.pai != null)
+	{
+		paiNovo=animalSelecionado.pai;
+		txtDetalhePai.text=paiNovo.nome;
+	}
+	else
+	{
+		txtDetalhePai.text="";
+	}
+	if (animalSelecionado.mae != null)
+	{
+		maeNovo=animalSelecionado.mae;
+		txtDetalheMae.text=maeNovo.nome;
+	}
+	else
+	{
+		txtDetalheMae.text="";
+	}
+	var df:DateFormatter=new DateFormatter();
+	df.formatString="DD/MM/YYYY";
+	txtDetalheDataNascimento.text=df.format(animalSelecionado.dataNascimento);
+	radioGroupDetalheSexo.selectedValue=animalSelecionado.sexo;
 
 	PopUpManager.centerPopUp(this);
 }
@@ -537,7 +475,13 @@ protected function validar():Boolean
 	//se não existem erros 
 	if (errors.length == 0)
 	{
-		return true;
+		if (txtNovoDataNascimento.selectedDate > new Date())
+		{
+			txtNovoDataNascimento.errorString="Data de Nascimento deve ser igual ou menor que hoje";
+			txtNovoDataNascimento.focusManager.setFocus(txtNovoDataNascimento);
+		}
+		else
+			return true;
 	}
 	else
 	{
@@ -563,6 +507,15 @@ protected function voltarPesquisa():void
 		currentState='stateResultado';
 		btnClickPesquisar();
 	}
-	txtPesquisaNomeAnimal.focusManager.setFocus(txtPesquisaNomeAnimal);
+	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);
 	PopUpManager.centerPopUp(this);
+	if (panelError != null)
+	{
+		panelError.visible=false;
+	}
+
+	if (panelSucesso != null)
+	{
+		panelSucesso.visible=false;
+	}
 }

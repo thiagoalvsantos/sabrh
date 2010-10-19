@@ -31,7 +31,7 @@
 		<s:Panel id="panelPesquisa" title="Pesquisa" includeIn="statePesquisa,stateResultado">
 			<mx:Canvas left="5" right="5" top="5" bottom="5">
 				<s:Label id="lblPesquisaRegistroAnimal" x="10" y="15" text="Registro Animal"/>
-				<s:Label id="lblPesquisaNomeAnimal" x="265" y="15" text="Nome Animal"/>
+				<s:Label id="lblPesquisaNomeAnimal" x="265" y="15" text="Nome/Apelido"/>
 				<s:Label id="lblPesquisaRegistroPai" x="10" y="45" text="Registro Pai"/>
 				<s:Label id="lblPesquisaNomePai" x="265" y="45" text="Nome Pai"/>
 				<s:Label id="lblPesquisaRegistroMae" x="10" y="75" text="Registro Mãe"/>
@@ -45,16 +45,16 @@
 				<s:TextInput id="txtPesquisaNomePai" x="350" y="40" width="300" tabIndex="4"/>
 				<s:TextInput id="txtPesquisaRegistroMae" x="100" y="70" width="150" tabIndex="5"/>
 				<s:TextInput id="txtPesquisaNomeMae" x="350" y="70" width="300" tabIndex="6"/>
-				<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false"/>
-				<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{btnClickConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="100" tabIndex="7"/>
-				<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false"/>
-				<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{btnClickConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8"/>
-				<s:CheckBox id="checkBoxMacho" x="705" y="10" label="Macho"/>
-				<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea"/>
+				<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false" focusEnabled="false"/>
+				<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{btnClickConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="100" tabIndex="7" buttonMode="true"/>
+				<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false" focusEnabled="false"/>
+				<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{btnClickConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8" buttonMode="true"/>
+				<s:CheckBox id="checkBoxMacho" x="705" y="10" label="Macho" tabIndex="9"/>
+				<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea" tabIndex="9"/>
 			</mx:Canvas>
 			<s:controlBarContent>
-				<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="4" id="btnPesquisaBuscar"/>
-				<s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex.statePesquisa="5"/>
+				<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="10" id="btnPesquisaBuscar" buttonMode="true"/>
+				<s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex.statePesquisa="11" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 		<!--//////////////////////////

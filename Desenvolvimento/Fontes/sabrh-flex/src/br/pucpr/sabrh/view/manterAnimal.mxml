@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow width="900" creationComplete="init(event)" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Animais ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
+<s:TitleWindow width="900" creationComplete="init(event)" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Manutenção de Animais ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
 
 
 	<fx:Script source="../controller/manterAnimal.as"/>
@@ -20,6 +20,9 @@
 		</fx:Array>
 
 		<s:RadioButtonGroup id="radioGroupNovoSexo"/>
+		<s:RadioButtonGroup id="radioGroupDetalheSexo"/>
+		
+		<entity:Animal id="animalSelecionado"/>
 
 		<entity:Usuario id="proprietarioPesquisa"/>
 		<entity:Propriedade id="propriedadePesquisa"/>
@@ -68,17 +71,17 @@
 				<s:TextInput id="txtPesquisaNomePai" x="350" y="40" width="300" tabIndex="4"/>
 				<s:TextInput id="txtPesquisaRegistroMae" x="100" y="70" width="150" tabIndex="5"/>
 				<s:TextInput id="txtPesquisaNomeMae" x="350" y="70" width="300" tabIndex="6"/>
-				<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false"/>
-				<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="100" tabIndex="7"/>
-				<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false"/>
-				<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8"/>
-				<s:CheckBox id="checkBoxMacho" x="705" y="10" label="Macho"/>
-				<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea"/>
+				<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false" focusEnabled="false"/>
+				<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="100" tabIndex="7" buttonMode="true"/>
+				<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false" focusEnabled="false"/>
+				<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8" buttonMode="true"/>
+				<s:CheckBox id="checkBoxMacho" x="705" y="10" label="Macho" tabIndex="9"/>
+				<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea" tabIndex="9"/>
 			</mx:Canvas>
 			<s:controlBarContent>
-				<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="6" buttonMode="true"/>
-				<s:Button label="Novo" click="{btnClickNovo()}" tabIndex.statePesquisa="7" buttonMode="true"/>
-				<s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex.statePesquisa="8" buttonMode="true"/>
+				<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="9" buttonMode="true"/>
+				<s:Button label="Novo" click="{btnClickNovo()}" tabIndex.statePesquisa="10" buttonMode="true"/>
+				<s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex.statePesquisa="11" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 		<!--//////////////////////////
@@ -102,7 +105,7 @@
 		<s:Panel id="panelNovo" width="100%" height="100%" title.stateNovo="Novo" title.stateEditar="Editar">
 			<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
 				<s:BorderContainer id="panelError" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelError" visible="false">
-					<s:Label text="Erro ao incluir usuário. Verificar campos em vermelho." left="50" verticalCenter="0"/>
+					<s:Label text="Erro ao incluir animal. Verificar campos em vermelho." left="50" verticalCenter="0"/>
 					<mx:Image source="@Embed(source='../assets/img/error.png')" verticalCenter="0" left="10"/>
 				</s:BorderContainer>
 				<mx:Canvas left="5" right="5" top="5" bottom="5">
@@ -135,20 +138,20 @@
 						</s:HGroup>
 					</s:VGroup>
 					<s:VGroup y="10" x="120">
-						<s:TextInput id="txtNovoRegistro" width="150" maxChars="20" tabIndex="1"/>
+						<s:TextInput id="txtNovoRegistro" width="150" maxChars="20" enabled.stateEditar="false" tabIndex="1"/>
 						<s:TextInput id="txtNovoNome" width="370" tabIndex="2"/>
 						<s:TextInput id="txtNovoApelido" width="370" tabIndex="3"/>
 						<s:HGroup>
 							<s:TextInput id="txtNovoPropriedade" width="370" editable="false" tabFocusEnabled="false"/>
-							<s:Button label="Buscar" tabIndex="4" click="{abrirConsultarPropriedade(txtNovoPropriedade,'novo')}"/>
+							<s:Button label="Buscar" tabIndex="4" click="{abrirConsultarPropriedade(txtNovoPropriedade,'novo')}" buttonMode="true"/>
 						</s:HGroup>
 						<s:HGroup>
 							<s:TextInput id="txtNovoPai" width="370" editable="false" tabFocusEnabled="false"/>
-							<s:Button label="Buscar" tabIndex="5" click="abrirConsultarAnimal(txtNovoPai,'novo','pai')"/>
+							<s:Button label="Buscar" tabIndex="5" click="abrirConsultarAnimal(txtNovoPai,'novo','pai')" buttonMode="true"/>
 						</s:HGroup>
 						<s:HGroup>
 							<s:TextInput id="txtNovoMae" width="370" editable="false" tabFocusEnabled="false"/>
-							<s:Button label="Buscar" tabIndex="6" click="abrirConsultarAnimal(txtNovoMae,'novo','mae')"/>
+							<s:Button label="Buscar" tabIndex="6" click="abrirConsultarAnimal(txtNovoMae,'novo','mae')" buttonMode="true"/>
 						</s:HGroup>
 						<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
 						<s:HGroup>
@@ -172,28 +175,50 @@
 		<s:Panel id="panelDetalhe" width="100%" height="100%" title="Detalhe">
 			<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
 				<s:BorderContainer id="panelSucesso" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelSuccess" visible="false">
-					<s:Label text="Usuário gravado com sucesso." left="50" verticalCenter="0"/>
+					<s:Label text="Animal gravado com sucesso." left="50" verticalCenter="0"/>
 					<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
 				</s:BorderContainer>
 				<mx:Canvas left="5" right="5" top="5" bottom="5">
-					<s:Label id="lblDetalheNome" x="10" y="15" text="Nome"/>
-					<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado"/>
-					<s:Label id="lblDetalheMunicipio" x="245" y="45" text="Município"/>
-					<s:Label id="lblDetalhePerfil" x="10" y="75" text="Perfil"/>
-					<s:Label id="lblDetalheCPF" x="10" y="105" text="CPF"/>
-					<s:Label id="lblDetalheLogin" x="10" y="135" text="Login"/>
-					<s:Label id="lblDetalheEmail" x="10" y="165" text="E-mail"/>
-					<s:TextInput id="txtDetalheNome" x="60" y="10" width="514" editable="false" borderColor="#D3D3D3"/>
-					<s:TextInput id="cmbDetalheEstado" x="60" y="40" width="171" editable="false" borderColor="#D3D3D3"/>
-					<s:TextInput id="cmbDetalheMunicipio" x="310" y="40" width="264" editable="false" borderColor="#D3D3D3"/>
-					<s:TextInput id="cmbDetalhePerfil" x="60" y="70" width="171" editable="false" borderColor="#D3D3D3"/>
-					<s:TextInput id="txtDetalheCPF" x="60" y="100" width="171" editable="false" borderColor="#D3D3D3"/>
-					<s:TextInput id="txtDetalheLogin" x="60" y="130" width="171" editable="false" borderColor="#D3D3D3"/>
-					<s:TextInput id="txtDetalheEmail" x="60" y="160" width="514" editable="false" borderColor="#D3D3D3"/>
+					<s:VGroup x="10" y="15" gap="16">
+						<s:HGroup>
+							<s:Label id="lblDetalheRegistro" text="Registro"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Label id="lblDetalheNome" text="Nome"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Label id="lblDetalheApelido" text="Apelido"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Label id="lblDetalhePropriedade" text="Propriedade"/>
+						</s:HGroup>
+						<s:Label id="lblDetalhePai" text="Pai"/>
+						<s:Label id="lblDetalheMae" text="Mãe"/>
+						<s:HGroup>
+							<s:Label id="lblDetalheDataNascimento" text="Data Nascimento"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Label id="lblDetalheSexo" text="Sexo"/>
+						</s:HGroup>
+					</s:VGroup>
+					<s:VGroup y="10" x="120">
+						<s:TextInput id="txtDetalheRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3"/>
+						<s:TextInput id="txtDetalheNome" width="370" editable="false" borderColor="#D3D3D3"/>
+						<s:TextInput id="txtDetalheApelido" width="370" editable="false" borderColor="#D3D3D3"/>
+						<s:TextInput id="txtDetalhePropriedade" width="370" editable="false" borderColor="#D3D3D3"/>
+						<s:TextInput id="txtDetalhePai" width="370" editable="false" borderColor="#D3D3D3"/>
+						<s:TextInput id="txtDetalheMae" width="370" editable="false" borderColor="#D3D3D3"/>
+						<s:TextInput id="txtDetalheDataNascimento" width="170" editable="false" borderColor="#D3D3D3"/>
+					<s:HGroup>
+							<s:RadioButton label="Macho" groupName="radioGroupDetalheSexo" value="MACHO" enabled="false"/>
+							<s:RadioButton label="Fêmea" groupName="radioGroupDetalheSexo" value="FEMEA" enabled="false"/>
+						</s:HGroup>
+					</s:VGroup>
 				</mx:Canvas>
 			</s:VGroup>
+
 			<s:controlBarContent>
-				<s:Button label="Editar" click="{editarUsuario()}" buttonMode="true"/>
+				<s:Button label="Editar" click="{editarAnimal()}" buttonMode="true"/>
 				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
