@@ -54,7 +54,7 @@
 		<s:Panel id="panelPesquisa" width="100%" title="Pesquisa" includeIn="statePesquisa,stateResultado">
 			<mx:Canvas left="5" right="5" top="5" bottom="5">
 				<s:Label id="lblPesquisaRegistroAnimal" x="10" y="15" text="Registro Animal"/>
-				<s:Label id="lblPesquisaNomeAnimal" x="265" y="15" text="Nome Animal"/>
+				<s:Label id="lblPesquisaNomeAnimal" x="265" y="15" text="Nome/Apelido"/>
 				<s:Label id="lblPesquisaRegistroPai" x="10" y="45" text="Registro Pai"/>
 				<s:Label id="lblPesquisaNomePai" x="265" y="45" text="Nome Pai"/>
 				<s:Label id="lblPesquisaRegistroMae" x="10" y="75" text="Registro Mãe"/>
