@@ -70,12 +70,12 @@ protected function btnClickLimparPesquisa():void
 		dataGridResultado.dataProvider=null;
 	}
 
-	//TODO IMPLEMENTAR REGRAS
-//	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
-//	{
-//		btnPesquisaBuscar.enabled=false;
-//		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
-//	}
+	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	{
+		proprietarioPesquisa=FlexGlobals.topLevelApplication.user;
+		btnPesquisaBuscar.enabled=false;
+		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
+	}
 
 	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);
 	PopUpManager.centerPopUp(this);

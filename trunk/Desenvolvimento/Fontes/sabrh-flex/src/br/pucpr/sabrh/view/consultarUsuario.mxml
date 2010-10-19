@@ -38,8 +38,8 @@
 				<s:DropDownList id="cmbPesquisaMunicipio" x="310" y="40" width="264" enabled="false" labelField="descricao" tabIndex.statePesquisa="3"/>
 			</mx:Canvas>
 			<s:controlBarContent>
-				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex.statePesquisa="4"/>
-				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex.statePesquisa="5"/>
+				<s:Button label="Pesquisar" click="{actionBtnPesquisar()}" tabIndex.statePesquisa="4" buttonMode="true"/>
+				<s:Button label="Limpar" click="{actionBtnLimparPesquisa()}" tabIndex.statePesquisa="5" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 		<!--//////////////////////////
