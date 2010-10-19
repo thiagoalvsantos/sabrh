@@ -48,7 +48,7 @@
 				<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false"/>
 				<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{btnClickConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="100" tabIndex="7"/>
 				<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false"/>
-				<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8"/>
+				<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{btnClickConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8"/>
 				<s:CheckBox id="checkBoxMacho" x="705" y="10" label="Macho"/>
 				<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea"/>
 			</mx:Canvas>
