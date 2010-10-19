@@ -59,7 +59,10 @@ mx|Alert
 */
 s|Application
 {	
-	backgroundImage: Embed(source="yflexskin.swf",symbol="BackgroundImage");
+	/*
+	backgroundImage: Embed(source='assets/img/btn-usuarios.png');
+	*/
+		backgroundImage: Embed(source="yflexskin.swf",symbol="BackgroundImage");
 	
 }
 

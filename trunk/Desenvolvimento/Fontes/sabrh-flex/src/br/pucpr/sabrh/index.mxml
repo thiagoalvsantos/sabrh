@@ -16,7 +16,7 @@
 		<mx:Image id="iconeRelatorios" name="iconeRelatorios" source="@Embed(source='assets/img/btn-graficos.png')" toolTip="Relatórios" click="{abrirManterPropriedade()}" mouseDown="{iconMD(iconeRelatorios)}" mouseOut="{iconMoveUp(iconeRelatorios)}" mouseOver="{iconMoveDown(iconeRelatorios)}" mouseUp="{iconMU(iconeRelatorios)}" buttonMode="true" tabIndex="3"/>
 	</s:HGroup>
 	<mx:Image id="iconeLogoff" bottom="10" right="10" source="@Embed(source='assets/img/btn-logout.png')" toolTip="Sair" click="{fazerLogoff()}" mouseDown="{iconMD(iconeLogoff)}" mouseOut="{iconMoveUp(iconeLogoff)}" mouseOver="{iconMoveDown(iconeLogoff)}" mouseUp="{iconMU(iconeLogoff)}" buttonMode="true"/>
-	<mx:Image id="iconeLogo" source="@Embed(source='assets/img/logo2_menor.png')" scaleContent="true" bottom="30" left="0"/>
+	<mx:Image id="iconeLogo" source="@Embed(source='assets/img/logo2_menor.png')" scaleContent="true" horizontalCenter="0" bottom="30"/>
 	<fx:Declarations>
 		<mx:DateFormatter id="df" formatString="DD/MM/YYYY"/>
 		<mx:DateFormatter id="hf" formatString="JJ:NN:SS"/>
