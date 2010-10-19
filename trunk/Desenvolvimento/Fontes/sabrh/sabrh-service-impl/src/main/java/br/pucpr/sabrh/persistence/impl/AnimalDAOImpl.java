@@ -67,14 +67,18 @@ public class AnimalDAOImpl implements AnimalDAO {
 		Criteria c = s.createCriteria(Animal.class, "ani");
 		c.createCriteria("propriedade", "prop");
 
-		//verifica se foi procurado por nome para procurar como apelido tambem
+		// verifica se foi procurado por registro
+		if (animal.getRegistro() != null)
+			c.add(Restrictions.ilike("registro", animal.getRegistro(),
+					MatchMode.ANYWHERE));
+
+		// verifica se foi procurado por nome para procurar como apelido tambem
 		if (animal.getNome() != null) {
-			c.add(Restrictions.or(
-					Restrictions.ilike("apelido", animal.getNome(), MatchMode.ANYWHERE),
-					Restrictions.ilike("nome", animal.getNome(), MatchMode.ANYWHERE)));
-			animal.setNome(null);
+			c.add(Restrictions.or(Restrictions.ilike("apelido",
+					animal.getNome(), MatchMode.ANYWHERE), Restrictions.ilike(
+					"nome", animal.getNome(), MatchMode.ANYWHERE)));
 		}
-		
+
 		// verifica se existe propriedade para ser pesquisada
 		if (animal.getPropriedade() != null) {
 			// se o nome da propriedade não existir, apenas o produtor será
@@ -92,10 +96,10 @@ public class AnimalDAOImpl implements AnimalDAO {
 		if (animal.getMae() != null) {
 			Criteria q = s.createCriteria(Animal.class);
 			if (animal.getMae().getNome() != null) {
-				q.add(Restrictions.or(
-						Restrictions.ilike("apelido", animal.getMae().getNome(), MatchMode.ANYWHERE),
-						Restrictions.ilike("nome", animal.getMae().getNome(), MatchMode.ANYWHERE)));
-				animal.getMae().setNome(null);
+				q.add(Restrictions.or(Restrictions.ilike("apelido", animal
+						.getMae().getNome(), MatchMode.ANYWHERE), Restrictions
+						.ilike("nome", animal.getMae().getNome(),
+								MatchMode.ANYWHERE)));
 			}
 			q.add(Example.create(animal.getMae())
 					.enableLike(MatchMode.ANYWHERE).ignoreCase());
@@ -106,18 +110,15 @@ public class AnimalDAOImpl implements AnimalDAO {
 		if (animal.getPai() != null) {
 			Criteria q = s.createCriteria(Animal.class);
 			if (animal.getPai().getNome() != null) {
-				q.add(Restrictions.or(
-						Restrictions.ilike("apelido", animal.getPai().getNome(), MatchMode.ANYWHERE),
-						Restrictions.ilike("nome", animal.getPai().getNome(), MatchMode.ANYWHERE)));
-				animal.getPai().setNome(null);
+				q.add(Restrictions.or(Restrictions.ilike("apelido", animal
+						.getPai().getNome(), MatchMode.ANYWHERE), Restrictions
+						.ilike("nome", animal.getPai().getNome(),
+								MatchMode.ANYWHERE)));
 			}
 			q.add(Example.create(animal.getPai())
 					.enableLike(MatchMode.ANYWHERE).ignoreCase());
 			c.add(Restrictions.in("pai", q.list()));
 		}
-		
-		c.add(Example.create(animal).enableLike(MatchMode.ANYWHERE)
-				.ignoreCase());
 
 		c.addOrder(Order.asc("registro"));
 		List<Animal> result = c.list();
