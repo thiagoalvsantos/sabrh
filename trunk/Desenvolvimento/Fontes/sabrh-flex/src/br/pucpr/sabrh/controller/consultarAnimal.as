@@ -1,3 +1,8 @@
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.Municipio;
+import br.pucpr.sabrh.entity.Propriedade;
+
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.core.FlexGlobals;
@@ -8,12 +13,8 @@ import mx.managers.PopUpManager;
 import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.Municipio;
-import br.pucpr.sabrh.entity.Propriedade;
 
-public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
+protected function btnClickConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarPropriedade:consultarPropriedade=consultarPropriedade(PopUpManager.createPopUp(this.parent, consultarPropriedade, true));
 	popUpConsultarPropriedade.janelaOrigem=this;
@@ -30,19 +31,8 @@ public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:Strin
 	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
-public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
-{
-	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
-	popUpConsultarUsuario.janelaOrigem=this;
-	popUpConsultarUsuario.tipoConsulta=tipoConsulta;
-	popUpConsultarUsuario.atributoDestino=atributo;
-	PopUpManager.centerPopUp(popUpConsultarUsuario);
-	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
-	FlexGlobals.topLevelApplication.popUpEffect.play();
-}
 
-
-public function btnClickConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
+protected function btnClickConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
 	popUpConsultarUsuario.janelaOrigem=this;
@@ -95,27 +85,74 @@ protected function btnClickPesquisar():void
 {
 	var ani:Animal=new Animal();
 
-//	if (StringUtil.trim(txtPesquisaNome.text) != "")
-//	{
-//		prop.nome=StringUtil.trim(txtPesquisaNome.text);
-//	}
-//
-//	if (cmbPesquisaMunicipio.selectedIndex == 0 && cmbPesquisaEstado.selectedIndex != 0)
-//	{
-//		var mun:Municipio=new Municipio;
-//		mun.estado=cmbPesquisaEstado.selectedItem;
-//		prop.municipio=mun;
-//	}
-//
-//	if (cmbPesquisaMunicipio.selectedIndex != 0)
-//	{
-//		prop.municipio=cmbPesquisaMunicipio.selectedItem;
-//	}
-//
-//	if (txtPesquisaProprietario.text != "")
-//	{
-//		prop.proprietario=proprietarioPesquisa;
-//	}
+	if (StringUtil.trim(txtPesquisaRegistroAnimal.text) != "")
+	{
+		ani.registro=txtPesquisaRegistroAnimal.text;
+	}
+
+	if (StringUtil.trim(txtPesquisaNomeAnimal.text) != "")
+	{
+		ani.nome=txtPesquisaNomeAnimal.text;
+	}
+
+	if (StringUtil.trim(txtPesquisaRegistroPai.text) != "")
+	{
+		if (ani.pai == null)
+		{
+			ani.pai=new Animal();
+		}
+		ani.pai.registro=txtPesquisaRegistroPai.text;
+	}
+
+	if (StringUtil.trim(txtPesquisaNomePai.text) != "")
+	{
+		if (ani.pai == null)
+		{
+			ani.pai=new Animal();
+		}
+		ani.pai.nome=txtPesquisaNomePai.text;
+	}
+
+	if (StringUtil.trim(txtPesquisaRegistroMae.text) != "")
+	{
+		if (ani.mae == null)
+		{
+			ani.mae=new Animal();
+		}
+		ani.mae.registro=txtPesquisaRegistroMae.text;
+	}
+
+	if (StringUtil.trim(txtPesquisaNomeMae.text) != "")
+	{
+		if (ani.mae == null)
+		{
+			ani.mae=new Animal();
+		}
+		ani.mae.nome=txtPesquisaNomeMae.text;
+	}
+
+	if (txtPesquisaProprietario.text != "")
+	{
+		ani.propriedade.proprietario=proprietarioPesquisa;
+	}
+
+	if (txtPesquisaPropriedade.text != "")
+	{
+		ani.propriedade=propriedadePesquisa;
+	}
+
+	if (checkBoxFemea.selected)
+	{
+		ani.sexo="FEMEA";
+		if (checkBoxMacho.selected)
+		{
+			ani.sexo=null;
+		}
+	}
+	else if (checkBoxMacho)
+	{
+		ani.sexo="MACHO";
+	}
 
 	animalService.pesquisar(ani);
 }
@@ -137,11 +174,11 @@ protected function gridResultadoItemClick(event:ListEvent):void
 
 	if (tipoConsulta == "novo")
 	{
-		if (tipoConsulta == "pai")
+		if (tipoAnimal == "pai")
 		{
 			janelaOrigem.paiNovo=ani;
 		}
-		else if (tipoConsulta == "mae")
+		else if (tipoAnimal == "mae")
 		{
 			janelaOrigem.maeNovo=ani;
 		}
@@ -150,11 +187,11 @@ protected function gridResultadoItemClick(event:ListEvent):void
 	{
 		if (tipoConsulta == "pesquisa")
 		{
-			if (tipoConsulta == "pai")
+			if (tipoAnimal == "pai")
 			{
 				janelaOrigem.paiPesquisa=ani;
 			}
-			else if (tipoConsulta == "mae")
+			else if (tipoAnimal == "mae")
 			{
 				janelaOrigem.maePesquisa=ani;
 			}
