@@ -20,6 +20,10 @@ import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
 
+public var paiDefault:Animal;
+public var maeDefault:Animal;
+
+//Função para abrir a tela de Consultar Propriedades.
 public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarPropriedade:consultarPropriedade=consultarPropriedade(PopUpManager.createPopUp(this.parent, consultarPropriedade, true));
@@ -140,9 +144,9 @@ public function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:St
 protected function btnClickLimparNovo():void
 {
 	txtNovoApelido.text="";
-	txtNovoMae.text="";
+	txtNovoMae.text=maeDefault.nome;
 	txtNovoNome.text="";
-	txtNovoPai.text="";
+	txtNovoPai.text=paiDefault.nome;
 	txtNovoPropriedade.text="";
 	txtNovoRegistro.text="";
 	txtNovoDataNascimento.text="";
@@ -301,11 +305,17 @@ protected function btnClickSalvar():void
 		animal.sexo=radioGroupNovoSexo.selectedValue as String;
 		if (txtNovoPai.text != null && txtNovoPai.text != "")
 		{
-			animal.pai=paiNovo;
+			if (txtNovoPai.text == "NÃO INFORMADO")
+				animal.pai=paiDefault;
+			else
+				animal.pai=paiNovo;
 		}
 		if (txtNovoMae.text != null && txtNovoMae.text != "")
 		{
-			animal.mae=maeNovo;
+			if (txtNovoMae.text == "NÃO INFORMADO")
+				animal.mae=maeDefault;
+			else
+				animal.mae=maeNovo;
 		}
 
 		animalService.salvar(animal);
@@ -440,6 +450,9 @@ protected function init(event:FlexEvent):void
 		btnPesquisaBuscarProprietario.enabled=false;
 		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
 	}
+	
+	animalService.recuperarAnimalPadrao("MACHO");
+	animalService.recuperarAnimalPadrao("FEMEA");
 
 	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);
 
@@ -490,6 +503,22 @@ protected function serviceResultAnimalPesquisar(event:ResultEvent):void
 	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaAnimais.length;
 	PopUpManager.centerPopUp(this);
 
+}
+
+
+/**
+ * Resultado da pesquisa de animal padrao
+ *
+ * @param event
+ */
+protected function serviceResultRecuperarAnimalPadrao(event:ResultEvent):void
+{	
+	var animal:Animal=event.result as Animal;
+	
+	if (animal.sexo == "MACHO")
+		paiDefault=animal;
+	else
+		maeDefault=animal;
 }
 
 /**
