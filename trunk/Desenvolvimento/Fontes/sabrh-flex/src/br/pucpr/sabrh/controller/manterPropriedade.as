@@ -505,7 +505,7 @@ protected function validar():Boolean
 }
 
 
-//Função para abrir a tela de Manuntenção de Usuários.
+//Função para abrir a tela de Consultar Usuários.
 public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
@@ -515,4 +515,19 @@ public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):v
 	PopUpManager.centerPopUp(popUpConsultarUsuario);
 	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
 	FlexGlobals.topLevelApplication.popUpEffect.play();
+}
+
+//Função que recebe o retorno da consulta de Usuário.
+public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
+{
+	atributoDestino.text=usuario.nome;
+	
+	if (tipoConsulta == "novo")
+	{
+		proprietarioNovo=usuario;
+	}
+	else if (tipoConsulta == "pesquisa")
+	{
+		proprietarioPesquisa=usuario;
+	}
 }

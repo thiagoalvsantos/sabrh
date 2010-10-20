@@ -198,19 +198,9 @@ protected function cbmEstadoChange():void
 protected function gridUsuarioItemClick(event:ListEvent):void
 {
 	var usr:Usuario=event.itemRenderer.data as Usuario;
-	atributoDestino.text=usr.nome;
-
-	if (tipoConsulta == "novo")
-	{
-		janelaOrigem.proprietarioNovo=usr;
-	}
-	else
-	{
-		if (tipoConsulta == "pesquisa")
-		{
-			janelaOrigem.proprietarioPesquisa=usr;
-		}
-	}
+	
+	janelaOrigem.resultConsultarUsuario(atributoDestino, tipoConsulta, usr);
+	
 	PopUpManager.removePopUp(this);
 }
 

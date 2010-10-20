@@ -18,6 +18,7 @@ import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
 
+//Função para abrir a tela de Consultar Propriedades.
 public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarPropriedade:consultarPropriedade=consultarPropriedade(PopUpManager.createPopUp(this.parent, consultarPropriedade, true));
@@ -35,6 +36,30 @@ public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:Strin
 	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
+//Função que recebe o retorno da consulta de Propriedade.
+public function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsulta:String, propriedade:Propriedade):void
+{	
+	atributoDestino.text=propriedade.nome;
+	
+	if (tipoConsulta == "novo")
+	{
+		propriedadeNovo=propriedade;
+	}
+	else
+	{
+		if (tipoConsulta == "pesquisa")
+		{
+			propriedadePesquisa=propriedade;
+			proprietarioPesquisa=propriedade.proprietario;
+			txtPesquisaProprietario.text=proprietarioPesquisa.nome;
+			btnPesquisaBuscarProprietario.enabled=false;
+		}
+	}
+
+}
+
+
+//Função para abrir a tela de Consultar Usuários.
 public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
@@ -51,6 +76,18 @@ public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):v
 	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
+//Função que recebe o retorno da consulta de Usuário.
+public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
+{
+	atributoDestino.text=usuario.nome;
+	
+	if (tipoConsulta == "pesquisa")
+	{
+		proprietarioPesquisa=usuario;
+	}
+}
+
+//Função para abrir a tela de Consultar Animais.
 public function abrirConsultarAnimal(atributo:TextInput, tipoConsulta:String, tipoAnimal:String):void
 {
 	var popUpConsultarAnimal:consultarAnimal=consultarAnimal(PopUpManager.createPopUp(this.parent, consultarAnimal, true));
@@ -58,15 +95,41 @@ public function abrirConsultarAnimal(atributo:TextInput, tipoConsulta:String, ti
 	popUpConsultarAnimal.tipoConsulta=tipoConsulta;
 	popUpConsultarAnimal.atributoDestino=atributo;
 	popUpConsultarAnimal.tipoAnimal=tipoAnimal;
-	/** TODO APLICAR REGRAS */
-//	if (txtPesquisaPropriedade.text != "")
-//	{
-//		popUpConsultarAnimal.txtPesquisaNome.text=propriedadePesquisa.proprietario.nome;
-//		popUpConsultarAnimal.txtPesquisaNome.enabled=false;
-//	}
 	PopUpManager.centerPopUp(popUpConsultarAnimal);
 	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarAnimal;
 	FlexGlobals.topLevelApplication.popUpEffect.play();
+}
+
+//Função que recebe o retorno da consulta de Animais.
+public function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:String, tipoAnimal:String, animal:Animal):void
+{
+	atributoDestino.text=animal.nome;
+	
+	if (tipoConsulta == "novo")
+	{
+		if (tipoAnimal == "pai")
+		{
+			paiNovo=animal;
+		}
+		else if (tipoAnimal == "mae")
+		{
+			maeNovo=animal;
+		}
+	}
+	else
+	{
+		if (tipoConsulta == "pesquisa")
+		{
+//			if (tipoAnimal == "pai")
+//			{
+//				paiPesquisa=animal;
+//			}
+//			else if (tipoAnimal == "mae")
+//			{
+//				maePesquisa=animal;
+//			}
+		}
+	}
 }
 
 /**
@@ -120,8 +183,13 @@ protected function btnClickLimparPesquisa():void
 	checkBoxMacho.selected=false;
 	txtPesquisaPropriedade.text="";
 	propriedadePesquisa=null;
-	txtPesquisaProprietario.text="";
-	proprietarioPesquisa=null;
+	
+	if (FlexGlobals.topLevelApplication.user.perfil != "PRODUTOR")
+	{
+		txtPesquisaProprietario.text="";
+		proprietarioPesquisa=null;
+		btnPesquisaBuscarProprietario.enabled=true;
+	}
 
 	if (dataGridResultado != null)
 	{
@@ -477,7 +545,7 @@ protected function validar():Boolean
 	{
 		if (txtNovoDataNascimento.selectedDate > new Date())
 		{
-			txtNovoDataNascimento.errorString="Data de Nascimento deve ser igual ou menor que hoje";
+			txtNovoDataNascimento.errorString="Data de Nascimento deve ser igual ou menor que a data atual";
 			txtNovoDataNascimento.focusManager.setFocus(txtNovoDataNascimento);
 		}
 		else

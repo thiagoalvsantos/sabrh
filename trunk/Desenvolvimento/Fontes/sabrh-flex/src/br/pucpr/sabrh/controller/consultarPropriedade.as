@@ -100,18 +100,16 @@ protected function actionBtnLimparPesquisa():void
 	cmbPesquisaMunicipio.selectedIndex=-1;
 	cmbPesquisaMunicipio.selectedIndex=0;
 	cmbPesquisaMunicipio.enabled=false;
-	txtPesquisaProprietario.text="";
-	proprietarioPesquisa=null;
+	
+	if (btnPesquisaBuscar.enabled)
+	{
+		txtPesquisaProprietario.text="";
+		proprietarioPesquisa=null;
+	}
 	
 	if (gridPropriedade != null)
 	{
 		gridPropriedade.dataProvider=null;
-	}
-	
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
-	{
-		btnPesquisaBuscar.enabled=false;
-		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
 	}
 	
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
@@ -209,23 +207,13 @@ protected function cbmEstadoChange():void
 protected function gridPropriedadeItemClick(event:ListEvent):void
 {
 	var prop:Propriedade=event.itemRenderer.data as Propriedade;
-	atributoDestino.text=prop.nome;
 	
-	if (tipoConsulta == "novo")
-	{
-		janelaOrigem.propriedadeNovo=prop;
-	}
-	else
-	{
-		if (tipoConsulta == "pesquisa")
-		{
-			janelaOrigem.propriedadePesquisa=prop;
-		}
-	}
+	janelaOrigem.resultConsultarPropriedade(atributoDestino, tipoConsulta, prop);
+	
 	PopUpManager.removePopUp(this);
 }
 
-//Função para abrir a tela de Manuntenção de Usuários.
+//Função para abrir a tela de Consultar Usuários.
 public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
@@ -235,6 +223,17 @@ public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):v
 	PopUpManager.centerPopUp(popUpConsultarUsuario);
 	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
 	FlexGlobals.topLevelApplication.popUpEffect.play();
+}
+
+//Função que recebe o retorno da consulta de Usuário.
+public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
+{
+	atributoDestino.text=usuario.nome;
+	
+	if (tipoConsulta == "pesquisa")
+	{
+		proprietarioPesquisa=usuario;
+	}
 }
 
 /**
