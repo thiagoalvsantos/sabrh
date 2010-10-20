@@ -59,6 +59,7 @@ public class PropriedadeDAOImpl implements PropriedadeDAO {
 		if (propriedade.getProprietario() != null) {
 			c.add(Restrictions.eq("proprietario", propriedade.getProprietario()));
 		}
+		c.add(Restrictions.ne("codigo", Long.parseLong("0")));
 		c.addOrder(Order.asc("nome"));
 		List<Propriedade> result = c.list();
 		return result;

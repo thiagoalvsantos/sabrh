@@ -11,6 +11,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.TipoSexoAnimal;
 import br.pucpr.sabrh.persistence.AnimalDAO;
 import br.pucpr.sabrh.services.AnimalService;
 
@@ -72,6 +73,18 @@ public class AnimalBusiness implements AnimalService {
 	@Override
 	public Animal salvar(Animal animal) {
 		return dao.salvar(animal);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.AnimalService#recuperarAnimalPadrao(br.pucpr.
+	 * sabrh.entity.TipoSexoAnimal)
+	 */
+	@Override
+	public Animal recuperarAnimalPadrao(TipoSexoAnimal sexo) {
+		return dao.recuperarAnimalPadrao(sexo);
 	}
 
 }
