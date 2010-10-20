@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.TipoSexoAnimal;
 
 /**
  * Interface de serviço da camada core relacionado ao componente Animal.
@@ -35,5 +36,14 @@ public interface AnimalService {
 	 * @return animal
 	 */
 	Animal salvar(Animal animal);
+	
+	/**
+	 * Recuperar animal default.
+	 * 
+	 * @param TipoSexoAnimal
+	 *            - sexo
+	 * @return animal
+	 */
+	Animal recuperarAnimalPadrao(TipoSexoAnimal sexo);
 
 }

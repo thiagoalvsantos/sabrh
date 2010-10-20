@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.TipoSexoAnimal;
 
 /**
  * Interface AnimalDAO.
@@ -40,5 +41,13 @@ public interface AnimalDAO {
 	 *            - animal.
 	 */
 	void excluir(Animal animal);
+	
+	/**
+	 * Retorna um animal Padrão.
+	 * 
+	 * @param TipoAnimalSexo
+	 *            - sexo.
+	 */
+	Animal recuperarAnimalPadrao(TipoSexoAnimal sexo);
 
 }

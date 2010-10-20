@@ -143,6 +143,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			}
 
 		}
+		c.add(Restrictions.ne("codigo", Long.parseLong("0")));
 		c.addOrder(Order.asc("nome"));
 		List<Usuario> result = c.list();
 		return result;

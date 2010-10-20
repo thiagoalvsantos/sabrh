@@ -18,6 +18,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.TipoSexoAnimal;
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.AnimalDAO;
 
@@ -66,11 +67,11 @@ public class AnimalDAOImpl implements AnimalDAO {
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(Animal.class, "ani");
 		c.createCriteria("propriedade", "prop");
-		
+
 		// verifica se foi procurado por sexo
 		if (animal.getSexo() != null)
 			c.add(Restrictions.eq("sexo", animal.getSexo()));
-		
+
 		// verifica se foi procurado por registro
 		if (animal.getRegistro() != null)
 			c.add(Restrictions.ilike("registro", animal.getRegistro(),
@@ -123,6 +124,9 @@ public class AnimalDAOImpl implements AnimalDAO {
 					.enableLike(MatchMode.ANYWHERE).ignoreCase());
 			c.add(Restrictions.in("pai", q.list()));
 		}
+		
+		c.add(Restrictions.ne("registro", "000000000000000"));
+		c.add(Restrictions.ne("registro", "000000000000001"));
 
 		c.addOrder(Order.asc("registro"));
 		List<Animal> result = c.list();
@@ -156,6 +160,28 @@ public class AnimalDAOImpl implements AnimalDAO {
 	public void excluir(Animal animal) {
 		// TODO Auto-generated method stub
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.persistence.AnimalDAO#recuperarAnimalPadrao(br.pucpr.sabrh
+	 * .entity.TipoSexoAnimal)
+	 */
+	@Override
+	public Animal recuperarAnimalPadrao(TipoSexoAnimal sexo) {
+		Session s = (Session) entityManager.getDelegate();
+		Criteria c = s.createCriteria(Animal.class, "ani");
+		c.add(Restrictions.eq("sexo", sexo));
+		
+		if (sexo == TipoSexoAnimal.FEMEA)
+			c.add(Restrictions.eq("registro", "000000000000000"));
+		else
+			c.add(Restrictions.eq("registro", "000000000000001"));
+		
+		Animal animal = (Animal) c.uniqueResult();
+		return animal;
 	}
 
 }
