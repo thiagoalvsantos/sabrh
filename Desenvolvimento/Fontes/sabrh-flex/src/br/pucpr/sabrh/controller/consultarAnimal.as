@@ -170,33 +170,9 @@ protected function fechar(event:CloseEvent):void
 protected function gridResultadoItemClick(event:ListEvent):void
 {
 	var ani:Animal=event.itemRenderer.data as Animal;
-	atributoDestino.text=ani.nome;
+	
+	janelaOrigem.resultConsultarUsuario(atributoDestino, tipoConsulta, tipoAnimal, ani);
 
-	if (tipoConsulta == "novo")
-	{
-		if (tipoAnimal == "pai")
-		{
-			janelaOrigem.paiNovo=ani;
-		}
-		else if (tipoAnimal == "mae")
-		{
-			janelaOrigem.maeNovo=ani;
-		}
-	}
-	else
-	{
-		if (tipoConsulta == "pesquisa")
-		{
-			if (tipoAnimal == "pai")
-			{
-				janelaOrigem.paiPesquisa=ani;
-			}
-			else if (tipoAnimal == "mae")
-			{
-				janelaOrigem.maePesquisa=ani;
-			}
-		}
-	}
 	PopUpManager.removePopUp(this);
 }
 
