@@ -150,7 +150,7 @@ protected function btnClickLimparNovo():void
 	txtNovoPropriedade.text="";
 	txtNovoRegistro.text="";
 	txtNovoDataNascimento.text="";
-	radioGroupNovoSexo.selectedValue="Macho";
+	radioGroupNovoSexo.selectedValue=ConstantesUtils.SEXO_MACHO;
 
 	txtNovoApelido.errorString=null;
 	txtNovoMae.errorString=null;
@@ -162,9 +162,9 @@ protected function btnClickLimparNovo():void
 
 	txtNovoRegistro.focusManager.setFocus(txtNovoRegistro);
 
-	if (currentState != "stateNovo")
+	if (currentState != ConstantesUtils.STATE_NOVO)
 	{
-		currentState="stateNovo";
+		currentState=ConstantesUtils.STATE_NOVO;
 	}
 
 	panelError.visible=false;
@@ -177,7 +177,7 @@ protected function btnClickLimparNovo():void
  */
 protected function btnClickLimparPesquisa():void
 {
-	currentState='statePesquisa';
+	currentState=ConstantesUtils.STATE_PESQUISA;
 	txtPesquisaNomeAnimal.text="";
 	txtPesquisaNomeMae.text="";
 	txtPesquisaNomePai.text="";
@@ -189,7 +189,7 @@ protected function btnClickLimparPesquisa():void
 	txtPesquisaPropriedade.text="";
 	propriedadePesquisa=null;
 
-	if (FlexGlobals.topLevelApplication.user.perfil != "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil != ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		txtPesquisaProprietario.text="";
 		proprietarioPesquisa=null;
@@ -213,7 +213,7 @@ protected function btnClickLimparPesquisa():void
  */
 protected function btnClickNovo():void
 {
-	currentState="stateNovo";
+	currentState=ConstantesUtils.STATE_NOVO;
 	btnClickLimparNovo();
 	PopUpManager.centerPopUp(this);
 }
@@ -268,9 +268,9 @@ protected function btnClickPesquisar():void
 	}
 
 	if (checkBoxFemea.selected && checkBoxMacho.selected == false)
-		animal.sexo="FEMEA";
+		animal.sexo=ConstantesUtils.SEXO_FEMEA;
 	else if (checkBoxMacho.selected && checkBoxFemea.selected == false)
-		animal.sexo="MACHO";
+		animal.sexo=ConstantesUtils.SEXO_MACHO;
 
 	if (txtPesquisaPropriedade.text != "")
 	{
@@ -305,14 +305,14 @@ protected function btnClickSalvar():void
 		animal.sexo=radioGroupNovoSexo.selectedValue as String;
 		if (txtNovoPai.text != null && txtNovoPai.text != "")
 		{
-			if (txtNovoPai.text == "NÃO INFORMADO")
+			if (txtNovoPai.text == ConstantesUtils.NOME_ANIMAL_DEFAULT)
 				animal.pai=paiDefault;
 			else
 				animal.pai=paiNovo;
 		}
 		if (txtNovoMae.text != null && txtNovoMae.text != "")
 		{
-			if (txtNovoMae.text == "NÃO INFORMADO")
+			if (txtNovoMae.text == ConstantesUtils.NOME_ANIMAL_DEFAULT)
 				animal.mae=maeDefault;
 			else
 				animal.mae=maeNovo;
@@ -329,7 +329,7 @@ protected function btnClickSalvar():void
  */
 protected function editarAnimal():void
 {
-	currentState="stateEditar";
+	currentState=ConstantesUtils.STATE_EDITAR;
 
 	txtNovoRegistro.text=animalSelecionado.registro;
 	txtNovoNome.text=animalSelecionado.nome;
@@ -380,7 +380,7 @@ protected function fechar(event:CloseEvent):void
  */
 protected function gridClickResultado(event:ListEvent):void
 {
-	currentState='stateDetalhe';
+	currentState=ConstantesUtils.STATE_DETALHE;
 
 	animalSelecionado=event.currentTarget.selectedItem;
 	txtDetalheRegistro.text=animalSelecionado.registro;
@@ -444,15 +444,15 @@ protected function trocaEstadoProvaTouro(event:MouseEvent):void
  */
 protected function init(event:FlexEvent):void
 {
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		proprietarioPesquisa=FlexGlobals.topLevelApplication.user;
 		btnPesquisaBuscarProprietario.enabled=false;
 		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
 	}
 	
-	animalService.recuperarAnimalPadrao("MACHO");
-	animalService.recuperarAnimalPadrao("FEMEA");
+	animalService.recuperarAnimalPadrao(ConstantesUtils.SEXO_MACHO);
+	animalService.recuperarAnimalPadrao(ConstantesUtils.SEXO_FEMEA);
 
 	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);
 
@@ -494,7 +494,7 @@ protected function serviceResultAnimalPesquisar(event:ResultEvent):void
 	var listaAnimais:ArrayCollection=event.result as ArrayCollection;
 
 	// Altera estado da tela para "RESULTADO"
-	currentState='stateResultado';
+	currentState=ConstantesUtils.STATE_RESULTADO;
 
 	// Atribui a lista de animais para a grid de resultado
 	dataGridResultado.dataProvider=listaAnimais;
@@ -515,7 +515,7 @@ protected function serviceResultRecuperarAnimalPadrao(event:ResultEvent):void
 {	
 	var animal:Animal=event.result as Animal;
 	
-	if (animal.sexo == "MACHO")
+	if (animal.sexo == ConstantesUtils.SEXO_MACHO)
 		paiDefault=animal;
 	else
 		maeDefault=animal;
@@ -528,7 +528,7 @@ protected function serviceResultRecuperarAnimalPadrao(event:ResultEvent):void
  */
 protected function serviceResultAnimalSalvar(event:ResultEvent):void
 {
-	currentState='stateDetalhe';
+	currentState=ConstantesUtils.STATE_DETALHE;
 
 	panelSucesso.visible=true;
 
@@ -601,11 +601,11 @@ protected function voltarPesquisa():void
 {
 	if (dataGridResultado == null)
 	{
-		currentState='statePesquisa';
+		currentState=ConstantesUtils.STATE_PESQUISA;
 	}
 	else
 	{
-		currentState='stateResultado';
+		currentState=ConstantesUtils.STATE_RESULTADO;
 		btnClickPesquisar();
 	}
 	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);

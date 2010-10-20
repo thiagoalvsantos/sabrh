@@ -34,7 +34,7 @@ import spark.events.IndexChangeEvent;
  */
 protected function init(event:FlexEvent):void
 {
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		proprietarioNovo=FlexGlobals.topLevelApplication.user;
 		proprietarioPesquisa=FlexGlobals.topLevelApplication.user;
@@ -108,7 +108,7 @@ protected function actionBtnPesquisar():void
 protected function actionBtnNovo():void
 {
 
-	currentState="stateNovo";
+	currentState=ConstantesUtils.STATE_NOVO;
 	actionBtnLimparNovo();
 	
 	PopUpManager.centerPopUp(this);
@@ -124,7 +124,7 @@ protected function actionBtnNovo():void
  */
 protected function actionBtnLimparPesquisa():void
 {
-	currentState='statePesquisa';
+	currentState=ConstantesUtils.STATE_PESQUISA;
 	txtPesquisaNome.text="";
 	cmbPesquisaEstado.selectedIndex=-1;
 	cmbPesquisaEstado.selectedIndex=0;
@@ -139,7 +139,7 @@ protected function actionBtnLimparPesquisa():void
 		gridPropriedade.dataProvider=null;
 	}
 	
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		btnPesquisaBuscar.enabled=false;
 		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
@@ -167,12 +167,12 @@ protected function actionBtnLimparNovo():void
 	cmbNovoMunicipio.errorString=null;
 	cmbNovoEstado.errorString=null;
 
-	if (currentState != "stateNovo")
+	if (currentState != ConstantesUtils.STATE_NOVO)
 	{
-		currentState="stateNovo";
+		currentState=ConstantesUtils.STATE_NOVO;
 	}
 	
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		btnNovoBuscar.enabled=false;
 		txtNovoProprietario.text=FlexGlobals.topLevelApplication.user.nome;
@@ -189,11 +189,11 @@ protected function actionBtnLimparNovo():void
  */
 protected function editarPropriedade():void
 {
-	currentState="stateEditar";
+	currentState=ConstantesUtils.STATE_EDITAR;
 	txtNovoNome.text=propriedadeSelecionada.nome;
 	txtNovoProprietario.text=propriedadeSelecionada.proprietario.nome;
 	txtNovoTelefone.text=telefoneFormatter.format(propriedadeSelecionada.telefone);
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		btnNovoBuscar.enabled=false;
 	}
@@ -209,9 +209,9 @@ protected function editarPropriedade():void
 protected function voltarPesquisa():void
 {
 	if (gridPropriedade == null){
-		currentState='statePesquisa';
+		currentState=ConstantesUtils.STATE_PESQUISA;
 	} else {		
-		currentState='stateResultado';
+		currentState=ConstantesUtils.STATE_RESULTADO;
 		actionBtnPesquisar();
 	}
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
@@ -263,7 +263,7 @@ protected function actionBtnSalvarPropriedade():void
 		propriedade.telefone=propriedade.telefone.replace(")", "");
 		propriedade.telefone=propriedade.telefone.replace("-", "");
 
-		if (currentState == 'stateEditar')
+		if (currentState == ConstantesUtils.STATE_EDITAR)
 		{
 			propriedade.codigo=propriedadeSelecionada.codigo;
 		}
@@ -292,7 +292,7 @@ protected function actionBtnSalvarPropriedade():void
 protected function pesquisarPropriedadesResult(event:ResultEvent):void
 {
 	var listaPropriedades:ArrayCollection=event.result as ArrayCollection;
-	currentState='stateResultado';
+	currentState=ConstantesUtils.STATE_RESULTADO;
 	gridPropriedade.dataProvider=listaPropriedades;
 	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaPropriedades.length;
 	PopUpManager.centerPopUp(this);
@@ -305,7 +305,7 @@ protected function pesquisarPropriedadesResult(event:ResultEvent):void
  */
 protected function salvarPropriedadeResult(event:ResultEvent):void
 {
-	currentState='stateDetalhe';
+	currentState=ConstantesUtils.STATE_DETALHE;
 	
 	panelSucesso.visible=true;
 
@@ -325,11 +325,11 @@ protected function salvarPropriedadeResult(event:ResultEvent):void
 protected function listarMunicipiosResult(event:ResultEvent):void
 {
 	var listaMunicipios:ArrayCollection=new ArrayCollection();
-	listaMunicipios.addItem("Selecione...");
+	listaMunicipios.addItem(ConstantesUtils.SELECIONE);
 	listaMunicipios.addAll(event.result as ArrayCollection);
 
 
-	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
+	if (currentState == ConstantesUtils.STATE_PESQUISA || currentState == ConstantesUtils.STATE_RESULTADO)
 	{
 		cmbPesquisaMunicipio.dataProvider=listaMunicipios;
 		cmbPesquisaMunicipio.selectedIndex=-1;
@@ -343,7 +343,7 @@ protected function listarMunicipiosResult(event:ResultEvent):void
 		cmbNovoMunicipio.selectedIndex=-1;
 		cmbNovoMunicipio.selectedIndex=0;
 		cmbNovoMunicipio.enabled=true;
-		if (currentState == 'stateEditar')
+		if (currentState == ConstantesUtils.STATE_EDITAR)
 		{
 			for (var i:Number=1; i < cmbNovoMunicipio.dataProvider.length; i++)
 			{
@@ -365,9 +365,9 @@ protected function listarMunicipiosResult(event:ResultEvent):void
 protected function listarEstadosResult(event:ResultEvent):void
 {
 	var listaEstados:ArrayCollection=new ArrayCollection();
-	listaEstados.addItem("Selecione...");
+	listaEstados.addItem(ConstantesUtils.SELECIONE);
 	listaEstados.addAll(event.result as ArrayCollection);
-	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
+	if (currentState == ConstantesUtils.STATE_PESQUISA || currentState == ConstantesUtils.STATE_RESULTADO)
 	{
 		cmbPesquisaEstado.dataProvider=listaEstados;
 		cmbPesquisaEstado.selectedIndex=-1;
@@ -381,7 +381,7 @@ protected function listarEstadosResult(event:ResultEvent):void
 		cmbNovoEstado.selectedIndex=0;
 
 
-		if (currentState == 'stateEditar')
+		if (currentState == ConstantesUtils.STATE_EDITAR)
 		{
 			for (var i:Number=1; i < cmbNovoEstado.dataProvider.length; i++)
 			{
@@ -414,7 +414,7 @@ protected function listarEstadosResult(event:ResultEvent):void
  */
 protected function cbmEstadoChange():void
 {
-	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
+	if (currentState == ConstantesUtils.STATE_PESQUISA || currentState == ConstantesUtils.STATE_RESULTADO)
 	{
 		if (cmbPesquisaEstado.selectedIndex != 0)
 		{
@@ -447,7 +447,7 @@ protected function cbmEstadoChange():void
  */
 protected function gridPropriedadeItemClick(event:ListEvent):void
 {
-	currentState='stateDetalhe';
+	currentState=ConstantesUtils.STATE_DETALHE;
 
 	propriedadeSelecionada=event.currentTarget.selectedItem;
 	txtDetalheNome.text=propriedadeSelecionada.nome;

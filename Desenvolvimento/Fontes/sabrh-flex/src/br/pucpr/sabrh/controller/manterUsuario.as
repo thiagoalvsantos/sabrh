@@ -27,7 +27,7 @@ private var usuarioSalvar:Usuario;
  */
 protected function init(event:FlexEvent):void
 {
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		setStateDetalheProdutor();
 	}
@@ -113,7 +113,7 @@ protected function actionBtnNovo():void
  */
 protected function actionBtnLimparPesquisa():void
 {
-	currentState='statePesquisa';
+	currentState=ConstantesUtils.STATE_PESQUISA;
 	txtPesquisaNome.text="";
 	cmbPesquisaEstado.selectedIndex=-1;
 	cmbPesquisaEstado.selectedIndex=0;
@@ -138,7 +138,7 @@ protected function actionBtnLimparPesquisa():void
 protected function actionBtnLimparNovo():void
 {
 
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		setStateDetalheProdutor();
 	}
@@ -164,9 +164,9 @@ protected function actionBtnLimparNovo():void
 		cmbNovoPerfil.errorString=null;
 		txtNovoNome.focusManager.setFocus(txtNovoNome);
 
-		if (currentState != "stateNovo")
+		if (currentState != ConstantesUtils.STATE_NOVO)
 		{
-			currentState="stateNovo";
+			currentState=ConstantesUtils.STATE_NOVO;
 		}
 		panelError.visible=false;
 	}
@@ -178,14 +178,14 @@ protected function actionBtnLimparNovo():void
  */
 protected function editarUsuario():void
 {
-	currentState="stateEditar";
+	currentState=ConstantesUtils.STATE_EDITAR;
 	txtNovoCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
 	txtNovoConfirmarSenha.text=usuarioSelecionado.senha;
 	txtNovoEmail.text=usuarioSelecionado.email;
 	txtNovoLogin.text=usuarioSelecionado.login;
 	txtNovoSenha.text=usuarioSelecionado.senha;
 	txtNovoNome.text=usuarioSelecionado.nome;
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		cmbNovoPerfil.enabled=false;
 		cmbNovoStatus.enabled=false;
@@ -210,11 +210,11 @@ protected function voltarPesquisa():void
 {
 	if (gridUsuario == null)
 	{
-		currentState='statePesquisa';
+		currentState=ConstantesUtils.STATE_PESQUISA;
 	}
 	else
 	{
-		currentState='stateResultado';
+		currentState=ConstantesUtils.STATE_RESULTADO;
 		actionBtnPesquisar();
 	}
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
@@ -307,7 +307,7 @@ protected function actionBtnSalvarUsuario():void
 protected function pesquisarUsuariosResult(event:ResultEvent):void
 {
 	var listaUsuarios:ArrayCollection=event.result as ArrayCollection;
-	currentState='stateResultado';
+	currentState=ConstantesUtils.STATE_RESULTADO;
 	gridUsuario.dataProvider=listaUsuarios;
 	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaUsuarios.length;
 	PopUpManager.centerPopUp(this);
@@ -320,7 +320,7 @@ protected function pesquisarUsuariosResult(event:ResultEvent):void
  */
 protected function inserirUsuarioResult(event:ResultEvent):void
 {
-	currentState='stateDetalhe';
+	currentState=ConstantesUtils.STATE_DETALHE;
 
 	panelSucesso.visible=true;
 
@@ -365,11 +365,11 @@ protected function criptografarUsuarioResult(event:ResultEvent):void
 protected function listarMunicipiosResult(event:ResultEvent):void
 {
 	var listaMunicipios:ArrayCollection=new ArrayCollection();
-	listaMunicipios.addItem("Selecione...");
+	listaMunicipios.addItem(ConstantesUtils.SELECIONE);
 	listaMunicipios.addAll(event.result as ArrayCollection);
 
 
-	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
+	if (currentState == ConstantesUtils.STATE_PESQUISA || currentState == ConstantesUtils.STATE_RESULTADO)
 	{
 		cmbPesquisaMunicipio.dataProvider=listaMunicipios;
 		cmbPesquisaMunicipio.selectedIndex=-1;
@@ -383,7 +383,7 @@ protected function listarMunicipiosResult(event:ResultEvent):void
 		cmbNovoMunicipio.selectedIndex=-1;
 		cmbNovoMunicipio.selectedIndex=0;
 		cmbNovoMunicipio.enabled=true;
-		if (currentState == 'stateEditar')
+		if (currentState == ConstantesUtils.STATE_EDITAR)
 		{
 			for (var i:Number=1; i < cmbNovoMunicipio.dataProvider.length; i++)
 			{
@@ -405,9 +405,9 @@ protected function listarMunicipiosResult(event:ResultEvent):void
 protected function listarEstadosResult(event:ResultEvent):void
 {
 	var listaEstados:ArrayCollection=new ArrayCollection();
-	listaEstados.addItem("Selecione...");
+	listaEstados.addItem(ConstantesUtils.SELECIONE);
 	listaEstados.addAll(event.result as ArrayCollection);
-	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
+	if (currentState == ConstantesUtils.STATE_PESQUISA || currentState == ConstantesUtils.STATE_RESULTADO)
 	{
 		cmbPesquisaEstado.dataProvider=listaEstados;
 		cmbPesquisaEstado.selectedIndex=-1;
@@ -420,7 +420,7 @@ protected function listarEstadosResult(event:ResultEvent):void
 		cmbNovoEstado.selectedIndex=-1;
 		cmbNovoEstado.selectedIndex=0;
 
-		if (currentState == 'stateEditar')
+		if (currentState == ConstantesUtils.STATE_EDITAR)
 		{
 			for (var i:Number=1; i < cmbNovoEstado.dataProvider.length; i++)
 			{
@@ -443,10 +443,10 @@ protected function listarEstadosResult(event:ResultEvent):void
 protected function listarPerfilResult(event:ResultEvent):void
 {
 	var listaPerfil:ArrayCollection=new ArrayCollection();
-	listaPerfil.addItem("Selecione...");
+	listaPerfil.addItem(ConstantesUtils.SELECIONE);
 	listaPerfil.addAll(event.result as ArrayCollection);
 
-	if (currentState == 'statePesquisa')
+	if (currentState == ConstantesUtils.STATE_PESQUISA)
 	{
 		cmbPesquisaPerfil.dataProvider=listaPerfil;
 		cmbPesquisaPerfil.selectedIndex=-1;
@@ -458,7 +458,7 @@ protected function listarPerfilResult(event:ResultEvent):void
 		cmbNovoPerfil.selectedIndex=-1;
 		cmbNovoPerfil.selectedIndex=0;
 
-		if (currentState == 'stateEditar')
+		if (currentState == ConstantesUtils.STATE_EDITAR)
 		{
 			cmbNovoPerfil.selectedItem=usuarioSelecionado.perfil;
 		}
@@ -474,10 +474,10 @@ protected function listarPerfilResult(event:ResultEvent):void
 protected function listarStatusResult(event:ResultEvent):void
 {
 	var listaStatus:ArrayCollection=new ArrayCollection();
-	listaStatus.addItem("Selecione...");
+	listaStatus.addItem(ConstantesUtils.SELECIONE);
 	listaStatus.addAll(event.result as ArrayCollection);
 
-	if (currentState == 'statePesquisa')
+	if (currentState == ConstantesUtils.STATE_PESQUISA)
 	{
 		cmbPesquisaStatus.dataProvider=listaStatus;
 		cmbPesquisaStatus.selectedIndex=-1;
@@ -490,7 +490,7 @@ protected function listarStatusResult(event:ResultEvent):void
 		cmbNovoStatus.selectedIndex=-1;
 		cmbNovoStatus.selectedIndex=0;
 
-		if (currentState == 'stateEditar')
+		if (currentState == ConstantesUtils.STATE_EDITAR)
 		{
 			cmbNovoStatus.selectedItem=usuarioSelecionado.status;
 		}
@@ -513,7 +513,7 @@ protected function listarStatusResult(event:ResultEvent):void
  */
 protected function cbmEstadoChange():void
 {
-	if (currentState == 'statePesquisa' || currentState == 'stateResultado')
+	if (currentState == ConstantesUtils.STATE_PESQUISA || currentState == ConstantesUtils.STATE_RESULTADO)
 	{
 		if (cmbPesquisaEstado.selectedIndex != 0)
 		{
@@ -546,7 +546,7 @@ protected function cbmEstadoChange():void
  */
 protected function gridUsuarioItemClick(event:ListEvent):void
 {
-	currentState='stateDetalhe';
+	currentState=ConstantesUtils.STATE_DETALHE;
 
 	usuarioSelecionado=event.currentTarget.selectedItem;
 	txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
@@ -628,7 +628,7 @@ protected function validar():Boolean
  */
 protected function setStateDetalheProdutor():void
 {
-	currentState='stateDetalhe';
+	currentState=ConstantesUtils.STATE_DETALHE;
 
 	usuarioSelecionado=FlexGlobals.topLevelApplication.user;
 	txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
