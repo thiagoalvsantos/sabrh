@@ -2,13 +2,11 @@
 import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Animal;
 import br.pucpr.sabrh.entity.Propriedade;
-import br.pucpr.sabrh.view.consultarPropriedade;
 
 import flash.events.MouseEvent;
 
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
-import mx.controls.DateField;
 import mx.core.FlexGlobals;
 import mx.events.CloseEvent;
 import mx.events.FlexEvent;
@@ -429,12 +427,12 @@ protected function gridClickResultado(event:ListEvent):void
 
 protected function trocaEstadoClassificacaoLinear(event:MouseEvent):void
 {
-	currentState='stateClassificacaoLinear';
+	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR;
 }
 
 protected function trocaEstadoProvaTouro(event:MouseEvent):void
 {
-	currentState='stateProvaTouro';
+	currentState=ConstantesUtils.STATE_PROVA_TOURO;
 }
 
 /**
@@ -450,7 +448,7 @@ protected function init(event:FlexEvent):void
 		btnPesquisaBuscarProprietario.enabled=false;
 		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
 	}
-	
+
 	animalService.recuperarAnimalPadrao(ConstantesUtils.SEXO_MACHO);
 	animalService.recuperarAnimalPadrao(ConstantesUtils.SEXO_FEMEA);
 
@@ -512,9 +510,9 @@ protected function serviceResultAnimalPesquisar(event:ResultEvent):void
  * @param event
  */
 protected function serviceResultRecuperarAnimalPadrao(event:ResultEvent):void
-{	
+{
 	var animal:Animal=event.result as Animal;
-	
+
 	if (animal.sexo == ConstantesUtils.SEXO_MACHO)
 		paiDefault=animal;
 	else

@@ -3,26 +3,20 @@ import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Municipio;
 import br.pucpr.sabrh.entity.Propriedade;
 import br.pucpr.sabrh.entity.Usuario;
-import br.pucpr.sabrh.view.consultarUsuario;
 
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
-import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
-import mx.controls.dataGridClasses.DataGridColumn;
-import mx.core.Application;
 import mx.core.FlexGlobals;
 import mx.events.CloseEvent;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
 import mx.managers.PopUpManager;
-import mx.messaging.errors.NoChannelAvailableError;
 import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
 
 import spark.components.TextInput;
-import spark.events.IndexChangeEvent;
 
 
 
@@ -110,7 +104,7 @@ protected function actionBtnNovo():void
 
 	currentState=ConstantesUtils.STATE_NOVO;
 	actionBtnLimparNovo();
-	
+
 	PopUpManager.centerPopUp(this);
 
 }
@@ -138,13 +132,13 @@ protected function actionBtnLimparPesquisa():void
 	{
 		gridPropriedade.dataProvider=null;
 	}
-	
+
 	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		btnPesquisaBuscar.enabled=false;
 		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
 	}
-	
+
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
 }
@@ -171,15 +165,15 @@ protected function actionBtnLimparNovo():void
 	{
 		currentState=ConstantesUtils.STATE_NOVO;
 	}
-	
+
 	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		btnNovoBuscar.enabled=false;
 		txtNovoProprietario.text=FlexGlobals.topLevelApplication.user.nome;
 	}
-	
+
 	panelError.visible=false;
-	
+
 	txtNovoNome.focusManager.setFocus(txtNovoNome);
 }
 
@@ -208,9 +202,12 @@ protected function editarPropriedade():void
  */
 protected function voltarPesquisa():void
 {
-	if (gridPropriedade == null){
+	if (gridPropriedade == null)
+	{
 		currentState=ConstantesUtils.STATE_PESQUISA;
-	} else {		
+	}
+	else
+	{
 		currentState=ConstantesUtils.STATE_RESULTADO;
 		actionBtnPesquisar();
 	}
@@ -220,7 +217,7 @@ protected function voltarPesquisa():void
 	{
 		panelError.visible=false;
 	}
-	
+
 	if (panelSucesso != null)
 	{
 		panelSucesso.visible=false;
@@ -238,8 +235,9 @@ protected function novoConfirmacao():void
 
 //Função para recuperar o resultado da confirmação.
 protected function novoConfirmacaoResult(event:CloseEvent):void
-{	
-	if (event.detail == Alert.YES){
+{
+	if (event.detail == Alert.YES)
+	{
 		actionBtnLimparNovo();
 	}
 }
@@ -257,7 +255,7 @@ protected function actionBtnSalvarPropriedade():void
 		propriedade.nome=txtNovoNome.text;
 		propriedade.proprietario=proprietarioNovo;
 		propriedade.telefone=txtNovoTelefone.text;
-		
+
 		//retira mascara telefone
 		propriedade.telefone=propriedade.telefone.replace("(", "");
 		propriedade.telefone=propriedade.telefone.replace(")", "");
@@ -306,7 +304,7 @@ protected function pesquisarPropriedadesResult(event:ResultEvent):void
 protected function salvarPropriedadeResult(event:ResultEvent):void
 {
 	currentState=ConstantesUtils.STATE_DETALHE;
-	
+
 	panelSucesso.visible=true;
 
 	txtDetalheNome.text=propriedadeSelecionada.nome;
@@ -521,7 +519,7 @@ public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):v
 public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
 {
 	atributoDestino.text=usuario.nome;
-	
+
 	if (tipoConsulta == "novo")
 	{
 		proprietarioNovo=usuario;

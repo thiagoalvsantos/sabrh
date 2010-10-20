@@ -1,4 +1,5 @@
 // login
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.index;
 import br.pucpr.sabrh.view.manterUsuario;
@@ -77,24 +78,24 @@ public function autenticarResult(event:ResultEvent):void
 
 		// coloca usuário na aplicação
 		app.user=usuario;
-		
+
 		// fecha tela de login
 		PopUpManager.removePopUp(this);
 
 		//verifica o perfil do usuário para limitar suas ações
 		switch (usuario.perfil)
 		{
-			case "ADMINISTRADOR":
+			case ConstantesUtils.PERFIL_ADMINISTRADOR:
 				app.barraIcones.visible=true;
 				break;
-			case "ESPECIALISTA":
+			case ConstantesUtils.PERFIL_ESPECIALISTA:
 				app.barraIcones.visible=true;
 				break;
-			case "EMPRESA":
+			case ConstantesUtils.PERFIL_EMPRESA:
 				app.barraIconesPersonalizada.addElement(app.barraIcones.getChildByName("iconeManterAnimal"));
 				app.barraIconesPersonalizada.addElement(app.barraIcones.getChildByName("iconeRelatorios"));
 				break;
-			case "PRODUTOR":
+			case ConstantesUtils.PERFIL_PRODUTOR:
 				app.barraIcones.getChildByName("iconeManterUsuario").toolTip="Editar Perfil";
 				app.barraIcones.visible=true;
 				break;

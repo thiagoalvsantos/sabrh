@@ -78,7 +78,7 @@ protected function actionBtnPesquisar():void
 	{
 		usr.municipio=cmbPesquisaMunicipio.selectedItem;
 	}
-	
+
 	usr.perfil="PRODUTOR";
 	usr.status="ATIVO";
 
@@ -92,7 +92,7 @@ protected function actionBtnPesquisar():void
  */
 protected function actionBtnLimparPesquisa():void
 {
-	currentState='statePesquisa';
+	currentState=ConstantesUtils.STATE_PESQUISA;
 	txtPesquisaNome.text="";
 	cmbPesquisaEstado.selectedIndex=-1;
 	cmbPesquisaEstado.selectedIndex=0;
@@ -124,7 +124,7 @@ protected function actionBtnLimparPesquisa():void
 protected function pesquisarUsuariosResult(event:ResultEvent):void
 {
 	var listaUsuarios:ArrayCollection=event.result as ArrayCollection;
-	currentState='stateResultado';
+	currentState=ConstantesUtils.STATE_RESULTADO;
 	gridUsuario.dataProvider=listaUsuarios;
 	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaUsuarios.length;
 	PopUpManager.centerPopUp(this);
@@ -137,7 +137,7 @@ protected function pesquisarUsuariosResult(event:ResultEvent):void
 protected function listarMunicipiosResult(event:ResultEvent):void
 {
 	var listaMunicipios:ArrayCollection=new ArrayCollection();
-	listaMunicipios.addItem("Selecione...");
+	listaMunicipios.addItem(ConstantesUtils.SELECIONE);
 	listaMunicipios.addAll(event.result as ArrayCollection);
 
 
@@ -156,7 +156,7 @@ protected function listarMunicipiosResult(event:ResultEvent):void
 protected function listarEstadosResult(event:ResultEvent):void
 {
 	var listaEstados:ArrayCollection=new ArrayCollection();
-	listaEstados.addItem("Selecione...");
+	listaEstados.addItem(ConstantesUtils.SELECIONE);
 	listaEstados.addAll(event.result as ArrayCollection);
 	cmbPesquisaEstado.dataProvider=listaEstados;
 	cmbPesquisaEstado.selectedIndex=-1;
@@ -198,9 +198,9 @@ protected function cbmEstadoChange():void
 protected function gridUsuarioItemClick(event:ListEvent):void
 {
 	var usr:Usuario=event.itemRenderer.data as Usuario;
-	
+
 	janelaOrigem.resultConsultarUsuario(atributoDestino, tipoConsulta, usr);
-	
+
 	PopUpManager.removePopUp(this);
 }
 

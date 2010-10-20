@@ -3,8 +3,6 @@ import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Municipio;
 import br.pucpr.sabrh.entity.Usuario;
 
-import flash.events.MouseEvent;
-
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
@@ -98,7 +96,7 @@ protected function actionBtnPesquisar():void
 protected function actionBtnNovo():void
 {
 
-	currentState="stateNovo";
+	currentState=ConstantesUtils.STATE_NOVO;
 	actionBtnLimparNovo();
 	PopUpManager.centerPopUp(this);
 
@@ -266,14 +264,14 @@ protected function actionBtnSalvarUsuario():void
 		usuarioSalvar.senha=txtNovoSenha.text;
 		usuarioSalvar.perfil=cmbNovoPerfil.selectedItem;
 		usuarioSalvar.email=txtNovoEmail.text;
-		usuarioSalvar.status="ATIVO";
+		usuarioSalvar.status=ConstantesUtils.STATUS_ATIVO;
 
 		//retira mascara cpf
 		usuarioSalvar.cpf=usuarioSalvar.cpf.replace(".", "");
 		usuarioSalvar.cpf=usuarioSalvar.cpf.replace(".", "");
 		usuarioSalvar.cpf=usuarioSalvar.cpf.replace("-", "");
 
-		if (currentState == 'stateEditar')
+		if (currentState == ConstantesUtils.STATE_EDITAR)
 		{
 			usuarioSalvar.codigo=usuarioSelecionado.codigo;
 			usuarioSalvar.status=cmbNovoStatus.selectedItem;
