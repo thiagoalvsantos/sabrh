@@ -171,7 +171,7 @@ protected function gridResultadoItemClick(event:ListEvent):void
 {
 	var ani:Animal=event.itemRenderer.data as Animal;
 	
-	janelaOrigem.resultConsultarUsuario(atributoDestino, tipoConsulta, tipoAnimal, ani);
+	janelaOrigem.resultConsultarAnimal(atributoDestino, tipoConsulta, tipoAnimal, ani);
 
 	PopUpManager.removePopUp(this);
 }
