@@ -66,7 +66,11 @@ public class AnimalDAOImpl implements AnimalDAO {
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(Animal.class, "ani");
 		c.createCriteria("propriedade", "prop");
-
+		
+		// verifica se foi procurado por sexo
+		if (animal.getSexo() != null)
+			c.add(Restrictions.eq("sexo", animal.getSexo()));
+		
 		// verifica se foi procurado por registro
 		if (animal.getRegistro() != null)
 			c.add(Restrictions.ilike("registro", animal.getRegistro(),
