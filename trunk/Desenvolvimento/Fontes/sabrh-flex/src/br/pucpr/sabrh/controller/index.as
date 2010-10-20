@@ -3,8 +3,8 @@ import br.pucpr.sabrh.view.manterAnimal;
 import br.pucpr.sabrh.view.manterPropriedade;
 import br.pucpr.sabrh.view.manterUsuario;
 
-import flash.display.DisplayObject;
 import flash.display.InteractiveObject;
+import flash.events.TimerEvent;
 import flash.external.ExternalInterface;
 
 import mx.controls.Alert;
@@ -44,7 +44,7 @@ public function init():void
 {
 	ExternalInterface.call('window.document.index.focus()');
 	this.timer=new Timer(1000 * 1);
-	timer.addEventListener("timer", incrementa);
+	timer.addEventListener(TimerEvent.TIMER, incrementa);
 	timer.start();
 	fazerLogin();
 
@@ -65,7 +65,7 @@ public function fazerLogin():void
 //Função para abrir a tela de Manuntenção de Usuários.
 public function abrirManterUsuario():void
 {
-	var popUpManterUsuario:manterUsuario=manterUsuario(PopUpManager.createPopUp(this,manterUsuario, true));
+	var popUpManterUsuario:manterUsuario=manterUsuario(PopUpManager.createPopUp(this, manterUsuario, true));
 	PopUpManager.centerPopUp(popUpManterUsuario);
 	popUpEffect.target=popUpManterUsuario;
 	popUpEffect.play();
@@ -75,7 +75,7 @@ public function abrirManterUsuario():void
 //Função para abrir a tela de Manuntenção de Propriedades.
 public function abrirManterPropriedade():void
 {
-	var popUpManterPropriedade:manterPropriedade=manterPropriedade(PopUpManager.createPopUp(this,manterPropriedade, true));
+	var popUpManterPropriedade:manterPropriedade=manterPropriedade(PopUpManager.createPopUp(this, manterPropriedade, true));
 	PopUpManager.centerPopUp(popUpManterPropriedade);
 	popUpEffect.target=popUpManterPropriedade;
 	popUpEffect.play();
@@ -85,7 +85,7 @@ public function abrirManterPropriedade():void
 //Função para abrir a tela de Manuntenção de Animais.
 public function abrirManterAnimais():void
 {
-	var popUpManterAnimal:manterAnimal=manterAnimal(PopUpManager.createPopUp(this,manterAnimal, true));
+	var popUpManterAnimal:manterAnimal=manterAnimal(PopUpManager.createPopUp(this, manterAnimal, true));
 	PopUpManager.centerPopUp(popUpManterAnimal);
 	popUpEffect.target=popUpManterAnimal;
 	popUpEffect.play();
@@ -99,34 +99,36 @@ public function fazerLogoff():void
 
 //Função para setar o encerramento da aplicação.
 public function encerrar(event:CloseEvent):void
-{	
-	if (event.detail == Alert.YES){
+{
+	if (event.detail == Alert.YES)
+	{
 		// remove usuário da aplicação
-		user = null;
-		
+		user=null;
+
 		init();
-		
+
 		resetIcones();
-		
-		this.visible = false;
+
+		this.visible=false;
 	}
 }
 
 
 /**
  * Metodo para resetar os dados dos icones principais.
- * 
+ *
  */
 protected function resetIcones():void
-{	
+{
 	if (barraIconesPersonalizada.numElements > 0)
-		do{
+		do
+		{
 			var elemento:InteractiveObject=barraIconesPersonalizada.getElementAt(0) as InteractiveObject;
 			if (barraIcones.numElements > elemento.tabIndex)
 				barraIcones.addElementAt(barraIconesPersonalizada.getElementAt(0), elemento.tabIndex);
 			else
 				barraIcones.addElementAt(barraIconesPersonalizada.getElementAt(0), barraIcones.numElements);
-		}while(barraIconesPersonalizada.numElements > 0);
+		} while (barraIconesPersonalizada.numElements > 0);
 	iconeManterUsuario.toolTip="Manutenção de Usuários";
 	barraIcones.visible=false;
 }

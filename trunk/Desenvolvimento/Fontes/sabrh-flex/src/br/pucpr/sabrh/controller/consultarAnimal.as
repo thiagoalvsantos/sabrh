@@ -55,7 +55,7 @@ protected function btnClickConsultarUsuario(atributo:TextInput, tipoConsulta:Str
  */
 protected function btnClickLimparPesquisa():void
 {
-	currentState='statePesquisa';
+	currentState=ConstantesUtils.STATE_PESQUISA;
 
 	txtPesquisaNomeAnimal.text=null;
 	txtPesquisaNomeMae.text=null;
@@ -70,7 +70,7 @@ protected function btnClickLimparPesquisa():void
 		dataGridResultado.dataProvider=null;
 	}
 
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		proprietarioPesquisa=FlexGlobals.topLevelApplication.user;
 		btnPesquisaBuscar.enabled=false;
@@ -143,7 +143,7 @@ protected function btnClickPesquisar():void
 
 	if (checkBoxFemea.selected)
 	{
-		ani.sexo="FEMEA";
+		ani.sexo=ConstantesUtils.SEXO_FEMEA;
 		if (checkBoxMacho.selected)
 		{
 			ani.sexo=null;
@@ -151,7 +151,7 @@ protected function btnClickPesquisar():void
 	}
 	else if (checkBoxMacho)
 	{
-		ani.sexo="MACHO";
+		ani.sexo=ConstantesUtils.SEXO_MACHO;
 	}
 
 	animalService.pesquisar(ani);
@@ -170,7 +170,7 @@ protected function fechar(event:CloseEvent):void
 protected function gridResultadoItemClick(event:ListEvent):void
 {
 	var ani:Animal=event.itemRenderer.data as Animal;
-	
+
 	janelaOrigem.resultConsultarAnimal(atributoDestino, tipoConsulta, tipoAnimal, ani);
 
 	PopUpManager.removePopUp(this);
@@ -184,7 +184,7 @@ protected function gridResultadoItemClick(event:ListEvent):void
  */
 protected function init(event:FlexEvent):void
 {
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		proprietarioPesquisa=FlexGlobals.topLevelApplication.user;
 		btnPesquisaBuscar.enabled=false;
@@ -246,7 +246,7 @@ protected function onFault(event:FaultEvent):void
 protected function serviceResultPesquisarAnimal(event:ResultEvent):void
 {
 	var listaAnimais:ArrayCollection=event.result as ArrayCollection;
-	currentState='stateResultado';
+	currentState=ConstantesUtils.STATE_RESULTADO;
 	dataGridResultado.dataProvider=listaAnimais;
 	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaAnimais.length;
 	PopUpManager.centerPopUp(this);

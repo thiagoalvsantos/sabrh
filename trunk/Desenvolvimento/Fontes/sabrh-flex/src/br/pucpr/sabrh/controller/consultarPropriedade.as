@@ -22,13 +22,13 @@ import mx.utils.StringUtil;
  */
 protected function init(event:FlexEvent):void
 {
-	if (FlexGlobals.topLevelApplication.user.perfil == "PRODUTOR")
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		proprietarioPesquisa=FlexGlobals.topLevelApplication.user;
 		btnPesquisaBuscar.enabled=false;
 		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
 	}
-	
+
 	estadoService.listarEstados();
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 }
@@ -51,8 +51,8 @@ protected function fechar(event:CloseEvent):void
  *
  * //////////////////////////////////////////////////////
  * /
- 
-/**
+
+   /**
  *	Evento botão de pesquisar propriedades.
  *
  * @param event
@@ -60,29 +60,29 @@ protected function fechar(event:CloseEvent):void
 protected function actionBtnPesquisar():void
 {
 	var prop:Propriedade=new Propriedade();
-	
+
 	if (StringUtil.trim(txtPesquisaNome.text) != "")
 	{
 		prop.nome=StringUtil.trim(txtPesquisaNome.text);
 	}
-	
+
 	if (cmbPesquisaMunicipio.selectedIndex == 0 && cmbPesquisaEstado.selectedIndex != 0)
 	{
 		var mun:Municipio=new Municipio;
 		mun.estado=cmbPesquisaEstado.selectedItem;
 		prop.municipio=mun;
 	}
-	
+
 	if (cmbPesquisaMunicipio.selectedIndex != 0)
 	{
 		prop.municipio=cmbPesquisaMunicipio.selectedItem;
 	}
-	
+
 	if (txtPesquisaProprietario.text != "")
 	{
 		prop.proprietario=proprietarioPesquisa;
 	}
-	
+
 	propriedadeService.pesquisar(prop);
 }
 
@@ -93,25 +93,25 @@ protected function actionBtnPesquisar():void
  */
 protected function actionBtnLimparPesquisa():void
 {
-	currentState='statePesquisa';
+	currentState=ConstantesUtils.STATE_PESQUISA;
 	txtPesquisaNome.text="";
 	cmbPesquisaEstado.selectedIndex=-1;
 	cmbPesquisaEstado.selectedIndex=0;
 	cmbPesquisaMunicipio.selectedIndex=-1;
 	cmbPesquisaMunicipio.selectedIndex=0;
 	cmbPesquisaMunicipio.enabled=false;
-	
+
 	if (btnPesquisaBuscar.enabled)
 	{
 		txtPesquisaProprietario.text="";
 		proprietarioPesquisa=null;
 	}
-	
+
 	if (gridPropriedade != null)
 	{
 		gridPropriedade.dataProvider=null;
 	}
-	
+
 	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
 }
@@ -123,8 +123,8 @@ protected function actionBtnLimparPesquisa():void
  *
  * //////////////////////////////////////////////////////
  * /
- 
-/**
+
+   /**
  *
  *	Resultado da pesquisa de propriedades.
  *
@@ -133,7 +133,7 @@ protected function actionBtnLimparPesquisa():void
 protected function pesquisarPropriedadesResult(event:ResultEvent):void
 {
 	var listaPropriedades:ArrayCollection=event.result as ArrayCollection;
-	currentState='stateResultado';
+	currentState=ConstantesUtils.STATE_RESULTADO;
 	gridPropriedade.dataProvider=listaPropriedades;
 	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaPropriedades.length;
 	PopUpManager.centerPopUp(this);
@@ -146,10 +146,10 @@ protected function pesquisarPropriedadesResult(event:ResultEvent):void
 protected function listarMunicipiosResult(event:ResultEvent):void
 {
 	var listaMunicipios:ArrayCollection=new ArrayCollection();
-	listaMunicipios.addItem("Selecione...");
+	listaMunicipios.addItem(ConstantesUtils.SELECIONE);
 	listaMunicipios.addAll(event.result as ArrayCollection);
-	
-	
+
+
 	cmbPesquisaMunicipio.dataProvider=listaMunicipios;
 	cmbPesquisaMunicipio.selectedIndex=-1;
 	cmbPesquisaMunicipio.selectedIndex=0;
@@ -165,7 +165,7 @@ protected function listarMunicipiosResult(event:ResultEvent):void
 protected function listarEstadosResult(event:ResultEvent):void
 {
 	var listaEstados:ArrayCollection=new ArrayCollection();
-	listaEstados.addItem("Selecione...");
+	listaEstados.addItem(ConstantesUtils.SELECIONE);
 	listaEstados.addAll(event.result as ArrayCollection);
 	cmbPesquisaEstado.dataProvider=listaEstados;
 	cmbPesquisaEstado.selectedIndex=-1;
@@ -180,8 +180,8 @@ protected function listarEstadosResult(event:ResultEvent):void
  *
  * //////////////////////////////////////////////////////
  * /
- 
-/**
+
+   /**
  * Evento de seleção de estado
  *
  * @param event
@@ -197,7 +197,7 @@ protected function cbmEstadoChange():void
 		cmbPesquisaMunicipio.enabled=false;
 		cmbPesquisaMunicipio.dataProvider=null;
 	}
-	
+
 }
 
 /**
@@ -207,9 +207,9 @@ protected function cbmEstadoChange():void
 protected function gridPropriedadeItemClick(event:ListEvent):void
 {
 	var prop:Propriedade=event.itemRenderer.data as Propriedade;
-	
+
 	janelaOrigem.resultConsultarPropriedade(atributoDestino, tipoConsulta, prop);
-	
+
 	PopUpManager.removePopUp(this);
 }
 
@@ -229,7 +229,7 @@ public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):v
 public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
 {
 	atributoDestino.text=usuario.nome;
-	
+
 	if (tipoConsulta == "pesquisa")
 	{
 		proprietarioPesquisa=usuario;
@@ -243,9 +243,9 @@ public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:S
  *
  * //////////////////////////////////////////////////////
  * /
- 
- 
-/**
+
+
+   /**
  * Falha ao invocar serviço
  *
  * @param event

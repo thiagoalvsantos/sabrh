@@ -10,7 +10,11 @@ package br.pucpr.sabrh.components.constantes
 		public static const RESULTADO_GRID="Resultado      -      Registros encontrados ";
 		public static const SEXO_MACHO="MACHO";
 		public static const SEXO_FEMEA="FEMEA";
+		public static const STATUS_ATIVO="ATIVO";
 		
+		public static const PERFIL_ADMINISTRADOR="ADMINISTRADOR";
+		public static const PERFIL_ESPECIALISTA="ESPECIALISTA";
+		public static const PERFIL_EMPRESA="EMPRESA";
 		public static const PERFIL_PRODUTOR="PRODUTOR";
 		
 		public static const STATE_PESQUISA="statePesquisa";
@@ -18,6 +22,8 @@ package br.pucpr.sabrh.components.constantes
 		public static const STATE_RESULTADO="stateResultado";
 		public static const STATE_DETALHE="stateDetalhe";
 		public static const STATE_EDITAR="stateEditar";
+		public static const STATE_CLASSIFICACAO_LINEAR="stateClassificacaoLinear";
+		public static const STATE_PROVA_TOURO="stateProvaTouro";
 		
 		public static const NOME_ANIMAL_DEFAULT="NÃO INFORMADO";
 		public static const SELECIONE="Selecione...";
