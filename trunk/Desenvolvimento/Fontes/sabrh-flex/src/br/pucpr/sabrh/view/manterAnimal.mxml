@@ -21,7 +21,7 @@
 
 		<s:RadioButtonGroup id="radioGroupNovoSexo"/>
 		<s:RadioButtonGroup id="radioGroupDetalheSexo"/>
-		
+
 		<entity:Animal id="animalSelecionado"/>
 
 		<entity:Usuario id="proprietarioPesquisa"/>
@@ -48,6 +48,7 @@
 		<s:State name="stateResultado"/>
 		<s:State name="stateDetalhe"/>
 		<s:State name="stateEditar"/>
+		<s:State name="stateClassificacaoLinear"/>
 	</s:states>
 
 	<!--//////////////////////////
@@ -209,7 +210,7 @@
 						<s:TextInput id="txtDetalhePai" width="370" editable="false" borderColor="#D3D3D3"/>
 						<s:TextInput id="txtDetalheMae" width="370" editable="false" borderColor="#D3D3D3"/>
 						<s:TextInput id="txtDetalheDataNascimento" width="170" editable="false" borderColor="#D3D3D3"/>
-					<s:HGroup>
+						<s:HGroup>
 							<s:RadioButton label="Macho" groupName="radioGroupDetalheSexo" value="MACHO" enabled="false"/>
 							<s:RadioButton label="Fêmea" groupName="radioGroupDetalheSexo" value="FEMEA" enabled="false"/>
 						</s:HGroup>
@@ -220,8 +221,68 @@
 			<s:controlBarContent>
 				<s:Button label="Editar" click="{editarAnimal()}" buttonMode="true"/>
 				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
+				<s:Button buttonMode="true" id="btnClassificacaoProva" visible="false"/>
 			</s:controlBarContent>
 		</s:Panel>
 	</s:VGroup>
+	<!--//////////////////////////
+		 //	CLASSIFICAÇÃO LINEAR
+		 /////////////////////////////-->
+	<s:VGroup id="groupClassificacaoLinear" left="5" right="5" top="5" bottom="5" includeIn="stateClassificacaoLinear">
+		<s:Panel id="panelAnimal" width="100%" height="100%" title="Dados Animal">
+			<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
+				<s:BorderContainer id="panelSucessoClassificacao" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelSuccess" visible="false">
+					<s:Label text="Animal gravado com sucesso." left="50" verticalCenter="0"/>
+					<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
+				</s:BorderContainer>
+				<mx:Canvas left="5" right="5" top="5" bottom="5" width="100%">
+					<mx:Accordion left="5" right="5">
+						<s:NavigatorContent label="Força Leiteira" width="100%" height="100%">
+							<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+								<s:HGroup>
+									<s:Label id="lblClassificacaoEstatura" text="Estatura"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblClassificacaoNivLinhaSup" text="Nivelamento Linha Superior"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblClassificacaoLarguraPeito" text="Largura Peito"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblClassificacaoProfundidadeCorporal" text="Profundidade Corporal"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblClassificacaoAngulosidade" text="Angulosidade"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblClassificacaoEscoreCorporal" text="Escore Corporal"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+							</s:VGroup>
+							<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+								<s:TextInput id="txtClassificacaoEstatura" width="50"/>
+								<s:TextInput id="txtClassificacaoNivLinhaSup" width="50"/>
+								<s:TextInput id="txtClassificacaoLarguraPeito" width="50"/>
+								<s:TextInput id="txtClassificacaoProfCorporal" width="50"/>
+								<s:TextInput id="txtClassificacaoAngulosidade" width="50"/>
+								<s:TextInput id="txtClassificacaoEscoreCorporal" width="50"/>
+							</s:VGroup>
+						</s:NavigatorContent>
+					</mx:Accordion>
+				</mx:Canvas>
+			</s:VGroup>
+
+			<s:controlBarContent>
+				<s:Button label="Editar" click="{editarAnimal()}" buttonMode="true"/>
+				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
+			</s:controlBarContent>
+		</s:Panel>
+	</s:VGroup>
+
 
 </s:TitleWindow>
