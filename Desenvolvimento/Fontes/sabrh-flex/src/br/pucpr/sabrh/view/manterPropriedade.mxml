@@ -162,11 +162,11 @@
 					<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
 				</s:BorderContainer>
 				<mx:Canvas left="5" right="5" top="5" bottom="5">
-					<s:Label id="lblDetalheNome" x="10" y="15" text="Nome" fontWeight="bold"/>
-					<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado" fontWeight="bold"/>
-					<s:Label id="lblDetalheMunicipio" x="270" y="45" text="Município" fontWeight="bold"/>
-					<s:Label id="lblDetalheTelefone" x="10" y="75" text="Telefone" fontWeight="bold"/>
-					<s:Label id="lblDetalheProprietario" x="10" y="105" text="Proprietário" fontWeight="bold"/>
+					<s:Label id="lblDetalheNome" x="10" y="15" text="Nome"/>
+					<s:Label id="lblDetalheEstado" x="10" y="45" text="Estado"/>
+					<s:Label id="lblDetalheMunicipio" x="270" y="45" text="Município"/>
+					<s:Label id="lblDetalheTelefone" x="10" y="75" text="Telefone"/>
+					<s:Label id="lblDetalheProprietario" x="10" y="105" text="Proprietário"/>
 					<!-- DADOS -->
 					<s:TextInput id="txtDetalheNome" x="90" y="10" width="514" editable="false" borderColor="#D3D3D3"/>
 					<s:TextInput id="cmbDetalheEstado" x="90" y="40" width="171" editable="false" borderColor="#D3D3D3"/>
