@@ -4,6 +4,8 @@ import br.pucpr.sabrh.entity.Animal;
 import br.pucpr.sabrh.entity.Propriedade;
 import br.pucpr.sabrh.view.consultarPropriedade;
 
+import flash.events.MouseEvent;
+
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.DateField;
@@ -18,7 +20,6 @@ import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
 
-//Função para abrir a tela de Consultar Propriedades.
 public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarPropriedade:consultarPropriedade=consultarPropriedade(PopUpManager.createPopUp(this.parent, consultarPropriedade, true));
@@ -38,9 +39,9 @@ public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:Strin
 
 //Função que recebe o retorno da consulta de Propriedade.
 public function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsulta:String, propriedade:Propriedade):void
-{	
+{
 	atributoDestino.text=propriedade.nome;
-	
+
 	if (tipoConsulta == "novo")
 	{
 		propriedadeNovo=propriedade;
@@ -80,7 +81,7 @@ public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):v
 public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
 {
 	atributoDestino.text=usuario.nome;
-	
+
 	if (tipoConsulta == "pesquisa")
 	{
 		proprietarioPesquisa=usuario;
@@ -104,7 +105,7 @@ public function abrirConsultarAnimal(atributo:TextInput, tipoConsulta:String, ti
 public function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:String, tipoAnimal:String, animal:Animal):void
 {
 	atributoDestino.text=animal.nome;
-	
+
 	if (tipoConsulta == "novo")
 	{
 		if (tipoAnimal == "pai")
@@ -183,7 +184,7 @@ protected function btnClickLimparPesquisa():void
 	checkBoxMacho.selected=false;
 	txtPesquisaPropriedade.text="";
 	propriedadePesquisa=null;
-	
+
 	if (FlexGlobals.topLevelApplication.user.perfil != "PRODUTOR")
 	{
 		txtPesquisaProprietario.text="";
@@ -195,9 +196,9 @@ protected function btnClickLimparPesquisa():void
 	{
 		dataGridResultado.dataProvider=null;
 	}
-	
+
 	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);
-	
+
 	PopUpManager.centerPopUp(this);
 }
 
@@ -347,9 +348,9 @@ protected function editarAnimal():void
 	txtNovoDataNascimento.selectedDate=animalSelecionado.dataNascimento;
 	radioGroupNovoSexo.selectedValue=animalSelecionado.sexo;
 
-	PopUpManager.centerPopUp(this);
-
 	panelSucesso.visible=false;
+
+	PopUpManager.centerPopUp(this);
 }
 
 /**
@@ -400,7 +401,30 @@ protected function gridClickResultado(event:ListEvent):void
 	txtDetalheDataNascimento.text=df.format(animalSelecionado.dataNascimento);
 	radioGroupDetalheSexo.selectedValue=animalSelecionado.sexo;
 
+	if (animalSelecionado.sexo == ConstantesUtils.SEXO_FEMEA)
+	{
+		btnClassificacaoProva.label=ConstantesUtils.CLASSIFICACAO_LINEAR;
+		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, trocaEstadoClassificacaoLinear);
+		btnClassificacaoProva.visible=true;
+	}
+	else if (animalSelecionado.sexo == ConstantesUtils.SEXO_MACHO)
+	{
+		btnClassificacaoProva.label=ConstantesUtils.PROVA_TOURO;
+		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, trocaEstadoProvaTouro);
+		btnClassificacaoProva.visible=true;
+	}
+
 	PopUpManager.centerPopUp(this);
+}
+
+protected function trocaEstadoClassificacaoLinear(event:MouseEvent):void
+{
+	currentState='stateClassificacaoLinear';
+}
+
+protected function trocaEstadoProvaTouro(event:MouseEvent):void
+{
+	currentState='stateProvaTouro';
 }
 
 /**
@@ -443,20 +467,6 @@ protected function novoConfirmacaoResult(event:CloseEvent):void
 	}
 }
 
-/**
- * //////////////////////////////////////////////////////
- *
- * 	Utils
- *
- * //////////////////////////////////////////////////////
- * /
-
-
-   /**
- * Falha ao invocar serviço
- *
- * @param event
- */
 protected function onFault(event:FaultEvent):void
 {
 	//Ocorreu uma falha ao chamar o servico. 
@@ -465,12 +475,6 @@ protected function onFault(event:FaultEvent):void
 
 
 
-   /**
- *
- *	Resultado da pesquisa de animais.
- *
- * @param event
- */
 protected function serviceResultAnimalPesquisar(event:ResultEvent):void
 {
 	// Recupera lista de animais
