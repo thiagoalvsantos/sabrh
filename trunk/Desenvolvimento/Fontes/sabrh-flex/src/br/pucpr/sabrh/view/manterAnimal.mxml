@@ -155,18 +155,23 @@
 							<s:TextInput id="txtNovoMae" width="370" editable="false" tabFocusEnabled="false"/>
 							<s:Button label="Buscar" tabIndex="6" click="abrirConsultarAnimal(txtNovoMae,'novo','mae')" buttonMode="true"/>
 						</s:HGroup>
-						<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
+						<s:HGroup verticalAlign="middle">
+							<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
+							<s:Label id="lblNovoStatus" text="Status"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							<s:DropDownList id="cmbNovoStatus" width="219" tabIndex="8"/>
+						</s:HGroup>
 						<s:HGroup>
-							<s:RadioButton label="Macho" groupName="radioGroupNovoSexo" value="MACHO" selected="true" tabIndex="8"/>
-							<s:RadioButton label="Fêmea" groupName="radioGroupNovoSexo" value="FEMEA" tabIndex="9"/>
+							<s:RadioButton label="Macho" groupName="radioGroupNovoSexo" value="MACHO" selected="true" tabIndex="9"/>
+							<s:RadioButton label="Fêmea" groupName="radioGroupNovoSexo" value="FEMEA" tabIndex="10"/>
 						</s:HGroup>
 					</s:VGroup>
 				</mx:Canvas>
 			</s:VGroup>
 			<s:controlBarContent>
-				<s:Button label="Salvar" click="{btnClickSalvar()}" tabIndex="10" buttonMode="true"/>
-				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="{novoConfirmacao()}" click.stateNovo="{btnClickLimparNovo()}" tabIndex="11" buttonMode="true"/>
-				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true" tabIndex="12"/>
+				<s:Button label="Salvar" click="{btnClickSalvar()}" tabIndex="11" buttonMode="true"/>
+				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="{novoConfirmacao()}" click.stateNovo="{btnClickLimparNovo()}" tabIndex="12" buttonMode="true"/>
+				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true" tabIndex="13"/>
 			</s:controlBarContent>
 		</s:Panel>
 	</s:VGroup>
