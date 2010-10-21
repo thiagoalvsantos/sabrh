@@ -45,19 +45,19 @@ public class Animal implements Serializable {
 	/** O atributo propriedade. */
 	@ManyToOne(targetEntity = Propriedade.class)
 	@JoinColumn(name = "CD_PROPRIEDADE", referencedColumnName = "CD_PROPRIEDADE")
-	@ForeignKey(name="FK_ANIMA_PROPRIEDADE")
+	@ForeignKey(name = "FK_ANIMA_PROPRIEDADE")
 	private Propriedade propriedade;
 
 	/** O atributo pai. */
 	@ManyToOne(targetEntity = Animal.class)
 	@JoinColumn(name = "TX_REGISTRO_PAI", referencedColumnName = "TX_REGISTRO")
-	@ForeignKey(name="FK_ANIMAL_PAI")
+	@ForeignKey(name = "FK_ANIMAL_PAI")
 	private Animal pai;
 
 	/** O atributo mae. */
 	@ManyToOne(targetEntity = Animal.class)
 	@JoinColumn(name = "TX_REGISTRO_MAE", referencedColumnName = "TX_REGISTRO")
-	@ForeignKey(name="FK_ANIMAL_MAE")
+	@ForeignKey(name = "FK_ANIMAL_MAE")
 	private Animal mae;
 
 	/** O atributo data nascimento. */

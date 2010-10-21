@@ -427,7 +427,7 @@ protected function gridClickResultado(event:ListEvent):void
 
 protected function trocaEstadoClassificacaoLinear(event:MouseEvent):void
 {
-	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR;
+	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
 }
 
 protected function trocaEstadoProvaTouro(event:MouseEvent):void
