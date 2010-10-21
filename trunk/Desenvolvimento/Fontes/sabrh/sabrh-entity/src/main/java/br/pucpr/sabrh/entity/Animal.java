@@ -45,7 +45,7 @@ public class Animal implements Serializable {
 	/** O atributo propriedade. */
 	@ManyToOne(targetEntity = Propriedade.class)
 	@JoinColumn(name = "CD_PROPRIEDADE", referencedColumnName = "CD_PROPRIEDADE")
-	@ForeignKey(name = "FK_ANIMA_PROPRIEDADE")
+	@ForeignKey(name = "FK_ANIMAL_PROPRIEDADE")
 	private Propriedade propriedade;
 
 	/** O atributo pai. */
@@ -69,6 +69,11 @@ public class Animal implements Serializable {
 	@Column(name = "TX_SEXO", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TipoSexoAnimal sexo;
+
+	/** O atributo status. */
+	@Enumerated(EnumType.STRING)
+	@Column(name = "IN_STATUS", length = 20)
+	private TipoStatusFemea status;
 
 	/**
 	 * Get registro.
@@ -238,4 +243,24 @@ public class Animal implements Serializable {
 		this.sexo = sexo;
 	}
 
+	/**
+	 * Get status.
+	 * 
+	 * @return the status
+	 * @see Animal#status.
+	 */
+	public TipoStatusFemea getStatus() {
+		return status;
+	}
+
+	/**
+	 * Set status.
+	 * 
+	 * @param status
+	 *            - status.
+	 * @see Animal#status.
+	 */
+	public void setStatus(TipoStatusFemea status) {
+		this.status = status;
+	}
 }
