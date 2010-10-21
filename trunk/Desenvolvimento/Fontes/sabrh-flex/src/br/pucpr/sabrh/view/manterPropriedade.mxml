@@ -125,22 +125,43 @@
 					<mx:Image source="@Embed(source='../assets/img/error.png')" verticalCenter="0" left="10"/>
 				</s:BorderContainer>
 				<mx:Canvas left="5" right="5" top="5" bottom="5" currentStateChange.stateNovo="{actionBtnLimparNovo()}">
-					<s:Label id="lblNovoNome" x="10" y="15" text="Nome"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold" x="42" y="15"/>
-					<s:Label id="lblNovoEstado" x="10" y="45" text="Estado"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold" x="47" y="45"/>
-					<s:Label id="lblNovoMunicipio" x="270" y="45" text="Município"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold" x="319" y="45"/>
-					<s:Label id="lblNovoTelefone" x="10" y="75" text="Telefone"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold" x="58" y="75"/>
-					<s:Label id="lblNovoPropritario" x="10" y="105" text="Proprietário"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold" x="72" y="105"/>
-					<s:TextInput id="txtNovoNome" x="90" y="10" width="514" maxChars="255" tabIndex="1" focusEnabled="true"/>
-					<s:DropDownList id="cmbNovoEstado" x="90" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
-					<s:DropDownList id="cmbNovoMunicipio" x="340" y="40" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
-					<components:TextInputTelefone id="txtNovoTelefone" x="90" y="70" width="171" tabIndex="4" maxChars="10"/> 
-					<s:TextInput id="txtNovoProprietario" x="90" y="100" maxChars="50" tabIndex="5" width="435" editable="false"/>
-					<s:Button id="btnNovoBuscar" label="Buscar" click="{abrirConsultarUsuario(txtNovoProprietario,'novo')}" x="535" y="100" buttonMode="true"/>
+					<s:VGroup x="10" y="15" gap="16">
+						<s:HGroup>
+							<s:Label id="lblNovoNome" text="Nome"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Label id="lblNovoEstado" text="Estado"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Label id="lblNovoTelefone" text="Telefone"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Label id="lblNovoPropritario" text="Proprietário"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						</s:HGroup>
+					</s:VGroup>
+					
+					<s:VGroup x="100" y="10">
+						<s:TextInput id="txtNovoNome" width="514" maxChars="255" tabIndex="1" focusEnabled="true"/>
+						<s:DropDownList id="cmbNovoEstado" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
+						<components:TextInputTelefone id="txtNovoTelefone" width="171" tabIndex="4" maxChars="10"/> 
+						<s:HGroup>
+							<s:TextInput id="txtNovoProprietario" maxChars="50" tabIndex="5" width="438" editable="false"/>
+							<s:Button id="btnNovoBuscar" label="Buscar" click="{abrirConsultarUsuario(txtNovoProprietario,'novo')}" buttonMode="true"/>
+						</s:HGroup>
+					</s:VGroup>
+					
+					<s:VGroup x="280" y="40">
+						<s:HGroup verticalAlign="middle">
+							<s:Label id="lblNovoMunicipio" text="Município"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							<s:DropDownList id="cmbNovoMunicipio" width="264" enabled="false" labelField="descricao" tabIndex="3"/>
+						</s:HGroup>
+					</s:VGroup>
+					
 				</mx:Canvas>
 			</s:VGroup>
 
