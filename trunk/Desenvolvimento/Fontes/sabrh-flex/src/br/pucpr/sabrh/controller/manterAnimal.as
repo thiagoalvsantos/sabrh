@@ -1,10 +1,4 @@
-
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.Propriedade;
-
 import flash.events.MouseEvent;
-
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.core.FlexGlobals;
@@ -17,12 +11,29 @@ import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.Propriedade;
 
-public var paiDefault:Animal;
 public var maeDefault:Animal;
 
+public var paiDefault:Animal;
+
+//Função para abrir a tela de Consultar Animais.
+protected function abrirConsultarAnimal(atributo:TextInput, tipoConsulta:String, tipoAnimal:String):void
+{
+	var popUpConsultarAnimal:consultarAnimal=consultarAnimal(PopUpManager.createPopUp(this.parent, consultarAnimal, true));
+	popUpConsultarAnimal.janelaOrigem=this;
+	popUpConsultarAnimal.tipoConsulta=tipoConsulta;
+	popUpConsultarAnimal.atributoDestino=atributo;
+	popUpConsultarAnimal.tipoAnimal=tipoAnimal;
+	PopUpManager.centerPopUp(popUpConsultarAnimal);
+	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarAnimal;
+	FlexGlobals.topLevelApplication.popUpEffect.play();
+}
+
 //Função para abrir a tela de Consultar Propriedades.
-public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
+protected function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarPropriedade:consultarPropriedade=consultarPropriedade(PopUpManager.createPopUp(this.parent, consultarPropriedade, true));
 	popUpConsultarPropriedade.janelaOrigem=this;
@@ -39,31 +50,9 @@ public function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:Strin
 	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
-//Função que recebe o retorno da consulta de Propriedade.
-public function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsulta:String, propriedade:Propriedade):void
-{
-	atributoDestino.text=propriedade.nome;
-
-	if (tipoConsulta == "novo")
-	{
-		propriedadeNovo=propriedade;
-	}
-	else
-	{
-		if (tipoConsulta == "pesquisa")
-		{
-			propriedadePesquisa=propriedade;
-			proprietarioPesquisa=propriedade.proprietario;
-			txtPesquisaProprietario.text=proprietarioPesquisa.nome;
-			btnPesquisaBuscarProprietario.enabled=false;
-		}
-	}
-
-}
-
 
 //Função para abrir a tela de Consultar Usuários.
-public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
+protected function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
 {
 	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
 	popUpConsultarUsuario.janelaOrigem=this;
@@ -79,60 +68,12 @@ public function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):v
 	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
-//Função que recebe o retorno da consulta de Usuário.
-public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
+protected function btnClickClassificacaoLinear(event:MouseEvent):void
 {
-	atributoDestino.text=usuario.nome;
-
-	if (tipoConsulta == "pesquisa")
-	{
-		proprietarioPesquisa=usuario;
-	}
-}
-
-//Função para abrir a tela de Consultar Animais.
-public function abrirConsultarAnimal(atributo:TextInput, tipoConsulta:String, tipoAnimal:String):void
-{
-	var popUpConsultarAnimal:consultarAnimal=consultarAnimal(PopUpManager.createPopUp(this.parent, consultarAnimal, true));
-	popUpConsultarAnimal.janelaOrigem=this;
-	popUpConsultarAnimal.tipoConsulta=tipoConsulta;
-	popUpConsultarAnimal.atributoDestino=atributo;
-	popUpConsultarAnimal.tipoAnimal=tipoAnimal;
-	PopUpManager.centerPopUp(popUpConsultarAnimal);
-	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarAnimal;
-	FlexGlobals.topLevelApplication.popUpEffect.play();
-}
-
-//Função que recebe o retorno da consulta de Animais.
-public function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:String, tipoAnimal:String, animal:Animal):void
-{
-	atributoDestino.text=animal.nome;
-
-	if (tipoConsulta == "novo")
-	{
-		if (tipoAnimal == "pai")
-		{
-			paiNovo=animal;
-		}
-		else if (tipoAnimal == "mae")
-		{
-			maeNovo=animal;
-		}
-	}
-	else
-	{
-		if (tipoConsulta == "pesquisa")
-		{
-//			if (tipoAnimal == "pai")
-//			{
-//				paiPesquisa=animal;
-//			}
-//			else if (tipoAnimal == "mae")
-//			{
-//				maePesquisa=animal;
-//			}
-		}
-	}
+	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
+	txtDetalheClassificacaoRegistro.text=animalSelecionado.registro;
+	txtDetalheClassificacaoApelido.text=animalSelecionado.apelido;
+	dataGridResultadoClassificacao.dataProvider = animalSelecionado.listaClassificacao;
 }
 
 /**
@@ -202,6 +143,12 @@ protected function btnClickLimparPesquisa():void
 	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);
 
 	PopUpManager.centerPopUp(this);
+}
+
+
+protected function btnClickNovaClassificacao():void
+{
+	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_EDITAR;
 }
 
 /**
@@ -321,6 +268,16 @@ protected function btnClickSalvar():void
 
 }
 
+protected function btnVoltarClassificacaoLista():void
+{
+	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
+}
+
+protected function btnVoltarDetalhe():void
+{
+	currentState=ConstantesUtils.STATE_DETALHE;
+}
+
 /**
  * Ação do botão editar Animal.
  * @param event
@@ -412,7 +369,7 @@ protected function gridClickResultado(event:ListEvent):void
 	if (animalSelecionado.sexo == ConstantesUtils.SEXO_FEMEA)
 	{
 		btnClassificacaoProva.label=ConstantesUtils.CLASSIFICACAO_LINEAR;
-		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, trocaEstadoClassificacaoLinear);
+		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, btnClickClassificacaoLinear);
 		btnClassificacaoProva.visible=true;
 	}
 	else if (animalSelecionado.sexo == ConstantesUtils.SEXO_MACHO)
@@ -425,14 +382,9 @@ protected function gridClickResultado(event:ListEvent):void
 	PopUpManager.centerPopUp(this);
 }
 
-protected function trocaEstadoClassificacaoLinear(event:MouseEvent):void
+protected function gridClickResultadoClassificacao(event:ListEvent):void
 {
-	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
-}
-
-protected function trocaEstadoProvaTouro(event:MouseEvent):void
-{
-	currentState=ConstantesUtils.STATE_PROVA_TOURO;
+	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_EDITAR;
 }
 
 /**
@@ -484,6 +436,71 @@ protected function onFault(event:FaultEvent):void
 	Alert.show(event.fault.rootCause.message);
 }
 
+//Função que recebe o retorno da consulta de Animais.
+protected function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:String, tipoAnimal:String, animal:Animal):void
+{
+	atributoDestino.text=animal.nome;
+
+	if (tipoConsulta == "novo")
+	{
+		if (tipoAnimal == "pai")
+		{
+			paiNovo=animal;
+		}
+		else if (tipoAnimal == "mae")
+		{
+			maeNovo=animal;
+		}
+	}
+	else
+	{
+		if (tipoConsulta == "pesquisa")
+		{
+//			if (tipoAnimal == "pai")
+//			{
+//				paiPesquisa=animal;
+//			}
+//			else if (tipoAnimal == "mae")
+//			{
+//				maePesquisa=animal;
+//			}
+		}
+	}
+}
+
+//Função que recebe o retorno da consulta de Propriedade.
+protected function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsulta:String, propriedade:Propriedade):void
+{
+	atributoDestino.text=propriedade.nome;
+
+	if (tipoConsulta == "novo")
+	{
+		propriedadeNovo=propriedade;
+	}
+	else
+	{
+		if (tipoConsulta == "pesquisa")
+		{
+			propriedadePesquisa=propriedade;
+			proprietarioPesquisa=propriedade.proprietario;
+			txtPesquisaProprietario.text=proprietarioPesquisa.nome;
+			btnPesquisaBuscarProprietario.enabled=false;
+		}
+	}
+
+}
+
+//Função que recebe o retorno da consulta de Usuário.
+protected function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
+{
+	atributoDestino.text=usuario.nome;
+
+	if (tipoConsulta == "pesquisa")
+	{
+		proprietarioPesquisa=usuario;
+	}
+}
+
 
 
 protected function serviceResultAnimalPesquisar(event:ResultEvent):void
@@ -501,22 +518,6 @@ protected function serviceResultAnimalPesquisar(event:ResultEvent):void
 	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaAnimais.length;
 	PopUpManager.centerPopUp(this);
 
-}
-
-
-/**
- * Resultado da pesquisa de animal padrao
- *
- * @param event
- */
-protected function serviceResultRecuperarAnimalPadrao(event:ResultEvent):void
-{
-	var animal:Animal=event.result as Animal;
-
-	if (animal.sexo == ConstantesUtils.SEXO_MACHO)
-		paiDefault=animal;
-	else
-		maeDefault=animal;
 }
 
 /**
@@ -560,6 +561,27 @@ protected function serviceResultAnimalSalvar(event:ResultEvent):void
 	radioGroupDetalheSexo.selectedValue=animalSelecionado.sexo;
 
 	PopUpManager.centerPopUp(this);
+}
+
+
+/**
+ * Resultado da pesquisa de animal padrao
+ *
+ * @param event
+ */
+protected function serviceResultRecuperarAnimalPadrao(event:ResultEvent):void
+{
+	var animal:Animal=event.result as Animal;
+
+	if (animal.sexo == ConstantesUtils.SEXO_MACHO)
+		paiDefault=animal;
+	else
+		maeDefault=animal;
+}
+
+protected function trocaEstadoProvaTouro(event:MouseEvent):void
+{
+	currentState=ConstantesUtils.STATE_PROVA_TOURO;
 }
 
 /**

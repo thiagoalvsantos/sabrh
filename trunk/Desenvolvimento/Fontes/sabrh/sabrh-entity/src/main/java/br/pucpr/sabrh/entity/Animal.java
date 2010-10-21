@@ -5,14 +5,17 @@ package br.pucpr.sabrh.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -74,6 +77,32 @@ public class Animal implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "IN_STATUS", length = 20)
 	private TipoStatusFemea status;
+
+	/** O atributo lista classificacao. */
+	@OneToMany(mappedBy = "animal", fetch = FetchType.EAGER)
+	private List<ClassificacaoLinear> listaClassificacao;
+
+	
+	/**
+	 * Get lista classificacao.
+	 * 
+	 * @return the lista classificacao
+	 * @see Animal#listaClassificacao.
+	 */
+	public List<ClassificacaoLinear> getListaClassificacao() {
+		return listaClassificacao;
+	}
+
+	/**
+	 * Set lista classificacao.
+	 * 
+	 * @param listaClassificacao
+	 *            - lista classificacao.
+	 * @see Animal#listaClassificacao.
+	 */
+	public void setListaClassificacao(List<ClassificacaoLinear> listaClassificacao) {
+		this.listaClassificacao = listaClassificacao;
+	}
 
 	/**
 	 * Get registro.
