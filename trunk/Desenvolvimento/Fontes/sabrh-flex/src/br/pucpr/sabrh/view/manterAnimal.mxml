@@ -9,6 +9,7 @@
 		<s:RemoteObject id="animalService" fault="onFault(event)" destination="AnimalService" showBusyCursor="true">
 			<s:method name="pesquisar" result="{serviceResultAnimalPesquisar(event)}"/>
 			<s:method name="salvar" result="{serviceResultAnimalSalvar(event)}"/>
+			<s:method name="recuperarAnimalPadrao" result="{serviceResultRecuperarAnimalPadrao(event)}"/>
 		</s:RemoteObject>
 
 		<fx:Array id="val">
