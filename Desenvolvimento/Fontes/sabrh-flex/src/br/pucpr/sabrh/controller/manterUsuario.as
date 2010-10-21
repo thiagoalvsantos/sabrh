@@ -32,7 +32,7 @@ protected function init(event:FlexEvent):void
 	else
 	{
 		estadoService.listarEstados();
-		statusService.listarStatus();
+		statusService.listarStatusUsuario();
 		perfilService.listarPerfil();
 		txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	}
@@ -193,7 +193,7 @@ protected function editarUsuario():void
 
 	estadoService.listarEstados();
 	perfilService.listarPerfil();
-	statusService.listarStatus();
+	statusService.listarStatusUsuario();
 
 	PopUpManager.centerPopUp(this);
 
@@ -469,7 +469,7 @@ protected function listarPerfilResult(event:ResultEvent):void
  *
  * @param event
  */
-protected function listarStatusResult(event:ResultEvent):void
+protected function listarStatusUsuarioResult(event:ResultEvent):void
 {
 	var listaStatus:ArrayCollection=new ArrayCollection();
 	listaStatus.addItem(ConstantesUtils.SELECIONE);
