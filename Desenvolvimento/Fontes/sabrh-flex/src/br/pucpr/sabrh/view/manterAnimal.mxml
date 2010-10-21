@@ -245,7 +245,6 @@
 					<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
 				</s:BorderContainer>
 				<s:HGroup>
-
 					<s:HGroup verticalAlign="middle">
 						<s:Label id="lblDetalheClassificacaoRegistro" text="Registro"/>
 						<s:TextInput id="txtDetalheClassificacaoRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3"/>
@@ -255,20 +254,17 @@
 						<s:TextInput id="txtDetalheClassificacaoApelido" width="370" editable="false" borderColor="#D3D3D3"/>
 					</s:HGroup>
 				</s:HGroup>
-
-				<mx:AdvancedDataGrid id="dataGridResultadoClassificacao" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10" designViewDataType="flat" itemClick="gridClickResultado(event)">
+				<mx:AdvancedDataGrid id="dataGridResultadoClassificacao" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10" designViewDataType="flat" itemClick="gridClickResultadoClassificacao(event)">
 					<mx:columns>
-						<mx:AdvancedDataGridColumn textAlign="left" headerText=" # " sortable="true" dataField="registro" width="45"/>
-						<mx:AdvancedDataGridColumn textAlign="left" headerText="Data Classificação" sortable="true" dataField="registro"/>
-						<mx:AdvancedDataGridColumn textAlign="left" headerText="Ultimo Parto" sortable="true" dataField="nome"/>
-						<mx:AdvancedDataGridColumn textAlign="left" headerText="Cria" sortable="true" dataField="apelido"/>
+						<mx:AdvancedDataGridColumn textAlign="left" headerText="Data Classificação" sortable="true" dataField="dataClassificacao"/>
+						<mx:AdvancedDataGridColumn textAlign="left" headerText="Ultimo Parto" sortable="true" dataField="dataParto"/>
 					</mx:columns>
 				</mx:AdvancedDataGrid>
 
 			</s:VGroup>
 			<s:controlBarContent>
-				<s:Button label="Novo" click="{editarAnimal()}" buttonMode="true"/>
-				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
+				<s:Button label="Novo" click="{btnClickNovaClassificacao()}" buttonMode="true"/>
+				<s:Button label="Voltar" click="{btnVoltarDetalhe()}" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 
@@ -283,176 +279,193 @@
 					<s:Label text="Animal gravado com sucesso." left="50" verticalCenter="0"/>
 					<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
 				</s:BorderContainer>
-				<mx:Canvas left="5" right="5" top="5" bottom="5" width="100%">
-					<mx:Accordion left="5" right="5">
-						<!-- Força Leiteira -->
-						<s:NavigatorContent label="Força Leiteira" width="100%" height="100%">
-							<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-								<s:HGroup>
-									<s:Label id="lblClassificacaoEstatura" text="Estatura"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-								<s:HGroup>
-									<s:Label id="lblClassificacaoNivLinhaSup" text="Nivelamento Linha Superior"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-								<s:HGroup>
-									<s:Label id="lblClassificacaoLarguraPeito" text="Largura Peito"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-								<s:HGroup>
-									<s:Label id="lblClassificacaoProfundidadeCorporal" text="Profundidade Corporal"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-								<s:HGroup>
-									<s:Label id="lblClassificacaoAngulosidade" text="Angulosidade"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-								<s:HGroup>
-									<s:Label id="lblClassificacaoEscoreCorporal" text="Escore Corporal"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-							</s:VGroup>
-							<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-								<s:TextInput id="txtClassificacaoEstatura" width="50"/>
-								<s:TextInput id="txtClassificacaoNivLinhaSup" width="50"/>
-								<s:TextInput id="txtClassificacaoLarguraPeito" width="50"/>
-								<s:TextInput id="txtClassificacaoProfCorporal" width="50"/>
-								<s:TextInput id="txtClassificacaoAngulosidade" width="50"/>
-								<s:TextInput id="txtClassificacaoEscoreCorporal" width="50"/>
-							</s:VGroup>
-						</s:NavigatorContent>
-						<!-- Garupa -->
 
-						<s:NavigatorContent label="Garupa" width="100%" height="100%">
-							<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-								<s:HGroup>
-									<s:Label id="lblClassificacaoAnguloGarupa" text="Ângulo de Garupa"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-								<s:HGroup>
-									<s:Label id="lblClassificacaoLarguraGarupa" text="Largura da Garupa"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-								<s:HGroup>
-									<s:Label id="lblClassificacaoForcaLombo" text="Força de Lombo"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-							</s:VGroup>
-							<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-								<s:TextInput id="txtClassificacaoAnguloGarupa" width="50"/>
-								<s:TextInput id="txtClassificacaoLarguraGarupa" width="50"/>
-								<s:TextInput id="txtClassificacaoForcaLombo" width="50"/>
-							</s:VGroup>
-						</s:NavigatorContent>
-
-						<!-- Pernas & Pés -->
-
-						<s:NavigatorContent label="Pernas e Pés" width="100%" height="100%">
-							<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-								<s:HGroup>
-									<s:Label id="lblClassificacaoAnguloCasco" text="Ângulo de Casco"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-								<s:HGroup>
-									<s:Label id="lblClassificacaoProfundidadeTalao" text="Profundidade de Talão"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-								<s:HGroup>
-									<s:Label id="lblClassificacaoQualidadeOssea" text="Qualidade Óssea"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-								<s:HGroup>
-									<s:Label id="lblClassificacaoPernasPostLateral" text="Pernas Posteriores - Vista Lateral"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-								<s:HGroup>
-									<s:Label id="lblClassificacaoPernasPostPosterior" text="Pernas Posteriores - Vista Posterior"/>
-									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								</s:HGroup>
-
-							</s:VGroup>
-							<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-								<s:TextInput id="txtClassificacaoAnguloCasco" width="50"/>
-								<s:TextInput id="txtClassificacaoProfundidadeTalao" width="50"/>
-								<s:TextInput id="txtClassificacaoQualidadeOssea" width="50"/>
-								<s:TextInput id="txtClassificacaoPernasPostLateral" width="50"/>
-								<s:TextInput id="txtClassificacaotxtClassificacaoPernasPostLateral" width="50"/>
-							</s:VGroup>
-						</s:NavigatorContent>
-
-						<!-- Sistema Mamário -->
-						<s:NavigatorContent label="Sistema Mamário" width="100%" height="100%">
+				<s:HGroup width="100%">
+					<s:HGroup verticalAlign="middle">
+						<s:Label id="lblClassificacaoDataClassificacao" text="Data Classificação"/>
+						<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						<mx:DateField id="txtClassificacaoDataClassificacao" width="150"/>
+					</s:HGroup>
+					<mx:Spacer width="10"/>
+					<s:HGroup verticalAlign="middle">
+						<s:Label id="lblClassificacaoDataParto" text="Data Parto"/>
+						<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						<mx:DateField id="txtClassificacaoDataParto" width="150"/>
+					</s:HGroup>
+					<mx:Spacer width="10"/>
+					<s:HGroup verticalAlign="middle">
+						<s:Label id="lblClassificacaoNumeroCria" text="Número Cria"/>
+						<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						<s:NumericStepper id="txtClassificacaoNumeroCria" width="50"/>
+					</s:HGroup>
+				</s:HGroup>
+				<mx:Accordion width="100%">
+					<!-- Força Leiteira -->
+					<s:NavigatorContent label="Força Leiteira" width="100%" height="100%">
+						<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
 							<s:HGroup>
-								<s:HGroup>
-									<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-										<s:HGroup>
-											<s:Label id="lblClassificacaoProfundidadeUbere" text="Profundidade de Úbere"/>
-											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										</s:HGroup>
-										<s:HGroup>
-											<s:Label id="lblClassificacaoTexturaUbere" text="Textura de Úbere"/>
-											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										</s:HGroup>
-										<s:HGroup>
-											<s:Label id="lblClassificacaoLigamentoMedio" text="Ligamento Médio"/>
-											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										</s:HGroup>
-										<s:HGroup>
-											<s:Label id="lblClassificacaoInsersaoUbereAnt" text="Insersão Úbere Anterior"/>
-											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										</s:HGroup>
-										<s:HGroup>
-											<s:Label id="lblClassificacaoColocacaoTetosAnt" text="Colocação Tetos Anteriores"/>
-											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										</s:HGroup>
-									</s:VGroup>
-									<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-										<s:TextInput id="txtClassificacaoProfundidadeUbere" width="50"/>
-										<s:TextInput id="txtClassificacaoTexturaUbere" width="50"/>
-										<s:TextInput id="txtClassificacaoLigamentoMedio" width="50"/>
-										<s:TextInput id="txtClassificacaoInsersaoUbereAnt" width="50"/>
-										<s:TextInput id="txtClassificacaoColocacaoTetosAnt" width="50"/>
-									</s:VGroup>
-								</s:HGroup>
-								<s:HGroup>
-									<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-										<s:HGroup>
-											<s:Label id="lblClassificacaoAlturaUberePost" text="Altura do Úbere Posterior"/>
-											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										</s:HGroup>
-										<s:HGroup>
-											<s:Label id="lblClassificacaoLarguraUberePost" text="Largura do Úbere Posterior"/>
-											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										</s:HGroup>
-										<s:HGroup>
-											<s:Label id="lblClassificacaoColocacaoTetosPost" text="Colocação de Tetos Posteriores"/>
-											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										</s:HGroup>
-										<s:HGroup>
-											<s:Label id="lblClassificacaoComprimentoTetos" text="Comprimento Tetos"/>
-											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										</s:HGroup>
-									</s:VGroup>
-									<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-										<s:TextInput id="txtClassificacaoAlturaUberePost" width="50"/>
-										<s:TextInput id="txtClassificacaoLarguraUberePost" width="50"/>
-										<s:TextInput id="txtClassificacaoColocacaoTetosPost" width="50"/>
-										<s:TextInput id="txtClassificacaoComprimentoTetos" width="50"/>
-									</s:VGroup>
-								</s:HGroup>
+								<s:Label id="lblClassificacaoEstatura" text="Estatura"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
 							</s:HGroup>
-						</s:NavigatorContent>
-					</mx:Accordion>
-				</mx:Canvas>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoNivLinhaSup" text="Nivelamento Linha Superior"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoLarguraPeito" text="Largura Peito"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoProfundidadeCorporal" text="Profundidade Corporal"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoAngulosidade" text="Angulosidade"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoEscoreCorporal" text="Escore Corporal"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+						</s:VGroup>
+						<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+							<s:TextInput id="txtClassificacaoEstatura" width="50"/>
+							<s:TextInput id="txtClassificacaoNivLinhaSup" width="50"/>
+							<s:TextInput id="txtClassificacaoLarguraPeito" width="50"/>
+							<s:TextInput id="txtClassificacaoProfCorporal" width="50"/>
+							<s:TextInput id="txtClassificacaoAngulosidade" width="50"/>
+							<s:TextInput id="txtClassificacaoEscoreCorporal" width="50"/>
+						</s:VGroup>
+					</s:NavigatorContent>
+					<!-- Garupa -->
+
+					<s:NavigatorContent label="Garupa" width="100%" height="100%">
+						<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+							<s:HGroup>
+								<s:Label id="lblClassificacaoAnguloGarupa" text="Ângulo de Garupa"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoLarguraGarupa" text="Largura da Garupa"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoForcaLombo" text="Força de Lombo"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+						</s:VGroup>
+						<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+							<s:TextInput id="txtClassificacaoAnguloGarupa" width="50"/>
+							<s:TextInput id="txtClassificacaoLarguraGarupa" width="50"/>
+							<s:TextInput id="txtClassificacaoForcaLombo" width="50"/>
+						</s:VGroup>
+					</s:NavigatorContent>
+
+					<!-- Pernas & Pés -->
+
+					<s:NavigatorContent label="Pernas e Pés" width="100%" height="100%">
+						<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+							<s:HGroup>
+								<s:Label id="lblClassificacaoAnguloCasco" text="Ângulo de Casco"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoProfundidadeTalao" text="Profundidade de Talão"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoQualidadeOssea" text="Qualidade Óssea"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoPernasPostLateral" text="Pernas Posteriores - Vista Lateral"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoPernasPostPosterior" text="Pernas Posteriores - Vista Posterior"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
+
+						</s:VGroup>
+						<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+							<s:TextInput id="txtClassificacaoAnguloCasco" width="50"/>
+							<s:TextInput id="txtClassificacaoProfundidadeTalao" width="50"/>
+							<s:TextInput id="txtClassificacaoQualidadeOssea" width="50"/>
+							<s:TextInput id="txtClassificacaoPernasPostLateral" width="50"/>
+							<s:TextInput id="txtClassificacaotxtClassificacaoPernasPostLateral" width="50"/>
+						</s:VGroup>
+					</s:NavigatorContent>
+
+					<!-- Sistema Mamário -->
+					<s:NavigatorContent label="Sistema Mamário" width="100%" height="100%">
+						<s:HGroup>
+							<s:HGroup>
+								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+									<s:HGroup>
+										<s:Label id="lblClassificacaoProfundidadeUbere" text="Profundidade de Úbere"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+									<s:HGroup>
+										<s:Label id="lblClassificacaoTexturaUbere" text="Textura de Úbere"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+									<s:HGroup>
+										<s:Label id="lblClassificacaoLigamentoMedio" text="Ligamento Médio"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+									<s:HGroup>
+										<s:Label id="lblClassificacaoInsersaoUbereAnt" text="Insersão Úbere Anterior"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+									<s:HGroup>
+										<s:Label id="lblClassificacaoColocacaoTetosAnt" text="Colocação Tetos Anteriores"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+								</s:VGroup>
+								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+									<s:TextInput id="txtClassificacaoProfundidadeUbere" width="50"/>
+									<s:TextInput id="txtClassificacaoTexturaUbere" width="50"/>
+									<s:TextInput id="txtClassificacaoLigamentoMedio" width="50"/>
+									<s:TextInput id="txtClassificacaoInsersaoUbereAnt" width="50"/>
+									<s:TextInput id="txtClassificacaoColocacaoTetosAnt" width="50"/>
+								</s:VGroup>
+							</s:HGroup>
+							<s:HGroup>
+								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+									<s:HGroup>
+										<s:Label id="lblClassificacaoAlturaUberePost" text="Altura do Úbere Posterior"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+									<s:HGroup>
+										<s:Label id="lblClassificacaoLarguraUberePost" text="Largura do Úbere Posterior"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+									<s:HGroup>
+										<s:Label id="lblClassificacaoColocacaoTetosPost" text="Colocação de Tetos Posteriores"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+									<s:HGroup>
+										<s:Label id="lblClassificacaoComprimentoTetos" text="Comprimento Tetos"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+								</s:VGroup>
+								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+									<s:TextInput id="txtClassificacaoAlturaUberePost" width="50"/>
+									<s:TextInput id="txtClassificacaoLarguraUberePost" width="50"/>
+									<s:TextInput id="txtClassificacaoColocacaoTetosPost" width="50"/>
+									<s:TextInput id="txtClassificacaoComprimentoTetos" width="50"/>
+								</s:VGroup>
+							</s:HGroup>
+						</s:HGroup>
+					</s:NavigatorContent>
+				</mx:Accordion>
 			</s:VGroup>
 
 			<s:controlBarContent>
-				<s:Button label="Editar" click="{editarAnimal()}" buttonMode="true"/>
-				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
+				<s:Button label="Salvar" click="{editarAnimal()}" buttonMode="true"/>
+				<s:Button label="Excuir" click="{btnVoltarClassificacaoLista()}" buttonMode="true"/>
+				<s:Button label="Voltar" click="{btnVoltarClassificacaoLista()}" buttonMode="true"/>
 			</s:controlBarContent>
 		</s:Panel>
 	</s:VGroup>
-
-
 </s:TitleWindow>
