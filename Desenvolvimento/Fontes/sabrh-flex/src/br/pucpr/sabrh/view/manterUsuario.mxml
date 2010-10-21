@@ -17,7 +17,7 @@
 			<s:method name="listarEstados" result="{listarEstadosResult(event)}"/>
 		</s:RemoteObject>
 		<s:RemoteObject id="statusService" fault="onFault(event)" destination="StatusService" showBusyCursor="true">
-			<s:method name="listarStatus" result="{listarStatusResult(event)}"/>
+			<s:method name="listarStatusUsuario" result="{listarStatusUsuarioResult(event)}"/>
 		</s:RemoteObject>
 		<s:RemoteObject id="perfilService" fault="onFault(event)" destination="PerfilService" showBusyCursor="true">
 			<s:method name="listarPerfil" result="{listarPerfilResult(event)}"/>
