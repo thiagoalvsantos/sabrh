@@ -8,10 +8,11 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import br.pucpr.sabrh.entity.TipoStatus;
+import br.pucpr.sabrh.entity.TipoStatusFemea;
 
 /**
  * Interface de serviço da camada core relacionado ao componente Status.
- *  
+ * 
  * @author Thiago
  * @version 1
  */
@@ -19,9 +20,17 @@ import br.pucpr.sabrh.entity.TipoStatus;
 public interface StatusService {
 
 	/**
-	 * Listar status.
+	 * Listar status do usuario.
 	 * 
 	 * @return list
 	 */
-	List<TipoStatus> listarStatus();
+	List<TipoStatus> listarStatusUsuario();
+
+	
+	/**
+	 * Listar status femea.
+	 * 
+	 * @return list
+	 */
+	List<TipoStatusFemea> listarStatusFemea();
 }
