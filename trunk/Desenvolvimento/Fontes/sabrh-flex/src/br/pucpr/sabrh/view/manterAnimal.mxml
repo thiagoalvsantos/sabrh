@@ -327,6 +327,10 @@
 								<s:Label id="lblClassificacaoEscoreCorporal" text="Escore Corporal"/>
 								<s:Label text="*" color="#B22222" fontWeight="bold"/>
 							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoTotalForcaLeiteira" text="Pontuação Seção" fontWeight="bold"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
 						</s:VGroup>
 						<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
 							<s:TextInput id="txtClassificacaoEstatura" width="50"/>
@@ -335,6 +339,7 @@
 							<s:TextInput id="txtClassificacaoProfCorporal" width="50"/>
 							<s:TextInput id="txtClassificacaoAngulosidade" width="50"/>
 							<s:TextInput id="txtClassificacaoEscoreCorporal" width="50"/>
+							<s:TextInput id="txtClassificacaoTotalForcaLeiteira" width="50"/>
 						</s:VGroup>
 					</s:NavigatorContent>
 					<!-- Garupa -->
@@ -353,11 +358,16 @@
 								<s:Label id="lblClassificacaoForcaLombo" text="Força de Lombo"/>
 								<s:Label text="*" color="#B22222" fontWeight="bold"/>
 							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoTotalGarupa" text="Pontuação Seção" fontWeight="bold"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
 						</s:VGroup>
 						<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
 							<s:TextInput id="txtClassificacaoAnguloGarupa" width="50"/>
 							<s:TextInput id="txtClassificacaoLarguraGarupa" width="50"/>
 							<s:TextInput id="txtClassificacaoForcaLombo" width="50"/>
+							<s:TextInput id="txtClassificacaoTotalGarupa" width="50"/>
 						</s:VGroup>
 					</s:NavigatorContent>
 
@@ -385,6 +395,10 @@
 								<s:Label id="lblClassificacaoPernasPostPosterior" text="Pernas Posteriores - Vista Posterior"/>
 								<s:Label text="*" color="#B22222" fontWeight="bold"/>
 							</s:HGroup>
+							<s:HGroup>
+								<s:Label id="lblClassificacaoTotalPernasPes" text="Pontuação Seção" fontWeight="bold"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+							</s:HGroup>
 
 						</s:VGroup>
 						<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
@@ -392,7 +406,8 @@
 							<s:TextInput id="txtClassificacaoProfundidadeTalao" width="50"/>
 							<s:TextInput id="txtClassificacaoQualidadeOssea" width="50"/>
 							<s:TextInput id="txtClassificacaoPernasPostLateral" width="50"/>
-							<s:TextInput id="txtClassificacaotxtClassificacaoPernasPostLateral" width="50"/>
+							<s:TextInput id="txtClassificacaoPernasPostPosterior" width="50"/>
+							<s:TextInput id="txtClassificacaoTotalPernasPes" width="50"/>
 						</s:VGroup>
 					</s:NavigatorContent>
 
@@ -421,6 +436,7 @@
 										<s:Label id="lblClassificacaoColocacaoTetosAnt" text="Colocação Tetos Anteriores"/>
 										<s:Label text="*" color="#B22222" fontWeight="bold"/>
 									</s:HGroup>
+
 								</s:VGroup>
 								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
 									<s:TextInput id="txtClassificacaoProfundidadeUbere" width="50"/>
@@ -448,12 +464,17 @@
 										<s:Label id="lblClassificacaoComprimentoTetos" text="Comprimento Tetos"/>
 										<s:Label text="*" color="#B22222" fontWeight="bold"/>
 									</s:HGroup>
+									<s:HGroup>
+										<s:Label id="lblClassificacaoTotalSistemaMamario" text="Pontuação Seção" fontWeight="bold"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
 								</s:VGroup>
 								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
 									<s:TextInput id="txtClassificacaoAlturaUberePost" width="50"/>
 									<s:TextInput id="txtClassificacaoLarguraUberePost" width="50"/>
 									<s:TextInput id="txtClassificacaoColocacaoTetosPost" width="50"/>
 									<s:TextInput id="txtClassificacaoComprimentoTetos" width="50"/>
+									<s:TextInput id="txtClassificacaoTotalSistemaMamario" width="50"/>
 								</s:VGroup>
 							</s:HGroup>
 						</s:HGroup>
