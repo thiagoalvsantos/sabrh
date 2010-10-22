@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow width="900" creationComplete="init(event)" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Manutenção de Animais ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
-
+<s:TitleWindow width="900" maxHeight="600" maxWidth="800" creationComplete="init(event)" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Manutenção de Animais ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
 
 	<fx:Script source="../controller/manterAnimal.as"/>
 
@@ -61,9 +60,9 @@
 			<mx:NumberValidator id="nbrValClassificacaoTotalSistemaMamario" source="{txtClassificacaoTotalSistemaMamario}" property="text" required="true" minValue="0" maxValue="10"/>
 			<mx:NumberValidator id="nbrValClassificacaoInsersaoUbereAnt" source="{txtClassificacaoInsersaoUbereAnt}" property="text" required="true" minValue="0" maxValue="10"/>
 		</fx:Array>
-		
+
 		<mx:NumberValidator id="numValStatusFemea" enabled="false" source="{cmbNovoStatusFemea}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
-		
+
 		<s:RadioButtonGroup id="radioGroupNovoSexo" change="radioChangeNovoSexo()"/>
 		<s:RadioButtonGroup id="radioGroupDetalheSexo"/>
 
@@ -97,509 +96,502 @@
 		<s:State name="stateClassificacaoLinearEditar"/>
 	</s:states>
 
-	<!--//////////////////////////
-		 //	PESQUISA
-		 /////////////////////////////-->
-	<s:VGroup id="groupPesquisa" left="5" right="5" top="5" bottom="5" includeIn="statePesquisa,stateResultado">
-		<s:Panel id="panelPesquisa" width="100%" title="Pesquisa" includeIn="statePesquisa,stateResultado">
-			<mx:Canvas left="5" right="5" top="5" bottom="5">
-				<s:Label id="lblPesquisaRegistroAnimal" x="10" y="15" text="Registro Animal"/>
-				<s:Label id="lblPesquisaNomeAnimal" x="265" y="15" text="Nome/Apelido"/>
-				<s:Label id="lblPesquisaRegistroPai" x="10" y="45" text="Registro Pai"/>
-				<s:Label id="lblPesquisaNomePai" x="265" y="45" text="Nome Pai"/>
-				<s:Label id="lblPesquisaRegistroMae" x="10" y="75" text="Registro Mãe"/>
-				<s:Label id="lblPesquisaNomeMae" x="265" y="75" text="Nome Mãe"/>
-				<s:Label id="lblPesquisaProprietario" x="10" y="105" text="Proprietário"/>
-				<s:Label id="lblPesquisaPropriedade" x="10" y="135" text="Propriedade"/>
-				<s:Label id="lblPesquisaNomeAnimal0" x="660" y="15" text="Sexo"/>
-				<s:TextInput id="txtPesquisaRegistroAnimal" x="100" y="10" width="150" tabIndex="1"/>
-				<s:TextInput id="txtPesquisaNomeAnimal" x="350" y="10" width="300" tabIndex="2"/>
-				<s:TextInput id="txtPesquisaRegistroPai" x="100" y="40" width="150" tabIndex="3"/>
-				<s:TextInput id="txtPesquisaNomePai" x="350" y="40" width="300" tabIndex="4"/>
-				<s:TextInput id="txtPesquisaRegistroMae" x="100" y="70" width="150" tabIndex="5"/>
-				<s:TextInput id="txtPesquisaNomeMae" x="350" y="70" width="300" tabIndex="6"/>
-				<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false" focusEnabled="false"/>
-				<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="100" tabIndex="7" buttonMode="true"/>
-				<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false" focusEnabled="false"/>
-				<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8" buttonMode="true"/>
-				<s:CheckBox id="checkBoxMacho" x="705" y="10" label="Macho" tabIndex="9"/>
-				<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea" tabIndex="9"/>
-			</mx:Canvas>
-			<s:controlBarContent>
-				<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="9" buttonMode="true"/>
-				<s:Button label="Novo" click="{btnClickNovo()}" tabIndex.statePesquisa="10" buttonMode="true"/>
-				<s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex.statePesquisa="11" buttonMode="true"/>
-			</s:controlBarContent>
-		</s:Panel>
-		<!--//////////////////////////
-			 //	RESULTADO
-			 /////////////////////////////-->
-		<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
-			<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridClickResultado(event)">
-				<mx:columns>
-					<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="true" dataField="registro"/>
-					<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" sortable="true" dataField="nome"/>
-					<mx:AdvancedDataGridColumn textAlign="left" headerText="Apelido" sortable="true" dataField="apelido"/>
-					<mx:AdvancedDataGridColumn textAlign="center" headerText="Sexo" sortable="true" dataField="sexo"/>
-				</mx:columns>
-			</mx:AdvancedDataGrid>
-		</s:Panel>
-	</s:VGroup>
-	<!--//////////////////////////
-		 //	NOVO
-		 /////////////////////////////-->
-	<s:VGroup id="groupNovo" left="5" right="5" top="5" bottom="5" includeIn="stateNovo,stateEditar">
-		<s:Panel id="panelNovo" width="100%" height="100%" title.stateNovo="Novo" title.stateEditar="Editar">
-			<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
-				<s:BorderContainer id="panelError" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelError" visible="false">
-					<s:Label text="Erro ao incluir animal. Verificar campos em vermelho." left="50" verticalCenter="0"/>
-					<mx:Image source="@Embed(source='../assets/img/error.png')" verticalCenter="0" left="10"/>
-				</s:BorderContainer>
-				<mx:Canvas left="5" right="5" top="5" bottom="5">
-					<s:VGroup x="10" y="15" gap="16">
-						<s:HGroup>
-							<s:Label id="lblNovoRegistro" text="Registro"/>
-							<s:Label text="*" color="#B22222" fontWeight="bold"/>
-						</s:HGroup>
-						<s:HGroup>
-							<s:Label id="lblNovoNome" text="Nome"/>
-							<s:Label text="*" color="#B22222" fontWeight="bold"/>
-						</s:HGroup>
-						<s:HGroup>
-							<s:Label id="lblNovoApelido" text="Apelido"/>
-							<s:Label text="*" color="#B22222" fontWeight="bold"/>
-						</s:HGroup>
-						<s:HGroup>
-							<s:Label id="lblNovoPropriedade" text="Propriedade"/>
-							<s:Label text="*" color="#B22222" fontWeight="bold"/>
-						</s:HGroup>
-						<s:Label id="lblNovoPai" text="Pai"/>
-						<s:Label id="lblNovoMae" text="Mãe"/>
-						<s:HGroup>
-							<s:Label id="lblNovoDataNascimento" text="Data Nascimento"/>
-							<s:Label text="*" color="#B22222" fontWeight="bold"/>
-						</s:HGroup>
-						<s:HGroup>
-							<s:Label id="lblNovoSexo" text="Sexo"/>
-							<s:Label text="*" color="#B22222" fontWeight="bold"/>
-						</s:HGroup>
-					</s:VGroup>
-					<s:VGroup y="10" x="120">
-						<s:TextInput id="txtNovoRegistro" width="150" maxChars="20" enabled.stateEditar="false" tabIndex="1"/>
-						<s:TextInput id="txtNovoNome" width="370" tabIndex="2"/>
-						<s:TextInput id="txtNovoApelido" width="370" tabIndex="3"/>
-						<s:HGroup>
-							<s:TextInput id="txtNovoPropriedade" width="370" editable="false" tabFocusEnabled="false"/>
-							<s:Button label="Buscar" tabIndex="4" click="{abrirConsultarPropriedade(txtNovoPropriedade,'novo')}" buttonMode="true"/>
-						</s:HGroup>
-						<s:HGroup>
-							<s:TextInput id="txtNovoPai" width="370" editable="false" tabFocusEnabled="false"/>
-							<s:Button label="Buscar" tabIndex="5" click="abrirConsultarAnimal(txtNovoPai,'novo','pai')" buttonMode="true"/>
-						</s:HGroup>
-						<s:HGroup>
-							<s:TextInput id="txtNovoMae" width="370" editable="false" tabFocusEnabled="false"/>
-							<s:Button label="Buscar" tabIndex="6" click="abrirConsultarAnimal(txtNovoMae,'novo','mae')" buttonMode="true"/>
-						</s:HGroup>
-						<s:HGroup verticalAlign="middle">
-							<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
-							<mx:Spacer width="15"/>
-							<s:HGroup id="novoStatusFemea" verticalAlign="middle" visible="false">
-								<s:Label id="lblNovoStatus" text="Status"/>
-								<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								<s:DropDownList id="cmbNovoStatusFemea" width="193" tabIndex="8"/>
-							</s:HGroup>
-						</s:HGroup>
-						<s:HGroup>
-							<s:RadioButton label="Macho" groupName="radioGroupNovoSexo" value="MACHO" selected="true" tabIndex="9"/>
-							<s:RadioButton label="Fêmea" groupName="radioGroupNovoSexo" value="FEMEA" tabIndex="10"/>
-						</s:HGroup>
-					</s:VGroup>
-				</mx:Canvas>
+	<s:Scroller width="100%" height="100%">
+		<s:Group maxWidth="900" maxHeight="500" width="100%">
+
+			<!--//////////////////////////
+				 //	PESQUISA
+				 /////////////////////////////-->
+			<s:VGroup id="groupPesquisa" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="statePesquisa,stateResultado">
+				<!--//////////////////////////
+					 //	FILTRO - PESQUISA
+					 /////////////////////////////-->
+				<s:Panel id="panelPesquisa" width="100%" title="Pesquisa" includeIn="statePesquisa,stateResultado">
+					<mx:Canvas left="5" right="5" top="5" bottom="5">
+						<s:Label id="lblPesquisaRegistroAnimal" x="10" y="15" text="Registro Animal"/>
+						<s:Label id="lblPesquisaNomeAnimal" x="265" y="15" text="Nome/Apelido"/>
+						<s:Label id="lblPesquisaRegistroPai" x="10" y="45" text="Registro Pai"/>
+						<s:Label id="lblPesquisaNomePai" x="265" y="45" text="Nome Pai"/>
+						<s:Label id="lblPesquisaRegistroMae" x="10" y="75" text="Registro Mãe"/>
+						<s:Label id="lblPesquisaNomeMae" x="265" y="75" text="Nome Mãe"/>
+						<s:Label id="lblPesquisaProprietario" x="10" y="105" text="Proprietário"/>
+						<s:Label id="lblPesquisaPropriedade" x="10" y="135" text="Propriedade"/>
+						<s:Label id="lblPesquisaNomeAnimal0" x="660" y="15" text="Sexo"/>
+						<s:TextInput id="txtPesquisaRegistroAnimal" x="100" y="10" width="150" tabIndex="1"/>
+						<s:TextInput id="txtPesquisaNomeAnimal" x="350" y="10" width="300" tabIndex="2"/>
+						<s:TextInput id="txtPesquisaRegistroPai" x="100" y="40" width="150" tabIndex="3"/>
+						<s:TextInput id="txtPesquisaNomePai" x="350" y="40" width="300" tabIndex="4"/>
+						<s:TextInput id="txtPesquisaRegistroMae" x="100" y="70" width="150" tabIndex="5"/>
+						<s:TextInput id="txtPesquisaNomeMae" x="350" y="70" width="300" tabIndex="6"/>
+						<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false" focusEnabled="false"/>
+						<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="100" tabIndex="7" buttonMode="true"/>
+						<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false" focusEnabled="false"/>
+						<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8" buttonMode="true"/>
+						<s:CheckBox id="checkBoxMacho" x="705" y="10" label="Macho" tabIndex="9"/>
+						<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea" tabIndex="9"/>
+					</mx:Canvas>
+					<s:controlBarContent>
+						<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="9" buttonMode="true"/>
+						<s:Button label="Novo" click="{btnClickNovo()}" tabIndex.statePesquisa="10" buttonMode="true"/>
+						<s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex.statePesquisa="11" buttonMode="true"/>
+					</s:controlBarContent>
+				</s:Panel>
+				<!--//////////////////////////
+					 //	RESULTADO - PESQUISA
+					 /////////////////////////////-->
+				<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
+					<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridClickResultado(event)">
+						<mx:columns>
+							<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="true" dataField="registro"/>
+							<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" sortable="true" dataField="nome"/>
+							<mx:AdvancedDataGridColumn textAlign="left" headerText="Apelido" sortable="true" dataField="apelido"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Sexo" sortable="true" dataField="sexo"/>
+						</mx:columns>
+					</mx:AdvancedDataGrid>
+				</s:Panel>
 			</s:VGroup>
-			<s:controlBarContent>
-				<s:Button label="Salvar" click="{btnClickSalvar()}" tabIndex="11" buttonMode="true"/>
-				<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="{novoConfirmacao()}" click.stateNovo="{btnClickLimparNovo()}" tabIndex="12" buttonMode="true"/>
-				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true" tabIndex="13"/>
-			</s:controlBarContent>
-		</s:Panel>
-	</s:VGroup>
-	<!--//////////////////////////
-		 //	DETALHE
-		 /////////////////////////////-->
-	<s:VGroup id="groupDetalhe" left="5" right="5" top="5" bottom="5" includeIn="stateDetalhe">
-		<s:Panel id="panelDetalhe" width="100%" height="100%" title="Detalhe">
-			<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
-				<s:BorderContainer id="panelSucesso" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelSuccess" visible="false">
-					<s:Label text="Animal gravado com sucesso." left="50" verticalCenter="0"/>
-					<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
-				</s:BorderContainer>
-				<mx:Canvas left="5" right="5" top="5" bottom="5">
-					<s:VGroup x="10" y="15" gap="16">
-						<s:HGroup>
-							<s:Label id="lblDetalheRegistro" text="Registro"/>
-						</s:HGroup>
-						<s:HGroup>
-							<s:Label id="lblDetalheNome" text="Nome"/>
-						</s:HGroup>
-						<s:HGroup>
-							<s:Label id="lblDetalheApelido" text="Apelido"/>
-						</s:HGroup>
-						<s:HGroup>
-							<s:Label id="lblDetalhePropriedade" text="Propriedade"/>
-						</s:HGroup>
-						<s:Label id="lblDetalhePai" text="Pai"/>
-						<s:Label id="lblDetalheMae" text="Mãe"/>
-						<s:HGroup>
-							<s:Label id="lblDetalheDataNascimento" text="Data Nascimento"/>
-						</s:HGroup>
-						<s:HGroup>
-							<s:Label id="lblDetalheSexo" text="Sexo"/>
-						</s:HGroup>
+			<!--//////////////////////////
+				 //	NOVO
+				 /////////////////////////////-->
+			<s:VGroup id="groupNovo" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateNovo,stateEditar">
+				<s:Panel id="panelNovo" width="100%" height="100%" title.stateNovo="Novo" title.stateEditar="Editar">
+					<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
+						<s:BorderContainer id="panelError" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelError" visible="false">
+							<s:Label text="Erro ao incluir animal. Verificar campos em vermelho." left="50" verticalCenter="0"/>
+							<mx:Image source="@Embed(source='../assets/img/error.png')" verticalCenter="0" left="10"/>
+						</s:BorderContainer>
+						<mx:Canvas left="5" right="5" top="5" bottom="5">
+							<s:VGroup x="10" y="15" gap="16">
+								<s:HGroup>
+									<s:Label id="lblNovoRegistro" text="Registro"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblNovoNome" text="Nome"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblNovoApelido" text="Apelido"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblNovoPropriedade" text="Propriedade"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+								<s:Label id="lblNovoPai" text="Pai"/>
+								<s:Label id="lblNovoMae" text="Mãe"/>
+								<s:HGroup>
+									<s:Label id="lblNovoDataNascimento" text="Data Nascimento"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblNovoSexo" text="Sexo"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								</s:HGroup>
+							</s:VGroup>
+							<s:VGroup y="10" x="120">
+								<s:TextInput id="txtNovoRegistro" width="150" maxChars="20" enabled.stateEditar="false" tabIndex="1"/>
+								<s:TextInput id="txtNovoNome" width="370" tabIndex="2"/>
+								<s:TextInput id="txtNovoApelido" width="370" tabIndex="3"/>
+								<s:HGroup>
+									<s:TextInput id="txtNovoPropriedade" width="370" editable="false" tabFocusEnabled="false"/>
+									<s:Button label="Buscar" tabIndex="4" click="{abrirConsultarPropriedade(txtNovoPropriedade,'novo')}" buttonMode="true"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:TextInput id="txtNovoPai" width="370" editable="false" tabFocusEnabled="false"/>
+									<s:Button label="Buscar" tabIndex="5" click="abrirConsultarAnimal(txtNovoPai,'novo','pai')" buttonMode="true"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:TextInput id="txtNovoMae" width="370" editable="false" tabFocusEnabled="false"/>
+									<s:Button label="Buscar" tabIndex="6" click="abrirConsultarAnimal(txtNovoMae,'novo','mae')" buttonMode="true"/>
+								</s:HGroup>
+								<s:HGroup verticalAlign="middle">
+									<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
+									<mx:Spacer width="15"/>
+									<s:HGroup id="novoStatusFemea" verticalAlign="middle" visible="false">
+										<s:Label id="lblNovoStatus" text="Status"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+										<s:DropDownList id="cmbNovoStatusFemea" width="193" tabIndex="8"/>
+									</s:HGroup>
+								</s:HGroup>
+								<s:HGroup>
+									<s:RadioButton label="Macho" groupName="radioGroupNovoSexo" value="MACHO" selected="true" tabIndex="9"/>
+									<s:RadioButton label="Fêmea" groupName="radioGroupNovoSexo" value="FEMEA" tabIndex="10"/>
+								</s:HGroup>
+							</s:VGroup>
+						</mx:Canvas>
 					</s:VGroup>
-					<s:VGroup y="10" x="120">
-						<s:TextInput id="txtDetalheRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3"/>
-						<s:TextInput id="txtDetalheNome" width="370" editable="false" borderColor="#D3D3D3"/>
-						<s:TextInput id="txtDetalheApelido" width="370" editable="false" borderColor="#D3D3D3"/>
-						<s:TextInput id="txtDetalhePropriedade" width="370" editable="false" borderColor="#D3D3D3"/>
-						<s:TextInput id="txtDetalhePai" width="370" editable="false" borderColor="#D3D3D3"/>
-						<s:TextInput id="txtDetalheMae" width="370" editable="false" borderColor="#D3D3D3"/>
-						<s:HGroup verticalAlign="middle">
-							<s:TextInput id="txtDetalheDataNascimento" width="170" editable="false" borderColor="#D3D3D3"/>
-							<mx:Spacer width="15"/>
-							<s:HGroup id="detalheStatusFemea" verticalAlign="middle" visible="false">
-								<s:Label id="lblDetalheStatus" text="Status"/>
-								<s:Label text="*" color="#B22222" fontWeight="bold"/>
-								<s:TextInput id="cmbDetalheStatusFemea" width="118" tabIndex="8" editable="false" borderColor="#D3D3D3"/>
-							</s:HGroup>
-						</s:HGroup>
-						<s:HGroup>
-							<s:RadioButton label="Macho" groupName="radioGroupDetalheSexo" value="MACHO" enabled="false"/>
-							<s:RadioButton label="Fêmea" groupName="radioGroupDetalheSexo" value="FEMEA" enabled="false"/>
-						</s:HGroup>
+					<s:controlBarContent>
+						<s:Button label="Salvar" click="{btnClickSalvar()}" tabIndex="11" buttonMode="true"/>
+						<s:Button label.stateEditar="Novo" label.stateNovo="Limpar" click.stateEditar="{novoConfirmacao()}" click.stateNovo="{btnClickLimparNovo()}" tabIndex="12" buttonMode="true"/>
+						<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true" tabIndex="13"/>
+					</s:controlBarContent>
+				</s:Panel>
+			</s:VGroup>
+			<!--//////////////////////////
+				 //	DETALHE
+				 /////////////////////////////-->
+			<s:VGroup id="groupDetalhe" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateDetalhe">
+				<s:Panel id="panelDetalhe" width="100%" height="100%" title="Detalhe">
+					<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
+						<s:BorderContainer id="panelSucesso" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelSuccess" visible="false">
+							<s:Label text="Animal gravado com sucesso." left="50" verticalCenter="0"/>
+							<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
+						</s:BorderContainer>
+						<mx:Canvas left="5" right="5" top="5" bottom="5">
+							<s:VGroup x="10" y="15" gap="16">
+								<s:HGroup>
+									<s:Label id="lblDetalheRegistro" text="Registro"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblDetalheNome" text="Nome"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblDetalheApelido" text="Apelido"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblDetalhePropriedade" text="Propriedade"/>
+								</s:HGroup>
+								<s:Label id="lblDetalhePai" text="Pai"/>
+								<s:Label id="lblDetalheMae" text="Mãe"/>
+								<s:HGroup>
+									<s:Label id="lblDetalheDataNascimento" text="Data Nascimento"/>
+								</s:HGroup>
+								<s:HGroup>
+									<s:Label id="lblDetalheSexo" text="Sexo"/>
+								</s:HGroup>
+							</s:VGroup>
+							<s:VGroup y="10" x="120">
+								<s:TextInput id="txtDetalheRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3"/>
+								<s:TextInput id="txtDetalheNome" width="370" editable="false" borderColor="#D3D3D3"/>
+								<s:TextInput id="txtDetalheApelido" width="370" editable="false" borderColor="#D3D3D3"/>
+								<s:TextInput id="txtDetalhePropriedade" width="370" editable="false" borderColor="#D3D3D3"/>
+								<s:TextInput id="txtDetalhePai" width="370" editable="false" borderColor="#D3D3D3"/>
+								<s:TextInput id="txtDetalheMae" width="370" editable="false" borderColor="#D3D3D3"/>
+								<s:HGroup verticalAlign="middle">
+									<s:TextInput id="txtDetalheDataNascimento" width="170" editable="false" borderColor="#D3D3D3"/>
+									<mx:Spacer width="15"/>
+									<s:HGroup id="detalheStatusFemea" verticalAlign="middle" visible="false">
+										<s:Label id="lblDetalheStatus" text="Status"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+										<s:TextInput id="cmbDetalheStatusFemea" width="118" tabIndex="8" editable="false" borderColor="#D3D3D3"/>
+									</s:HGroup>
+								</s:HGroup>
+								<s:HGroup>
+									<s:RadioButton label="Macho" groupName="radioGroupDetalheSexo" value="MACHO" enabled="false"/>
+									<s:RadioButton label="Fêmea" groupName="radioGroupDetalheSexo" value="FEMEA" enabled="false"/>
+								</s:HGroup>
+							</s:VGroup>
+						</mx:Canvas>
 					</s:VGroup>
-				</mx:Canvas>
-			</s:VGroup>
 
-			<s:controlBarContent>
-				<s:Button label="Editar" click="{editarAnimal()}" buttonMode="true"/>
-				<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
-				<s:Button buttonMode="true" id="btnClassificacaoProva" visible="false"/>
-			</s:controlBarContent>
-		</s:Panel>
-	</s:VGroup>
-
-	<!--//////////////////////////
-		 //	CLASSIFICAÇÃO LINEAR LISTA
-		 /////////////////////////////-->
-	<s:VGroup id="groupClassificacaoLinearLista" left="5" right="5" top="5" bottom="5" includeIn="stateClassificacaoLinearListar">
-
-		<s:Panel id="panelDetalheClassificacao" width="100%" height="100%" title="Detalhe - Classificação Linear">
-			<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
-				<s:BorderContainer id="panelSucessoClassificacaoLista" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelSuccess" visible="false">
-					<s:Label text="Classificação linear gravada com sucesso." left="50" verticalCenter="0"/>
-					<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
-				</s:BorderContainer>
-				<s:HGroup>
-					<s:HGroup verticalAlign="middle">
-						<s:Label id="lblDetalheClassificacaoRegistro" text="Registro"/>
-						<s:TextInput id="txtDetalheClassificacaoRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3"/>
-					</s:HGroup>
-					<s:HGroup verticalAlign="middle">
-						<s:Label id="lblDetalheClassificacaoApelido" text="Apelido"/>
-						<s:TextInput id="txtDetalheClassificacaoApelido" width="370" editable="false" borderColor="#D3D3D3"/>
-					</s:HGroup>
-				</s:HGroup>
-				<mx:AdvancedDataGrid id="dataGridResultadoClassificacao" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10" designViewDataType="flat" itemClick="gridClickResultadoClassificacao(event)">
-					<mx:columns>
-						<mx:AdvancedDataGridColumn textAlign="left" headerText="Data Classificação" sortable="true" dataField="dataClassificacao"/>
-						<mx:AdvancedDataGridColumn textAlign="left" headerText="Ultimo Parto" sortable="true" dataField="dataParto"/>
-					</mx:columns>
-				</mx:AdvancedDataGrid>
-
-			</s:VGroup>
-			<s:controlBarContent>
-				<s:Button label="Novo" click="{btnClickNovaClassificacao()}" buttonMode="true"/>
-				<s:Button label="Voltar" click="{btnClickVoltarDetalhe()}" buttonMode="true"/>
-			</s:controlBarContent>
-		</s:Panel>
-
-	</s:VGroup>
-	<!--//////////////////////////
-		 //	CLASSIFICAÇÃO LINEAR EDITAR
-		 /////////////////////////////-->
-	<s:VGroup id="groupClassificacaoLinearEditar" left="5" right="5" top="5" bottom="5" includeIn="stateClassificacaoLinearEditar">
-		<s:Panel id="panelAnimal" width="100%" height="100%" title="Dados Animal">
-			<s:VGroup width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
-				<s:BorderContainer id="panelSucessoClassificacaoEditar" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelSuccess" visible="false">
-					<s:Label text="Animal gravado com sucesso." left="50" verticalCenter="0"/>
-					<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
-				</s:BorderContainer>
-				<s:HGroup width="100%">
-					<s:HGroup verticalAlign="middle">
-						<s:Label id="lblClassificacaoDataClassificacao" text="Data Classificação"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold"/>
-						<mx:DateField id="txtClassificacaoDataClassificacao" width="100"/>
-					</s:HGroup>
-					<mx:Spacer width="10"/>
-					<s:HGroup verticalAlign="middle">
-						<s:Label id="lblClassificacaoDataParto" text="Data Parto"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold"/>
-						<mx:DateField id="txtClassificacaoDataParto" width="100"/>
-					</s:HGroup>
-					<mx:Spacer width="10"/>
-					<s:HGroup verticalAlign="middle">
-						<s:Label id="lblClassificacaoNumeroCria" text="Número Cria"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold"/>
-						<s:NumericStepper id="txtClassificacaoNumeroCria" width="50"/>
-					</s:HGroup>
-					<mx:Spacer width="10"/>
-					<s:HGroup verticalAlign="middle">
-						<s:Label id="lblClassificacaoPontuacaoFinal" text="Pontuação Final"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold"/>
-						<s:TextInput id="txtClassificacaoPontuacaoFinal" width="50"/>
-					</s:HGroup>
-					<mx:Spacer width="10"/>
-					<s:HGroup verticalAlign="middle">
-						<s:Label id="lblClassificacaoClasse" text="Classe"/>
-						<s:Label text="*" color="#B22222" fontWeight="bold"/>
-						<s:TextInput id="txtClassificacaoClasse" width="50"/>
-					</s:HGroup>
-				</s:HGroup>
-				<mx:Accordion width="100%" height="200" id="accordionClassificacao">
-					<!-- Força Leiteira -->
-					<s:NavigatorContent label="Força Leiteira" width="100%">
-						<s:HGroup>
-							<s:HGroup>
-								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-									<s:HGroup>
-										<s:Label id="lblClassificacaoEstatura" text="Estatura"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoNivLinhaSup" text="Nivelamento Linha Superior"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoLarguraPeito" text="Largura Peito"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-								</s:VGroup>
-								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-									<s:TextInput id="txtClassificacaoEstatura" width="50"/>
-									<s:TextInput id="txtClassificacaoNivLinhaSup" width="50"/>
-									<s:TextInput id="txtClassificacaoLarguraPeito" width="50"/>
-								</s:VGroup>
-							</s:HGroup>
-							<s:HGroup>
-								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-									<s:HGroup>
-										<s:Label id="lblClassificacaoProfundidadeCorporal" text="Profundidade Corporal"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoAngulosidade" text="Angulosidade"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoEscoreCorporal" text="Escore Corporal"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-								</s:VGroup>
-								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-									<s:TextInput id="txtClassificacaoProfCorporal" width="50"/>
-									<s:TextInput id="txtClassificacaoAngulosidade" width="50"/>
-									<s:TextInput id="txtClassificacaoEscoreCorporal" width="50"/>
-								</s:VGroup>
-							</s:HGroup>
-							<s:HGroup>
-								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-									<s:HGroup>
-										<s:Label id="lblClassificacaoTotalForcaLeiteira" text="Pontuação Seção" fontWeight="bold"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-								</s:VGroup>
-								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-									<s:TextInput id="txtClassificacaoTotalForcaLeiteira" width="50"/>
-								</s:VGroup>
-							</s:HGroup>
-						</s:HGroup>
-
-					</s:NavigatorContent>
-					<!-- Garupa -->
-
-					<s:NavigatorContent label="Garupa" width="100%">
-						<s:HGroup>
-							<s:HGroup>
-								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-									<s:HGroup>
-										<s:Label id="lblClassificacaoAnguloGarupa" text="Ângulo de Garupa"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoLarguraGarupa" text="Largura da Garupa"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-
-								</s:VGroup>
-								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-									<s:TextInput id="txtClassificacaoAnguloGarupa" width="50"/>
-									<s:TextInput id="txtClassificacaoLarguraGarupa" width="50"/>
-								</s:VGroup>
-							</s:HGroup>
-							<s:HGroup>
-								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-									<s:HGroup>
-										<s:Label id="lblClassificacaoForcaLombo" text="Força de Lombo"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoTotalGarupa" text="Pontuação Seção" fontWeight="bold"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-								</s:VGroup>
-								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-									<s:TextInput id="txtClassificacaoForcaLombo" width="50"/>
-									<s:TextInput id="txtClassificacaoTotalGarupa" width="50"/>
-								</s:VGroup>
-
-							</s:HGroup>
-						</s:HGroup>
-
-					</s:NavigatorContent>
-
-					<!-- Pernas & Pés -->
-
-					<s:NavigatorContent label="Pernas e Pés" width="100%">
-						<s:HGroup>
-							<s:HGroup>
-								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-									<s:HGroup>
-										<s:Label id="lblClassificacaoAnguloCasco" text="Ângulo de Casco"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoProfundidadeTalao" text="Profundidade de Talão"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoQualidadeOssea" text="Qualidade Óssea"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-
-
-								</s:VGroup>
-								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-									<s:TextInput id="txtClassificacaoAnguloCasco" width="50"/>
-									<s:TextInput id="txtClassificacaoProfundidadeTalao" width="50"/>
-									<s:TextInput id="txtClassificacaoQualidadeOssea" width="50"/>
-
-								</s:VGroup>
-							</s:HGroup>
-							<s:HGroup>
-								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-									<s:HGroup>
-										<s:Label id="lblClassificacaoPernasPostLateral" text="Pernas Posteriores - Vista Lateral"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoPernasPostPosterior" text="Pernas Posteriores - Vista Posterior"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoTotalPernasPes" text="Pontuação Seção" fontWeight="bold"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-
-								</s:VGroup>
-								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-									<s:TextInput id="txtClassificacaoPernasPostLateral" width="50"/>
-									<s:TextInput id="txtClassificacaoPernasPostPosterior" width="50"/>
-									<s:TextInput id="txtClassificacaoTotalPernasPes" width="50"/>
-								</s:VGroup>
-							</s:HGroup>
-						</s:HGroup>
-					</s:NavigatorContent>
-					<!-- Sistema Mamário -->
-					<s:NavigatorContent label="Sistema Mamário" width="100%">
-						<s:HGroup>
-							<s:HGroup>
-								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-									<s:HGroup>
-										<s:Label id="lblClassificacaoProfundidadeUbere" text="Profundidade de Úbere"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoTexturaUbere" text="Textura de Úbere"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoLigamentoMedio" text="Ligamento Médio"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoInsersaoUbereAnt" text="Insersão Úbere Anterior"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-								</s:VGroup>
-								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-									<s:TextInput id="txtClassificacaoProfundidadeUbere" width="50"/>
-									<s:TextInput id="txtClassificacaoTexturaUbere" width="50"/>
-									<s:TextInput id="txtClassificacaoLigamentoMedio" width="50"/>
-									<s:TextInput id="txtClassificacaoInsersaoUbereAnt" width="50"/>
-								</s:VGroup>
-							</s:HGroup>
-							<s:HGroup>
-								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-									<s:HGroup>
-										<s:Label id="lblClassificacaoColocacaoTetosAnt" text="Colocação Tetos Anteriores"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoAlturaUberePost" text="Altura do Úbere Posterior"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoLarguraUberePost" text="Largura do Úbere Posterior"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-								</s:VGroup>
-								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-									<s:TextInput id="txtClassificacaoColocacaoTetosAnt" width="50"/>
-									<s:TextInput id="txtClassificacaoAlturaUberePost" width="50"/>
-									<s:TextInput id="txtClassificacaoLarguraUberePost" width="50"/>
-								</s:VGroup>
-							</s:HGroup>
-							<s:HGroup>
-								<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
-									<s:HGroup>
-										<s:Label id="lblClassificacaoColocacaoTetosPost" text="Colocação de Tetos Posteriores"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoComprimentoTetos" text="Comprimento Tetos"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-									<s:HGroup>
-										<s:Label id="lblClassificacaoTotalSistemaMamario" text="Pontuação Seção" fontWeight="bold"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									</s:HGroup>
-								</s:VGroup>
-								<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-									<s:TextInput id="txtClassificacaoColocacaoTetosPost" width="50"/>
-									<s:TextInput id="txtClassificacaoComprimentoTetos" width="50"/>
-									<s:TextInput id="txtClassificacaoTotalSistemaMamario" width="50"/>
-								</s:VGroup>
-							</s:HGroup>
-						</s:HGroup>
-					</s:NavigatorContent>
-				</mx:Accordion>
+					<s:controlBarContent>
+						<s:Button label="Editar" click="{editarAnimal()}" buttonMode="true"/>
+						<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
+						<s:Button buttonMode="true" id="btnClassificacaoProva" visible="false"/>
+					</s:controlBarContent>
+				</s:Panel>
 			</s:VGroup>
 
-			<s:controlBarContent>
-				<s:Button label="Salvar" click="{btnClickSalvarClassificacao()}" buttonMode="true"/>
-				<s:Button label="Excuir" click="{btnClickVoltarClassificacaoLista()}" buttonMode="true"/>
-				<s:Button label="Voltar" click="{btnClickVoltarClassificacaoLista()}" buttonMode="true"/>
-			</s:controlBarContent>
-		</s:Panel>
-	</s:VGroup>
+			<!--//////////////////////////
+				 //	CLASSIFICAÇÃO LINEAR LISTA
+				 /////////////////////////////-->
+			<s:VGroup id="groupClassificacaoLinearLista" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateClassificacaoLinearListar">
+
+				<s:Panel id="panelDetalheClassificacao" width="100%" height="100%" title="Detalhe - Classificação Linear">
+					<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
+						<s:BorderContainer id="panelSucessoClassificacaoLista" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelSuccess" visible="false">
+							<s:Label text="Classificação linear gravada com sucesso." left="50" verticalCenter="0"/>
+							<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
+						</s:BorderContainer>
+						<s:HGroup>
+							<s:HGroup verticalAlign="middle">
+								<s:Label id="lblDetalheClassificacaoRegistro" text="Registro"/>
+								<s:TextInput id="txtDetalheClassificacaoRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3"/>
+							</s:HGroup>
+							<s:HGroup verticalAlign="middle">
+								<s:Label id="lblDetalheClassificacaoApelido" text="Apelido"/>
+								<s:TextInput id="txtDetalheClassificacaoApelido" width="370" editable="false" borderColor="#D3D3D3"/>
+							</s:HGroup>
+						</s:HGroup>
+						<mx:AdvancedDataGrid id="dataGridResultadoClassificacao" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10" designViewDataType="flat" itemClick="gridClickResultadoClassificacao(event)">
+							<mx:columns>
+								<mx:AdvancedDataGridColumn textAlign="left" headerText="Data Classificação" sortable="true" dataField="dataClassificacao"/>
+								<mx:AdvancedDataGridColumn textAlign="left" headerText="Ultimo Parto" sortable="true" dataField="dataParto"/>
+							</mx:columns>
+						</mx:AdvancedDataGrid>
+
+					</s:VGroup>
+					<s:controlBarContent>
+						<s:Button label="Novo" click="{btnClickNovaClassificacao()}" buttonMode="true"/>
+						<s:Button label="Voltar" click="{btnClickVoltarDetalhe()}" buttonMode="true"/>
+					</s:controlBarContent>
+				</s:Panel>
+
+			</s:VGroup>
+			<!--//////////////////////////
+				 //	CLASSIFICAÇÃO LINEAR EDITAR
+				 /////////////////////////////-->
+			<s:VGroup id="groupClassificacaoLinearEditar" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateClassificacaoLinearEditar">
+				<s:Panel id="panelAnimal" width="100%" height="100%" title="Classificação Linear">
+					<s:VGroup width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
+						<s:BorderContainer id="panelErrorClassificacao" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelError" visible="false">
+							<s:Label text="Erro ao salvar classificação linear. Verificar campos em vermelho." left="50" verticalCenter="0"/>
+							<mx:Image source="@Embed(source='../assets/img/error.png')" verticalCenter="0" left="10"/>
+						</s:BorderContainer>
+						<s:Panel width="100%" title="Dados Gerais">
+							<s:HGroup width="100%" paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+								<s:HGroup  paddingRight="10" verticalAlign="middle">
+									<s:Label id="lblClassificacaoDataClassificacao" text="Data Classificação"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									<mx:DateField id="txtClassificacaoDataClassificacao" width="100"/>
+								</s:HGroup>
+								<s:HGroup paddingRight="10" verticalAlign="middle">
+									<s:Label id="lblClassificacaoLactacao" text="Lactação"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									<s:NumericStepper id="txtClassificacaoLactacao" width="50"/>
+								</s:HGroup>
+							</s:HGroup>
+						</s:Panel>
+						<!-- Força Leiteira -->
+						<s:Panel width="100%" title="Força Leiteira" height="100%">
+							<s:HGroup>
+								<s:HGroup>
+									<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+										<s:HGroup>
+											<s:Label id="lblClassificacaoEstatura" text="Estatura"/>
+											<s:Label text="*" color="#B22222" fontWeight="bold"/>
+										</s:HGroup>
+										<s:HGroup>
+											<s:Label id="lblClassificacaoNivLinhaSup" text="Nivelamento Linha Superior"/>
+											<s:Label text="*" color="#B22222" fontWeight="bold"/>
+										</s:HGroup>
+										<s:HGroup>
+											<s:Label id="lblClassificacaoLarguraPeito" text="Largura Peito"/>
+											<s:Label text="*" color="#B22222" fontWeight="bold"/>
+										</s:HGroup>
+									</s:VGroup>
+									<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+										<s:TextInput id="txtClassificacaoEstatura" width="50"/>
+										<s:TextInput id="txtClassificacaoNivLinhaSup" width="50"/>
+										<s:TextInput id="txtClassificacaoLarguraPeito" width="50"/>
+									</s:VGroup>
+								</s:HGroup>
+								<s:HGroup>
+									<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+										<s:HGroup>
+											<s:Label id="lblClassificacaoProfundidadeCorporal" text="Profundidade Corporal"/>
+											<s:Label text="*" color="#B22222" fontWeight="bold"/>
+										</s:HGroup>
+										<s:HGroup>
+											<s:Label id="lblClassificacaoAngulosidade" text="Angulosidade"/>
+											<s:Label text="*" color="#B22222" fontWeight="bold"/>
+										</s:HGroup>
+										<s:HGroup>
+											<s:Label id="lblClassificacaoEscoreCorporal" text="Escore Corporal"/>
+											<s:Label text="*" color="#B22222" fontWeight="bold"/>
+										</s:HGroup>
+									</s:VGroup>
+									<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+										<s:TextInput id="txtClassificacaoProfCorporal" width="50"/>
+										<s:TextInput id="txtClassificacaoAngulosidade" width="50"/>
+										<s:TextInput id="txtClassificacaoEscoreCorporal" width="50"/>
+									</s:VGroup>
+								</s:HGroup>
+								<s:HGroup>
+									<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+										<s:HGroup>
+											<s:Label id="lblClassificacaoTotalForcaLeiteira" text="Pontuação Seção" fontWeight="bold"/>
+											<s:Label text="*" color="#B22222" fontWeight="bold"/>
+										</s:HGroup>
+									</s:VGroup>
+									<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+										<s:TextInput id="txtClassificacaoTotalForcaLeiteira" width="50"/>
+									</s:VGroup>
+								</s:HGroup>
+							</s:HGroup>
+
+						</s:Panel>
+						<mx:Accordion width="100%" height="200" id="accordionClassificacao">
+
+							<!-- Garupa -->
+
+							<s:NavigatorContent label="Garupa" width="100%">
+								<s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+											<s:HGroup>
+												<s:Label id="lblClassificacaoAnguloGarupa" text="Ângulo de Garupa"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoLarguraGarupa" text="Largura da Garupa"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtClassificacaoAnguloGarupa" width="50"/>
+											<s:TextInput id="txtClassificacaoLarguraGarupa" width="50"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+											<s:HGroup>
+												<s:Label id="lblClassificacaoForcaLombo" text="Força de Lombo"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoTotalGarupa" text="Pontuação Seção" fontWeight="bold"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtClassificacaoForcaLombo" width="50"/>
+											<s:TextInput id="txtClassificacaoTotalGarupa" width="50"/>
+										</s:VGroup>
+
+									</s:HGroup>
+								</s:HGroup>
+
+							</s:NavigatorContent>
+
+							<!-- Pernas & Pés -->
+
+							<s:NavigatorContent label="Pernas e Pés" width="100%">
+								<s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+											<s:HGroup>
+												<s:Label id="lblClassificacaoAnguloCasco" text="Ângulo de Casco"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoProfundidadeTalao" text="Profundidade de Talão"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoQualidadeOssea" text="Qualidade Óssea"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+
+
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtClassificacaoAnguloCasco" width="50"/>
+											<s:TextInput id="txtClassificacaoProfundidadeTalao" width="50"/>
+											<s:TextInput id="txtClassificacaoQualidadeOssea" width="50"/>
+
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+											<s:HGroup>
+												<s:Label id="lblClassificacaoPernasPostLateral" text="Pernas Posteriores - Vista Lateral"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoPernasPostPosterior" text="Pernas Posteriores - Vista Posterior"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoTotalPernasPes" text="Pontuação Seção" fontWeight="bold"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtClassificacaoPernasPostLateral" width="50"/>
+											<s:TextInput id="txtClassificacaoPernasPostPosterior" width="50"/>
+											<s:TextInput id="txtClassificacaoTotalPernasPes" width="50"/>
+										</s:VGroup>
+									</s:HGroup>
+								</s:HGroup>
+							</s:NavigatorContent>
+							<!-- Sistema Mamário -->
+							<s:NavigatorContent label="Sistema Mamário" width="100%">
+								<s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+											<s:HGroup>
+												<s:Label id="lblClassificacaoProfundidadeUbere" text="Profundidade de Úbere"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoTexturaUbere" text="Textura de Úbere"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoLigamentoMedio" text="Ligamento Médio"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoInsersaoUbereAnt" text="Insersão Úbere Anterior"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtClassificacaoProfundidadeUbere" width="50"/>
+											<s:TextInput id="txtClassificacaoTexturaUbere" width="50"/>
+											<s:TextInput id="txtClassificacaoLigamentoMedio" width="50"/>
+											<s:TextInput id="txtClassificacaoInsersaoUbereAnt" width="50"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+											<s:HGroup>
+												<s:Label id="lblClassificacaoColocacaoTetosAnt" text="Colocação Tetos Anteriores"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoAlturaUberePost" text="Altura do Úbere Posterior"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoLarguraUberePost" text="Largura do Úbere Posterior"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtClassificacaoColocacaoTetosAnt" width="50"/>
+											<s:TextInput id="txtClassificacaoAlturaUberePost" width="50"/>
+											<s:TextInput id="txtClassificacaoLarguraUberePost" width="50"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10">
+											<s:HGroup>
+												<s:Label id="lblClassificacaoColocacaoTetosPost" text="Colocação de Tetos Posteriores"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoComprimentoTetos" text="Comprimento Tetos"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblClassificacaoTotalSistemaMamario" text="Pontuação Seção" fontWeight="bold"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtClassificacaoColocacaoTetosPost" width="50"/>
+											<s:TextInput id="txtClassificacaoComprimentoTetos" width="50"/>
+											<s:TextInput id="txtClassificacaoTotalSistemaMamario" width="50"/>
+										</s:VGroup>
+									</s:HGroup>
+								</s:HGroup>
+							</s:NavigatorContent>
+						</mx:Accordion>
+					</s:VGroup>
+
+					<s:controlBarContent>
+						<s:Button label="Salvar" click="{btnClickSalvarClassificacao()}" buttonMode="true"/>
+						<s:Button label="Excuir" click="{btnClickVoltarClassificacaoLista()}" buttonMode="true"/>
+						<s:Button label="Voltar" click="{btnClickVoltarClassificacaoLista()}" buttonMode="true"/>
+					</s:controlBarContent>
+				</s:Panel>
+			</s:VGroup>
+
+		</s:Group>
+	</s:Scroller>
 </s:TitleWindow>
