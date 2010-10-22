@@ -1,4 +1,9 @@
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.Propriedade;
+
 import flash.events.MouseEvent;
+
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.core.FlexGlobals;
@@ -11,9 +16,8 @@ import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.Propriedade;
+
+import spark.components.NavigatorContent;
 
 public var maeDefault:Animal;
 
@@ -73,7 +77,7 @@ protected function btnClickClassificacaoLinear(event:MouseEvent):void
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
 	txtDetalheClassificacaoRegistro.text=animalSelecionado.registro;
 	txtDetalheClassificacaoApelido.text=animalSelecionado.apelido;
-	dataGridResultadoClassificacao.dataProvider = animalSelecionado.listaClassificacao;
+	dataGridResultadoClassificacao.dataProvider=animalSelecionado.listaClassificacao;
 }
 
 /**
@@ -268,12 +272,17 @@ protected function btnClickSalvar():void
 
 }
 
-protected function btnVoltarClassificacaoLista():void
+protected function btnClickVoltarClassificacaoLista():void
 {
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
 }
 
-protected function btnVoltarDetalhe():void
+protected function btnClickSalvarClassificacao():void
+{
+	validarClassificacaoLinear();
+}
+
+protected function btnClickVoltarDetalhe():void
 {
 	currentState=ConstantesUtils.STATE_DETALHE;
 }
@@ -609,6 +618,42 @@ protected function validar():Boolean
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
 	}
 	panelError.visible=true;
+
+	return false;
+}
+
+protected function validarClassificacaoLinear():Boolean
+{
+	var errors:Array=Validator.validateAll(valForcaLeiteira);
+
+	//se não existem erros 
+	if (errors.length > 0)
+	{
+		accordionClassificacao.selectedIndex=0;
+		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
+			// TODO panelError.visible=true;
+	}
+	errors=Validator.validateAll(valGarupa);
+	if (errors.length > 0)
+	{
+		accordionClassificacao.selectedIndex=1;
+		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
+			// TODO panelError.visible=true;
+	}
+	errors=Validator.validateAll(valPernasPes);
+	if (errors.length > 0)
+	{
+		accordionClassificacao.selectedIndex=2;
+		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
+			// TODO panelError.visible=true;
+	}
+	errors=Validator.validateAll(valSisitemaMamario);
+	if (errors.length > 0)
+	{
+		accordionClassificacao.selectedIndex=3;
+		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
+			// TODO panelError.visible=true;
+	}
 
 	return false;
 }
