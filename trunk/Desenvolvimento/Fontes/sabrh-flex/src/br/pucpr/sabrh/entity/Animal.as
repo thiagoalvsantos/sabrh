@@ -14,7 +14,7 @@ package br.pucpr.sabrh.entity
 		public var mae:Animal;
 		public var dataNascimento:Date;
 		public var sexo:String;
-		public var listaClassificacao:ArrayCollection;
+		public var listaClassificacao:Array;
 		public var status:String;
 	}
 }
