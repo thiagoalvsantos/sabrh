@@ -235,6 +235,11 @@ mx|DataGrid
 	headerSeparatorSkin: Embed(source="yflexskin.swf", symbol="DataGrid_headerSeparatorSkin");
 	sortArrowSkin: Embed(source="yflexskin.swf", symbol="DataGrid_sortArrowSkin");
 	stretchCursor: Embed(source="yflexskin.swf",symbol="DataGrid_stretchCursor");
+	header-style-name:header-style; 
+}
+
+.header-style{
+	text-align:center;
 }
 
 /*
@@ -687,9 +692,10 @@ mx|Tree
 {
 	background-color:#BDB6D6;
 	color: #292929; 
-	 
-	
 }
-
-
+.panelTotalFinal
+{
+	background-color:#E6C632;
+	color: #292929; 
+}
 
