@@ -94,7 +94,8 @@ protected function btnClickLimparNovo():void
 	txtNovoRegistro.text="";
 	txtNovoDataNascimento.text="";
 	radioGroupNovoSexo.selectedValue=ConstantesUtils.SEXO_MACHO;
-
+	novoStatusFemea.visible=false;
+	
 	txtNovoApelido.errorString=null;
 	txtNovoMae.errorString=null;
 	txtNovoNome.errorString=null;
@@ -102,14 +103,14 @@ protected function btnClickLimparNovo():void
 	txtNovoPropriedade.errorString=null;
 	txtNovoRegistro.errorString=null;
 	txtNovoDataNascimento.errorString=null;
-
+	
 	txtNovoRegistro.focusManager.setFocus(txtNovoRegistro);
-
+	
 	if (currentState != ConstantesUtils.STATE_NOVO)
 	{
 		currentState=ConstantesUtils.STATE_NOVO;
 	}
-
+	
 	panelError.visible=false;
 }
 
@@ -131,21 +132,21 @@ protected function btnClickLimparPesquisa():void
 	checkBoxMacho.selected=false;
 	txtPesquisaPropriedade.text="";
 	propriedadePesquisa=null;
-
+	
 	if (FlexGlobals.topLevelApplication.user.perfil != ConstantesUtils.PERFIL_PRODUTOR)
 	{
 		txtPesquisaProprietario.text="";
 		proprietarioPesquisa=null;
 		btnPesquisaBuscarProprietario.enabled=true;
 	}
-
+	
 	if (dataGridResultado != null)
 	{
 		dataGridResultado.dataProvider=null;
 	}
-
+	
 	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);
-
+	
 	PopUpManager.centerPopUp(this);
 }
 
@@ -163,6 +164,7 @@ protected function btnClickNovaClassificacao():void
 protected function btnClickNovo():void
 {
 	currentState=ConstantesUtils.STATE_NOVO;
+	statusService.listarStatusFemea();
 	btnClickLimparNovo();
 	PopUpManager.centerPopUp(this);
 }
@@ -182,45 +184,45 @@ protected function btnClickPesquisar():void
 	{
 		animal.registro=StringUtil.trim(txtPesquisaRegistroAnimal.text);
 	}
-
+	
 	if (StringUtil.trim(txtPesquisaNomeAnimal.text) != "")
 	{
 		animal.nome=StringUtil.trim(txtPesquisaNomeAnimal.text);
 	}
-
+	
 	if (StringUtil.trim(txtPesquisaRegistroMae.text) != "")
 	{
 		if (mae == null)
 			mae=new Animal();
 		mae.registro=StringUtil.trim(txtPesquisaRegistroMae.text);
 	}
-
+	
 	if (StringUtil.trim(txtPesquisaNomeMae.text) != "")
 	{
 		if (mae == null)
 			mae=new Animal();
 		mae.nome=StringUtil.trim(txtPesquisaNomeMae.text);
 	}
-
+	
 	if (StringUtil.trim(txtPesquisaRegistroPai.text) != "")
 	{
 		if (pai == null)
 			pai=new Animal();
 		pai.registro=StringUtil.trim(txtPesquisaRegistroPai.text);
 	}
-
+	
 	if (StringUtil.trim(txtPesquisaNomePai.text) != "")
 	{
 		if (pai == null)
 			pai=new Animal();
 		pai.nome=StringUtil.trim(txtPesquisaNomePai.text);
 	}
-
+	
 	if (checkBoxFemea.selected && checkBoxMacho.selected == false)
 		animal.sexo=ConstantesUtils.SEXO_FEMEA;
 	else if (checkBoxMacho.selected && checkBoxFemea.selected == false)
 		animal.sexo=ConstantesUtils.SEXO_MACHO;
-
+	
 	if (txtPesquisaPropriedade.text != "")
 	{
 		animal.propriedade=propriedadePesquisa;
@@ -231,12 +233,12 @@ protected function btnClickPesquisar():void
 		prop.proprietario=proprietarioPesquisa;
 		animal.propriedade=prop;
 	}
-
+	
 	if (mae != null)
 		animal.mae=mae;
 	if (pai != null)
 		animal.pai=pai;
-
+	
 	animalService.pesquisar(animal);
 }
 
@@ -244,8 +246,10 @@ protected function btnClickSalvar():void
 {
 	if (validar())
 	{
+		panelError.visible=false;
+		
 		var animal:Animal=new Animal;
-
+		
 		animal.apelido=StringUtil.trim(txtNovoApelido.text);
 		animal.dataNascimento=txtNovoDataNascimento.selectedDate;
 		animal.propriedade=propriedadeNovo;
@@ -266,10 +270,12 @@ protected function btnClickSalvar():void
 			else
 				animal.mae=maeNovo;
 		}
-
+		if (radioGroupNovoSexo.selectedValue==ConstantesUtils.SEXO_FEMEA)
+			animal.status=cmbNovoStatusFemea.selectedItem;
+		
 		animalService.salvar(animal);
 	}
-
+	
 }
 
 protected function btnClickVoltarClassificacaoLista():void
@@ -294,7 +300,7 @@ protected function btnClickVoltarDetalhe():void
 protected function editarAnimal():void
 {
 	currentState=ConstantesUtils.STATE_EDITAR;
-
+	
 	txtNovoRegistro.text=animalSelecionado.registro;
 	txtNovoNome.text=animalSelecionado.nome;
 	txtNovoApelido.text=animalSelecionado.apelido;
@@ -318,12 +324,13 @@ protected function editarAnimal():void
 	{
 		txtNovoMae.text="";
 	}
-
+	
 	txtNovoDataNascimento.selectedDate=animalSelecionado.dataNascimento;
 	radioGroupNovoSexo.selectedValue=animalSelecionado.sexo;
-
+	statusService.listarStatusFemea();
+	
 	panelSucesso.visible=false;
-
+	
 	PopUpManager.centerPopUp(this);
 }
 
@@ -345,7 +352,7 @@ protected function fechar(event:CloseEvent):void
 protected function gridClickResultado(event:ListEvent):void
 {
 	currentState=ConstantesUtils.STATE_DETALHE;
-
+	
 	animalSelecionado=event.currentTarget.selectedItem;
 	txtDetalheRegistro.text=animalSelecionado.registro;
 	txtDetalheNome.text=animalSelecionado.nome;
@@ -374,20 +381,23 @@ protected function gridClickResultado(event:ListEvent):void
 	df.formatString="DD/MM/YYYY";
 	txtDetalheDataNascimento.text=df.format(animalSelecionado.dataNascimento);
 	radioGroupDetalheSexo.selectedValue=animalSelecionado.sexo;
-
+	
 	if (animalSelecionado.sexo == ConstantesUtils.SEXO_FEMEA)
 	{
 		btnClassificacaoProva.label=ConstantesUtils.CLASSIFICACAO_LINEAR;
 		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, btnClickClassificacaoLinear);
 		btnClassificacaoProva.visible=true;
+		cmbDetalheStatusFemea.text=animalSelecionado.status;
+		detalheStatusFemea.visible=true;
 	}
 	else if (animalSelecionado.sexo == ConstantesUtils.SEXO_MACHO)
 	{
 		btnClassificacaoProva.label=ConstantesUtils.PROVA_TOURO;
 		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, trocaEstadoProvaTouro);
 		btnClassificacaoProva.visible=true;
+		detalheStatusFemea.visible=false;
 	}
-
+	
 	PopUpManager.centerPopUp(this);
 }
 
@@ -409,12 +419,37 @@ protected function init(event:FlexEvent):void
 		btnPesquisaBuscarProprietario.enabled=false;
 		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
 	}
-
+	
 	animalService.recuperarAnimalPadrao(ConstantesUtils.SEXO_MACHO);
 	animalService.recuperarAnimalPadrao(ConstantesUtils.SEXO_FEMEA);
-
+	
 	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);
+	
+}
 
+protected function listarStatusFemeaResult(event:ResultEvent):void
+{
+	var listaStatusFemea:ArrayCollection=new ArrayCollection();
+	listaStatusFemea.addItem(ConstantesUtils.SELECIONE);
+	listaStatusFemea.addAll(event.result as ArrayCollection);
+	
+	cmbNovoStatusFemea.dataProvider=listaStatusFemea;
+	cmbNovoStatusFemea.selectedIndex=-1;
+	cmbNovoStatusFemea.selectedIndex=0;
+	
+	if (currentState == ConstantesUtils.STATE_EDITAR && animalSelecionado.sexo==ConstantesUtils.SEXO_FEMEA)
+	{
+		cmbNovoStatusFemea.selectedItem=animalSelecionado.status;
+		novoStatusFemea.visible=true;
+		numValStatusFemea.enabled=true;
+	}
+	else
+	{
+		novoStatusFemea.visible=false;
+		numValStatusFemea.enabled=false;
+	}
+	
+	cmbNovoStatusFemea.errorString=null;
 }
 
 /**
@@ -446,10 +481,10 @@ protected function onFault(event:FaultEvent):void
 }
 
 //Função que recebe o retorno da consulta de Animais.
-protected function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:String, tipoAnimal:String, animal:Animal):void
+public function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:String, tipoAnimal:String, animal:Animal):void
 {
 	atributoDestino.text=animal.nome;
-
+	
 	if (tipoConsulta == "novo")
 	{
 		if (tipoAnimal == "pai")
@@ -478,10 +513,10 @@ protected function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta
 }
 
 //Função que recebe o retorno da consulta de Propriedade.
-protected function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsulta:String, propriedade:Propriedade):void
+public function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsulta:String, propriedade:Propriedade):void
 {
 	atributoDestino.text=propriedade.nome;
-
+	
 	if (tipoConsulta == "novo")
 	{
 		propriedadeNovo=propriedade;
@@ -496,14 +531,14 @@ protected function resultConsultarPropriedade(atributoDestino:TextInput, tipoCon
 			btnPesquisaBuscarProprietario.enabled=false;
 		}
 	}
-
+	
 }
 
 //Função que recebe o retorno da consulta de Usuário.
-protected function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
+public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
 {
 	atributoDestino.text=usuario.nome;
-
+	
 	if (tipoConsulta == "pesquisa")
 	{
 		proprietarioPesquisa=usuario;
@@ -516,17 +551,17 @@ protected function serviceResultAnimalPesquisar(event:ResultEvent):void
 {
 	// Recupera lista de animais
 	var listaAnimais:ArrayCollection=event.result as ArrayCollection;
-
+	
 	// Altera estado da tela para "RESULTADO"
 	currentState=ConstantesUtils.STATE_RESULTADO;
-
+	
 	// Atribui a lista de animais para a grid de resultado
 	dataGridResultado.dataProvider=listaAnimais;
-
+	
 	// Informa o número de registros encontrados 
 	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaAnimais.length;
 	PopUpManager.centerPopUp(this);
-
+	
 }
 
 /**
@@ -537,9 +572,7 @@ protected function serviceResultAnimalPesquisar(event:ResultEvent):void
 protected function serviceResultAnimalSalvar(event:ResultEvent):void
 {
 	currentState=ConstantesUtils.STATE_DETALHE;
-
-	panelSucesso.visible=true;
-
+	
 	animalSelecionado=event.result as Animal;
 	txtDetalheRegistro.text=animalSelecionado.registro;
 	txtDetalheNome.text=animalSelecionado.nome;
@@ -568,8 +601,26 @@ protected function serviceResultAnimalSalvar(event:ResultEvent):void
 	df.formatString="DD/MM/YYYY";
 	txtDetalheDataNascimento.text=df.format(animalSelecionado.dataNascimento);
 	radioGroupDetalheSexo.selectedValue=animalSelecionado.sexo;
-
+	
+	if (animalSelecionado.sexo == ConstantesUtils.SEXO_FEMEA)
+	{
+		btnClassificacaoProva.label=ConstantesUtils.CLASSIFICACAO_LINEAR;
+		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, btnClickClassificacaoLinear);
+		btnClassificacaoProva.visible=true;
+		cmbDetalheStatusFemea.text=animalSelecionado.status;
+		detalheStatusFemea.visible=true;
+	}
+	else if (animalSelecionado.sexo == ConstantesUtils.SEXO_MACHO)
+	{
+		btnClassificacaoProva.label=ConstantesUtils.PROVA_TOURO;
+		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, trocaEstadoProvaTouro);
+		btnClassificacaoProva.visible=true;
+		detalheStatusFemea.visible=false;
+	}
+	
 	PopUpManager.centerPopUp(this);
+	
+	panelSucesso.visible=true;
 }
 
 
@@ -581,7 +632,7 @@ protected function serviceResultAnimalSalvar(event:ResultEvent):void
 protected function serviceResultRecuperarAnimalPadrao(event:ResultEvent):void
 {
 	var animal:Animal=event.result as Animal;
-
+	
 	if (animal.sexo == ConstantesUtils.SEXO_MACHO)
 		paiDefault=animal;
 	else
@@ -598,10 +649,10 @@ protected function trocaEstadoProvaTouro(event:MouseEvent):void
  * @return
  */
 protected function validar():Boolean
-{
+{	
 	//executa todos os validadores
 	var errors:Array=Validator.validateAll(val);
-
+	
 	//se não existem erros 
 	if (errors.length == 0)
 	{
@@ -609,6 +660,10 @@ protected function validar():Boolean
 		{
 			txtNovoDataNascimento.errorString="Data de Nascimento deve ser igual ou menor que a data atual";
 			txtNovoDataNascimento.focusManager.setFocus(txtNovoDataNascimento);
+		}
+		else if (radioGroupNovoSexo.selectedValue==ConstantesUtils.SEXO_FEMEA && numValStatusFemea.validate().results != null)
+		{
+			cmbNovoStatusFemea.focusManager.setFocus(cmbNovoStatusFemea);
 		}
 		else
 			return true;
@@ -618,43 +673,43 @@ protected function validar():Boolean
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
 	}
 	panelError.visible=true;
-
+	
 	return false;
 }
 
 protected function validarClassificacaoLinear():Boolean
 {
 	var errors:Array=Validator.validateAll(valForcaLeiteira);
-
+	
 	//se não existem erros 
 	if (errors.length > 0)
 	{
 		accordionClassificacao.selectedIndex=0;
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
-			// TODO panelError.visible=true;
+		// TODO panelError.visible=true;
 	}
 	errors=Validator.validateAll(valGarupa);
 	if (errors.length > 0)
 	{
 		accordionClassificacao.selectedIndex=1;
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
-			// TODO panelError.visible=true;
+		// TODO panelError.visible=true;
 	}
 	errors=Validator.validateAll(valPernasPes);
 	if (errors.length > 0)
 	{
 		accordionClassificacao.selectedIndex=2;
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
-			// TODO panelError.visible=true;
+		// TODO panelError.visible=true;
 	}
 	errors=Validator.validateAll(valSisitemaMamario);
 	if (errors.length > 0)
 	{
 		accordionClassificacao.selectedIndex=3;
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
-			// TODO panelError.visible=true;
+		// TODO panelError.visible=true;
 	}
-
+	
 	return false;
 }
 
@@ -679,9 +734,23 @@ protected function voltarPesquisa():void
 	{
 		panelError.visible=false;
 	}
-
+	
 	if (panelSucesso != null)
 	{
 		panelSucesso.visible=false;
+	}
+}
+
+protected function radioChangeNovoSexo():void
+{
+	if (radioGroupNovoSexo.selectedValue==ConstantesUtils.SEXO_FEMEA)
+	{
+		novoStatusFemea.visible=true;
+		numValStatusFemea.enabled=true;
+	}
+	else
+	{
+		novoStatusFemea.visible=false;
+		numValStatusFemea.enabled=false;
 	}
 }
