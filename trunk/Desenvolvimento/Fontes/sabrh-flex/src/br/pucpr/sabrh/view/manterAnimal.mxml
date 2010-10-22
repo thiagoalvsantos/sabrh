@@ -11,6 +11,9 @@
 			<s:method name="salvar" result="{serviceResultAnimalSalvar(event)}"/>
 			<s:method name="recuperarAnimalPadrao" result="{serviceResultRecuperarAnimalPadrao(event)}"/>
 		</s:RemoteObject>
+		<s:RemoteObject id="statusService" fault="onFault(event)" destination="StatusService" showBusyCursor="true">
+			<s:method name="listarStatusFemea" result="{listarStatusFemeaResult(event)}"/>
+		</s:RemoteObject>
 
 		<fx:Array id="val">
 			<mx:StringValidator id="strValRegistro" source="{txtNovoRegistro}" property="text" required="true" minLength="15" maxLength="20"/>
@@ -58,8 +61,10 @@
 			<mx:NumberValidator id="nbrValClassificacaoTotalSistemaMamario" source="{txtClassificacaoTotalSistemaMamario}" property="text" required="true" minValue="0" maxValue="10"/>
 			<mx:NumberValidator id="nbrValClassificacaoInsersaoUbereAnt" source="{txtClassificacaoInsersaoUbereAnt}" property="text" required="true" minValue="0" maxValue="10"/>
 		</fx:Array>
-
-		<s:RadioButtonGroup id="radioGroupNovoSexo"/>
+		
+		<mx:NumberValidator id="numValStatusFemea" enabled="false" source="{cmbNovoStatusFemea}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
+		
+		<s:RadioButtonGroup id="radioGroupNovoSexo" change="radioChangeNovoSexo()"/>
 		<s:RadioButtonGroup id="radioGroupDetalheSexo"/>
 
 		<entity:Animal id="animalSelecionado"/>
@@ -197,9 +202,12 @@
 						</s:HGroup>
 						<s:HGroup verticalAlign="middle">
 							<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
-							<s:Label id="lblNovoStatus" text="Status"/>
-							<s:Label text="*" color="#B22222" fontWeight="bold"/>
-							<s:DropDownList id="cmbNovoStatus" width="219" tabIndex="8"/>
+							<mx:Spacer width="15"/>
+							<s:HGroup id="novoStatusFemea" verticalAlign="middle" visible="false">
+								<s:Label id="lblNovoStatus" text="Status"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								<s:DropDownList id="cmbNovoStatusFemea" width="193" tabIndex="8"/>
+							</s:HGroup>
 						</s:HGroup>
 						<s:HGroup>
 							<s:RadioButton label="Macho" groupName="radioGroupNovoSexo" value="MACHO" selected="true" tabIndex="9"/>
@@ -255,7 +263,15 @@
 						<s:TextInput id="txtDetalhePropriedade" width="370" editable="false" borderColor="#D3D3D3"/>
 						<s:TextInput id="txtDetalhePai" width="370" editable="false" borderColor="#D3D3D3"/>
 						<s:TextInput id="txtDetalheMae" width="370" editable="false" borderColor="#D3D3D3"/>
-						<s:TextInput id="txtDetalheDataNascimento" width="170" editable="false" borderColor="#D3D3D3"/>
+						<s:HGroup verticalAlign="middle">
+							<s:TextInput id="txtDetalheDataNascimento" width="170" editable="false" borderColor="#D3D3D3"/>
+							<mx:Spacer width="15"/>
+							<s:HGroup id="detalheStatusFemea" verticalAlign="middle" visible="false">
+								<s:Label id="lblDetalheStatus" text="Status"/>
+								<s:Label text="*" color="#B22222" fontWeight="bold"/>
+								<s:TextInput id="cmbDetalheStatusFemea" width="118" tabIndex="8" editable="false" borderColor="#D3D3D3"/>
+							</s:HGroup>
+						</s:HGroup>
 						<s:HGroup>
 							<s:RadioButton label="Macho" groupName="radioGroupDetalheSexo" value="MACHO" enabled="false"/>
 							<s:RadioButton label="Fêmea" groupName="radioGroupDetalheSexo" value="FEMEA" enabled="false"/>
