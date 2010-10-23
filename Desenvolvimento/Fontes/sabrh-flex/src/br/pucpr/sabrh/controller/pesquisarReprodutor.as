@@ -32,11 +32,13 @@ protected function verificaLimiteDataGrid():void
 		{
 			dataGridConformacaoSelecionado.dropEnabled=false;
 			btnMoverDireita.enabled=false;
+			dataGridConformacao.doubleClickEnabled=false;
 		}
 		else 
 		{
 			dataGridConformacaoSelecionado.dropEnabled=true;
 			btnMoverDireita.enabled=true;
+			dataGridConformacao.doubleClickEnabled=true;
 		}
 		
 		if (arrayAtributoConformacaoSelecionado.length > 0)
