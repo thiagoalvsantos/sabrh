@@ -226,6 +226,11 @@ protected function btnClickLimparPesquisa():void
 }
 
 
+protected function btnClickNovaProvaTouro():void
+{
+	// TODO FAZER METODO
+}
+
 protected function btnClickNovaClassificacao():void
 {
 	classificacaoLinearSelecionada=null;
@@ -619,12 +624,18 @@ protected function gridClickResultado(event:ListEvent):void
 	else if (animalSelecionado.sexo == ConstantesUtils.SEXO_MACHO)
 	{
 		btnClassificacaoProva.label=ConstantesUtils.PROVA_TOURO;
-		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, trocaEstadoProvaTouro);
+		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, btnClickProvaTouro);
 		btnClassificacaoProva.visible=true;
 		detalheStatusFemea.visible=false;
 	}
 
 	PopUpManager.centerPopUp(this);
+}
+
+
+protected function gridClickResultadoProvaTouro(event:ListEvent):void
+{
+	// TODO FAZER METODO
 }
 
 protected function gridClickResultadoClassificacao(event:ListEvent):void
@@ -846,7 +857,7 @@ protected function serviceResultAnimalSalvar(event:ResultEvent):void
 	else if (animalSelecionado.sexo == ConstantesUtils.SEXO_MACHO)
 	{
 		btnClassificacaoProva.label=ConstantesUtils.PROVA_TOURO;
-		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, trocaEstadoProvaTouro);
+		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, btnClickProvaTouro);
 		btnClassificacaoProva.visible=true;
 		detalheStatusFemea.visible=false;
 	}
@@ -863,6 +874,12 @@ protected function serviceResultPesquisarClassificacaoLinear(event:ResultEvent):
 
 }
 
+protected function serviceResultPesquisarProvaTouro(event:ResultEvent):void
+{
+	var listaProvaTouro:ArrayCollection=event.result as ArrayCollection;
+	dataGridResultadoProvaTouro.dataProvider=listaProvaTouro;
+
+}
 
 /**
  * Resultado da pesquisa de animal padrao
@@ -885,10 +902,23 @@ protected function serviceResultSalvarClassificacao(event:ResultEvent):void
 	classificacaoLinearSelecionada=null;
 }
 
-
-protected function trocaEstadoProvaTouro(event:MouseEvent):void
+protected function serviceResultSalvarProvaTouro(event:ResultEvent):void
 {
-	currentState=ConstantesUtils.STATE_PROVA_TOURO;
+	btnClickProvaTouro(null);
+	provaTouroSelecionada=null;
+}
+
+protected function btnClickProvaTouro(event:MouseEvent):void
+{
+	currentState=ConstantesUtils.STATE_PROVA_TOURO_LISTA;
+	txtDetalheProvaTouroRegistro.text=animalSelecionado.registro;
+	txtDetalheProvaTouroApelido.text=animalSelecionado.apelido;
+
+	//TODO TROCAR PARA PROVA TOURO
+	//classificacaoLinearService.pesquisar(animalSelecionado);
+
+	PopUpManager.centerPopUp(this);
+
 }
 
 /**

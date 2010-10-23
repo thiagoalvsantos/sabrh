@@ -24,7 +24,8 @@ package br.pucpr.sabrh.components.constantes
 		public static const STATE_EDITAR="stateEditar";
 		public static const STATE_CLASSIFICACAO_LINEAR_LISTA="stateClassificacaoLinearListar";
 		public static const STATE_CLASSIFICACAO_LINEAR_EDITAR="stateClassificacaoLinearEditar";
-		public static const STATE_PROVA_TOURO="stateProvaTouro";
+		public static const STATE_PROVA_TOURO_LISTA="stateProvaTouroListar";
+		public static const STATE_PROVA_TOURO_EDITAR="stateProvaTouroEditar";
 		
 		public static const NOME_ANIMAL_DEFAULT="NÃO INFORMADO";
 		public static const SELECIONE="Selecione...";
