@@ -26,7 +26,7 @@ import br.pucpr.sabrh.persistence.ClassificacaoLinearDAO;
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class ClassificacaoLinearDAOImpl implements ClassificacaoLinearDAO {
-	
+
 	/** O atributo entity manager. */
 	@PersistenceContext(unitName = "SABRH")
 	private EntityManager entityManager;
@@ -52,8 +52,12 @@ public class ClassificacaoLinearDAOImpl implements ClassificacaoLinearDAO {
 		this.entityManager = entityManager;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.pucpr.sabrh.persistence.ClassificacaoLinearDAO#pesquisar(br.pucpr.sabrh.entity.Animal)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.persistence.ClassificacaoLinearDAO#pesquisar(br.pucpr.
+	 * sabrh.entity.Animal)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -61,23 +65,33 @@ public class ClassificacaoLinearDAOImpl implements ClassificacaoLinearDAO {
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(ClassificacaoLinear.class, "classlin");
 		c.add(Restrictions.eq("animal", animal));
-		
+
 		c.addOrder(Order.asc("dataClassificacao"));
 		List<ClassificacaoLinear> result = c.list();
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.pucpr.sabrh.persistence.ClassificacaoLinearDAO#salvar(br.pucpr.sabrh.entity.ClassificacaoLinear)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.persistence.ClassificacaoLinearDAO#salvar(br.pucpr.sabrh
+	 * .entity.ClassificacaoLinear)
 	 */
 	@Override
 	public ClassificacaoLinear salvar(ClassificacaoLinear classificacaoLinear) {
-		
+
 		ClassificacaoLinear result = null;
 		result = entityManager.merge(classificacaoLinear);
 		entityManager.flush();
 
 		return result;
-	}	
+	}
+
+	@Override
+	public void excluir(ClassificacaoLinear classificacaoLinear) {
+		entityManager.remove(classificacaoLinear);
+		entityManager.flush();
+	}
 
 }

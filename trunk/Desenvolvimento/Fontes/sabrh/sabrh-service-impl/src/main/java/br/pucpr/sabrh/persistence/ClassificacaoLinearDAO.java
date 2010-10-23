@@ -33,5 +33,14 @@ public interface ClassificacaoLinearDAO {
 	 * @return classificacao linear
 	 */
 	ClassificacaoLinear salvar(ClassificacaoLinear classificacaoLinear);
+	
+	/**
+	 * Realiza Excluir.
+	 * 
+	 * @param classificacaoLinear
+	 *            - classificacao linear.
+	 */
+	void excluir(ClassificacaoLinear classificacaoLinear);
+	
 
 }
