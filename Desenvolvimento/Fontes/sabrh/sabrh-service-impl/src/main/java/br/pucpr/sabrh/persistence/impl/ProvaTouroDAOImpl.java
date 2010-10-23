@@ -83,4 +83,11 @@ public class ProvaTouroDAOImpl implements ProvaTouroDAO {
 		return result;
 	}
 
+	@Override
+	public void excluir(ProvaTouro provaTouro) {
+		provaTouro = entityManager.merge(provaTouro);
+		entityManager.remove(provaTouro);
+		entityManager.flush();
+	}
+
 }

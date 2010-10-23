@@ -67,4 +67,11 @@
 		</properties>
 	</destination>
 
+	<destination id="ProvaTouroService">
+		<properties>
+			<factory>ejb3</factory>
+			<source>sabrh-ear-1.0/ProvaTouroService/remote</source>
+		</properties>
+	</destination>
+
 </service>

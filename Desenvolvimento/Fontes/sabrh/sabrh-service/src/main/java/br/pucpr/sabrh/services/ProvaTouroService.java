@@ -35,4 +35,13 @@ public interface ProvaTouroService {
 	 */
 	ProvaTouro salvar(ProvaTouro provaTouro);
 
+	/**
+	 * Realiza Excluir.
+	 * 
+	 * @param provaTouro
+	 *            - prova touro.
+	 */
+	void excluir(ProvaTouro provaTouro);
+
+	
 }
