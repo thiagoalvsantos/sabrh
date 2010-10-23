@@ -68,4 +68,10 @@ public class ProvaTouroBusiness implements ProvaTouroService {
 		return dao.salvar(provaTouro);
 	}
 
+	@Override
+	public void excluir(ProvaTouro provaTouro) {
+		dao.excluir(provaTouro);
+
+	}
+
 }
