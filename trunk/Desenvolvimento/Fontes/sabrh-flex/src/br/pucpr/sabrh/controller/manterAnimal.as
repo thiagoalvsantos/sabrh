@@ -1,5 +1,6 @@
 import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.ClassificacaoLinear;
 import br.pucpr.sabrh.entity.Propriedade;
 
 import flash.events.MouseEvent;
@@ -77,6 +78,9 @@ protected function btnClickClassificacaoLinear(event:MouseEvent):void
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
 	txtDetalheClassificacaoRegistro.text=animalSelecionado.registro;
 	txtDetalheClassificacaoApelido.text=animalSelecionado.apelido;
+
+	classificacaoLinearService.pesquisar(animalSelecionado);
+
 	dataGridResultadoClassificacao.dataProvider=animalSelecionado.listaClassificacao;
 	PopUpManager.centerPopUp(this);
 }
@@ -287,7 +291,57 @@ protected function btnClickVoltarClassificacaoLista():void
 
 protected function btnClickSalvarClassificacao():void
 {
-	validarClassificacaoLinear();
+	if (validarClassificacaoLinear())
+	{
+		var classificacaoLinear:ClassificacaoLinear=new ClassificacaoLinear();
+
+		classificacaoLinear.dataClassificacao=txtClassificacaoDataClassificacao.selectedDate;
+		classificacaoLinear.lactacao=txtClassificacaoLactacao.value;
+
+		//Força Leiteira
+		classificacaoLinear.estatura=new Number(txtClassificacaoEstatura.text);
+		classificacaoLinear.nivelamentoNivelSuperior=new Number(txtClassificacaoNivLinhaSup.text);
+		classificacaoLinear.larguraPeito=new Number(txtClassificacaoLarguraPeito.text);
+		classificacaoLinear.profundidadeCorporal=new Number(txtClassificacaoProfCorporal.text);
+		classificacaoLinear.angulosidade=new Number(txtClassificacaoAngulosidade.text);
+		classificacaoLinear.escoreCorporal=new Number(txtClassificacaoEscoreCorporal.text);
+		classificacaoLinear.pontuacaoForcaLeiteira=new Number(txtClassificacaoTotalForcaLeiteira.text);
+
+
+		//Garupa
+		classificacaoLinear.anguloGarupa=new Number(txtClassificacaoAnguloGarupa.text);
+		classificacaoLinear.larguraGarupa=new Number(txtClassificacaoLarguraGarupa.text);
+		classificacaoLinear.forcaLombo=new Number(txtClassificacaoForcaLombo.text);
+		classificacaoLinear.pontuacaoGarupa=new Number(txtClassificacaoTotalGarupa.text);
+
+		//Pernas e Pés
+		classificacaoLinear.anguloCasco=new Number(txtClassificacaoAnguloCasco.text);
+		classificacaoLinear.profundidadeTalao=new Number(txtClassificacaoProfundidadeTalao.text);
+		classificacaoLinear.qualidadeOssea=new Number(txtClassificacaoQualidadeOssea.text);
+		classificacaoLinear.pernasPostVistaLateral=new Number(txtClassificacaoPernasPostLateral.text);
+		classificacaoLinear.pernasPostVistaPost=new Number(txtClassificacaoPernasPostPosterior.text);
+		classificacaoLinear.pontucaoPernasPes=new Number(txtClassificacaoTotalPernasPes.text);
+
+		//Sistema Mamário
+		classificacaoLinear.profundidadeUbere=new Number(txtClassificacaoProfundidadeUbere.text);
+		classificacaoLinear.texturaUbere=new Number(txtClassificacaoTexturaUbere.text);
+		classificacaoLinear.ligamentoMedio=new Number(txtClassificacaoLigamentoMedio.text);
+		classificacaoLinear.insercaoUbereAnterior=new Number(txtClassificacaoInsersaoUbereAnt.text);
+		classificacaoLinear.colocacaoTetosAnteriores=new Number(txtClassificacaoColocacaoTetosAnt.text);
+		classificacaoLinear.alturaUberePosterior=new Number(txtClassificacaoAlturaUberePost.text);
+		classificacaoLinear.larguraUberePosterior=new Number(txtClassificacaoLarguraUberePost.text);
+		classificacaoLinear.colocacaoTetosPosteriores=new Number(txtClassificacaoColocacaoTetosPost.text);
+		classificacaoLinear.comprimentoTetos=new Number(txtClassificacaoComprimentoTetos.text);
+		classificacaoLinear.pontuacaoSistemaMamario=new Number(txtClassificacaoTotalSistemaMamario.text);
+
+		//Classificação Final
+		classificacaoLinear.pontuacaoFinal=new Number(txtClassificacaoPontuacaoFinal.text);
+		classificacaoLinear.classificacaoFinal=txtClassificacaoClassificacaoFinal.text;
+
+		classificacaoLinear.animal=animalSelecionado;
+
+		classificacaoLinearService.salvar(classificacaoLinear);
+	}
 }
 
 protected function btnClickVoltarDetalhe():void
@@ -641,6 +695,19 @@ protected function serviceResultRecuperarAnimalPadrao(event:ResultEvent):void
 		maeDefault=animal;
 }
 
+protected function serviceResultSalvarClassificacao(event:ResultEvent):void
+{
+	btnClickClassificacaoLinear(null);
+}
+
+protected function serviceResultPesquisarClassificacaoLinear(event:ResultEvent):void
+{
+	var listaClassificacao:ArrayCollection=event.result as ArrayCollection;
+	dataGridResultadoClassificacao.dataProvider=listaClassificacao;
+
+}
+
+
 protected function trocaEstadoProvaTouro(event:MouseEvent):void
 {
 	currentState=ConstantesUtils.STATE_PROVA_TOURO;
@@ -681,36 +748,27 @@ protected function validar():Boolean
 
 protected function validarClassificacaoLinear():Boolean
 {
-	var errors:Array=Validator.validateAll(valForcaLeiteira);
+	var errors:Array=Validator.validateAll(valClassificacao);
 
 	//se não existem erros 
-	if (errors.length > 0)
+	if (errors.length == 0)
 	{
-		accordionClassificacao.selectedIndex=0;
-		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
-		panelErrorClassificacao.visible=true;
+		if (txtClassificacaoDataClassificacao.selectedDate > new Date())
+		{
+			txtClassificacaoDataClassificacao.errorString="Data da classificação deve ser igual ou menor que a data atual";
+			txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
+		}
+		else
+		{
+			panelErrorClassificacao.visible=false;
+			return true;
+		}
 	}
-	errors=Validator.validateAll(valGarupa);
-	if (errors.length > 0)
+	else
 	{
-		accordionClassificacao.selectedIndex=1;
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
-		panelErrorClassificacao.visible=true;
 	}
-	errors=Validator.validateAll(valPernasPes);
-	if (errors.length > 0)
-	{
-		accordionClassificacao.selectedIndex=2;
-		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
-		panelErrorClassificacao.visible=true;
-	}
-	errors=Validator.validateAll(valSisitemaMamario);
-	if (errors.length > 0)
-	{
-		accordionClassificacao.selectedIndex=3;
-		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
-		panelErrorClassificacao.visible=true;
-	}
+	panelErrorClassificacao.visible=true;
 
 	return false;
 }
