@@ -8,7 +8,7 @@ package br.pucpr.sabrh.entity
 		public var codigo:Number;
 		public var animal:Animal;
 		public var dataClassificacao:Date;
-		public var dataParto:Date;
+		public var lactacao:Number;
 		public var estatura:Number;
 		public var nivelamentoNivelSuperior:Number;
 		public var larguraPeito:Number;

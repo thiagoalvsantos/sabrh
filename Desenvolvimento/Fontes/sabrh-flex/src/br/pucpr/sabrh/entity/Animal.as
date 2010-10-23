@@ -1,6 +1,10 @@
 package br.pucpr.sabrh.entity
 {
 	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayList;
+
+	import spark.components.List;
+	import spark.primitives.Line;
 
 	[RemoteClass(alias="br.pucpr.sabrh.entity.Animal")]
 	[Bindable]
