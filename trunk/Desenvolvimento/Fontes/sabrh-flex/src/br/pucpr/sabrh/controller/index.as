@@ -2,6 +2,7 @@ import br.pucpr.sabrh.view.login;
 import br.pucpr.sabrh.view.manterAnimal;
 import br.pucpr.sabrh.view.manterPropriedade;
 import br.pucpr.sabrh.view.manterUsuario;
+import br.pucpr.sabrh.view.pesquisarReprodutor;
 
 import flash.display.InteractiveObject;
 import flash.events.TimerEvent;
@@ -88,6 +89,15 @@ public function abrirManterAnimais():void
 	var popUpManterAnimal:manterAnimal=manterAnimal(PopUpManager.createPopUp(this, manterAnimal, true));
 	PopUpManager.centerPopUp(popUpManterAnimal);
 	popUpEffect.target=popUpManterAnimal;
+	popUpEffect.play();
+}
+
+//Função para abrir a tela de Pesquisa de Reprodutor.
+public function abrirPesquisarReprodutor():void
+{
+	var popUpPesquisarReprodutor:pesquisarReprodutor=pesquisarReprodutor(PopUpManager.createPopUp(this, pesquisarReprodutor, true));
+	PopUpManager.centerPopUp(popUpPesquisarReprodutor);
+	popUpEffect.target=popUpPesquisarReprodutor;
 	popUpEffect.play();
 }
 

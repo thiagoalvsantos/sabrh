@@ -44,7 +44,7 @@ protected function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:St
 	popUpConsultarPropriedade.janelaOrigem=this;
 	popUpConsultarPropriedade.tipoConsulta=tipoConsulta;
 	popUpConsultarPropriedade.atributoDestino=atributo;
-	if (txtPesquisaProprietario.text != "")
+	if (txtPesquisaProprietario.text != "" && tipoConsulta == "pesquisa")
 	{
 		popUpConsultarPropriedade.proprietarioPesquisa=proprietarioPesquisa;
 		popUpConsultarPropriedade.btnPesquisaBuscar.enabled=false;
