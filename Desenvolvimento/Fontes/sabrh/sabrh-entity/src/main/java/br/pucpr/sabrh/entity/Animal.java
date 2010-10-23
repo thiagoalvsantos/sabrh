@@ -79,10 +79,9 @@ public class Animal implements Serializable {
 	private TipoStatusFemea status;
 
 	/** O atributo lista classificacao. */
-	@OneToMany(mappedBy = "animal", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "animal", fetch = FetchType.EAGER)
 	private List<ClassificacaoLinear> listaClassificacao;
 
-	
 	/**
 	 * Get lista classificacao.
 	 * 
@@ -100,7 +99,8 @@ public class Animal implements Serializable {
 	 *            - lista classificacao.
 	 * @see Animal#listaClassificacao.
 	 */
-	public void setListaClassificacao(List<ClassificacaoLinear> listaClassificacao) {
+	public void setListaClassificacao(
+			List<ClassificacaoLinear> listaClassificacao) {
 		this.listaClassificacao = listaClassificacao;
 	}
 

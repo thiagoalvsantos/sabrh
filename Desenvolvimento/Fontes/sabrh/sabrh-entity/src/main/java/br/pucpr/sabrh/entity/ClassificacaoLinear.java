@@ -131,7 +131,7 @@ public class ClassificacaoLinear implements Serializable {
 
 	/** O atributo pontucao pernas pes. */
 	@Column(name = "VL_PONT_PERNAS_PES", nullable = false)
-	private short pontucaoPernasPes;
+	private short pontuacaoPernasPes;
 
 	// /////////////////////////
 	//
@@ -608,24 +608,24 @@ public class ClassificacaoLinear implements Serializable {
 	}
 
 	/**
-	 * Get pontucao pernas pes.
+	 * Get ponatucao pernas pes.
 	 * 
-	 * @return the pontucao pernas pes
-	 * @see ClassificacaoLinear#pontucaoPernasPes.
+	 * @return the pontuacao pernas pes
+	 * @see ClassificacaoLinear#pontuacaoPernasPes.
 	 */
-	public short getPontucaoPernasPes() {
-		return pontucaoPernasPes;
+	public short getPontuacaoPernasPes() {
+		return pontuacaoPernasPes;
 	}
 
 	/**
-	 * Set pontucao pernas pes.
+	 * Set pontuacao pernas pes.
 	 * 
-	 * @param pontucaoPernasPes
+	 * @param pontuacaoPernasPes
 	 *            - pontucao pernas pes.
-	 * @see ClassificacaoLinear#pontucaoPernasPes.
+	 * @see ClassificacaoLinear#pontuacaoPernasPes.
 	 */
-	public void setPontucaoPernasPes(short pontucaoPernasPes) {
-		this.pontucaoPernasPes = pontucaoPernasPes;
+	public void setPontuacaoPernasPes(short pontuacaoPernasPes) {
+		this.pontuacaoPernasPes = pontuacaoPernasPes;
 	}
 
 	/**
