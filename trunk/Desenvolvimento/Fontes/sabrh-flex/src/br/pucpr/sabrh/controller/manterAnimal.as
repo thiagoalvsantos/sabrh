@@ -147,6 +147,14 @@ protected function btnClickClassificacaoLinear(event:MouseEvent):void
 	PopUpManager.centerPopUp(this);
 }
 
+
+
+protected function btnClickExcluirClassificacao():void
+{
+
+	classificacaoLinearService.excluir(classificacaoLinearSelecionada);
+}
+
 /**
  * Limpa dados de novo.
  *
@@ -224,6 +232,7 @@ protected function btnClickNovaClassificacao():void
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_EDITAR;
 	// Limpar os campos para uma nova classificação
 
+	btnClassificacaoExcluir.visible=false;
 	//Dados Gerais
 	txtClassificacaoDataClassificacao.selectedDate=null;
 	txtClassificacaoLactacao.value=1;
@@ -666,6 +675,8 @@ protected function gridClickResultadoClassificacao(event:ListEvent):void
 	// Classificação Final
 	txtClassificacaoPontuacaoFinal.text=classificacaoLinearSelecionada.pontuacaoFinal.toString();
 	txtClassificacaoClassificacaoFinal.text=classificacaoLinearSelecionada.classificacaoFinal;
+
+	btnClassificacaoExcluir.visible=true;
 
 	txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
 	PopUpManager.centerPopUp(this);

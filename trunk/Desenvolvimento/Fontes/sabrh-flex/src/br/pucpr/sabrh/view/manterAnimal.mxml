@@ -16,6 +16,7 @@
 		<s:RemoteObject id="classificacaoLinearService" fault="onFault(event)" destination="ClassificacaoLinearService" showBusyCursor="true">
 			<s:method name="salvar" result="{serviceResultSalvarClassificacao(event)}"/>
 			<s:method name="pesquisar" result="{serviceResultPesquisarClassificacaoLinear(event)}"/>
+			<s:method name="excluir" result="{serviceResultSalvarClassificacao(event)}"/>
 		</s:RemoteObject>
 
 		<fx:Array id="val">
@@ -614,9 +615,9 @@
 					</s:VGroup>
 
 					<s:controlBarContent>
-						<s:Button label="Salvar" click="{btnClickSalvarClassificacao()}" buttonMode="true" tabIndex="32"/>
-						<s:Button label="Excuir" click="{btnClickVoltarClassificacaoLista()}" buttonMode="true" tabIndex="33"/>
 						<s:Button label="Voltar" click="{btnClickVoltarClassificacaoLista()}" buttonMode="true" tabIndex="34"/>
+						<s:Button label="Salvar" click="{btnClickSalvarClassificacao()}" buttonMode="true" tabIndex="32"/>
+						<s:Button label="Excuir" click="{btnClickExcluirClassificacao()}" buttonMode="true" tabIndex="33" id="btnClassificacaoExcluir"/>
 					</s:controlBarContent>
 				</s:Panel>
 			</s:VGroup>
