@@ -24,6 +24,71 @@ public var maeDefault:Animal;
 
 public var paiDefault:Animal;
 
+//Função que recebe o retorno da consulta de Animais.
+public function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:String, tipoAnimal:String, animal:Animal):void
+{
+	atributoDestino.text=animal.nome;
+
+	if (tipoConsulta == "novo")
+	{
+		if (tipoAnimal == "pai")
+		{
+			paiNovo=animal;
+		}
+		else if (tipoAnimal == "mae")
+		{
+			maeNovo=animal;
+		}
+	}
+	else
+	{
+		if (tipoConsulta == "pesquisa")
+		{
+//			if (tipoAnimal == "pai")
+//			{
+//				paiPesquisa=animal;
+//			}
+//			else if (tipoAnimal == "mae")
+//			{
+//				maePesquisa=animal;
+//			}
+		}
+	}
+}
+
+//Função que recebe o retorno da consulta de Propriedade.
+public function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsulta:String, propriedade:Propriedade):void
+{
+	atributoDestino.text=propriedade.nome;
+
+	if (tipoConsulta == "novo")
+	{
+		propriedadeNovo=propriedade;
+	}
+	else
+	{
+		if (tipoConsulta == "pesquisa")
+		{
+			propriedadePesquisa=propriedade;
+			proprietarioPesquisa=propriedade.proprietario;
+			txtPesquisaProprietario.text=proprietarioPesquisa.nome;
+			btnPesquisaBuscarProprietario.enabled=false;
+		}
+	}
+
+}
+
+//Função que recebe o retorno da consulta de Usuário.
+public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
+{
+	atributoDestino.text=usuario.nome;
+
+	if (tipoConsulta == "pesquisa")
+	{
+		proprietarioPesquisa=usuario;
+	}
+}
+
 //Função para abrir a tela de Consultar Animais.
 protected function abrirConsultarAnimal(atributo:TextInput, tipoConsulta:String, tipoAnimal:String):void
 {
@@ -284,17 +349,19 @@ protected function btnClickSalvar():void
 
 }
 
-protected function btnClickVoltarClassificacaoLista():void
-{
-	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
-}
-
 protected function btnClickSalvarClassificacao():void
 {
 	if (validarClassificacaoLinear())
 	{
-		var classificacaoLinear:ClassificacaoLinear=new ClassificacaoLinear();
-
+		var classificacaoLinear:ClassificacaoLinear;
+		if (classificacaoLinearSelecionada == null)
+		{
+			classificacaoLinear=new ClassificacaoLinear();
+		}
+		else
+		{
+			classificacaoLinear=classificacaoLinearSelecionada;
+		}
 		classificacaoLinear.dataClassificacao=txtClassificacaoDataClassificacao.selectedDate;
 		classificacaoLinear.lactacao=txtClassificacaoLactacao.value;
 
@@ -320,7 +387,7 @@ protected function btnClickSalvarClassificacao():void
 		classificacaoLinear.qualidadeOssea=new Number(txtClassificacaoQualidadeOssea.text);
 		classificacaoLinear.pernasPostVistaLateral=new Number(txtClassificacaoPernasPostLateral.text);
 		classificacaoLinear.pernasPostVistaPost=new Number(txtClassificacaoPernasPostPosterior.text);
-		classificacaoLinear.pontucaoPernasPes=new Number(txtClassificacaoTotalPernasPes.text);
+		classificacaoLinear.pontuacaoPernasPes=new Number(txtClassificacaoTotalPernasPes.text);
 
 		//Sistema Mamário
 		classificacaoLinear.profundidadeUbere=new Number(txtClassificacaoProfundidadeUbere.text);
@@ -342,6 +409,11 @@ protected function btnClickSalvarClassificacao():void
 
 		classificacaoLinearService.salvar(classificacaoLinear);
 	}
+}
+
+protected function btnClickVoltarClassificacaoLista():void
+{
+	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
 }
 
 protected function btnClickVoltarDetalhe():void
@@ -460,6 +532,53 @@ protected function gridClickResultado(event:ListEvent):void
 protected function gridClickResultadoClassificacao(event:ListEvent):void
 {
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_EDITAR;
+
+	classificacaoLinearSelecionada=event.currentTarget.selectedItem;
+
+	//Dados Gerais
+	txtClassificacaoDataClassificacao.selectedDate=classificacaoLinearSelecionada.dataClassificacao;
+	txtClassificacaoLactacao.value=classificacaoLinearSelecionada.lactacao;
+
+	//Força Leiteira
+	txtClassificacaoEstatura.text=classificacaoLinearSelecionada.estatura.toString();
+	txtClassificacaoNivLinhaSup.text=classificacaoLinearSelecionada.nivelamentoNivelSuperior.toString();
+	txtClassificacaoLarguraPeito.text=classificacaoLinearSelecionada.larguraPeito.toString();
+	txtClassificacaoProfCorporal.text=classificacaoLinearSelecionada.profundidadeCorporal.toString();
+	txtClassificacaoAngulosidade.text=classificacaoLinearSelecionada.angulosidade.toString();
+	txtClassificacaoEscoreCorporal.text=classificacaoLinearSelecionada.escoreCorporal.toString();
+	txtClassificacaoTotalForcaLeiteira.text=classificacaoLinearSelecionada.pontuacaoForcaLeiteira.toString();
+
+	//Garupa
+	txtClassificacaoAnguloGarupa.text=classificacaoLinearSelecionada.anguloGarupa.toString();
+	txtClassificacaoLarguraGarupa.text=classificacaoLinearSelecionada.larguraGarupa.toString();
+	txtClassificacaoForcaLombo.text=classificacaoLinearSelecionada.forcaLombo.toString();
+	txtClassificacaoTotalGarupa.text=classificacaoLinearSelecionada.pontuacaoGarupa.toString();
+
+	//Pernas e Pés
+	txtClassificacaoAnguloCasco.text=classificacaoLinearSelecionada.anguloCasco.toString();
+	txtClassificacaoProfundidadeTalao.text=classificacaoLinearSelecionada.profundidadeTalao.toString();
+	txtClassificacaoQualidadeOssea.text=classificacaoLinearSelecionada.qualidadeOssea.toString();
+	txtClassificacaoPernasPostLateral.text=classificacaoLinearSelecionada.pernasPostVistaLateral.toString();
+	txtClassificacaoPernasPostPosterior.text=classificacaoLinearSelecionada.pernasPostVistaPost.toString();
+	txtClassificacaoTotalPernasPes.text=classificacaoLinearSelecionada.pontuacaoPernasPes.toString();
+	
+	//Sistema Mamário
+	txtClassificacaoProfundidadeUbere.text=classificacaoLinearSelecionada.profundidadeUbere.toString();
+	txtClassificacaoTexturaUbere.text=classificacaoLinearSelecionada.texturaUbere.toString();
+	txtClassificacaoLigamentoMedio.text=classificacaoLinearSelecionada.ligamentoMedio.toString();
+	txtClassificacaoInsersaoUbereAnt.text=classificacaoLinearSelecionada.insercaoUbereAnterior.toString();
+	txtClassificacaoColocacaoTetosAnt.text=classificacaoLinearSelecionada.colocacaoTetosAnteriores.toString();
+	txtClassificacaoAlturaUberePost.text=classificacaoLinearSelecionada.alturaUberePosterior.toString();
+	txtClassificacaoLarguraUberePost.text=classificacaoLinearSelecionada.larguraUberePosterior.toString();
+	txtClassificacaoColocacaoTetosPost.text=classificacaoLinearSelecionada.colocacaoTetosPosteriores.toString();
+	txtClassificacaoComprimentoTetos.text=classificacaoLinearSelecionada.comprimentoTetos.toString();
+	txtClassificacaoTotalSistemaMamario.text=classificacaoLinearSelecionada.pontuacaoSistemaMamario.toString();
+
+	// Classificação Final
+	txtClassificacaoPontuacaoFinal.text=classificacaoLinearSelecionada.pontuacaoFinal.toString();
+	txtClassificacaoClassificacaoFinal.text=classificacaoLinearSelecionada.classificacaoFinal;
+	
+	PopUpManager.centerPopUp(this);
 }
 
 /**
@@ -536,68 +655,17 @@ protected function onFault(event:FaultEvent):void
 	Alert.show(event.fault.rootCause.message);
 }
 
-//Função que recebe o retorno da consulta de Animais.
-public function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:String, tipoAnimal:String, animal:Animal):void
+protected function radioChangeNovoSexo():void
 {
-	atributoDestino.text=animal.nome;
-
-	if (tipoConsulta == "novo")
+	if (radioGroupNovoSexo.selectedValue == ConstantesUtils.SEXO_FEMEA)
 	{
-		if (tipoAnimal == "pai")
-		{
-			paiNovo=animal;
-		}
-		else if (tipoAnimal == "mae")
-		{
-			maeNovo=animal;
-		}
+		novoStatusFemea.visible=true;
+		numValStatusFemea.enabled=true;
 	}
 	else
 	{
-		if (tipoConsulta == "pesquisa")
-		{
-//			if (tipoAnimal == "pai")
-//			{
-//				paiPesquisa=animal;
-//			}
-//			else if (tipoAnimal == "mae")
-//			{
-//				maePesquisa=animal;
-//			}
-		}
-	}
-}
-
-//Função que recebe o retorno da consulta de Propriedade.
-public function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsulta:String, propriedade:Propriedade):void
-{
-	atributoDestino.text=propriedade.nome;
-
-	if (tipoConsulta == "novo")
-	{
-		propriedadeNovo=propriedade;
-	}
-	else
-	{
-		if (tipoConsulta == "pesquisa")
-		{
-			propriedadePesquisa=propriedade;
-			proprietarioPesquisa=propriedade.proprietario;
-			txtPesquisaProprietario.text=proprietarioPesquisa.nome;
-			btnPesquisaBuscarProprietario.enabled=false;
-		}
-	}
-
-}
-
-//Função que recebe o retorno da consulta de Usuário.
-public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
-{
-	atributoDestino.text=usuario.nome;
-
-	if (tipoConsulta == "pesquisa")
-	{
-		proprietarioPesquisa=usuario;
+		novoStatusFemea.visible=false;
+		numValStatusFemea.enabled=false;
 	}
 }
 
@@ -679,6 +747,13 @@ protected function serviceResultAnimalSalvar(event:ResultEvent):void
 	panelSucesso.visible=true;
 }
 
+protected function serviceResultPesquisarClassificacaoLinear(event:ResultEvent):void
+{
+	var listaClassificacao:ArrayCollection=event.result as ArrayCollection;
+	dataGridResultadoClassificacao.dataProvider=listaClassificacao;
+
+}
+
 
 /**
  * Resultado da pesquisa de animal padrao
@@ -698,13 +773,7 @@ protected function serviceResultRecuperarAnimalPadrao(event:ResultEvent):void
 protected function serviceResultSalvarClassificacao(event:ResultEvent):void
 {
 	btnClickClassificacaoLinear(null);
-}
-
-protected function serviceResultPesquisarClassificacaoLinear(event:ResultEvent):void
-{
-	var listaClassificacao:ArrayCollection=event.result as ArrayCollection;
-	dataGridResultadoClassificacao.dataProvider=listaClassificacao;
-
+	animalSelecionado = null;
 }
 
 
@@ -767,6 +836,7 @@ protected function validarClassificacaoLinear():Boolean
 	else
 	{
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
+		scroll.viewport.verticalScrollPosition=0;
 	}
 	panelErrorClassificacao.visible=true;
 
@@ -801,16 +871,10 @@ protected function voltarPesquisa():void
 	}
 }
 
-protected function radioChangeNovoSexo():void
+protected function labelFunctionDataClassificacao(item:Object, column:AdvancedDataGridColumn):String
 {
-	if (radioGroupNovoSexo.selectedValue == ConstantesUtils.SEXO_FEMEA)
-	{
-		novoStatusFemea.visible=true;
-		numValStatusFemea.enabled=true;
-	}
-	else
-	{
-		novoStatusFemea.visible=false;
-		numValStatusFemea.enabled=false;
-	}
+	var dateFormat:DateFormatter=new DateFormatter();
+	dateFormat.formatString="DD/MM/YYYY";
+
+	return dateFormat.format(item.dataClassificacao);
 }

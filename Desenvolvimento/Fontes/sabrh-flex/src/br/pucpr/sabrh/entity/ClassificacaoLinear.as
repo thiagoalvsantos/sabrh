@@ -25,7 +25,7 @@ package br.pucpr.sabrh.entity
 		public var qualidadeOssea:Number;
 		public var pernasPostVistaLateral:Number;
 		public var pernasPostVistaPost:Number;
-		public var pontucaoPernasPes:Number;
+		public var pontuacaoPernasPes:Number;
 		public var profundidadeUbere:Number;
 		public var texturaUbere:Number;
 		public var ligamentoMedio:Number;
