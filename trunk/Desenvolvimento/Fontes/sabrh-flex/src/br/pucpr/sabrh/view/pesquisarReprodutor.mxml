@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow width="900" maxHeight="600" maxWidth="800" creationComplete="init()" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Pesquisar Reprodutor ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
+
+	<fx:Script source="../controller/pesquisarReprodutor.as"/>
+
+	<fx:Declarations>
+
+		<s:RemoteObject id="animalService" fault="" destination="AnimalService" showBusyCursor="true">
+			<s:method name="pesquisar" result=""/>
+			<s:method name="salvar" result=""/>
+			<s:method name="recuperarAnimalPadrao" result=""/>
+		</s:RemoteObject>
+
+		<s:Parallel id="exibeMensagemParallel">
+			<s:Fade alphaFrom="0" alphaTo="1"/>
+			<s:Resize heightFrom="0" heightTo="40"/>
+		</s:Parallel>
+
+		<s:Parallel id="escondeMensagemParallel">
+			<s:Fade alphaFrom="1" alphaTo="0"/>
+			<s:Resize heightFrom="40" heightTo="0"/>
+		</s:Parallel>
+		
+		<fx:Array id="listaAtributoProducao">
+			<fx:Object abrituto="Quantidade de Filhas"/>
+			<fx:Object abrituto="Percentual de Proteina"/>
+			<fx:Object abrituto="Percentual de Gordura"/>
+			<fx:Object abrituto="Kg de Leite"/>
+		</fx:Array>
+
+		<fx:Array id="listaAtributoConformacao">
+			<fx:Object atributo="Altura Úbere Posterior"/>
+			<fx:Object atributo="Ângulo do Casco"/>
+			<fx:Object atributo="Ângulo Garupa"/>
+			<fx:Object atributo="Angulosidade"/>
+			<fx:Object atributo="Colocação de Tetos Anteriores"/>
+			<fx:Object atributo="Colocação de Tetos Posteriores"/>
+			<fx:Object atributo="Comprimento Tetos"/>
+			<fx:Object atributo="Estatura"/>
+			<fx:Object atributo="Inserção Úbere Anterior"/>
+			<fx:Object atributo="Largura da Garupa"/>
+			<fx:Object atributo="Largura do Peito"/>
+			<fx:Object atributo="Largura Úbere Posterior"/>
+			<fx:Object atributo="Ligamento Médio"/>
+			<fx:Object atributo="Pernas Posteriores - Vista Lateral"/>
+			<fx:Object atributo="Pernas Posteriores - Vista Posterior"/>
+			<fx:Object atributo="Profundidade Corporal"/>
+			<fx:Object atributo="Profundidade do Úbere"/>
+			<fx:Object atributo="Score Pernas e Pés"/>
+		</fx:Array>
+		
+		<s:ArrayCollection id="arrayAtributoConformacao" source="{listaAtributoConformacao}" />
+		<s:ArrayCollection id="arrayAtributoConformacaoSelecionado" />
+		
+	</fx:Declarations>
+
+
+	<s:states>
+		<s:State name="statePesquisa"/>
+		<s:State name="stateNovo"/>
+		<s:State name="stateResultado"/>
+		<s:State name="stateDetalhe"/>
+		<s:State name="stateEditar"/>
+	</s:states>
+
+	<s:Scroller width="100%" height="100%">
+		<s:Group maxWidth="900" maxHeight="500" width="100%">
+
+			<!--//////////////////////////
+				 //	PESQUISA
+				 /////////////////////////////-->
+			<s:VGroup id="groupPesquisa" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="statePesquisa,stateResultado">
+				<!--//////////////////////////
+					 //	FILTRO - PESQUISA
+					 /////////////////////////////-->
+				<s:Panel id="panelPesquisa" width="100%" title="Pesquisa" includeIn="statePesquisa,stateResultado">
+					<mx:Canvas left="5" right="5" top="5" bottom="5">
+						<s:HGroup x="10" y="15" gap="16">
+							<mx:DataGrid id="dataGridConformacao" width="240" dataProvider="{arrayAtributoConformacao}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" verticalScrollPolicy="on" dragDrop="verificaLimiteDataGrid()">
+								<mx:columns>
+									<mx:DataGridColumn dataField="atributo" headerText="Atributos de Conformação"/>
+								</mx:columns>
+							</mx:DataGrid>
+							<s:VGroup height="100%" verticalAlign="middle">
+								<s:Button label=">" buttonMode="true" width="29" height="29"/>
+								<s:Button label=">" buttonMode="true" rotation="180" width="29" height="29"/>
+							</s:VGroup>
+							<mx:DataGrid id="dataGridConformacaoSelecionado" width="240" dataProvider="{arrayAtributoConformacaoSelecionado}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" x="10" y="250" dragDrop="verificaLimiteDataGrid()">
+								<mx:columns>
+									<mx:DataGridColumn dataField="atributo" headerText="Atributos de Conformação"/>
+								</mx:columns>
+							</mx:DataGrid>
+							<s:VGroup height="100%" verticalAlign="middle" paddingLeft="-10">
+								<s:Button label=">" buttonMode="true" rotation="-90" width="29" height="29"/>
+								<s:Button label=">" buttonMode="true" rotation="90" width="29" height="29"/>
+							</s:VGroup>
+						</s:HGroup>
+					</mx:Canvas>
+					<s:controlBarContent>
+						<s:Button label="Pesquisar" click="" tabIndex.statePesquisa="9" buttonMode="true"/>
+						<s:Button label="Novo" click="" tabIndex.statePesquisa="10" buttonMode="true"/>
+						<s:Button label="Limpar" click="" tabIndex.statePesquisa="11" buttonMode="true"/>
+					</s:controlBarContent>
+				</s:Panel>
+				<!--//////////////////////////
+					 //	RESULTADO - PESQUISA
+					 /////////////////////////////-->
+				<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
+					<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat">
+						<mx:columns>
+							<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="true" dataField="registro"/>
+							<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" sortable="true" dataField="nome"/>
+							<mx:AdvancedDataGridColumn textAlign="left" headerText="Apelido" sortable="true" dataField="apelido"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Sexo" sortable="true" dataField="sexo"/>
+						</mx:columns>
+					</mx:AdvancedDataGrid>
+				</s:Panel>
+			</s:VGroup>
+		</s:Group>
+	</s:Scroller>
+</s:TitleWindow>
