@@ -1,3 +1,4 @@
+import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.events.CloseEvent;
 import mx.managers.PopUpManager;
@@ -22,3 +23,4 @@ protected function verificaLimiteDataGrid():void
 {
 	Alert.show(""+dataGridConformacaoSelecionado.data);
 }
+
