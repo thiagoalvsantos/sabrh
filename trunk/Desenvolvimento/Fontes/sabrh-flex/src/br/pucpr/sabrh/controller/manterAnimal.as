@@ -1,10 +1,4 @@
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.ClassificacaoLinear;
-import br.pucpr.sabrh.entity.Propriedade;
-
 import flash.events.MouseEvent;
-
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.core.FlexGlobals;
@@ -17,7 +11,10 @@ import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
-
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.ClassificacaoLinear;
+import br.pucpr.sabrh.entity.Propriedade;
 import spark.components.NavigatorContent;
 
 public var maeDefault:Animal;
@@ -223,7 +220,99 @@ protected function btnClickLimparPesquisa():void
 
 protected function btnClickNovaClassificacao():void
 {
+	classificacaoLinearSelecionada=null;
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_EDITAR;
+	// Limpar os campos para uma nova classificação
+
+	//Dados Gerais
+	txtClassificacaoDataClassificacao.selectedDate=null;
+	txtClassificacaoLactacao.value=1;
+
+	//Força Leiteira
+	txtClassificacaoEstatura.text=null;
+	txtClassificacaoNivLinhaSup.text=null;
+	txtClassificacaoLarguraPeito.text=null;
+	txtClassificacaoProfCorporal.text=null;
+	txtClassificacaoAngulosidade.text=null;
+	txtClassificacaoEscoreCorporal.text=null;
+	txtClassificacaoTotalForcaLeiteira.text=null;
+
+	//Garupa
+	txtClassificacaoAnguloGarupa.text=null;
+	txtClassificacaoLarguraGarupa.text=null;
+	txtClassificacaoForcaLombo.text=null;
+	txtClassificacaoTotalGarupa.text=null;
+
+	//Pernas e Pés
+	txtClassificacaoAnguloCasco.text=null;
+	txtClassificacaoProfundidadeTalao.text=null;
+	txtClassificacaoQualidadeOssea.text=null;
+	txtClassificacaoPernasPostLateral.text=null;
+	txtClassificacaoPernasPostPosterior.text=null;
+	txtClassificacaoTotalPernasPes.text=null;
+
+	//Sistema Mamário
+	txtClassificacaoProfundidadeUbere.text=null;
+	txtClassificacaoTexturaUbere.text=null;
+	txtClassificacaoLigamentoMedio.text=null;
+	txtClassificacaoInsersaoUbereAnt.text=null;
+	txtClassificacaoColocacaoTetosAnt.text=null;
+	txtClassificacaoAlturaUberePost.text=null;
+	txtClassificacaoLarguraUberePost.text=null;
+	txtClassificacaoColocacaoTetosPost.text=null;
+	txtClassificacaoComprimentoTetos.text=null;
+	txtClassificacaoTotalSistemaMamario.text=null;
+
+	// Classificação Final
+	txtClassificacaoPontuacaoFinal.text=null;
+	txtClassificacaoClassificacaoFinal.text=null;
+
+	//Limpar as mensagens de erro
+
+	//Dados Gerais
+	txtClassificacaoDataClassificacao.errorString=null;
+	txtClassificacaoLactacao.errorString=null;
+
+	//Força Leiteira
+	txtClassificacaoEstatura.errorString=null;
+	txtClassificacaoNivLinhaSup.errorString=null;
+	txtClassificacaoLarguraPeito.errorString=null;
+	txtClassificacaoProfCorporal.errorString=null;
+	txtClassificacaoAngulosidade.errorString=null;
+	txtClassificacaoEscoreCorporal.errorString=null;
+	txtClassificacaoTotalForcaLeiteira.errorString=null;
+
+	//Garupa
+	txtClassificacaoAnguloGarupa.errorString=null;
+	txtClassificacaoLarguraGarupa.errorString=null;
+	txtClassificacaoForcaLombo.errorString=null;
+	txtClassificacaoTotalGarupa.errorString=null;
+
+	//Pernas e Pés
+	txtClassificacaoAnguloCasco.errorString=null;
+	txtClassificacaoProfundidadeTalao.errorString=null;
+	txtClassificacaoQualidadeOssea.errorString=null;
+	txtClassificacaoPernasPostLateral.errorString=null;
+	txtClassificacaoPernasPostPosterior.errorString=null;
+	txtClassificacaoTotalPernasPes.errorString=null;
+
+	//Sistema Mamário
+	txtClassificacaoProfundidadeUbere.errorString=null;
+	txtClassificacaoTexturaUbere.errorString=null;
+	txtClassificacaoLigamentoMedio.errorString=null;
+	txtClassificacaoInsersaoUbereAnt.errorString=null;
+	txtClassificacaoColocacaoTetosAnt.errorString=null;
+	txtClassificacaoAlturaUberePost.errorString=null;
+	txtClassificacaoLarguraUberePost.errorString=null;
+	txtClassificacaoColocacaoTetosPost.errorString=null;
+	txtClassificacaoComprimentoTetos.errorString=null;
+	txtClassificacaoTotalSistemaMamario.errorString=null;
+
+	// Classificação Final
+	txtClassificacaoPontuacaoFinal.errorString=null;
+	txtClassificacaoClassificacaoFinal.errorString=null;
+
+	txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
 	PopUpManager.centerPopUp(this);
 }
 
@@ -561,7 +650,7 @@ protected function gridClickResultadoClassificacao(event:ListEvent):void
 	txtClassificacaoPernasPostLateral.text=classificacaoLinearSelecionada.pernasPostVistaLateral.toString();
 	txtClassificacaoPernasPostPosterior.text=classificacaoLinearSelecionada.pernasPostVistaPost.toString();
 	txtClassificacaoTotalPernasPes.text=classificacaoLinearSelecionada.pontuacaoPernasPes.toString();
-	
+
 	//Sistema Mamário
 	txtClassificacaoProfundidadeUbere.text=classificacaoLinearSelecionada.profundidadeUbere.toString();
 	txtClassificacaoTexturaUbere.text=classificacaoLinearSelecionada.texturaUbere.toString();
@@ -577,7 +666,8 @@ protected function gridClickResultadoClassificacao(event:ListEvent):void
 	// Classificação Final
 	txtClassificacaoPontuacaoFinal.text=classificacaoLinearSelecionada.pontuacaoFinal.toString();
 	txtClassificacaoClassificacaoFinal.text=classificacaoLinearSelecionada.classificacaoFinal;
-	
+
+	txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
 	PopUpManager.centerPopUp(this);
 }
 
@@ -600,6 +690,14 @@ protected function init(event:FlexEvent):void
 
 	txtPesquisaRegistroAnimal.focusManager.setFocus(txtPesquisaRegistroAnimal);
 
+}
+
+protected function labelFunctionDataClassificacao(item:Object, column:AdvancedDataGridColumn):String
+{
+	var dateFormat:DateFormatter=new DateFormatter();
+	dateFormat.formatString="DD/MM/YYYY";
+
+	return dateFormat.format(item.dataClassificacao);
 }
 
 protected function listarStatusFemeaResult(event:ResultEvent):void
@@ -773,7 +871,7 @@ protected function serviceResultRecuperarAnimalPadrao(event:ResultEvent):void
 protected function serviceResultSalvarClassificacao(event:ResultEvent):void
 {
 	btnClickClassificacaoLinear(null);
-	animalSelecionado = null;
+	classificacaoLinearSelecionada=null;
 }
 
 
@@ -869,12 +967,4 @@ protected function voltarPesquisa():void
 	{
 		panelSucesso.visible=false;
 	}
-}
-
-protected function labelFunctionDataClassificacao(item:Object, column:AdvancedDataGridColumn):String
-{
-	var dateFormat:DateFormatter=new DateFormatter();
-	dateFormat.formatString="DD/MM/YYYY";
-
-	return dateFormat.format(item.dataClassificacao);
 }
