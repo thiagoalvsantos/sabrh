@@ -65,7 +65,6 @@ protected function btnClickMoverDireita():void
 	{
 		var index:int=arrayAtributoConformacao.getItemIndex(itemSelecionado);
 		arrayAtributoConformacaoSelecionado.addItem(itemSelecionado);
-		//ordenarLista("atributo", arrayAtributoConformacaoSelecionado);
 		arrayAtributoConformacao.removeItemAt(index);
 	}
 }
