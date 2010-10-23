@@ -43,10 +43,9 @@ public class ClassificacaoLinear implements Serializable {
 	@Column(name = "DT_CLASSIFICACAO", nullable = false)
 	private Date dataClassificacao;
 
-	/** O atributo data parto. */
-	@Temporal(value = TemporalType.DATE)
-	@Column(name = "DT_PARTO", nullable = false)
-	private Date dataParto;
+	/** O atributo lactacao. */
+	@Column(name = "VL_LACTACAO", nullable = false)
+	private short lactacao;
 
 	// /////////////////////////
 	//
@@ -252,34 +251,34 @@ public class ClassificacaoLinear implements Serializable {
 	}
 
 	/**
-	 * Get data parto.
-	 * 
-	 * @return the data parto
-	 * @see ClassificacaoLinear#dataParto.
-	 */
-	public Date getDataParto() {
-		return dataParto;
-	}
-
-	/**
-	 * Set data parto.
-	 * 
-	 * @param dataParto
-	 *            - data parto.
-	 * @see ClassificacaoLinear#dataParto.
-	 */
-	public void setDataParto(Date dataParto) {
-		this.dataParto = dataParto;
-	}
-
-	/**
-	 * Get estatura.
+	 * /** Get estatura.
 	 * 
 	 * @return the estatura
 	 * @see ClassificacaoLinear#estatura.
 	 */
 	public short getEstatura() {
 		return estatura;
+	}
+
+	/**
+	 * Get lactacao.
+	 * 
+	 * @return the lactacao
+	 * @see ClassificacaoLinear#lactacao.
+	 */
+	public short getLactacao() {
+		return lactacao;
+	}
+
+	/**
+	 * Set lactacao.
+	 * 
+	 * @param lactacao
+	 *            - lactacao.
+	 * @see ClassificacaoLinear#lactacao.
+	 */
+	public void setLactacao(short lactacao) {
+		this.lactacao = lactacao;
 	}
 
 	/**

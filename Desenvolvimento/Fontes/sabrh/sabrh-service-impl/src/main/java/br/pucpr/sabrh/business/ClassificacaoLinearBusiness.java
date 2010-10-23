@@ -24,8 +24,8 @@ import br.pucpr.sabrh.services.ClassificacaoLinearService;
  */
 @Stateless(name = "ClassificacaoLinearService")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-public class ClassificacaoLinearBusiness implements ClassificacaoLinearService{
-	
+public class ClassificacaoLinearBusiness implements ClassificacaoLinearService {
+
 	/** O atributo dao. */
 	@EJB
 	private ClassificacaoLinearDAO dao;
@@ -51,20 +51,41 @@ public class ClassificacaoLinearBusiness implements ClassificacaoLinearService{
 		this.dao = dao;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.pucpr.sabrh.services.ClassificacaoLinearService#pesquisar(br.pucpr.sabrh.entity.Animal)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.ClassificacaoLinearService#pesquisar(br.pucpr
+	 * .sabrh.entity.Animal)
 	 */
 	@Override
 	public List<ClassificacaoLinear> pesquisar(Animal animal) {
 		return dao.pesquisar(animal);
 	}
 
-	/* (non-Javadoc)
-	 * @see br.pucpr.sabrh.services.ClassificacaoLinearService#salvar(br.pucpr.sabrh.entity.ClassificacaoLinear)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.ClassificacaoLinearService#salvar(br.pucpr.sabrh
+	 * .entity.ClassificacaoLinear)
 	 */
 	@Override
 	public ClassificacaoLinear salvar(ClassificacaoLinear classificacaoLinear) {
 		return dao.salvar(classificacaoLinear);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.ClassificacaoLinearService#excluir(br.pucpr.sabrh
+	 * .entity.ClassificacaoLinear)
+	 */
+	@Override
+	public void excluir(ClassificacaoLinear classificacaoLinear) {
+		dao.excluir(classificacaoLinear);
+
 	}
 
 }
