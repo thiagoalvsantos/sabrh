@@ -32,7 +32,7 @@ public class Usuario implements Serializable {
 	/** O atributo codigo. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(initialValue = 0, sequenceName = "SEQ_USUARIO", name = "codigo")
+	@SequenceGenerator(initialValue = 1, sequenceName = "SEQ_USUARIO", name = "codigo")
 	@Column(name = "CD_CODIGO", length = 8)
 	private Long codigo;
 
