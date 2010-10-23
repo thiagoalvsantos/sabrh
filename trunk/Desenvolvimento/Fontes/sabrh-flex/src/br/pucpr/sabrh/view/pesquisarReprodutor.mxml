@@ -20,7 +20,7 @@
 			<s:Fade alphaFrom="1" alphaTo="0"/>
 			<s:Resize heightFrom="40" heightTo="0"/>
 		</s:Parallel>
-		
+
 		<fx:Array id="listaAtributoProducao">
 			<fx:Object abrituto="Quantidade de Filhas"/>
 			<fx:Object abrituto="Percentual de Proteina"/>
@@ -48,10 +48,10 @@
 			<fx:Object atributo="Profundidade do Úbere"/>
 			<fx:Object atributo="Score Pernas e Pés"/>
 		</fx:Array>
-		
+
 		<s:ArrayCollection id="arrayAtributoConformacao" source="{listaAtributoConformacao}"/>
 		<s:ArrayCollection id="arrayAtributoConformacaoSelecionado" collectionChange="verificaLimiteDataGrid()"/>
-		
+
 	</fx:Declarations>
 
 
@@ -76,7 +76,7 @@
 				<s:Panel id="panelPesquisa" width="100%" title="Pesquisa" includeIn="statePesquisa,stateResultado">
 					<mx:Canvas left="5" right="5" top="5" bottom="5">
 						<s:HGroup x="10" y="15" gap="16">
-							<mx:DataGrid id="dataGridConformacao" width="240" dataProvider="{arrayAtributoConformacao}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" verticalScrollPolicy="on">
+							<mx:DataGrid id="dataGridConformacao" width="240" dataProvider="{arrayAtributoConformacao}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" verticalScrollPolicy="on" doubleClickEnabled="false" doubleClick="btnClickMoverDireita()">
 								<mx:columns>
 									<mx:DataGridColumn dataField="atributo" headerText="Atributos de Conformação"/>
 								</mx:columns>
@@ -85,7 +85,7 @@
 								<s:Button id="btnMoverDireita" label=">" buttonMode="true" width="29" height="29" click="btnClickMoverDireita()"/>
 								<s:Button id="btnMoverEsquerda" label=">" buttonMode="true" rotation="180" width="29" height="29" click="btnClickMoverEsquerda()"/>
 							</s:VGroup>
-							<mx:DataGrid id="dataGridConformacaoSelecionado" width="240" dataProvider="{arrayAtributoConformacaoSelecionado}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" x="10" y="250">
+							<mx:DataGrid id="dataGridConformacaoSelecionado" width="240" dataProvider="{arrayAtributoConformacaoSelecionado}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" x="10" y="250" doubleClickEnabled="true" doubleClick="btnClickMoverEsquerda()">
 								<mx:columns>
 									<mx:DataGridColumn dataField="atributo" headerText="Atributos para Pesquisa"/>
 								</mx:columns>
