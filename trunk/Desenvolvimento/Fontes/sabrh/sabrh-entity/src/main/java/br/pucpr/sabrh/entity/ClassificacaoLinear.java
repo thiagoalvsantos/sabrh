@@ -8,9 +8,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +32,9 @@ public class ClassificacaoLinear implements Serializable {
 
 	/** O atributo codigo. */
 	@Id
-	@Column(name = "CODIGO")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(initialValue = 1, sequenceName = "SEQ_CLASSIFICACAO", name = "codigo")
+	@Column(name = "CD_CODIGO")
 	private long codigo;
 
 	/** O atributo animal. */
