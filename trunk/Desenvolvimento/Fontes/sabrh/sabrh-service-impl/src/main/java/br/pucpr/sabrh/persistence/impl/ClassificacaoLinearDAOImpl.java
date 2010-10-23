@@ -16,6 +16,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
+
 import br.pucpr.sabrh.entity.Animal;
 import br.pucpr.sabrh.entity.ClassificacaoLinear;
 import br.pucpr.sabrh.persistence.ClassificacaoLinearDAO;
@@ -90,6 +92,7 @@ public class ClassificacaoLinearDAOImpl implements ClassificacaoLinearDAO {
 
 	@Override
 	public void excluir(ClassificacaoLinear classificacaoLinear) {
+		classificacaoLinear = entityManager.merge(classificacaoLinear);
 		entityManager.remove(classificacaoLinear);
 		entityManager.flush();
 	}
