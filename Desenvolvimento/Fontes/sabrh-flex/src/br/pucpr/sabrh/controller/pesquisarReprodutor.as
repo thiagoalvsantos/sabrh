@@ -1,3 +1,5 @@
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+
 import mx.collections.ArrayCollection;
 import mx.collections.Sort;
 import mx.collections.SortField;
@@ -144,5 +146,23 @@ protected function dataGridSelect(dataGrid:DataGrid):void
 		dataGridConformacaoSelecionado.selectedIndex=-1;
 	else
 		dataGridConformacao.selectedIndex=-1;
+}
+
+/**
+ *	Evento botão de pesquisar animais.
+ *
+ * @param event
+ */
+protected function btnClickPesquisar():void
+{
+	// Altera estado da tela para "RESULTADO"
+	currentState=ConstantesUtils.STATE_RESULTADO;
+	
+	// Atribui a lista de animais para a grid de resultado
+	//dataGridResultado.dataProvider=listaAnimais;
+	
+	// Informa o número de registros encontrados 
+	panelResultado.title=ConstantesUtils.RESULTADO_GRID + "";
+	PopUpManager.centerPopUp(this);
 }
 
