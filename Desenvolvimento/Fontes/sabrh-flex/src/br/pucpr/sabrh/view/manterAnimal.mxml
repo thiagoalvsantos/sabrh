@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow width="900" maxHeight="600" maxWidth="800" creationComplete="init(event)" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Manutenção de Animais ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
+<s:TitleWindow width="900" maxHeight="600" maxWidth="800" creationComplete="init(event)" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Animais ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
 
 	<fx:Script source="../controller/manterAnimal.as"/>
 
@@ -65,8 +65,44 @@
 			<mx:StringValidator id="strValClassificacaoClassificacaoFinal" source="{txtClassificacaoClassificacaoFinal}" property="text" required="true"/>
 		</fx:Array>
 
+		<fx:Array id="valProvaTouro">
+			<!-- Dados Gerais -->
+			<mx:DateValidator id="dateValProvaTouroDataProva" source="{txtProvaTouroDataProva}" property="text" required="true" allowedFormatChars="/"/>
+			<mx:NumberValidator id="nbrValProvaTouroQtdFilhas" source="{txtProvaTouroQtdFilhas}" property="text" required="true" minValue="0"/>
+			<mx:CurrencyValidator id="nbrValProvaPreco" source="{txtProvaTouroPreco}" property="text" required="true" thousandsSeparator="." currencySymbol="R$" decimalSeparator="," alignSymbol="left" precision="2"/>
+			<!-- Produção -->
+			<mx:NumberValidator id="nbrValProvaTouroPercentualProteina" source="{txtProvaTouroPercentualProteina}" property="text" required="true" minValue="0" maxValue="100"/>
+			<mx:NumberValidator id="nbrValProvaTouroPercentualGordura" source="{txtProvaTouroPercentualGordura}" property="text" required="true" minValue="0" maxValue="100"/>
+			<mx:NumberValidator id="nbrValProvaTouroQuiloLeite" source="{txtProvaTouroQuiloLeite}" property="text" required="true" minValue="0"/>
+			<!-- Força Leiteira-->
+			<mx:NumberValidator id="nbrValProvaTouroEstatura" source="{txtProvaTouroEstatura}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroAngulosidade" source="{txtProvaTouroAngulosidade}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroLarguraPeito" source="{txtProvaTouroLarguraPeito}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroProfundidadeCorporal" source="{txtProvaTouroProfundidadeCorporal}" property="text" required="true" minValue="0" maxValue="9"/>
+			<!-- Garupa -->
+			<mx:NumberValidator id="nbrValProvaTouroAnguloGarupa" source="{txtProvaTouroAnguloGarupa}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroLarguraGarupa" source="{txtProvaTouroLarguraGarupa}" property="text" required="true" minValue="0" maxValue="9"/>
+			<!-- Pernas e Pes -->
+			<mx:NumberValidator id="nbrValProvaTouroTouroAnguloCasco" source="{txtProvaTouroAnguloCasco}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroPernasPostVistaLateral" source="{txtProvaTouroPernasPostVistaLateral}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroPernasPostVistaPost" source="{txtProvaTouroPernasPostVistaPost}" property="text" required="true" minValue="0" maxValue="9"/>
+			<!-- Sistema Mamário-->
+			<mx:NumberValidator id="nbrValProvaTouroProfundidadeUbere" source="{txtProvaTouroProfundidadeUbere}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroColocacaoTetorAnteriores" source="{txtProvaTouroColocacaoTetorAnteriores}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroColocacaoTetosPosteriores" source="{txtProvaTouroColocacaoTetosPosteriores}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroLigamentoMedio" source="{txtProvaTouroLigamentoMedio}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroAlturaUberePosterior" source="{txtProvaTouroAlturaUberePosterior}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroComprimentoTetos" source="{txtProvaTouroComprimentoTetos}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroInsersaoUbereAnterior" source="{txtProvaTouroInsersaoUbereAnterior}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroLarguraUberePosterior" source="{txtProvaTouroLarguraUberePosterior}" property="text" required="true" minValue="0" maxValue="9"/>
+			<!-- Dados Finais -->
+			<mx:NumberValidator id="nbrValProvaTouroConfiabilidadeProducao" source="{txtProvaTouroConfiabilidadeProducao}" property="text" required="true" minValue="0" maxValue="100"/>
+			<mx:NumberValidator id="nbrValProvaTouroConfiabilidadeConformacao" source="{txtProvaTouroConfiabilidadeConformacao}" property="text" required="true" minValue="0" maxValue="100"/>
+		</fx:Array>
+
 		<mx:NumberValidator id="numValStatusFemea" enabled="false" source="{cmbNovoStatusFemea}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 
+		<mx:CurrencyFormatter currencySymbol="R$" precision="2" decimalSeparatorFrom="," decimalSeparatorTo="," useThousandsSeparator="true" thousandsSeparatorFrom="." thousandsSeparatorTo="." useNegativeSign="false"/>
 		<s:RadioButtonGroup id="radioGroupNovoSexo" change="radioChangeNovoSexo()"/>
 		<s:RadioButtonGroup id="radioGroupDetalheSexo"/>
 
@@ -655,7 +691,7 @@
 						<mx:AdvancedDataGrid id="dataGridResultadoProvaTouro" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10" designViewDataType="flat" itemClick="gridClickResultadoProvaTouro(event)">
 							<mx:columns>
 								<mx:AdvancedDataGridColumn textAlign="left" headerText="Qtd. Filhas" sortable="true" dataField="quantidadeFilhas"/>
-								<mx:AdvancedDataGridColumn textAlign="left" headerText="Ultima Atualização" sortable="true" dataField="dataUltimaAtualizacao" labelFunction="labelFunctionDataClassificacao"/>
+								<mx:AdvancedDataGridColumn textAlign="left" headerText="Ultima Atualização" sortable="true" dataField="dataUltimaAtualizacao" labelFunction="labelFunctionDataProvaTouro"/>
 								<mx:AdvancedDataGridColumn textAlign="left" headerText="Preço" sortable="true" dataField="preco"/>
 							</mx:columns>
 						</mx:AdvancedDataGrid>
@@ -669,6 +705,287 @@
 			</s:VGroup>
 
 
+
+			<!--//////////////////////////
+				 //	CLASSIFICAÇÃO LINEAR EDITAR
+				 /////////////////////////////-->
+			<s:VGroup id="groupProvaTouroEditar" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateProvaTouroEditar">
+				<s:Panel width="100%" height="100%" title="Prova de Touro">
+					<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
+						<s:BorderContainer id="panelErrorProvaTouro" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelError" visible="false">
+							<s:Label text="Erro ao salvar prova de touro. Verificar campos em vermelho." left="50" verticalCenter="0"/>
+							<mx:Image source="@Embed(source='../assets/img/error.png')" verticalCenter="0" left="10"/>
+						</s:BorderContainer>
+						<!-- Dados Gerais -->
+						<s:Panel width="100%" height="77" title="Dados Gerais">
+							<s:HGroup width="100%" paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+								<s:HGroup paddingRight="10" verticalAlign="middle">
+									<s:HGroup width="200">
+										<s:Label id="lblProvaTouroDataProva" text="Data Prova Touro"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+									<mx:DateField id="txtProvaTouroDataProva" width="100" restrict="0-9/" tabIndex="1"/>
+								</s:HGroup>
+								<s:HGroup paddingRight="10" verticalAlign="middle">
+									<s:HGroup width="150">
+										<s:Label id="lblProvaTouroQtdFilhas" text="Qtd. Filhas"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+									<s:TextInput id="txtProvaTouroQtdFilhas" width="50" restrict="0-9" maxChars="5" tabIndex="2"/>
+								</s:HGroup>
+								<s:HGroup paddingRight="10" verticalAlign="middle">
+									<s:HGroup width="150">
+										<s:Label id="lblProvaTouroPreco" text="Preço"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									</s:HGroup>
+									<s:TextInput id="txtProvaTouroPreco" width="50" restrict="0-9,." maxChars="10" tabIndex="3"/>
+								</s:HGroup>
+							</s:HGroup>
+						</s:Panel>
+						<!-- Produção -->
+						<s:Panel width="100%" title="Produção" height="145">
+							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
+								<s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroPercentualProteina" text="Percentual de Proteina"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroPercentualProteina" width="50" restrict="0-9" maxChars="3" tabIndex="4"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroPercentualGordura" text="Percentual de Gordura"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroPercentualGordura" width="50" restrict="0-9" maxChars="3" tabIndex="5"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroQuiloLeite" text="Quilos de leite"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroQuiloLeite" width="50" restrict="0-9" maxChars="5" tabIndex="6"/>
+										</s:VGroup>
+									</s:HGroup>
+								</s:HGroup>
+							</s:VGroup>
+						</s:Panel>
+						<!-- Força Leiteira-->
+						<s:Panel width="100%" title="Força Leiteira" height="117">
+							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
+								<s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroEstatura" text="Estatura"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblProvaTouroAngulosidade" text="Ângulosidade"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroEstatura" width="50" restrict="0-9" maxChars="1" tabIndex="7"/>
+											<s:TextInput id="txtProvaTouroAngulosidade" width="50" restrict="0-9" maxChars="1" tabIndex="10"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroLarguraPeito" text="Largura de Peito"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroLarguraPeito" width="50" restrict="0-9" maxChars="1" tabIndex="8"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroProfundidadeCorporal" text="Profundidade Corporal"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroProfundidadeCorporal" width="50" restrict="0-9" maxChars="1" tabIndex="9"/>
+										</s:VGroup>
+									</s:HGroup>
+								</s:HGroup>
+							</s:VGroup>
+						</s:Panel>
+						<!-- Garupa -->
+						<s:Panel width="100%" title="Garupa" height="145">
+							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
+								<s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroAnguloGarupa" text="Ângulo de Garupa"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroAnguloGarupa" width="50" restrict="0-9" maxChars="1" tabIndex="11"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroLarguraGarupa" text="Largura da Garupa"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroLarguraGarupa" width="50" restrict="0-9" maxChars="1" tabIndex="12"/>
+										</s:VGroup>
+									</s:HGroup>
+								</s:HGroup>
+							</s:VGroup>
+						</s:Panel>
+						<!-- Pernas e Pes -->
+						<s:Panel width="100%" title="Pernas e Pés" height="173">
+							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
+								<s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroAnguloCasco" text="Ângulo de Casco"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroAnguloCasco" width="50" restrict="0-9" maxChars="1" tabIndex="13"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroPernasPostVistaLateral" text="Pernas Posteriores - Vista Lateral"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroPernasPostVistaLateral" width="50" restrict="0-9" maxChars="1" tabIndex="14"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroPernasPostVistaPost" text="Pernas Posteriores - Vista Posterior"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroPernasPostVistaPost" width="50" restrict="0-9" maxChars="1" tabIndex="15"/>
+										</s:VGroup>
+									</s:HGroup>
+								</s:HGroup>
+							</s:VGroup>
+						</s:Panel>
+						<!-- Sistema Mamário-->
+						<s:Panel width="100%" title="Sistema Mamário" height="173">
+							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
+								<s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroProfundidadeUbere" text="Profundidade de Úbere"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblProvaTouroColocacaoTetorAnteriores" text="Colocação de Tetos Anteriores"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblProvaTouroColocacaoTetosPosteriores" text="Colocação de Tetos Posteriores"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroProfundidadeUbere" width="50" restrict="0-9" maxChars="1" tabIndex="14"/>
+											<s:TextInput id="txtProvaTouroColocacaoTetorAnteriores" width="50" restrict="0-9" maxChars="1" tabIndex="17"/>
+											<s:TextInput id="txtProvaTouroColocacaoTetosPosteriores" width="50" restrict="0-9" maxChars="1" tabIndex="20"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroLigamentoMedio" text="Ligamento Médio"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblProvaTouroAlturaUberePosterior" text="Altura Úbere Posterior"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblProvaTouroComprimentoTetos" text="Comprimento de Tetos"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroLigamentoMedio" width="50" restrict="0-9" maxChars="1" tabIndex="15"/>
+											<s:TextInput id="txtProvaTouroAlturaUberePosterior" width="50" restrict="0-9" maxChars="1" tabIndex="18"/>
+											<s:TextInput id="txtProvaTouroComprimentoTetos" width="50" restrict="0-9" maxChars="1" tabIndex="21"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup>
+										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+											<s:HGroup>
+												<s:Label id="lblProvaTouroInsersaoUbereAnterior" text="Inserção de Úbere Anterior"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblProvaTouroLarguraUberePosterior" text="Largura de Úbere Posterior"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+											<s:TextInput id="txtProvaTouroInsersaoUbereAnterior" width="50" restrict="0-9" maxChars="1" tabIndex="16"/>
+											<s:TextInput id="txtProvaTouroLarguraUberePosterior" width="50" restrict="0-9" maxChars="1" tabIndex="19"/>
+										</s:VGroup>
+									</s:HGroup>
+								</s:HGroup>
+							</s:VGroup>
+						</s:Panel>
+						<!-- Dados Finais -->
+						<s:Panel width="100%" title="Classificação Final" height="77">
+							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
+								<s:BorderContainer width="100%" height="30" styleName="panelTotalFinal">
+									<s:HGroup verticalAlign="middle" verticalCenter="0" paddingLeft="10">
+										<s:Label id="lblProvaTouroConfiabilidadeProducao" text="Confiabilidade Produção" fontWeight="bold"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+										<s:TextInput id="txtProvaTouroConfiabilidadeProducao" width="50" restrict="0-9" maxChars="2" tabIndex="22"/>
+										<mx:Spacer width="30"/>
+										<s:Label id="lblProvaTouroConfiabilidadeConformacao" text="Confiabilidade Conformação" fontWeight="bold"/>
+										<s:Label text="*" color="#B22222" fontWeight="bold"/>
+										<s:TextInput id="txtProvaTouroConfiabilidadeConformacao" width="50" restrict="0-9" maxChars="2" tabIndex="22"/>
+									</s:HGroup>
+								</s:BorderContainer>
+							</s:VGroup>
+						</s:Panel>
+					</s:VGroup>
+
+					<s:controlBarContent>
+						<s:Button label="Voltar" click="{btnClickVoltarProvaTouroLista()}" buttonMode="true" tabIndex="34"/>
+						<s:Button label="Salvar" click="{btnClickSalvarProvaTouro()}" buttonMode="true" tabIndex="32"/>
+						<s:Button label="Excuir" click="{}" buttonMode="true" tabIndex="33" id="btnProvaTouroExcluir"/>
+					</s:controlBarContent>
+				</s:Panel>
+			</s:VGroup>
 
 
 		</s:Group>
