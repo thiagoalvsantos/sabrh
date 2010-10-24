@@ -2,6 +2,7 @@ import mx.collections.ArrayCollection;
 import mx.collections.Sort;
 import mx.collections.SortField;
 import mx.controls.Alert;
+import mx.controls.DataGrid;
 import mx.events.CloseEvent;
 import mx.managers.PopUpManager;
 
@@ -97,6 +98,7 @@ protected function btnClickMoverCima():void
 		{
 			arrayAtributoConformacaoSelecionado.removeItemAt(index);
 			arrayAtributoConformacaoSelecionado.addItemAt(itemSelecionado, index - 1);
+			dataGridConformacaoSelecionado.selectedIndex=index;
 		}
 	}
 }
@@ -114,6 +116,7 @@ protected function btnClickMoverBaixo():void
 		{
 			arrayAtributoConformacaoSelecionado.removeItemAt(index);
 			arrayAtributoConformacaoSelecionado.addItemAt(itemSelecionado, index + 1);
+			dataGridConformacaoSelecionado.selectedIndex=index;
 		}
 	}
 }
@@ -130,5 +133,16 @@ protected function ordenarLista(ordenarPor:String, arrayCollection:ArrayCollecti
 	ordenar.fields=[new SortField(ordenarPor)];
 	arrayCollection.sort=ordenar;
 	arrayCollection.refresh();
+}
+
+/**
+ * Método para retirar a seleção de dois grids ao mesmo tempo.
+ */
+protected function dataGridSelect(dataGrid:DataGrid):void
+{
+	if (dataGrid == dataGridConformacao)
+		dataGridConformacaoSelecionado.selectedIndex=-1;
+	else
+		dataGridConformacao.selectedIndex=-1;
 }
 
