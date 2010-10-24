@@ -3,7 +3,12 @@
  */
 package br.pucpr.sabrh.business;
 
+import java.util.List;
+
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import br.pucpr.sabrh.entity.Animal;
 import br.pucpr.sabrh.entity.ProvaTouro;
@@ -17,6 +22,8 @@ import br.pucpr.sabrh.services.ProvaTouroService;
  * @version 1
  * @see ProvaTouroService
  */
+@Stateless(name = "ProvaTouroService")
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class ProvaTouroBusiness implements ProvaTouroService {
 
 	/** O atributo dao. */
@@ -52,7 +59,7 @@ public class ProvaTouroBusiness implements ProvaTouroService {
 	 * .Animal)
 	 */
 	@Override
-	public ProvaTouro pesquisar(Animal animal) {
+	public List<ProvaTouro> pesquisar(Animal animal) {
 		return dao.pesquisar(animal);
 	}
 

@@ -3,6 +3,8 @@
  */
 package br.pucpr.sabrh.persistence;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import br.pucpr.sabrh.entity.Animal;
@@ -21,7 +23,7 @@ public interface ProvaTouroDAO {
 	 *            - animal
 	 * @return prova touro
 	 */
-	ProvaTouro pesquisar(Animal animal);
+	List<ProvaTouro> pesquisar(Animal animal);
 
 	/**
 	 * Salvar.
