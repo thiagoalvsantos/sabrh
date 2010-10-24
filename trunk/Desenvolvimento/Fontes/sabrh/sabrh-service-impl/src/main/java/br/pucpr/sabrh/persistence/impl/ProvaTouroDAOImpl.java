@@ -3,6 +3,8 @@
  */
 package br.pucpr.sabrh.persistence.impl;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -57,12 +59,12 @@ public class ProvaTouroDAOImpl implements ProvaTouroDAO {
 	 * .Animal)
 	 */
 	@Override
-	public ProvaTouro pesquisar(Animal animal) {
+	public List<ProvaTouro> pesquisar(Animal animal) {
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(ProvaTouro.class, "provaTouro");
 		c.add(Restrictions.eq("animal", animal));
 
-		ProvaTouro result = (ProvaTouro) c.uniqueResult();
+		List<ProvaTouro> result = c.list();
 		return result;
 	}
 

@@ -67,7 +67,7 @@ public class ProvaTouro implements Serializable {
 
 	/** O atributo quilo leite. */
 	@Column(name = "KG_LEITE", nullable = false)
-	private float quiloLeite;
+	private int quiloLeite;
 
 	// /////////////////////////
 	//
@@ -326,7 +326,7 @@ public class ProvaTouro implements Serializable {
 	 * @return the quilo leite
 	 * @see ProvaTouro#quiloLeite.
 	 */
-	public float getQuiloLeite() {
+	public int getQuiloLeite() {
 		return quiloLeite;
 	}
 
@@ -337,7 +337,7 @@ public class ProvaTouro implements Serializable {
 	 *            - quilo leite.
 	 * @see ProvaTouro#quiloLeite.
 	 */
-	public void setQuiloLeite(float quiloLeite) {
+	public void setQuiloLeite(int quiloLeite) {
 		this.quiloLeite = quiloLeite;
 	}
 
