@@ -1,4 +1,13 @@
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.ClassificacaoLinear;
+import br.pucpr.sabrh.entity.Propriedade;
+import br.pucpr.sabrh.entity.ProvaTouro;
+
 import flash.events.MouseEvent;
+
+import flashx.textLayout.formats.Float;
+
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.core.FlexGlobals;
@@ -11,10 +20,7 @@ import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.ClassificacaoLinear;
-import br.pucpr.sabrh.entity.Propriedade;
+
 import spark.components.NavigatorContent;
 
 public var maeDefault:Animal;
@@ -225,12 +231,6 @@ protected function btnClickLimparPesquisa():void
 	PopUpManager.centerPopUp(this);
 }
 
-
-protected function btnClickNovaProvaTouro():void
-{
-	// TODO FAZER METODO
-}
-
 protected function btnClickNovaClassificacao():void
 {
 	classificacaoLinearSelecionada=null;
@@ -330,6 +330,85 @@ protected function btnClickNovaClassificacao():void
 	PopUpManager.centerPopUp(this);
 }
 
+
+protected function btnClickNovaProvaTouro():void
+{
+	provaTouroSelecionada=null;
+	currentState=ConstantesUtils.STATE_PROVA_TOURO_EDITAR;
+
+	btnProvaTouroExcluir.visible=false;
+
+	//Dados Gerais
+	txtProvaTouroDataProva.selectedDate=null;
+	txtProvaTouroQtdFilhas.text=null;
+	txtProvaTouroPreco.text=null;
+	//Produção 
+	txtProvaTouroPercentualProteina.text=null;
+	txtProvaTouroPercentualGordura.text=null;
+	txtProvaTouroQuiloLeite.text=null;
+	// Força Leiteira
+	txtProvaTouroEstatura.text=null;
+	txtProvaTouroAngulosidade.text=null;
+	txtProvaTouroLarguraPeito.text=null;
+	txtProvaTouroProfundidadeCorporal.text=null;
+	//Garupa 
+	txtProvaTouroAnguloGarupa.text=null;
+	txtProvaTouroLarguraGarupa.text=null;
+	// Pernas e Pes
+	txtProvaTouroAnguloCasco.text=null;
+	txtProvaTouroPernasPostVistaLateral.text=null;
+	txtProvaTouroPernasPostVistaPost.text=null;
+	// Sistema Mamário
+	txtProvaTouroProfundidadeUbere.text=null;
+	txtProvaTouroColocacaoTetorAnteriores.text=null;
+	txtProvaTouroColocacaoTetosPosteriores.text=null;
+	txtProvaTouroLigamentoMedio.text=null;
+	txtProvaTouroAlturaUberePosterior.text=null;
+	txtProvaTouroComprimentoTetos.text=null;
+	txtProvaTouroInsersaoUbereAnterior.text=null;
+	txtProvaTouroLarguraUberePosterior.text=null;
+	// Dados Finais 
+	txtProvaTouroConfiabilidadeProducao.text=null;
+	txtProvaTouroConfiabilidadeConformacao.text=null;
+
+
+	//Dados Gerais
+	txtProvaTouroDataProva.errorString=null;
+	txtProvaTouroQtdFilhas.errorString=null;
+	txtProvaTouroPreco.errorString=null;
+	//Produção 
+	txtProvaTouroPercentualProteina.errorString=null;
+	txtProvaTouroPercentualGordura.errorString=null;
+	txtProvaTouroQuiloLeite.errorString=null;
+	// Força Leiteira
+	txtProvaTouroEstatura.errorString=null;
+	txtProvaTouroAngulosidade.errorString=null;
+	txtProvaTouroLarguraPeito.errorString=null;
+	txtProvaTouroProfundidadeCorporal.errorString=null;
+	//Garupa 
+	txtProvaTouroAnguloGarupa.errorString=null;
+	txtProvaTouroLarguraGarupa.errorString=null;
+	// Pernas e Pes
+	txtProvaTouroAnguloCasco.errorString=null;
+	txtProvaTouroPernasPostVistaLateral.errorString=null;
+	txtProvaTouroPernasPostVistaPost.errorString=null;
+	// Sistema Mamário
+	txtProvaTouroProfundidadeUbere.errorString=null;
+	txtProvaTouroColocacaoTetorAnteriores.errorString=null;
+	txtProvaTouroColocacaoTetosPosteriores.errorString=null;
+	txtProvaTouroLigamentoMedio.errorString=null;
+	txtProvaTouroAlturaUberePosterior.errorString=null;
+	txtProvaTouroComprimentoTetos.errorString=null;
+	txtProvaTouroInsersaoUbereAnterior.errorString=null;
+	txtProvaTouroLarguraUberePosterior.errorString=null;
+	// Dados Finais 
+	txtProvaTouroConfiabilidadeProducao.errorString=null;
+	txtProvaTouroConfiabilidadeConformacao.errorString=null;
+
+	txtProvaTouroDataProva.focusManager.setFocus(txtProvaTouroDataProva);
+	PopUpManager.centerPopUp(this);
+}
+
 /**
  * Evento botão de inserir Animal.
  *
@@ -414,6 +493,18 @@ protected function btnClickPesquisar():void
 		animal.pai=pai;
 
 	animalService.pesquisar(animal);
+}
+
+protected function btnClickProvaTouro(event:MouseEvent):void
+{
+	currentState=ConstantesUtils.STATE_PROVA_TOURO_LISTA;
+	txtDetalheProvaTouroRegistro.text=animalSelecionado.registro;
+	txtDetalheProvaTouroApelido.text=animalSelecionado.apelido;
+
+	provaTouroService.pesquisar(animalSelecionado);
+
+	PopUpManager.centerPopUp(this);
+
 }
 
 protected function btnClickSalvar():void
@@ -514,6 +605,63 @@ protected function btnClickSalvarClassificacao():void
 	}
 }
 
+
+protected function btnClickSalvarProvaTouro():void
+{
+	if (validarProvaTouro())
+	{
+		var provaTouro:ProvaTouro;
+		if (provaTouroSelecionada == null)
+		{
+			provaTouro=new ProvaTouro();
+		}
+		else
+		{
+			provaTouro=provaTouroSelecionada;
+		}
+
+		// Dados Gerais
+		provaTouro.dataUltimaAtualizacao=txtProvaTouroDataProva.selectedDate;
+		provaTouro.quantidadeFilhas=new Number(txtProvaTouroQtdFilhas.text);
+		provaTouro.preco=new Number(txtProvaTouroPreco.text);
+
+		//Produção
+		provaTouro.proteina=new Number(txtProvaTouroPercentualProteina.text);
+		provaTouro.gordura=new Number(txtProvaTouroPercentualGordura.text);
+		provaTouro.quiloLeite=parseFloat(txtProvaTouroQuiloLeite.text);
+		//Força Leiteira
+		provaTouro.estatura=new Number(txtProvaTouroEstatura.text);
+		provaTouro.larguraPeito=new Number(txtProvaTouroLarguraPeito.text);
+		provaTouro.profundidadeCorporal=new Number(txtProvaTouroProfundidadeCorporal.text);
+		provaTouro.angulosidade=new Number(txtProvaTouroAngulosidade.text);
+		//Garupa
+		provaTouro.anguloGarupa=new Number(txtProvaTouroAnguloGarupa.text);
+		provaTouro.larguraGarupa=new Number(txtProvaTouroLarguraGarupa.text);
+		//Pernas e Pés
+		provaTouro.anguloCasco=new Number(txtProvaTouroAnguloCasco.text);
+		provaTouro.pernasPostVistaLateral=new Number(txtProvaTouroPernasPostVistaLateral.text);
+		provaTouro.pernasPostVistaPost=new Number(txtProvaTouroPernasPostVistaPost.text);
+
+		//Sistema Mamário
+		provaTouro.profundidadeUbere=new Number(txtProvaTouroProfundidadeUbere.text);
+		provaTouro.ligamentoMedio=new Number(txtProvaTouroLigamentoMedio.text);
+		provaTouro.insercaoUbereAnterior=new Number(txtProvaTouroInsersaoUbereAnterior.text);
+		provaTouro.colocacaoTetosAnteriores=new Number(txtProvaTouroColocacaoTetorAnteriores.text);
+		provaTouro.alturaUberePosterior=new Number(txtProvaTouroAlturaUberePosterior.text);
+		provaTouro.larguraUberePosterior=new Number(txtProvaTouroLarguraUberePosterior.text);
+		provaTouro.colocacaoTetosPosteriores=new Number(txtProvaTouroColocacaoTetosPosteriores.text);
+		provaTouro.comprimentoTetos=new Number(txtProvaTouroComprimentoTetos.text);
+
+		//Classificação Final
+		provaTouro.confiabilidadeConformacao=new Number(txtProvaTouroConfiabilidadeConformacao.text);
+		provaTouro.confiabilidadeProducao=new Number(txtProvaTouroConfiabilidadeProducao.text);
+
+		provaTouro.animal=animalSelecionado;
+
+		provaTouroService.salvar(provaTouro);
+	}
+}
+
 protected function btnClickVoltarClassificacaoLista():void
 {
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
@@ -522,6 +670,11 @@ protected function btnClickVoltarClassificacaoLista():void
 protected function btnClickVoltarDetalhe():void
 {
 	currentState=ConstantesUtils.STATE_DETALHE;
+}
+
+protected function btnClickVoltarProvaTouroLista():void
+{
+	currentState=ConstantesUtils.STATE_PROVA_TOURO_LISTA;
 }
 
 /**
@@ -632,12 +785,6 @@ protected function gridClickResultado(event:ListEvent):void
 	PopUpManager.centerPopUp(this);
 }
 
-
-protected function gridClickResultadoProvaTouro(event:ListEvent):void
-{
-	// TODO FAZER METODO
-}
-
 protected function gridClickResultadoClassificacao(event:ListEvent):void
 {
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_EDITAR;
@@ -693,6 +840,12 @@ protected function gridClickResultadoClassificacao(event:ListEvent):void
 	PopUpManager.centerPopUp(this);
 }
 
+
+protected function gridClickResultadoProvaTouro(event:ListEvent):void
+{
+	// TODO FAZER METODO
+}
+
 /**
  * Preenche as combos ai iniciar.
  *
@@ -720,6 +873,14 @@ protected function labelFunctionDataClassificacao(item:Object, column:AdvancedDa
 	dateFormat.formatString="DD/MM/YYYY";
 
 	return dateFormat.format(item.dataClassificacao);
+}
+
+protected function labelFunctionDataProvaTouro(item:Object, column:AdvancedDataGridColumn):String
+{
+	var dateFormat:DateFormatter=new DateFormatter();
+	dateFormat.formatString="DD/MM/YYYY";
+	
+	return dateFormat.format(item.dataUltimaAtualizacao);
 }
 
 protected function listarStatusFemeaResult(event:ResultEvent):void
@@ -871,6 +1032,7 @@ protected function serviceResultPesquisarClassificacaoLinear(event:ResultEvent):
 {
 	var listaClassificacao:ArrayCollection=event.result as ArrayCollection;
 	dataGridResultadoClassificacao.dataProvider=listaClassificacao;
+	PopUpManager.centerPopUp(this);
 
 }
 
@@ -878,6 +1040,7 @@ protected function serviceResultPesquisarProvaTouro(event:ResultEvent):void
 {
 	var listaProvaTouro:ArrayCollection=event.result as ArrayCollection;
 	dataGridResultadoProvaTouro.dataProvider=listaProvaTouro;
+	PopUpManager.centerPopUp(this);
 
 }
 
@@ -906,19 +1069,6 @@ protected function serviceResultSalvarProvaTouro(event:ResultEvent):void
 {
 	btnClickProvaTouro(null);
 	provaTouroSelecionada=null;
-}
-
-protected function btnClickProvaTouro(event:MouseEvent):void
-{
-	currentState=ConstantesUtils.STATE_PROVA_TOURO_LISTA;
-	txtDetalheProvaTouroRegistro.text=animalSelecionado.registro;
-	txtDetalheProvaTouroApelido.text=animalSelecionado.apelido;
-
-	//TODO TROCAR PARA PROVA TOURO
-	//classificacaoLinearService.pesquisar(animalSelecionado);
-
-	PopUpManager.centerPopUp(this);
-
 }
 
 /**
@@ -978,6 +1128,34 @@ protected function validarClassificacaoLinear():Boolean
 		scroll.viewport.verticalScrollPosition=0;
 	}
 	panelErrorClassificacao.visible=true;
+
+	return false;
+}
+
+protected function validarProvaTouro():Boolean
+{
+	var errors:Array=Validator.validateAll(valProvaTouro);
+
+	//se não existem erros 
+	if (errors.length == 0)
+	{
+		if (txtProvaTouroDataProva.selectedDate > new Date())
+		{
+			txtProvaTouroDataProva.errorString="Data da prova de touro deve ser igual ou menor que a data atual";
+			txtProvaTouroDataProva.focusManager.setFocus(txtProvaTouroDataProva);
+		}
+		else
+		{
+			panelErrorProvaTouro.visible=false;
+			return true;
+		}
+	}
+	else
+	{
+		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
+		scroll.viewport.verticalScrollPosition=0;
+	}
+	panelErrorProvaTouro.visible=true;
 
 	return false;
 }
