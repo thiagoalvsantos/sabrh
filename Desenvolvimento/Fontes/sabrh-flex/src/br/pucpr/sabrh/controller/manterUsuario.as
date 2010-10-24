@@ -1,4 +1,5 @@
 // login
+import br.pucpr.sabrh.components.ToolTipUtil;
 import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Municipio;
 import br.pucpr.sabrh.entity.Usuario;
@@ -337,6 +338,50 @@ protected function inserirUsuarioResult(event:ResultEvent):void
 	if (FlexGlobals.topLevelApplication.user.codigo == usuarioSelecionado.codigo)
 	{
 		FlexGlobals.topLevelApplication.user=usuarioSelecionado;
+	}
+}
+
+/**
+ * Falha da inserção de usuários
+ *
+ * @param event
+ */
+protected function inserirUsuarioFault(event:FaultEvent):void
+{
+	var erro:String=event.fault.rootCause.message;
+	if (erro.search("Erro ao salvar.\n Dados já está cadastrado para um outro usuário.") != -1)
+		usuarioService.pesquisarCPF(usuarioSalvar.cpf);
+}
+
+/**
+ * Resultado da pesquisa de usuario com o mesmo CPF
+ *
+ * @param event
+ */
+protected function pesquisarCPFUsuarioResult(event:ResultEvent):void
+{
+	var cpfExistente:Boolean=event.result as Boolean;
+	if (cpfExistente)
+	{
+		txtNovoCPF.errorString="CPF já cadastrado para outro usuário";
+		panelError.visible=true;
+	}
+	else
+		usuarioService.pesquisarLogin(usuarioSalvar.login);
+}
+
+/**
+ * Resultado da inserção de usuários
+ *
+ * @param event
+ */
+protected function pesquisarLoginUsuarioResult(event:ResultEvent):void
+{
+	var loginExistente:Boolean=event.result as Boolean;
+	if (loginExistente)
+	{
+		txtNovoLogin.errorString="Login já cadastrado para outro usuário";
+		panelError.visible=true;
 	}
 }
 
