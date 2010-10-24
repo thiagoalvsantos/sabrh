@@ -21,11 +21,10 @@
 			<s:Resize heightFrom="40" heightTo="0"/>
 		</s:Parallel>
 
-		<fx:Array id="listaAtributoProducao">
-			<fx:Object abrituto="Quantidade de Filhas"/>
-			<fx:Object abrituto="Percentual de Proteina"/>
-			<fx:Object abrituto="Percentual de Gordura"/>
-			<fx:Object abrituto="Kg de Leite"/>
+		<fx:Array id="listaTemp">
+			<fx:Object registro="HOU0980980HH" nome="Touro da Raça Holandesa" kgLeite="+1538" filhas="121" confProducao="80%" confConformacao="98%"/>
+			<fx:Object registro="2380238948HHHS33" nome="Touro de outra Raça Holandesa" kgLeite="-89" filhas="50" confProducao="99%" confConformacao="99%"/>
+			<fx:Object registro="HOU0980980HH" nome="Touro da Raça Holandesa" kgLeite="+2408" filhas="157" confProducao="87%" confConformacao="96%"/>
 		</fx:Array>
 
 		<fx:Array id="listaAtributoConformacao">
@@ -131,26 +130,33 @@
 						</s:BorderContainer>
 					</mx:Canvas>
 					<s:controlBarContent>
-						<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="9" buttonMode="true"/>
-						<s:Button label="Novo" click="" tabIndex.statePesquisa="10" buttonMode="true"/>
-						<s:Button label="Limpar" click="" tabIndex.statePesquisa="11" buttonMode="true"/>
+						<s:VGroup width="100%">
+							<s:HGroup>
+								<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="9" buttonMode="true"/>
+								<s:Button label="Novo" click="" tabIndex.statePesquisa="10" buttonMode="true"/>
+								<s:Button label="Limpar" click="" tabIndex.statePesquisa="11" buttonMode="true"/>
+							</s:HGroup>
+						</s:VGroup>
+						<s:VGroup horizontalAlign="right">
+							<s:Button id="btnComparar" label="Comparar Reprodutores" click="" buttonMode="true" includeIn="stateResultado" enabled="false"/>
+						</s:VGroup>
 					</s:controlBarContent>
 				</s:Panel>
 				<!--//////////////////////////
 					 //	RESULTADO - PESQUISA
 					 /////////////////////////////-->
-				<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
-					<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" rowCount="3">
+				<s:BorderContainer id="panelResultado" width="100%" height="100%" includeIn="stateResultado">
+					<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" rowCount="3" allowMultipleSelection="true" itemClick="controlarSelecoes()">
 						<mx:columns>
 							<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="true" dataField="registro"/>
 							<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" sortable="true" dataField="nome"/>
-							<mx:AdvancedDataGridColumn textAlign="left" headerText="Filhas" sortable="true" dataField="filhas" width="70"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Filhas" sortable="true" dataField="filhas" width="70"/>
 							<mx:AdvancedDataGridColumn textAlign="center" headerText="Kg de Leite" sortable="true" dataField="kgLeite" width="100"/>
 							<mx:AdvancedDataGridColumn textAlign="center" headerText="Confiabilidade Produção" sortable="true" dataField="confProducao" width="180"/>
 							<mx:AdvancedDataGridColumn textAlign="center" headerText="Confiabilidade Conformação" sortable="true" dataField="confConformacao" width="180"/>
 						</mx:columns>
 					</mx:AdvancedDataGrid>
-				</s:Panel>
+				</s:BorderContainer>
 			</s:VGroup>
 		</s:Group>
 	</s:Scroller>

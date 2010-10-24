@@ -159,10 +159,25 @@ protected function btnClickPesquisar():void
 	currentState=ConstantesUtils.STATE_RESULTADO;
 	
 	// Atribui a lista de animais para a grid de resultado
-	//dataGridResultado.dataProvider=listaAnimais;
+	dataGridResultado.dataProvider=listaTemp;
 	
 	// Informa o número de registros encontrados 
-	panelResultado.title=ConstantesUtils.RESULTADO_GRID + "";
+	//panelResultado.title=ConstantesUtils.RESULTADO_GRID + "";
 	PopUpManager.centerPopUp(this);
+}
+
+protected function controlarSelecoes():void
+{
+	var itemSelecionado:Object=dataGridResultado.selectedItem;
+	if (dataGridResultado.selectedIndices.length>2)
+	{
+		var itensSelecionado:Array=dataGridResultado.selectedItems;
+		itensSelecionado.pop();
+		dataGridResultado.selectedItems=itensSelecionado;
+	}
+	else if (dataGridResultado.selectedIndices.length==2)
+		btnComparar.enabled=true;
+	else
+		btnComparar.enabled=false;
 }
 
