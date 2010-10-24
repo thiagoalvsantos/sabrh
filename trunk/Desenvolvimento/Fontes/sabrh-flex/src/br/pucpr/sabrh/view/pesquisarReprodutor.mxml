@@ -122,16 +122,16 @@
 							<s:VGroup gap="16" horizontalAlign="center" width="100%" height="100%" verticalAlign="middle">
 								<s:HGroup verticalAlign="middle">
 									<s:Label text="Produção %"/>
-									<s:TextInput id="confProducao" width="40" restrict="0-9" maxChars="2"/>
+									<s:TextInput id="confProducao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado."/>
 									<mx:Spacer width="70"/>
 									<s:Label text="Conformação %"/>
-									<s:TextInput id="confConformacao" width="40" restrict="0-9" maxChars="2"/>
+									<s:TextInput id="confConformacao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado."/>
 								</s:HGroup>
 							</s:VGroup>
 						</s:BorderContainer>
 					</mx:Canvas>
 					<s:controlBarContent>
-						<s:Button label="Pesquisar" click="" tabIndex.statePesquisa="9" buttonMode="true"/>
+						<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="9" buttonMode="true"/>
 						<s:Button label="Novo" click="" tabIndex.statePesquisa="10" buttonMode="true"/>
 						<s:Button label="Limpar" click="" tabIndex.statePesquisa="11" buttonMode="true"/>
 					</s:controlBarContent>
@@ -140,12 +140,14 @@
 					 //	RESULTADO - PESQUISA
 					 /////////////////////////////-->
 				<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
-					<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat">
+					<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" rowCount="3">
 						<mx:columns>
 							<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="true" dataField="registro"/>
 							<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" sortable="true" dataField="nome"/>
-							<mx:AdvancedDataGridColumn textAlign="left" headerText="Apelido" sortable="true" dataField="apelido"/>
-							<mx:AdvancedDataGridColumn textAlign="center" headerText="Sexo" sortable="true" dataField="sexo"/>
+							<mx:AdvancedDataGridColumn textAlign="left" headerText="Filhas" sortable="true" dataField="filhas" width="70"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Kg de Leite" sortable="true" dataField="kgLeite" width="100"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Confiabilidade Produção" sortable="true" dataField="confProducao" width="180"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Confiabilidade Conformação" sortable="true" dataField="confConformacao" width="180"/>
 						</mx:columns>
 					</mx:AdvancedDataGrid>
 				</s:Panel>
