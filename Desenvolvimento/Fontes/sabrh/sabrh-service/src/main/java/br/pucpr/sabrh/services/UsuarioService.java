@@ -37,7 +37,7 @@ public interface UsuarioService {
 	 * @return usuario
 	 */
 	public Usuario inserir(Usuario usuario) throws Exception;
-	
+
 	/**
 	 * Criptografar senha do usuario.
 	 * 
@@ -66,5 +66,27 @@ public interface UsuarioService {
 	 *             the exception
 	 */
 	public List<Usuario> pesquisar(Usuario usuario) throws Exception;
+
+	/**
+	 * Pesquisar cpf.
+	 * 
+	 * @param cpf
+	 *            - cpf.
+	 * @return verdadeiro, se bem sucedido.
+	 * @throws Exception
+	 *             the exception
+	 */
+	public boolean pesquisarCPF(String cpf) throws Exception;
+
+	/**
+	 * Pesquisar login.
+	 * 
+	 * @param login
+	 *            - login.
+	 * @return verdadeiro, se bem sucedido.
+	 * @throws Exception
+	 *             the exception
+	 */
+	public boolean pesquisarLogin(String login) throws Exception;
 
 }

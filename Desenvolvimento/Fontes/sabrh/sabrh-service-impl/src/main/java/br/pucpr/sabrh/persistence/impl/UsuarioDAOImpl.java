@@ -82,6 +82,11 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.pucpr.sabrh.persistence.UsuarioDAO#listar()
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Usuario> listar() throws Exception {
@@ -90,6 +95,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.persistence.UsuarioDAO#salvar(br.pucpr.sabrh.entity.Usuario
+	 * )
+	 */
 	@Override
 	public Usuario salvar(Usuario usuario) {
 		Usuario result = null;
@@ -99,18 +111,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		} catch (PersistenceException e) {
 
 			if (ConstraintViolationException.class.isInstance(e.getCause())) {
-				Session s = (Session) entityManager.getDelegate();
-				Criteria c = s.createCriteria(Usuario.class);
-				c.add(Restrictions.eq("cpf", usuario.getCpf()));
-
-				if (c.uniqueResult() != null) {
-					throw new RuntimeException(
-							"Erro ao salvar.\n CPF  já está cadastrado para um outro usuário.");
-				} else {
-					throw new RuntimeException(
-							"Erro ao salvar.\n Login já está cadastrado para um outro usuário.");
-				}
-
+				throw new RuntimeException(
+						"Erro ao salvar.\n Dados já está cadastrado para um outro usuário.");
 			} else {
 				if (EntityExistsException.class.isInstance(e.getCause())) {
 					throw new RuntimeException(
@@ -124,6 +126,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.persistence.UsuarioDAO#pesquisar(br.pucpr.sabrh.entity
+	 * .Usuario)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Usuario> pesquisar(Usuario usuario) throws Exception {
@@ -148,6 +157,41 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		List<Usuario> result = c.list();
 		return result;
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.pucpr.sabrh.persistence.UsuarioDAO#pesquisarCPF(java.lang.String)
+	 */
+	@Override
+	public boolean pesquisarCPF(String cpf) throws Exception {
+		Session s = (Session) entityManager.getDelegate();
+		Criteria c = s.createCriteria(Usuario.class);
+		c.add(Restrictions.eq("cpf", cpf));
+		Usuario usuario = (Usuario) c.uniqueResult();
+		if (usuario != null)
+			return true;
+		else
+			return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.persistence.UsuarioDAO#pesquisarLogin(java.lang.String)
+	 */
+	@Override
+	public boolean pesquisarLogin(String login) throws Exception {
+		Session s = (Session) entityManager.getDelegate();
+		Criteria c = s.createCriteria(Usuario.class);
+		c.add(Restrictions.eq("login", login));
+		Usuario usuario = (Usuario) c.uniqueResult();
+		if (usuario != null)
+			return true;
+		else
+			return false;
 	}
 
 }

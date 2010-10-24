@@ -55,4 +55,26 @@ public interface UsuarioDAO {
 	 */
 	List<Usuario> pesquisar(Usuario usuario) throws Exception;
 
+	/**
+	 * Pesquisar cpf.
+	 * 
+	 * @param cpf
+	 *            - cpf.
+	 * @return verdadeiro, se bem sucedido.
+	 * @throws Exception
+	 *             the exception
+	 */
+	boolean pesquisarCPF(String cpf) throws Exception;
+
+	/**
+	 * Pesquisar login.
+	 * 
+	 * @param login
+	 *            - login.
+	 * @return verdadeiro, se bem sucedido.
+	 * @throws Exception
+	 *             the exception
+	 */
+	boolean pesquisarLogin(String login) throws Exception;
+
 }
