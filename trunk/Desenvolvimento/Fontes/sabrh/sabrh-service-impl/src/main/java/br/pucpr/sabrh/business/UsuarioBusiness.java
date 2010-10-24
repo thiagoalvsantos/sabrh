@@ -76,25 +76,30 @@ public class UsuarioBusiness implements UsuarioService {
 	@Override
 	public Usuario inserir(Usuario usuario) throws Exception {
 
-		usuario = usuarioDAO.salvar(usuario);
+		try {
+			usuario = usuarioDAO.salvar(usuario);
+		} catch (RuntimeException ex) {
+			throw new RuntimeException(ex);
+		}
 		return usuario;
 
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.pucpr.sabrh.services.UsuarioService#criptografar(br.pucpr.sabrh.
 	 * entity.Usuario)
 	 */
 	@Override
 	public String criptografar(String senha1, String senha2) throws Exception {
-		
-		if (CriptografiaUtil.isEqual(senha1.getBytes(), senha2.getBytes())){
+
+		if (CriptografiaUtil.isEqual(senha1.getBytes(), senha2.getBytes())) {
 			return senha1;
-		} else {			
+		} else {
 			return CriptografiaUtil.criptografar(senha1);
 		}
-		
+
 	}
 
 	/*
@@ -107,10 +112,39 @@ public class UsuarioBusiness implements UsuarioService {
 		return usuarioDAO.listar();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.UsuarioService#pesquisar(br.pucpr.sabrh.entity
+	 * .Usuario)
+	 */
 	@Override
 	public List<Usuario> pesquisar(Usuario usuario) throws Exception {
 
 		return usuarioDAO.pesquisar(usuario);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.UsuarioService#pesquisarCPF(java.lang.String)
+	 */
+	@Override
+	public boolean pesquisarCPF(String cpf) throws Exception {
+		return usuarioDAO.pesquisarCPF(cpf);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.UsuarioService#pesquisarLogin(java.lang.String)
+	 */
+	@Override
+	public boolean pesquisarLogin(String login) throws Exception {
+		return usuarioDAO.pesquisarLogin(login);
 	}
 
 }
