@@ -292,4 +292,85 @@ public class Animal implements Serializable {
 	public void setStatus(TipoStatusFemea status) {
 		this.status = status;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((apelido == null) ? 0 : apelido.hashCode());
+		result = prime * result
+				+ ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
+		result = prime
+				* result
+				+ ((listaClassificacao == null) ? 0 : listaClassificacao
+						.hashCode());
+		result = prime * result + ((mae == null) ? 0 : mae.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((pai == null) ? 0 : pai.hashCode());
+		result = prime * result
+				+ ((propriedade == null) ? 0 : propriedade.hashCode());
+		result = prime * result
+				+ ((registro == null) ? 0 : registro.hashCode());
+		result = prime * result + ((sexo == null) ? 0 : sexo.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Animal other = (Animal) obj;
+		if (apelido == null) {
+			if (other.apelido != null)
+				return false;
+		} else if (!apelido.equals(other.apelido))
+			return false;
+		if (dataNascimento == null) {
+			if (other.dataNascimento != null)
+				return false;
+		} else if (!dataNascimento.equals(other.dataNascimento))
+			return false;
+		if (listaClassificacao == null) {
+			if (other.listaClassificacao != null)
+				return false;
+		} else if (!listaClassificacao.equals(other.listaClassificacao))
+			return false;
+		if (mae == null) {
+			if (other.mae != null)
+				return false;
+		} else if (!mae.equals(other.mae))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (pai == null) {
+			if (other.pai != null)
+				return false;
+		} else if (!pai.equals(other.pai))
+			return false;
+		if (propriedade == null) {
+			if (other.propriedade != null)
+				return false;
+		} else if (!propriedade.equals(other.propriedade))
+			return false;
+		if (registro == null) {
+			if (other.registro != null)
+				return false;
+		} else if (!registro.equals(other.registro))
+			return false;
+		if (sexo != other.sexo)
+			return false;
+		if (status != other.status)
+			return false;
+		return true;
+	}
+	
+	
 }
