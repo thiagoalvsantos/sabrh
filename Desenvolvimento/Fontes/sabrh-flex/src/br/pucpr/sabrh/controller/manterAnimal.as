@@ -637,7 +637,8 @@ protected function btnClickSalvarProvaTouro():void
 		// Dados Gerais
 		provaTouro.dataUltimaAtualizacao=txtProvaTouroDataProva.selectedDate;
 		provaTouro.quantidadeFilhas=new Number(txtProvaTouroQtdFilhas.text);
-		provaTouro.preco=new Number(txtProvaTouroPreco.text);
+		provaTouro.preco=new Number(txtProvaTouroPreco.text.replace("R$",'').replace(',','').replace('.',''));
+			
 
 		//Produção
 		provaTouro.proteina=new Number(txtProvaTouroPercentualProteina.text);
@@ -868,7 +869,7 @@ protected function gridClickResultadoProvaTouro(event:ListEvent):void
 	//Dados Gerais
 	txtProvaTouroDataProva.selectedDate=provaTouroSelecionada.dataUltimaAtualizacao;
 	txtProvaTouroQtdFilhas.text=provaTouroSelecionada.quantidadeFilhas.toString();
-	txtProvaTouroPreco.text=provaTouroSelecionada.preco.toString();
+	txtProvaTouroPreco.text=currencyFormatter.format(provaTouroSelecionada.preco.toString());
 	//Produção 
 	txtProvaTouroPercentualProteina.text=provaTouroSelecionada.proteina.toString();
 	txtProvaTouroPercentualGordura.text=provaTouroSelecionada.gordura.toString();

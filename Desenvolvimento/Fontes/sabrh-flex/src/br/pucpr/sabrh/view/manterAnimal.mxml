@@ -103,11 +103,12 @@
 		<mx:NumberValidator id="numValStatusFemea" enabled="false" source="{cmbNovoStatusFemea}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 
 		<mx:CurrencyFormatter id="currencyFormatter" currencySymbol="R$" precision="2" decimalSeparatorFrom="," decimalSeparatorTo="," useThousandsSeparator="true" thousandsSeparatorFrom="." thousandsSeparatorTo="." useNegativeSign="false"/>
+		<mx:CurrencyFormatter id="currencyFormatterWithoutCurrency"  precision="2" decimalSeparatorFrom="," decimalSeparatorTo="," useThousandsSeparator="true" thousandsSeparatorFrom="." thousandsSeparatorTo="." useNegativeSign="false"/>
+		
 		<s:RadioButtonGroup id="radioGroupNovoSexo" change="radioChangeNovoSexo()"/>
 		<s:RadioButtonGroup id="radioGroupDetalheSexo"/>
 
 		<entity:Animal id="animalSelecionado"/>
-
 		<entity:Usuario id="proprietarioPesquisa"/>
 		<entity:Propriedade id="propriedadePesquisa"/>
 		<entity:Propriedade id="propriedadeNovo"/>
@@ -738,7 +739,19 @@
 										<s:Label id="lblProvaTouroPreco" text="Preço"/>
 										<s:Label text="*" color="#B22222" fontWeight="bold"/>
 									</s:HGroup>
-									<s:TextInput id="txtProvaTouroPreco" width="50" restrict="0-9,." maxChars="10" tabIndex="3"/>
+									<s:TextInput id="txtProvaTouroPreco" width="100" restrict="0-9,." maxChars="7" tabIndex="3" focusOut="{currencyFormatter.format()}">
+										<s:focusOut>
+											<![CDATA[
+											txtProvaTouroPreco.text = currencyFormatter.format(txtProvaTouroPreco.text);
+											]]>
+										</s:focusOut>
+										<s:focusIn>
+											<![CDATA[
+											txtProvaTouroPreco.text = currencyFormatterWithoutCurrency.format(txtProvaTouroPreco.text);
+											]]>
+										</s:focusIn>
+
+									</s:TextInput>
 								</s:HGroup>
 							</s:HGroup>
 						</s:Panel>
