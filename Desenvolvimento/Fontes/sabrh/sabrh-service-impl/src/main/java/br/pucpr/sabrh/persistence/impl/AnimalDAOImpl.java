@@ -3,6 +3,7 @@
  */
 package br.pucpr.sabrh.persistence.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -68,6 +69,7 @@ public class AnimalDAOImpl implements AnimalDAO {
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(Animal.class, "ani");
 		c.createCriteria("propriedade", "prop");
+		boolean executa = true;
 
 		// verifica se foi procurado por sexo
 		if (animal.getSexo() != null)
@@ -107,9 +109,15 @@ public class AnimalDAOImpl implements AnimalDAO {
 						.ilike("nome", animal.getMae().getNome(),
 								MatchMode.ANYWHERE)));
 			}
-			q.add(Example.create(animal.getMae())
-					.enableLike(MatchMode.ANYWHERE).ignoreCase());
-			c.add(Restrictions.in("mae", q.list()));
+			// verifica se foi procurado por registro da mae
+			if (animal.getMae().getRegistro() != null)
+				q.add(Restrictions.ilike("registro", animal.getMae()
+						.getRegistro(), MatchMode.ANYWHERE));
+			List<Animal> listaMae = q.list();
+			if (!listaMae.isEmpty())
+				c.add(Restrictions.in("mae", listaMae));
+			else
+				executa = false;
 		}
 
 		// verifica se existe dados do pai para ser pesquisado
@@ -121,18 +129,27 @@ public class AnimalDAOImpl implements AnimalDAO {
 						.ilike("nome", animal.getPai().getNome(),
 								MatchMode.ANYWHERE)));
 			}
-			q.add(Example.create(animal.getPai())
-					.enableLike(MatchMode.ANYWHERE).ignoreCase());
-			c.add(Restrictions.in("pai", q.list()));
+			// verifica se foi procurado por registro do pai
+			if (animal.getPai().getRegistro() != null)
+				q.add(Restrictions.ilike("registro", animal.getPai()
+						.getRegistro(), MatchMode.ANYWHERE));
+			List<Animal> listaPai = q.list();
+			if (!listaPai.isEmpty())
+				c.add(Restrictions.in("pai", listaPai));
+			else
+				executa = false;
 		}
-		
-		c.add(Restrictions.ne("registro", "000000000000000"));
-		c.add(Restrictions.ne("registro", "000000000000001"));
 
-		c.addOrder(Order.asc("registro"));
-		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		List<Animal> result = c.list();
-		
+		List<Animal> result = new ArrayList<Animal>();
+		if (executa) {
+			c.add(Restrictions.ne("registro", "000000000000000"));
+			c.add(Restrictions.ne("registro", "000000000000001"));
+
+			c.addOrder(Order.asc("registro"));
+			c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			result = c.list();
+		}
+
 		return result;
 	}
 
@@ -177,12 +194,12 @@ public class AnimalDAOImpl implements AnimalDAO {
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(Animal.class, "ani");
 		c.add(Restrictions.eq("sexo", sexo));
-		
+
 		if (sexo == TipoSexoAnimal.FEMEA)
 			c.add(Restrictions.eq("registro", "000000000000000"));
 		else
 			c.add(Restrictions.eq("registro", "000000000000001"));
-		
+
 		Animal animal = (Animal) c.uniqueResult();
 		return animal;
 	}
