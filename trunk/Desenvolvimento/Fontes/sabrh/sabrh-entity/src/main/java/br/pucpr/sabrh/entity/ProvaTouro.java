@@ -29,7 +29,7 @@ public class ProvaTouro implements Serializable {
 
 	/** O atributo codigo. */
 	@Id
-	@Column(name = "CODIGO")
+	@Column(name = "CD_CODIGO")
 	private long codigo;
 
 	/** O atributo animal. */

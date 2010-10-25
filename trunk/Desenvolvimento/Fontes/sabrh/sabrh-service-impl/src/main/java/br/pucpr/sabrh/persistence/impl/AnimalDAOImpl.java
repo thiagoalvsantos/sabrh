@@ -13,11 +13,11 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Distinct;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+
 import br.pucpr.sabrh.entity.Animal;
 import br.pucpr.sabrh.entity.TipoSexoAnimal;
 import br.pucpr.sabrh.entity.Usuario;

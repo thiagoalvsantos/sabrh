@@ -91,22 +91,24 @@ public class AnimalBusiness implements AnimalService {
 	@Override
 	public boolean verificarConsanguinidade(Animal femea, Animal macho) {
 
+		List<Animal> filhos = new ArrayList<Animal>();
 		List<Animal> pais = new ArrayList<Animal>();
 		List<Animal> avos = new ArrayList<Animal>();
 		List<Animal> bisavos = new ArrayList<Animal>();
 		List<Animal> arvore = new ArrayList<Animal>();
 
-		pais.add(femea.getPai());
-		pais.add(femea.getMae());
+		filhos.add(femea);
+		filhos.add(macho);
 
 		try {
-			adiocionarGeracao(arvore, pais);
+			pais = criarGeracao(filhos);
+			adicionarGeracao(arvore, pais);
 
 			avos = criarGeracao(pais);
-			adiocionarGeracao(arvore, avos);
+			adicionarGeracao(arvore, avos);
 
 			bisavos = criarGeracao(avos);
-			adiocionarGeracao(arvore, bisavos);
+			adicionarGeracao(arvore, bisavos);
 
 		} catch (Exception e) {
 			return false;
@@ -115,18 +117,20 @@ public class AnimalBusiness implements AnimalService {
 		return true;
 	}
 
-	private List<Animal> adiocionarGeracao(List<Animal> arvore,
-			List<Animal> geracao) throws Exception {
+	private void adicionarGeracao(List<Animal> arvore, List<Animal> geracao)
+			throws Exception {
 
 		for (Animal animal : geracao) {
-			if (!arvore.contains(animal)) {
-				arvore.add(animal);
-			} else {
-				throw new Exception();
+			if (!animal.getRegistro().equals("000000000000000")
+					|| !animal.getRegistro().equals("000000000000001")) {
+				if (!arvore.contains(animal)) {
+					arvore.add(animal);
+				} else {
+					throw new Exception();
+				}
 			}
 		}
 
-		return arvore;
 	}
 
 	private List<Animal> criarGeracao(List<Animal> filhos) throws Exception {
