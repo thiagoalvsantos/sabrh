@@ -357,8 +357,9 @@
 						</s:HGroup>
 						<mx:AdvancedDataGrid id="dataGridResultadoClassificacao" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10" designViewDataType="flat" itemClick="gridClickResultadoClassificacao(event)">
 							<mx:columns>
-								<mx:AdvancedDataGridColumn textAlign="left" headerText="Lactação" sortable="true" dataField="lactacao"/>
-								<mx:AdvancedDataGridColumn textAlign="left" headerText="Data Classificação" sortable="true" dataField="dataClassificacao" labelFunction="labelFunctionDataClassificacao"/>
+								<mx:AdvancedDataGridColumn textAlign="center" headerText="Lactação" sortable="true" dataField="lactacao"/>
+								<mx:AdvancedDataGridColumn textAlign="center" headerText="Data Classificação" sortable="true" dataField="dataClassificacao" labelFunction="labelFunctionDataClassificacao"/>
+								<mx:AdvancedDataGridColumn textAlign="center" headerText="Pontuação" sortable="true" dataField="pontuacaoFinal"/>
 								<mx:AdvancedDataGridColumn textAlign="left" headerText="Classificação" sortable="true" dataField="classificacaoFinal"/>
 							</mx:columns>
 						</mx:AdvancedDataGrid>
