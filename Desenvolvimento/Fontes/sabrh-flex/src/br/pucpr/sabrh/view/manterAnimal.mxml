@@ -243,11 +243,11 @@
 								</s:HGroup>
 								<s:HGroup>
 									<s:TextInput id="txtNovoPai" width="370" editable="false" tabFocusEnabled="false"/>
-									<s:Button label="Buscar" tabIndex="5" click="abrirConsultarAnimal(txtNovoPai,'novo','pai')" buttonMode="true"/>
+									<s:Button label="Buscar" tabIndex="5" click="abrirConsultarAnimal(txtNovoPai,'novo',ConstantesUtils.SEXO_MACHO)" buttonMode="true"/>
 								</s:HGroup>
 								<s:HGroup>
 									<s:TextInput id="txtNovoMae" width="370" editable="false" tabFocusEnabled="false"/>
-									<s:Button label="Buscar" tabIndex="6" click="abrirConsultarAnimal(txtNovoMae,'novo','mae')" buttonMode="true"/>
+									<s:Button label="Buscar" tabIndex="6" click="abrirConsultarAnimal(txtNovoMae,'novo',ConstantesUtils.SEXO_FEMEA)" buttonMode="true"/>
 								</s:HGroup>
 								<s:HGroup verticalAlign="middle">
 									<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
@@ -346,7 +346,7 @@
 							<s:Label text="Classificação linear gravada com sucesso." left="50" verticalCenter="0"/>
 							<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
 						</s:BorderContainer>
-						<s:HGroup>
+						<s:HGroup horizontalAlign="center" width="100%">
 							<s:HGroup verticalAlign="middle">
 								<s:Label id="lblDetalheClassificacaoRegistro" text="Registro"/>
 								<s:TextInput id="txtDetalheClassificacaoRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3"/>
@@ -681,7 +681,7 @@
 							<s:Label text="Prova de Touro gravada com sucesso." left="50" verticalCenter="0"/>
 							<mx:Image source="@Embed(source='../assets/img/success.png')" verticalCenter="0" left="10"/>
 						</s:BorderContainer>
-						<s:HGroup>
+						<s:HGroup horizontalAlign="center" width="100%">
 							<s:HGroup verticalAlign="middle">
 								<s:Label id="lblDetalheProvaTouroRegistro" text="Registro"/>
 								<s:TextInput id="txtDetalheProvaTouroRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3"/>

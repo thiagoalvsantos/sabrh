@@ -35,11 +35,11 @@ public function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:St
 
 	if (tipoConsulta == "novo")
 	{
-		if (tipoAnimal == "pai")
+		if (tipoAnimal == ConstantesUtils.SEXO_MACHO)
 		{
 			paiNovo=animal;
 		}
-		else if (tipoAnimal == "mae")
+		else if (tipoAnimal == ConstantesUtils.SEXO_FEMEA)
 		{
 			maeNovo=animal;
 		}
@@ -158,8 +158,8 @@ protected function btnClickAcasalar():void
 {
 	var popUpPesquisarReprodutor:pesquisarReprodutor=pesquisarReprodutor(PopUpManager.createPopUp(this.parent, pesquisarReprodutor, true));
 	popUpPesquisarReprodutor.vacaSelecionada=animalSelecionado;
-	popUpPesquisarReprodutor.txtPesquisaReprodutorRegistro.text=animalSelecionado.registro;
-	popUpPesquisarReprodutor.txtPesquisaReprodutorApelido.text=animalSelecionado.apelido;
+	popUpPesquisarReprodutor.txtPesquisaRegistroVaca.text=animalSelecionado.registro;
+	popUpPesquisarReprodutor.txtPesquisaApelidoVaca.text=animalSelecionado.apelido;
 	PopUpManager.centerPopUp(popUpPesquisarReprodutor);
 	PopUpManager.centerPopUp(this);
 	PopUpManager.removePopUp(this);

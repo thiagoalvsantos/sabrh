@@ -191,14 +191,14 @@ protected function init(event:FlexEvent):void
 		txtPesquisaProprietario.text=FlexGlobals.topLevelApplication.user.nome;
 	}
 
-	if (tipoAnimal == 'pai')
+	if (tipoAnimal == ConstantesUtils.SEXO_MACHO)
 	{
 		checkBoxMacho.selected=true;
 		checkBoxMacho.enabled=false;
 		checkBoxFemea.selected=false;
 		checkBoxFemea.enabled=false;
 	}
-	if (tipoAnimal == 'mae')
+	if (tipoAnimal == ConstantesUtils.SEXO_FEMEA)
 	{
 		checkBoxMacho.selected=false;
 		checkBoxMacho.enabled=false;

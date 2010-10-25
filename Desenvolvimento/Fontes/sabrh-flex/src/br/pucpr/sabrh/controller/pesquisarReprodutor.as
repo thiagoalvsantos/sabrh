@@ -1,12 +1,16 @@
 import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.FiltroAcasalamento;
 
 import mx.collections.ArrayCollection;
 import mx.collections.Sort;
 import mx.collections.SortField;
 import mx.controls.Alert;
 import mx.controls.DataGrid;
+import mx.core.FlexGlobals;
 import mx.events.CloseEvent;
 import mx.managers.PopUpManager;
+import mx.rpc.events.FaultEvent;
+import mx.rpc.events.ResultEvent;
 
 public function init():void
 {
@@ -37,13 +41,13 @@ protected function verificaLimiteDataGrid():void
 			btnMoverDireita.enabled=false;
 			dataGridConformacao.doubleClickEnabled=false;
 		}
-		else 
+		else
 		{
 			dataGridConformacaoSelecionado.dropEnabled=true;
 			btnMoverDireita.enabled=true;
 			dataGridConformacao.doubleClickEnabled=true;
 		}
-		
+
 		if (arrayAtributoConformacaoSelecionado.length > 0)
 		{
 			btnMoverCima.enabled=true;
@@ -54,7 +58,7 @@ protected function verificaLimiteDataGrid():void
 			btnMoverCima.enabled=false;
 			btnMoverBaixo.enabled=false;
 		}
-			
+
 	}
 }
 
@@ -114,13 +118,43 @@ protected function btnClickMoverBaixo():void
 	if (itemSelecionado)
 	{
 		var index:int=arrayAtributoConformacaoSelecionado.getItemIndex(itemSelecionado);
-		if (index != arrayAtributoConformacaoSelecionado.length-1)
+		if (index != arrayAtributoConformacaoSelecionado.length - 1)
 		{
 			arrayAtributoConformacaoSelecionado.removeItemAt(index);
 			arrayAtributoConformacaoSelecionado.addItemAt(itemSelecionado, index + 1);
 			dataGridConformacaoSelecionado.selectedIndex=index;
 		}
 	}
+}
+
+//Função para abrir a tela de Consultar Animais.
+protected function abrirConsultarAnimal(atributo:TextInput, tipoConsulta:String, tipoAnimal:String):void
+{
+	var popUpConsultarAnimal:consultarAnimal=consultarAnimal(PopUpManager.createPopUp(this.parent, consultarAnimal, true));
+	popUpConsultarAnimal.janelaOrigem=this;
+	popUpConsultarAnimal.tipoConsulta=tipoConsulta;
+	popUpConsultarAnimal.atributoDestino=atributo;
+	popUpConsultarAnimal.tipoAnimal=tipoAnimal;
+	PopUpManager.centerPopUp(popUpConsultarAnimal);
+	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarAnimal;
+	FlexGlobals.topLevelApplication.popUpEffect.play();
+}
+
+//Função que recebe o retorno da consulta de Animais.
+public function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:String, tipoAnimal:String, animal:Animal):void
+{
+	if (tipoConsulta == "pesquisa" && tipoAnimal == ConstantesUtils.SEXO_FEMEA)
+	{
+		atributoDestino.text=animal.apelido;
+		txtPesquisaRegistroVaca.text=animal.registro;
+		vacaSelecionada=animal;
+	}
+
+}
+
+protected function btnClickDetalhe():void
+{
+	currentState=ConstantesUtils.STATE_DETALHE;
 }
 
 /**
@@ -155,6 +189,50 @@ protected function dataGridSelect(dataGrid:DataGrid):void
  */
 protected function btnClickPesquisar():void
 {
+	var filtroAcasalamento:FiltroAcasalamento=new FiltroAcasalamento();
+	var listaProducao:ArrayCollection=new ArrayCollection();
+	var listaConformacao:ArrayCollection=new ArrayCollection();
+	
+	if (vacaSelecionada != null)
+		filtroAcasalamento.femea=vacaSelecionada;
+	
+	// PRODUÇÃO
+	if (checkBoxKgLeite.selected)
+		listaProducao.addItem("quiloLeite");
+	
+	if (checkBoxPerGordura.selected)
+		listaProducao.addItem("gordura");
+	
+	if (checkBoxPerProteina.selected)
+		listaProducao.addItem("proteina");
+	
+	if (checkBoxQntFilhas.selected)
+		listaProducao.addItem("quantidadeFilhas");
+	
+	// CONFORMAÇÃO
+	for(var i:int=0; i < arrayAtributoConformacaoSelecionado.length; i++)
+	{
+		var elemento:Object=arrayAtributoConformacaoSelecionado.getItemIndex(i);
+		listaConformacao.addItem(elemento.value);
+	}
+	
+	if (txtPesquisaConfiabilidadeConformacao.text != null && txtPesquisaConfiabilidadeConformacao.text != "") 
+		filtroAcasalamento.confiabilidadeConformacao=new Number(txtPesquisaConfiabilidadeConformacao.text);
+	
+	if (txtPesquisaConfiabilidadeProducao.text != null && txtPesquisaConfiabilidadeProducao.text != "") 
+		filtroAcasalamento.confiabilidadeProducao=new Number(txtPesquisaConfiabilidadeProducao.text);
+	
+	filtroAcasalamento.listaConformacao=listaConformacao;
+	filtroAcasalamento.listaProducao=listaProducao;
+	
+	provaTouroService.pesquisarReprodutor(filtroAcasalamento);
+	
+}
+
+protected function serviceResultPesquisarReprodutor(event:ResultEvent):void
+{
+	var listaProvaTouro:ArrayCollection=event.result as ArrayCollection;
+	
 	// Altera estado da tela para "RESULTADO"
 	currentState=ConstantesUtils.STATE_RESULTADO;
 	
@@ -166,18 +244,31 @@ protected function btnClickPesquisar():void
 	PopUpManager.centerPopUp(this);
 }
 
+protected function onFault(event:FaultEvent):void
+{
+	//Ocorreu uma falha ao chamar o servico. 
+	Alert.show(event.fault.rootCause.message);
+}
+
 protected function controlarSelecoes():void
 {
-	var itemSelecionado:Object=dataGridResultado.selectedItem;
-	if (dataGridResultado.selectedIndices.length>2)
+//	var itemSelecionado:Object=dataGridResultado.selectedItem;
+	switch (dataGridResultado.selectedIndices.length)
 	{
-		var itensSelecionado:Array=dataGridResultado.selectedItems;
-		itensSelecionado.pop();
-		dataGridResultado.selectedItems=itensSelecionado;
+		case 1:
+			btnComparar.enabled=false;
+			btnDetalhe.enabled=true;
+			break;
+		case 2:
+			btnComparar.enabled=true;
+			btnDetalhe.enabled=false;
+			break;
+		case 3:
+			var itensSelecionado:Array=dataGridResultado.selectedItems;
+			itensSelecionado.pop();
+			dataGridResultado.selectedItems=itensSelecionado;
+			break;
+
 	}
-	else if (dataGridResultado.selectedIndices.length==2)
-		btnComparar.enabled=true;
-	else
-		btnComparar.enabled=false;
 }
 
