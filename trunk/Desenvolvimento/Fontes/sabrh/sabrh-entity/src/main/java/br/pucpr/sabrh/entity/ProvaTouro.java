@@ -55,7 +55,7 @@ public class ProvaTouro implements Serializable {
 
 	/** O atributo quantidade filhas. */
 	@Column(name = "VL_QUANT_FILHAS", nullable = false)
-	private short quantidadeFilhas;
+	private int quantidadeFilhas;
 
 	/** O atributo proteina. */
 	@Column(name = "PC_PROTEINA", nullable = false)
@@ -263,7 +263,7 @@ public class ProvaTouro implements Serializable {
 	 * @return the quantidade filhas
 	 * @see ProvaTouro#quantidadeFilhas.
 	 */
-	public short getQuantidadeFilhas() {
+	public int getQuantidadeFilhas() {
 		return quantidadeFilhas;
 	}
 
@@ -274,7 +274,7 @@ public class ProvaTouro implements Serializable {
 	 *            - quantidade filhas.
 	 * @see ProvaTouro#quantidadeFilhas.
 	 */
-	public void setQuantidadeFilhas(short quantidadeFilhas) {
+	public void setQuantidadeFilhas(int quantidadeFilhas) {
 		this.quantidadeFilhas = quantidadeFilhas;
 	}
 

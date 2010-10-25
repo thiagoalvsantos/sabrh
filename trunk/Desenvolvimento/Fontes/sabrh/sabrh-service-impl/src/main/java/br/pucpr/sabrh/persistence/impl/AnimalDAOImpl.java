@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Distinct;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -129,7 +130,9 @@ public class AnimalDAOImpl implements AnimalDAO {
 		c.add(Restrictions.ne("registro", "000000000000001"));
 
 		c.addOrder(Order.asc("registro"));
+		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<Animal> result = c.list();
+		
 		return result;
 	}
 

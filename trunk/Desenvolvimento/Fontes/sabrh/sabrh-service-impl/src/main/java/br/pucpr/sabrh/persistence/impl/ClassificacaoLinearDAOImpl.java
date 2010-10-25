@@ -16,8 +16,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-
 import br.pucpr.sabrh.entity.Animal;
 import br.pucpr.sabrh.entity.ClassificacaoLinear;
 import br.pucpr.sabrh.persistence.ClassificacaoLinearDAO;
@@ -68,7 +66,7 @@ public class ClassificacaoLinearDAOImpl implements ClassificacaoLinearDAO {
 		Criteria c = s.createCriteria(ClassificacaoLinear.class, "classlin");
 		c.add(Restrictions.eq("animal", animal));
 
-		c.addOrder(Order.asc("dataClassificacao"));
+		c.addOrder(Order.asc("lactacao"));
 		List<ClassificacaoLinear> result = c.list();
 		return result;
 	}
