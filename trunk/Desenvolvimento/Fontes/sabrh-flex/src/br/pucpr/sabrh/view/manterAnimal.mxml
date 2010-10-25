@@ -707,7 +707,7 @@
 			</s:VGroup>
 
 			<!--//////////////////////////
-				 //	CLASSIFICAÇÃO LINEAR EDITAR
+				 //	PROVA TOURO EDITAR
 				 /////////////////////////////-->
 			<s:VGroup id="groupProvaTouroEditar" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateProvaTouroEditar">
 				<s:Panel width="100%" height="100%" title="Prova de Touro">
@@ -916,9 +916,9 @@
 											</s:HGroup>
 										</s:VGroup>
 										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-											<s:TextInput id="txtProvaTouroProfundidadeUbere" width="50" restrict="0-9" maxChars="1" tabIndex="14"/>
-											<s:TextInput id="txtProvaTouroColocacaoTetorAnteriores" width="50" restrict="0-9" maxChars="1" tabIndex="17"/>
-											<s:TextInput id="txtProvaTouroColocacaoTetosPosteriores" width="50" restrict="0-9" maxChars="1" tabIndex="20"/>
+											<s:TextInput id="txtProvaTouroProfundidadeUbere" width="50" restrict="0-9" maxChars="1" tabIndex="16"/>
+											<s:TextInput id="txtProvaTouroColocacaoTetorAnteriores" width="50" restrict="0-9" maxChars="1" tabIndex="19"/>
+											<s:TextInput id="txtProvaTouroColocacaoTetosPosteriores" width="50" restrict="0-9" maxChars="1" tabIndex="22"/>
 										</s:VGroup>
 									</s:HGroup>
 									<s:HGroup>
@@ -937,9 +937,9 @@
 											</s:HGroup>
 										</s:VGroup>
 										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-											<s:TextInput id="txtProvaTouroLigamentoMedio" width="50" restrict="0-9" maxChars="1" tabIndex="15"/>
-											<s:TextInput id="txtProvaTouroAlturaUberePosterior" width="50" restrict="0-9" maxChars="1" tabIndex="18"/>
-											<s:TextInput id="txtProvaTouroComprimentoTetos" width="50" restrict="0-9" maxChars="1" tabIndex="21"/>
+											<s:TextInput id="txtProvaTouroLigamentoMedio" width="50" restrict="0-9" maxChars="1" tabIndex="17"/>
+											<s:TextInput id="txtProvaTouroAlturaUberePosterior" width="50" restrict="0-9" maxChars="1" tabIndex="20"/>
+											<s:TextInput id="txtProvaTouroComprimentoTetos" width="50" restrict="0-9" maxChars="1" tabIndex="23"/>
 										</s:VGroup>
 									</s:HGroup>
 									<s:HGroup>
@@ -954,8 +954,8 @@
 											</s:HGroup>
 										</s:VGroup>
 										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-											<s:TextInput id="txtProvaTouroInsersaoUbereAnterior" width="50" restrict="0-9" maxChars="1" tabIndex="16"/>
-											<s:TextInput id="txtProvaTouroLarguraUberePosterior" width="50" restrict="0-9" maxChars="1" tabIndex="19"/>
+											<s:TextInput id="txtProvaTouroInsersaoUbereAnterior" width="50" restrict="0-9" maxChars="1" tabIndex="18"/>
+											<s:TextInput id="txtProvaTouroLarguraUberePosterior" width="50" restrict="0-9" maxChars="1" tabIndex="21"/>
 										</s:VGroup>
 									</s:HGroup>
 								</s:HGroup>
@@ -968,11 +968,11 @@
 									<s:HGroup verticalAlign="middle" verticalCenter="0" paddingLeft="10">
 										<s:Label id="lblProvaTouroConfiabilidadeProducao" text="Confiabilidade Produção" fontWeight="bold"/>
 										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										<s:TextInput id="txtProvaTouroConfiabilidadeProducao" width="50" restrict="0-9" maxChars="2" tabIndex="22"/>
+										<s:TextInput id="txtProvaTouroConfiabilidadeProducao" width="50" restrict="0-9" maxChars="2" tabIndex="24"/>
 										<mx:Spacer width="30"/>
 										<s:Label id="lblProvaTouroConfiabilidadeConformacao" text="Confiabilidade Conformação" fontWeight="bold"/>
 										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										<s:TextInput id="txtProvaTouroConfiabilidadeConformacao" width="50" restrict="0-9" maxChars="2" tabIndex="22"/>
+										<s:TextInput id="txtProvaTouroConfiabilidadeConformacao" width="50" restrict="0-9" maxChars="2" tabIndex="25"/>
 									</s:HGroup>
 								</s:BorderContainer>
 							</s:VGroup>
