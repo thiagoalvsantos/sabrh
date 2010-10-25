@@ -3,6 +3,7 @@ import br.pucpr.sabrh.entity.Animal;
 import br.pucpr.sabrh.entity.ClassificacaoLinear;
 import br.pucpr.sabrh.entity.Propriedade;
 import br.pucpr.sabrh.entity.ProvaTouro;
+import br.pucpr.sabrh.view.pesquisarReprodutor;
 
 import flash.events.MouseEvent;
 
@@ -151,6 +152,17 @@ protected function btnClickClassificacaoLinear(event:MouseEvent):void
 
 	dataGridResultadoClassificacao.dataProvider=animalSelecionado.listaClassificacao;
 	PopUpManager.centerPopUp(this);
+}
+
+protected function btnClickAcasalar():void
+{
+	var popUpPesquisarReprodutor:pesquisarReprodutor=pesquisarReprodutor(PopUpManager.createPopUp(this.parent, pesquisarReprodutor, true));
+	popUpPesquisarReprodutor.vacaSelecionada=animalSelecionado;
+	popUpPesquisarReprodutor.txtPesquisaReprodutorRegistro.text=animalSelecionado.registro;
+	popUpPesquisarReprodutor.txtPesquisaReprodutorApelido.text=animalSelecionado.apelido;
+	PopUpManager.centerPopUp(popUpPesquisarReprodutor);
+	PopUpManager.centerPopUp(this);
+	PopUpManager.removePopUp(this);
 }
 
 protected function btnClickExcluirClassificacao():void
@@ -773,6 +785,7 @@ protected function gridClickResultado(event:ListEvent):void
 		btnClassificacaoProva.label=ConstantesUtils.CLASSIFICACAO_LINEAR;
 		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, btnClickClassificacaoLinear);
 		btnClassificacaoProva.visible=true;
+		btnAcasalar.visible=true;
 		cmbDetalheStatusFemea.text=animalSelecionado.status;
 		detalheStatusFemea.visible=true;
 	}
@@ -1054,6 +1067,7 @@ protected function serviceResultAnimalSalvar(event:ResultEvent):void
 		btnClassificacaoProva.label=ConstantesUtils.CLASSIFICACAO_LINEAR;
 		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, btnClickClassificacaoLinear);
 		btnClassificacaoProva.visible=true;
+		btnAcasalar.visible=true;
 		cmbDetalheStatusFemea.text=animalSelecionado.status;
 		detalheStatusFemea.visible=true;
 	}
