@@ -74,4 +74,11 @@
 		</properties>
 	</destination>
 
+	<destination id="AcasalamentoService">
+		<properties>
+			<factory>ejb3</factory>
+			<source>sabrh-ear-1.0/AcasalamentoService/remote</source>
+		</properties>
+	</destination>
+
 </service>
