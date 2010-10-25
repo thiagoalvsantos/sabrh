@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.FiltroAcasalamento;
 import br.pucpr.sabrh.entity.ProvaTouro;
 
 /**
@@ -45,5 +46,13 @@ public interface ProvaTouroService {
 	 */
 	void excluir(ProvaTouro provaTouro);
 
-	
+	/**
+	 * Pesquisar reprodutor.
+	 * 
+	 * @param filtroAcasalamento
+	 *            - filtro acasalamento
+	 * @return list
+	 */
+	List<ProvaTouro> pesquisarReprodutor(FiltroAcasalamento filtroAcasalamento);
+
 }

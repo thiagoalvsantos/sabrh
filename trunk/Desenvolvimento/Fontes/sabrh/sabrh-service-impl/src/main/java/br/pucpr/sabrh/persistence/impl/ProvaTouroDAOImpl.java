@@ -16,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.FiltroAcasalamento;
 import br.pucpr.sabrh.entity.ProvaTouro;
 import br.pucpr.sabrh.persistence.ProvaTouroDAO;
 
@@ -58,6 +59,7 @@ public class ProvaTouroDAOImpl implements ProvaTouroDAO {
 	 * br.pucpr.sabrh.persistence.ProvaTouroDAO#pesquisar(br.pucpr.sabrh.entity
 	 * .Animal)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProvaTouro> pesquisar(Animal animal) {
 		Session s = (Session) entityManager.getDelegate();
@@ -90,6 +92,13 @@ public class ProvaTouroDAOImpl implements ProvaTouroDAO {
 		provaTouro = entityManager.merge(provaTouro);
 		entityManager.remove(provaTouro);
 		entityManager.flush();
+	}
+	
+	@Override
+	public List<ProvaTouro> pesquisarReprodutor(
+			FiltroAcasalamento filtroAcasalamento) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
