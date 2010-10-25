@@ -102,7 +102,7 @@
 
 		<mx:NumberValidator id="numValStatusFemea" enabled="false" source="{cmbNovoStatusFemea}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 
-		<mx:CurrencyFormatter currencySymbol="R$" precision="2" decimalSeparatorFrom="," decimalSeparatorTo="," useThousandsSeparator="true" thousandsSeparatorFrom="." thousandsSeparatorTo="." useNegativeSign="false"/>
+		<mx:CurrencyFormatter id="currencyFormatter" currencySymbol="R$" precision="2" decimalSeparatorFrom="," decimalSeparatorTo="," useThousandsSeparator="true" thousandsSeparatorFrom="." thousandsSeparatorTo="." useNegativeSign="false"/>
 		<s:RadioButtonGroup id="radioGroupNovoSexo" change="radioChangeNovoSexo()"/>
 		<s:RadioButtonGroup id="radioGroupDetalheSexo"/>
 
@@ -690,9 +690,9 @@
 						</s:HGroup>
 						<mx:AdvancedDataGrid id="dataGridResultadoProvaTouro" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10" designViewDataType="flat" itemClick="gridClickResultadoProvaTouro(event)">
 							<mx:columns>
-								<mx:AdvancedDataGridColumn textAlign="left" headerText="Qtd. Filhas" sortable="true" dataField="quantidadeFilhas"/>
+								<mx:AdvancedDataGridColumn textAlign="left" headerText="Filhas" sortable="true" dataField="quantidadeFilhas"/>
 								<mx:AdvancedDataGridColumn textAlign="left" headerText="Ultima Atualização" sortable="true" dataField="dataUltimaAtualizacao" labelFunction="labelFunctionDataProvaTouro"/>
-								<mx:AdvancedDataGridColumn textAlign="left" headerText="Preço" sortable="true" dataField="preco"/>
+								<mx:AdvancedDataGridColumn textAlign="left" headerText="Preço" sortable="true" dataField="preco" formatter="{currencyFormatter}"/>
 							</mx:columns>
 						</mx:AdvancedDataGrid>
 					</s:VGroup>
@@ -703,8 +703,6 @@
 				</s:Panel>
 
 			</s:VGroup>
-
-
 
 			<!--//////////////////////////
 				 //	CLASSIFICAÇÃO LINEAR EDITAR
@@ -734,7 +732,7 @@
 									<s:TextInput id="txtProvaTouroQtdFilhas" width="50" restrict="0-9" maxChars="5" tabIndex="2"/>
 								</s:HGroup>
 								<s:HGroup paddingRight="10" verticalAlign="middle">
-									<s:HGroup width="150">
+									<s:HGroup width="196">
 										<s:Label id="lblProvaTouroPreco" text="Preço"/>
 										<s:Label text="*" color="#B22222" fontWeight="bold"/>
 									</s:HGroup>
@@ -743,7 +741,7 @@
 							</s:HGroup>
 						</s:Panel>
 						<!-- Produção -->
-						<s:Panel width="100%" title="Produção" height="145">
+						<s:Panel width="100%" title="Produção" height="90">
 							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
 								<s:HGroup>
 									<s:HGroup>
@@ -828,8 +826,8 @@
 							</s:VGroup>
 						</s:Panel>
 						<!-- Garupa -->
-						<s:Panel width="100%" title="Garupa" height="145">
-							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
+						<s:Panel width="100%" title="Garupa" height="90">
+							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5" height="46">
 								<s:HGroup>
 									<s:HGroup>
 										<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
@@ -857,7 +855,7 @@
 							</s:VGroup>
 						</s:Panel>
 						<!-- Pernas e Pes -->
-						<s:Panel width="100%" title="Pernas e Pés" height="173">
+						<s:Panel width="100%" title="Pernas e Pés" height="90">
 							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
 								<s:HGroup>
 									<s:HGroup>
@@ -897,7 +895,7 @@
 							</s:VGroup>
 						</s:Panel>
 						<!-- Sistema Mamário-->
-						<s:Panel width="100%" title="Sistema Mamário" height="173">
+						<s:Panel width="100%" title="Sistema Mamário" height="145">
 							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
 								<s:HGroup>
 									<s:HGroup>
@@ -982,7 +980,7 @@
 					<s:controlBarContent>
 						<s:Button label="Voltar" click="{btnClickVoltarProvaTouroLista()}" buttonMode="true" tabIndex="34"/>
 						<s:Button label="Salvar" click="{btnClickSalvarProvaTouro()}" buttonMode="true" tabIndex="32"/>
-						<s:Button label="Excuir" click="{}" buttonMode="true" tabIndex="33" id="btnProvaTouroExcluir"/>
+						<s:Button label="Excuir" click="{btnClickExcluirProvaTouro()}" buttonMode="true" tabIndex="33" id="btnProvaTouroExcluir"/>
 					</s:controlBarContent>
 				</s:Panel>
 			</s:VGroup>

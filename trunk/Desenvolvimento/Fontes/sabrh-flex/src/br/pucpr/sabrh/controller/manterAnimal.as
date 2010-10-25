@@ -153,12 +153,14 @@ protected function btnClickClassificacaoLinear(event:MouseEvent):void
 	PopUpManager.centerPopUp(this);
 }
 
-
-
 protected function btnClickExcluirClassificacao():void
 {
-
 	classificacaoLinearService.excluir(classificacaoLinearSelecionada);
+}
+
+protected function btnClickExcluirProvaTouro():void
+{
+	provaTouroService.excluir(provaTouroSelecionada);
 }
 
 /**
@@ -843,7 +845,47 @@ protected function gridClickResultadoClassificacao(event:ListEvent):void
 
 protected function gridClickResultadoProvaTouro(event:ListEvent):void
 {
-	// TODO FAZER METODO
+	currentState=ConstantesUtils.STATE_PROVA_TOURO_EDITAR;
+
+	provaTouroSelecionada=event.currentTarget.selectedItem;
+
+	//Dados Gerais
+	txtProvaTouroDataProva.selectedDate=provaTouroSelecionada.dataUltimaAtualizacao;
+	txtProvaTouroQtdFilhas.text=provaTouroSelecionada.quantidadeFilhas.toString();
+	txtProvaTouroPreco.text=provaTouroSelecionada.preco.toString();
+	//Produção 
+	txtProvaTouroPercentualProteina.text=provaTouroSelecionada.proteina.toString();
+	txtProvaTouroPercentualGordura.text=provaTouroSelecionada.gordura.toString();
+	txtProvaTouroQuiloLeite.text=provaTouroSelecionada.quiloLeite.toString();
+	// Força Leiteira
+	txtProvaTouroEstatura.text=provaTouroSelecionada.estatura.toString();
+	txtProvaTouroAngulosidade.text=provaTouroSelecionada.angulosidade.toString();
+	txtProvaTouroLarguraPeito.text=provaTouroSelecionada.larguraPeito.toString();
+	txtProvaTouroProfundidadeCorporal.text=provaTouroSelecionada.profundidadeCorporal.toString();
+	//Garupa 
+	txtProvaTouroAnguloGarupa.text=provaTouroSelecionada.anguloGarupa.toString();
+	txtProvaTouroLarguraGarupa.text=provaTouroSelecionada.larguraGarupa.toString();
+	// Pernas e Pes
+	txtProvaTouroAnguloCasco.text=provaTouroSelecionada.anguloCasco.toString();
+	txtProvaTouroPernasPostVistaLateral.text=provaTouroSelecionada.pernasPostVistaLateral.toString();
+	txtProvaTouroPernasPostVistaPost.text=provaTouroSelecionada.pernasPostVistaPost.toString();
+	// Sistema Mamário
+	txtProvaTouroProfundidadeUbere.text=provaTouroSelecionada.profundidadeUbere.toString();
+	txtProvaTouroColocacaoTetorAnteriores.text=provaTouroSelecionada.colocacaoTetosAnteriores.toString();
+	txtProvaTouroColocacaoTetosPosteriores.text=provaTouroSelecionada.colocacaoTetosPosteriores.toString();
+	txtProvaTouroLigamentoMedio.text=provaTouroSelecionada.ligamentoMedio.toString();
+	txtProvaTouroAlturaUberePosterior.text=provaTouroSelecionada.alturaUberePosterior.toString();
+	txtProvaTouroComprimentoTetos.text=provaTouroSelecionada.comprimentoTetos.toString();
+	txtProvaTouroInsersaoUbereAnterior.text=provaTouroSelecionada.insercaoUbereAnterior.toString();
+	txtProvaTouroLarguraUberePosterior.text=provaTouroSelecionada.larguraUberePosterior.toString();
+	// Dados Finais 
+	txtProvaTouroConfiabilidadeProducao.text=provaTouroSelecionada.confiabilidadeProducao.toString();
+	txtProvaTouroConfiabilidadeConformacao.text=provaTouroSelecionada.confiabilidadeConformacao.toString();
+
+	btnProvaTouroExcluir.visible=true;
+
+	txtProvaTouroDataProva.focusManager.setFocus(txtProvaTouroDataProva);
+	PopUpManager.centerPopUp(this);
 }
 
 /**
@@ -879,7 +921,7 @@ protected function labelFunctionDataProvaTouro(item:Object, column:AdvancedDataG
 {
 	var dateFormat:DateFormatter=new DateFormatter();
 	dateFormat.formatString="DD/MM/YYYY";
-	
+
 	return dateFormat.format(item.dataUltimaAtualizacao);
 }
 
