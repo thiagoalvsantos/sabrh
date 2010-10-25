@@ -3,6 +3,7 @@
  */
 package br.pucpr.sabrh.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -85,6 +86,64 @@ public class AnimalBusiness implements AnimalService {
 	@Override
 	public Animal recuperarAnimalPadrao(TipoSexoAnimal sexo) {
 		return dao.recuperarAnimalPadrao(sexo);
+	}
+
+	@Override
+	public boolean verificarConsanguinidade(Animal femea, Animal macho) {
+
+		List<Animal> pais = new ArrayList<Animal>();
+		List<Animal> avos = new ArrayList<Animal>();
+		List<Animal> bisavos = new ArrayList<Animal>();
+		List<Animal> arvore = new ArrayList<Animal>();
+
+		pais.add(femea.getPai());
+		pais.add(femea.getMae());
+
+		try {
+			adiocionarGeracao(arvore, pais);
+
+			avos = criarGeracao(pais);
+			adiocionarGeracao(arvore, avos);
+
+			bisavos = criarGeracao(avos);
+			adiocionarGeracao(arvore, bisavos);
+
+		} catch (Exception e) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private List<Animal> adiocionarGeracao(List<Animal> arvore,
+			List<Animal> geracao) throws Exception {
+
+		for (Animal animal : geracao) {
+			if (!arvore.contains(animal)) {
+				arvore.add(animal);
+			} else {
+				throw new Exception();
+			}
+		}
+
+		return arvore;
+	}
+
+	private List<Animal> criarGeracao(List<Animal> filhos) throws Exception {
+		ArrayList<Animal> geracao = new ArrayList<Animal>();
+		for (Animal animal : filhos) {
+			if (!geracao.contains(animal.getPai())) {
+				geracao.add(animal.getPai());
+			} else {
+				throw new Exception();
+			}
+			if (!geracao.contains(animal.getMae())) {
+				geracao.add(animal.getMae());
+			} else {
+				throw new Exception();
+			}
+		}
+		return geracao;
 	}
 
 }

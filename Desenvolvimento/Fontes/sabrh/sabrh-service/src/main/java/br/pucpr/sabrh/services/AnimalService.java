@@ -36,7 +36,7 @@ public interface AnimalService {
 	 * @return animal
 	 */
 	Animal salvar(Animal animal);
-	
+
 	/**
 	 * Recuperar animal default.
 	 * 
@@ -45,5 +45,16 @@ public interface AnimalService {
 	 * @return animal
 	 */
 	Animal recuperarAnimalPadrao(TipoSexoAnimal sexo);
+
+	/**
+	 * Verificar consanguinidade.
+	 * 
+	 * @param femea
+	 *            - femea.
+	 * @param macho
+	 *            - macho.
+	 * @return verdadeiro, se bem sucedido.
+	 */
+	boolean verificarConsanguinidade(Animal femea, Animal macho);
 
 }
