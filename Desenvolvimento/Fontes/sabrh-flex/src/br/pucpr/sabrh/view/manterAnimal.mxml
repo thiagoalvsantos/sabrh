@@ -331,6 +331,7 @@
 						<s:Button label="Editar" click="{editarAnimal()}" buttonMode="true"/>
 						<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
 						<s:Button buttonMode="true" id="btnClassificacaoProva" visible="false"/>
+						<s:Button label="Acasalar" buttonMode="true" id="btnAcasalar" visible="false" click="{btnClickAcasalar()}"/>
 					</s:controlBarContent>
 				</s:Panel>
 			</s:VGroup>

@@ -50,6 +50,8 @@
 
 		<s:ArrayCollection id="arrayAtributoConformacao" source="{listaAtributoConformacao}"/>
 		<s:ArrayCollection id="arrayAtributoConformacaoSelecionado" collectionChange="verificaLimiteDataGrid()"/>
+		
+		<entity:Animal id="vacaSelecionada"/>
 
 	</fx:Declarations>
 
@@ -73,72 +75,82 @@
 					 //	FILTRO - PESQUISA
 					 /////////////////////////////-->
 				<s:Panel id="panelPesquisa" width="100%" title="Pesquisa" includeIn="statePesquisa,stateResultado">
-					<mx:Canvas left="5" right="5" top="5" bottom="5">
+					<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5">
+						<s:HGroup>
+							<s:HGroup verticalAlign="middle">
+								<s:Label id="lblPesquisaReprodutorRegistro" text="Registro"/>
+								<s:TextInput id="txtPesquisaReprodutorRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+							</s:HGroup>
+							<s:HGroup verticalAlign="middle">
+								<s:Label id="lblPesquisaReprodutorApelido" text="Apelido"/>
+								<s:TextInput id="txtPesquisaReprodutorApelido" width="370" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+							</s:HGroup>
+						</s:HGroup>
 						<s:BorderContainer width="100%" height="26" styleName="panelProducao">
 							<s:VGroup paddingTop="3" paddingLeft="2">
 								<s:Label text="Produção"/>
 							</s:VGroup>
 							<s:VGroup horizontalAlign="center" width="100%" height="100%" verticalAlign="middle">
 								<s:HGroup gap="25">
-									<s:CheckBox id="checkBoxQntFilhas" label="Quantidade de Filhas" tabIndex="9"/>
-									<s:CheckBox id="checkBoxKgLeite" label="Kg de Leite" tabIndex="9"/>
-									<s:CheckBox id="checkBoxPerGordura" label="Percentual de Gordura" tabIndex="9"/>
-									<s:CheckBox id="checkBoxPerProteina" label="Percentual de Proteina" tabIndex="9"/>
+									<s:CheckBox id="checkBoxQntFilhas" label="Quantidade de Filhas" tabIndex="1"/>
+									<s:CheckBox id="checkBoxKgLeite" label="Kg de Leite" tabIndex="2"/>
+									<s:CheckBox id="checkBoxPerGordura" label="Percentual de Gordura" tabIndex="3"/>
+									<s:CheckBox id="checkBoxPerProteina" label="Percentual de Proteina" tabIndex="4"/>
 								</s:HGroup>
 							</s:VGroup>
 						</s:BorderContainer>
-						<s:BorderContainer width="100%" styleName="panelProducao" y="35" height="210">
+						<s:BorderContainer width="100%" styleName="panelProducao" height="210">
 							<s:VGroup paddingTop="3" paddingLeft="2">
 								<s:Label text="Conformação"/>
 							</s:VGroup>
 							<s:VGroup gap="16" horizontalAlign="center" width="100%" height="100%" verticalAlign="middle">
 								<s:HGroup>
-									<mx:DataGrid id="dataGridConformacao" width="240" dataProvider="{arrayAtributoConformacao}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" verticalScrollPolicy="on" doubleClickEnabled="true" doubleClick="btnClickMoverDireita()" itemClick="dataGridSelect(dataGridConformacao)">
+									<mx:DataGrid id="dataGridConformacao" width="240" dataProvider="{arrayAtributoConformacao}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" verticalScrollPolicy="on" doubleClickEnabled="true" doubleClick="btnClickMoverDireita()" itemClick="dataGridSelect(dataGridConformacao)" tabIndex="5">
 										<mx:columns>
 											<mx:DataGridColumn dataField="atributo" headerText="Atributos de Conformação"/>
 										</mx:columns>
 									</mx:DataGrid>
 									<s:VGroup height="100%" verticalAlign="middle">
-										<s:Button id="btnMoverDireita" label=">" buttonMode="true" width="29" height="29" click="btnClickMoverDireita()"/>
-										<s:Button id="btnMoverEsquerda" label=">" buttonMode="true" rotation="180" width="29" height="29" click="btnClickMoverEsquerda()"/>
+										<s:Button id="btnMoverDireita" label=">" buttonMode="true" width="29" height="29" click="btnClickMoverDireita()" tabIndex="6"/>
+										<s:Button id="btnMoverEsquerda" label=">" buttonMode="true" rotation="180" width="29" height="29" click="btnClickMoverEsquerda()" tabIndex="7"/>
 									</s:VGroup>
-									<mx:DataGrid id="dataGridConformacaoSelecionado" width="240" dataProvider="{arrayAtributoConformacaoSelecionado}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" x="10" y="250" doubleClickEnabled="true" doubleClick="btnClickMoverEsquerda()" sortableColumns="false"  itemClick="dataGridSelect(dataGridConformacaoSelecionado)">
+									<mx:DataGrid id="dataGridConformacaoSelecionado" width="240" dataProvider="{arrayAtributoConformacaoSelecionado}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" x="10" y="250" doubleClickEnabled="true" doubleClick="btnClickMoverEsquerda()" sortableColumns="false"  itemClick="dataGridSelect(dataGridConformacaoSelecionado)" tabIndex="8">
 										<mx:columns>
 											<mx:DataGridColumn dataField="atributo" headerText="Atributos para Pesquisa"/>
 										</mx:columns>
 									</mx:DataGrid>
 									<s:VGroup height="100%" verticalAlign="middle" paddingLeft="-5">
-										<s:Button id="btnMoverCima" label=">" buttonMode="true" rotation="-90" width="29" height="29" click="btnClickMoverCima()" enabled="false"/>
-										<s:Button id="btnMoverBaixo" label=">" buttonMode="true" rotation="90" width="29" height="29" click="btnClickMoverBaixo()" enabled="false"/>
+										<s:Button id="btnMoverCima" label=">" buttonMode="true" rotation="-90" width="29" height="29" click="btnClickMoverCima()" enabled="false" tabIndex="9"/>
+										<s:Button id="btnMoverBaixo" label=">" buttonMode="true" rotation="90" width="29" height="29" click="btnClickMoverBaixo()" enabled="false" tabIndex="10"/>
 									</s:VGroup>
 								</s:HGroup>
 							</s:VGroup>
 						</s:BorderContainer>
-						<s:BorderContainer width="100%" styleName="panelProducao" y="253" height="30">
+						<s:BorderContainer width="100%" styleName="panelProducao" height="30">
 							<s:VGroup paddingTop="3" paddingLeft="2">
 								<s:Label text="Confiabilidade"/>
 							</s:VGroup>
 							<s:VGroup gap="16" horizontalAlign="center" width="100%" height="100%" verticalAlign="middle">
 								<s:HGroup verticalAlign="middle">
 									<s:Label text="Produção %"/>
-									<s:TextInput id="confProducao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado."/>
+									<s:TextInput id="confProducao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado." tabIndex="11"/>
 									<mx:Spacer width="70"/>
 									<s:Label text="Conformação %"/>
-									<s:TextInput id="confConformacao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado."/>
+									<s:TextInput id="confConformacao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado." tabIndex="12"/>
 								</s:HGroup>
 							</s:VGroup>
 						</s:BorderContainer>
-					</mx:Canvas>
+					</s:VGroup>
 					<s:controlBarContent>
 						<s:VGroup width="100%">
 							<s:HGroup>
-								<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="9" buttonMode="true"/>
-								<s:Button label="Novo" click="" tabIndex.statePesquisa="10" buttonMode="true"/>
-								<s:Button label="Limpar" click="" tabIndex.statePesquisa="11" buttonMode="true"/>
+								<s:Button label="Pesquisar" click="{btnClickPesquisar()}" buttonMode="true" tabIndex="13"/>
+								<s:Button label="Novo" click="" tabIndex="14" buttonMode="true"/>
+								<s:Button label="Limpar" click="" tabIndex="15" buttonMode="true"/>
 							</s:HGroup>
 						</s:VGroup>
 						<s:VGroup horizontalAlign="right">
-							<s:Button id="btnComparar" label="Comparar Reprodutores" click="" buttonMode="true" includeIn="stateResultado" enabled="false"/>
+							<s:Button id="btnComparar" label="Comparar Reprodutores" click="" buttonMode="true" includeIn="stateResultado" enabled="false" tabIndex="16"/>
 						</s:VGroup>
 					</s:controlBarContent>
 				</s:Panel>
