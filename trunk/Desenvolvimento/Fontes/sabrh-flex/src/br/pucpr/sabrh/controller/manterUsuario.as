@@ -1,9 +1,3 @@
-// login
-import br.pucpr.sabrh.components.ToolTipUtil;
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Municipio;
-import br.pucpr.sabrh.entity.Usuario;
-
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
@@ -16,119 +10,13 @@ import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
+// login
+import br.pucpr.sabrh.components.ToolTipUtil;
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Municipio;
+import br.pucpr.sabrh.entity.Usuario;
 
 private var usuarioSalvar:Usuario;
-
-/**
- * Preenche as combos ai iniciar.
- *
- * @param event
- */
-protected function init(event:FlexEvent):void
-{
-	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
-	{
-		setStateDetalheProdutor();
-	}
-	else
-	{
-		estadoService.listarEstados();
-		statusService.listarStatusUsuario();
-		perfilService.listarPerfil();
-		txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
-	}
-
-}
-
-/**
- *	Fechar a tela de manter usuário
- *
- * @param event
- */
-protected function fechar(event:CloseEvent):void
-{
-	// fecha tela de manter usuário
-	PopUpManager.removePopUp(this);
-}
-
-/**
- * //////////////////////////////////////////////////////
- *
- * 	Eventos de botões
- *
- * //////////////////////////////////////////////////////
- * /
-
-   /**
- *	Evento botão de pesquisar usuários.
- *
- * @param event
- */
-protected function actionBtnPesquisar():void
-{
-	var usr:Usuario=new Usuario();
-	if (StringUtil.trim(txtPesquisaNome.text) != "")
-	{
-		usr.nome=StringUtil.trim(txtPesquisaNome.text);
-	}
-
-	if (cmbPesquisaMunicipio.selectedIndex == 0 && cmbPesquisaEstado.selectedIndex != 0)
-	{
-		var mun:Municipio=new Municipio;
-		mun.estado=cmbPesquisaEstado.selectedItem;
-		usr.municipio=mun;
-	}
-
-	if (cmbPesquisaMunicipio.selectedIndex != 0)
-	{
-		usr.municipio=cmbPesquisaMunicipio.selectedItem;
-	}
-	usr.perfil=cmbPesquisaPerfil.selectedItem;
-	usr.status=cmbPesquisaStatus.selectedItem;
-
-	usuarioService.pesquisar(usr);
-}
-
-/**
- * Evento botão de inserir usuário.
- *
- * @param event
- */
-protected function actionBtnNovo():void
-{
-
-	currentState=ConstantesUtils.STATE_NOVO;
-	actionBtnLimparNovo();
-	PopUpManager.centerPopUp(this);
-
-}
-
-
-
-/**
- * Limpa dados de pesquisa.
- *
- * @param event
- */
-protected function actionBtnLimparPesquisa():void
-{
-	currentState=ConstantesUtils.STATE_PESQUISA;
-	txtPesquisaNome.text="";
-	cmbPesquisaEstado.selectedIndex=-1;
-	cmbPesquisaEstado.selectedIndex=0;
-	cmbPesquisaMunicipio.selectedIndex=-1;
-	cmbPesquisaMunicipio.selectedIndex=0;
-	cmbPesquisaMunicipio.enabled=false;
-	cmbPesquisaPerfil.selectedIndex=-1;
-	cmbPesquisaPerfil.selectedIndex=0;
-	cmbPesquisaStatus.selectedIndex=-1;
-	cmbPesquisaStatus.selectedIndex=0;
-	if (gridUsuario != null)
-	{
-		gridUsuario.dataProvider=null;
-	}
-	PopUpManager.centerPopUp(this);
-}
 
 /**
  * Limpa dados de novo.
@@ -171,81 +59,83 @@ protected function actionBtnLimparNovo():void
 	}
 }
 
+
+
 /**
- * Ação do botão editar usuario.
+ * Limpa dados de pesquisa.
+ *
  * @param event
  */
-protected function editarUsuario():void
+protected function actionBtnLimparPesquisa():void
 {
-	currentState=ConstantesUtils.STATE_EDITAR;
-	txtNovoCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
-	txtNovoConfirmarSenha.text=usuarioSelecionado.senha;
-	txtNovoEmail.text=usuarioSelecionado.email;
-	txtNovoLogin.text=usuarioSelecionado.login;
-	txtNovoSenha.text=usuarioSelecionado.senha;
-	txtNovoNome.text=usuarioSelecionado.nome;
-	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
+	currentState=ConstantesUtils.STATE_PESQUISA;
+	txtPesquisaNome.text="";
+	cmbPesquisaEstado.selectedIndex=-1;
+	cmbPesquisaEstado.selectedIndex=0;
+	cmbPesquisaMunicipio.selectedIndex=-1;
+	cmbPesquisaMunicipio.selectedIndex=0;
+	cmbPesquisaMunicipio.enabled=false;
+	cmbPesquisaPerfil.selectedIndex=-1;
+	cmbPesquisaPerfil.selectedIndex=0;
+	cmbPesquisaStatus.selectedIndex=-1;
+	cmbPesquisaStatus.selectedIndex=0;
+	if (gridUsuario != null)
 	{
-		cmbNovoPerfil.enabled=false;
-		cmbNovoStatus.enabled=false;
-		btnNovoLimpar.label="Voltar";
-		btnNovoVoltar.visible=false;
+		gridUsuario.dataProvider=null;
 	}
+	PopUpManager.centerPopUp(this);
+}
 
-	estadoService.listarEstados();
-	perfilService.listarPerfil();
-	statusService.listarStatusUsuario();
+/**
+ * Evento botão de inserir usuário.
+ *
+ * @param event
+ */
+protected function actionBtnNovo():void
+{
 
+	currentState=ConstantesUtils.STATE_NOVO;
+	actionBtnLimparNovo();
 	PopUpManager.centerPopUp(this);
 
-	panelSucesso.visible=false;
 }
 
 /**
- * Ação do botão voltar da pesquisa.
+ * //////////////////////////////////////////////////////
+ *
+ * 	Eventos de botões
+ *
+ * //////////////////////////////////////////////////////
+ * /
+
+   /**
+ *	Evento botão de pesquisar usuários.
+ *
  * @param event
  */
-protected function voltarPesquisa():void
+protected function actionBtnPesquisar():void
 {
-	if (gridUsuario == null)
+	var usr:Usuario=new Usuario();
+	if (StringUtil.trim(txtPesquisaNome.text) != "")
 	{
-		currentState=ConstantesUtils.STATE_PESQUISA;
-	}
-	else
-	{
-		currentState=ConstantesUtils.STATE_RESULTADO;
-		actionBtnPesquisar();
-	}
-	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
-	PopUpManager.centerPopUp(this);
-	if (panelError != null)
-	{
-		panelError.visible=false;
+		usr.nome=StringUtil.trim(txtPesquisaNome.text);
 	}
 
-	if (panelSucesso != null)
+	if (cmbPesquisaMunicipio.selectedIndex == 0 && cmbPesquisaEstado.selectedIndex != 0)
 	{
-		panelSucesso.visible=false;
+		var mun:Municipio=new Municipio;
+		mun.estado=cmbPesquisaEstado.selectedItem;
+		usr.municipio=mun;
 	}
-}
 
-/**
- * Ação do botão novo na tela de edição.
- * @param event
- */
-protected function novoConfirmacao():void
-{
-	Alert.show("Tem certeza de sair sem salvar as alterações?", "Manutenção de Usuários", Alert.YES | Alert.NO, this, novoConfirmacaoResult);
-
-}
-
-//Função para recuperar o resultado da confirmação.
-protected function novoConfirmacaoResult(event:CloseEvent):void
-{
-	if (event.detail == Alert.YES)
+	if (cmbPesquisaMunicipio.selectedIndex != 0)
 	{
-		actionBtnLimparNovo();
+		usr.municipio=cmbPesquisaMunicipio.selectedItem;
 	}
+	usr.perfil=cmbPesquisaPerfil.selectedItem;
+	usr.status=cmbPesquisaStatus.selectedItem;
+
+	usuarioService.pesquisar(usr);
 }
 
 /**
@@ -292,24 +182,165 @@ protected function actionBtnSalvarUsuario():void
 /**
  * //////////////////////////////////////////////////////
  *
- * 	Resultado de serviços
+ * 	Eventos de componentes.
  *
  * //////////////////////////////////////////////////////
  * /
 
    /**
- *
- *	Resultado da pesquisa de usuários.
+ * Evento de seleção de estado
  *
  * @param event
  */
-protected function pesquisarUsuariosResult(event:ResultEvent):void
+protected function cbmEstadoChange():void
 {
-	var listaUsuarios:ArrayCollection=event.result as ArrayCollection;
-	currentState=ConstantesUtils.STATE_RESULTADO;
-	gridUsuario.dataProvider=listaUsuarios;
-	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaUsuarios.length;
+	if (currentState == ConstantesUtils.STATE_PESQUISA || currentState == ConstantesUtils.STATE_RESULTADO)
+	{
+		if (cmbPesquisaEstado.selectedIndex != 0)
+		{
+			municipioService.listarMunicipios(cmbPesquisaEstado.selectedItem);
+		}
+		else
+		{
+			cmbPesquisaMunicipio.enabled=false;
+			cmbPesquisaMunicipio.dataProvider=null;
+		}
+	}
+	else
+	{
+		if (cmbNovoEstado.selectedIndex != 0)
+		{
+			municipioService.listarMunicipios(cmbNovoEstado.selectedItem);
+		}
+		else
+		{
+			cmbNovoMunicipio.enabled=false;
+			cmbNovoMunicipio.dataProvider=null;
+		}
+	}
+
+}
+
+
+/**
+ *
+ * @param item
+ * @param column
+ * @return
+ */
+protected function cpflabelFunc(item:Object, column:AdvancedDataGridColumn):String
+{
+	return cpfFormatter.format(item.cpf);
+}
+
+/**
+ * Resultado da criptografia da senha do usuário
+ *
+ * @param event
+ */
+protected function criptografarUsuarioResult(event:ResultEvent):void
+{
+	var senhaCriptografada:String=event.result as String;
+
+	usuarioSalvar.senha=senhaCriptografada;
+
+	usuarioSelecionado=usuarioSalvar;
+
+	usuarioService.inserir(usuarioSalvar);
+}
+
+/**
+ * Ação do botão editar usuario.
+ * @param event
+ */
+protected function editarUsuario():void
+{
+	currentState=ConstantesUtils.STATE_EDITAR;
+	txtNovoCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
+	txtNovoConfirmarSenha.text=usuarioSelecionado.senha;
+	txtNovoEmail.text=usuarioSelecionado.email;
+	txtNovoLogin.text=usuarioSelecionado.login;
+	txtNovoSenha.text=usuarioSelecionado.senha;
+	txtNovoNome.text=usuarioSelecionado.nome;
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
+	{
+		cmbNovoPerfil.enabled=false;
+		cmbNovoStatus.enabled=false;
+		btnNovoLimpar.label="Voltar";
+		btnNovoVoltar.visible=false;
+	}
+
+	estadoService.listarEstados();
+	perfilService.listarPerfil();
+	statusService.listarStatusUsuario();
+
 	PopUpManager.centerPopUp(this);
+
+	panelSucesso.visible=false;
+}
+
+/**
+ *	Fechar a tela de manter usuário
+ *
+ * @param event
+ */
+protected function fechar(event:CloseEvent):void
+{
+	// fecha tela de manter usuário
+	PopUpManager.removePopUp(this);
+}
+
+/**
+ *
+ * @param event
+ */
+protected function gridUsuarioItemClick(event:ListEvent):void
+{
+	currentState=ConstantesUtils.STATE_DETALHE;
+
+	usuarioSelecionado=event.currentTarget.selectedItem;
+	txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
+	txtDetalheEmail.text=usuarioSelecionado.email;
+	txtDetalheLogin.text=usuarioSelecionado.login;
+	txtDetalheNome.text=usuarioSelecionado.nome;
+	cmbDetalheEstado.text=usuarioSelecionado.municipio.estado.descricao;
+	cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
+	cmbDetalhePerfil.text=usuarioSelecionado.perfil;
+
+	PopUpManager.centerPopUp(this);
+}
+
+/**
+ * Preenche as combos ai iniciar.
+ *
+ * @param event
+ */
+protected function init(event:FlexEvent):void
+{
+	if (FlexGlobals.topLevelApplication.user.perfil == ConstantesUtils.PERFIL_PRODUTOR)
+	{
+		setStateDetalheProdutor();
+	}
+	else
+	{
+		estadoService.listarEstados();
+		statusService.listarStatusUsuario();
+		perfilService.listarPerfil();
+		txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
+	}
+
+}
+
+/**
+ * Falha da inserção de usuários
+ *
+ * @param event
+ */
+protected function inserirUsuarioFault(event:FaultEvent):void
+{
+	var erro:String=event.fault.rootCause.message;
+	if (erro.search("Erro ao salvar.\n Dados já está cadastrado para um outro usuário.") != -1)
+		usuarioService.pesquisarCPF(usuarioSalvar.cpf);
 }
 
 /**
@@ -338,105 +369,6 @@ protected function inserirUsuarioResult(event:ResultEvent):void
 	if (FlexGlobals.topLevelApplication.user.codigo == usuarioSelecionado.codigo)
 	{
 		FlexGlobals.topLevelApplication.user=usuarioSelecionado;
-	}
-}
-
-/**
- * Falha da inserção de usuários
- *
- * @param event
- */
-protected function inserirUsuarioFault(event:FaultEvent):void
-{
-	var erro:String=event.fault.rootCause.message;
-	if (erro.search("Erro ao salvar.\n Dados já está cadastrado para um outro usuário.") != -1)
-		usuarioService.pesquisarCPF(usuarioSalvar.cpf);
-}
-
-/**
- * Resultado da pesquisa de usuario com o mesmo CPF
- *
- * @param event
- */
-protected function pesquisarCPFUsuarioResult(event:ResultEvent):void
-{
-	var cpfExistente:Boolean=event.result as Boolean;
-	if (cpfExistente)
-	{
-		txtNovoCPF.errorString="CPF já cadastrado para outro usuário";
-		panelError.visible=true;
-	}
-	else
-		usuarioService.pesquisarLogin(usuarioSalvar.login);
-}
-
-/**
- * Resultado da inserção de usuários
- *
- * @param event
- */
-protected function pesquisarLoginUsuarioResult(event:ResultEvent):void
-{
-	var loginExistente:Boolean=event.result as Boolean;
-	if (loginExistente)
-	{
-		txtNovoLogin.errorString="Login já cadastrado para outro usuário";
-		panelError.visible=true;
-	}
-}
-
-/**
- * Resultado da criptografia da senha do usuário
- *
- * @param event
- */
-protected function criptografarUsuarioResult(event:ResultEvent):void
-{
-	var senhaCriptografada:String=event.result as String;
-
-	usuarioSalvar.senha=senhaCriptografada;
-
-	usuarioSelecionado=usuarioSalvar;
-
-	usuarioService.inserir(usuarioSalvar);
-}
-
-/**
- *	Resultado da listagem de municipios.
- * @param event
- */
-protected function listarMunicipiosResult(event:ResultEvent):void
-{
-	var listaMunicipios:ArrayCollection=new ArrayCollection();
-	listaMunicipios.addItem(ConstantesUtils.SELECIONE);
-	listaMunicipios.addAll(event.result as ArrayCollection);
-
-
-	if (currentState == ConstantesUtils.STATE_PESQUISA || currentState == ConstantesUtils.STATE_RESULTADO)
-	{
-		cmbPesquisaMunicipio.dataProvider=listaMunicipios;
-		cmbPesquisaMunicipio.selectedIndex=-1;
-		cmbPesquisaMunicipio.selectedIndex=0;
-		cmbPesquisaMunicipio.enabled=true;
-		cmbPesquisaMunicipio.errorString=null;
-	}
-	else
-	{
-		cmbNovoMunicipio.dataProvider=listaMunicipios;
-		cmbNovoMunicipio.selectedIndex=-1;
-		cmbNovoMunicipio.selectedIndex=0;
-		cmbNovoMunicipio.enabled=true;
-		if (currentState == ConstantesUtils.STATE_EDITAR)
-		{
-			for (var i:Number=1; i < cmbNovoMunicipio.dataProvider.length; i++)
-			{
-				if (cmbNovoMunicipio.dataProvider.getItemAt(i).codigo == usuarioSelecionado.municipio.codigo)
-				{
-					cmbNovoMunicipio.selectedIndex=i;
-				}
-			}
-		}
-		cmbNovoMunicipio.errorString=null;
 	}
 }
 
@@ -475,6 +407,45 @@ protected function listarEstadosResult(event:ResultEvent):void
 		}
 		cbmEstadoChange();
 		cmbNovoEstado.errorString=null;
+	}
+}
+
+/**
+ *	Resultado da listagem de municipios.
+ * @param event
+ */
+protected function listarMunicipiosResult(event:ResultEvent):void
+{
+	var listaMunicipios:ArrayCollection=new ArrayCollection();
+	listaMunicipios.addItem(ConstantesUtils.SELECIONE);
+	listaMunicipios.addAll(event.result as ArrayCollection);
+
+
+	if (currentState == ConstantesUtils.STATE_PESQUISA || currentState == ConstantesUtils.STATE_RESULTADO)
+	{
+		cmbPesquisaMunicipio.dataProvider=listaMunicipios;
+		cmbPesquisaMunicipio.selectedIndex=-1;
+		cmbPesquisaMunicipio.selectedIndex=0;
+		cmbPesquisaMunicipio.enabled=true;
+		cmbPesquisaMunicipio.errorString=null;
+	}
+	else
+	{
+		cmbNovoMunicipio.dataProvider=listaMunicipios;
+		cmbNovoMunicipio.selectedIndex=-1;
+		cmbNovoMunicipio.selectedIndex=0;
+		cmbNovoMunicipio.enabled=true;
+		if (currentState == ConstantesUtils.STATE_EDITAR)
+		{
+			for (var i:Number=1; i < cmbNovoMunicipio.dataProvider.length; i++)
+			{
+				if (cmbNovoMunicipio.dataProvider.getItemAt(i).codigo == usuarioSelecionado.municipio.codigo)
+				{
+					cmbNovoMunicipio.selectedIndex=i;
+				}
+			}
+		}
+		cmbNovoMunicipio.errorString=null;
 	}
 }
 
@@ -542,65 +513,22 @@ protected function listarStatusUsuarioResult(event:ResultEvent):void
 }
 
 /**
- * //////////////////////////////////////////////////////
- *
- * 	Eventos de componentes.
- *
- * //////////////////////////////////////////////////////
- * /
-
-   /**
- * Evento de seleção de estado
- *
+ * Ação do botão novo na tela de edição.
  * @param event
  */
-protected function cbmEstadoChange():void
+protected function novoConfirmacao():void
 {
-	if (currentState == ConstantesUtils.STATE_PESQUISA || currentState == ConstantesUtils.STATE_RESULTADO)
-	{
-		if (cmbPesquisaEstado.selectedIndex != 0)
-		{
-			municipioService.listarMunicipios(cmbPesquisaEstado.selectedItem);
-		}
-		else
-		{
-			cmbPesquisaMunicipio.enabled=false;
-			cmbPesquisaMunicipio.dataProvider=null;
-		}
-	}
-	else
-	{
-		if (cmbNovoEstado.selectedIndex != 0)
-		{
-			municipioService.listarMunicipios(cmbNovoEstado.selectedItem);
-		}
-		else
-		{
-			cmbNovoMunicipio.enabled=false;
-			cmbNovoMunicipio.dataProvider=null;
-		}
-	}
+	Alert.show("Tem certeza de sair sem salvar as alterações?", "Manutenção de Usuários", Alert.YES | Alert.NO, this, novoConfirmacaoResult);
 
 }
 
-/**
- *
- * @param event
- */
-protected function gridUsuarioItemClick(event:ListEvent):void
+//Função para recuperar o resultado da confirmação.
+protected function novoConfirmacaoResult(event:CloseEvent):void
 {
-	currentState=ConstantesUtils.STATE_DETALHE;
-
-	usuarioSelecionado=event.currentTarget.selectedItem;
-	txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
-	txtDetalheEmail.text=usuarioSelecionado.email;
-	txtDetalheLogin.text=usuarioSelecionado.login;
-	txtDetalheNome.text=usuarioSelecionado.nome;
-	cmbDetalheEstado.text=usuarioSelecionado.municipio.estado.descricao;
-	cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
-	cmbDetalhePerfil.text=usuarioSelecionado.perfil;
-
-	PopUpManager.centerPopUp(this);
+	if (event.detail == Alert.YES)
+	{
+		actionBtnLimparNovo();
+	}
 }
 
 /**
@@ -629,6 +557,84 @@ protected function onFault(event:FaultEvent):void
 	{
 		Alert.show(event.fault.rootCause.message);
 	}
+}
+
+/**
+ * Resultado da pesquisa de usuario com o mesmo CPF
+ *
+ * @param event
+ */
+protected function pesquisarCPFUsuarioResult(event:ResultEvent):void
+{
+	var cpfExistente:Boolean=event.result as Boolean;
+	if (cpfExistente)
+	{
+		txtNovoCPF.errorString="CPF já cadastrado para outro usuário";
+		panelError.visible=true;
+	}
+	else
+		usuarioService.pesquisarLogin(usuarioSalvar.login);
+}
+
+/**
+ * Resultado da inserção de usuários
+ *
+ * @param event
+ */
+protected function pesquisarLoginUsuarioResult(event:ResultEvent):void
+{
+	var loginExistente:Boolean=event.result as Boolean;
+	if (loginExistente)
+	{
+		txtNovoLogin.errorString="Login já cadastrado para outro usuário";
+		panelError.visible=true;
+	}
+}
+
+/**
+ * //////////////////////////////////////////////////////
+ *
+ * 	Resultado de serviços
+ *
+ * //////////////////////////////////////////////////////
+ * /
+
+   /**
+ *
+ *	Resultado da pesquisa de usuários.
+ *
+ * @param event
+ */
+protected function pesquisarUsuariosResult(event:ResultEvent):void
+{
+	var listaUsuarios:ArrayCollection=event.result as ArrayCollection;
+	currentState=ConstantesUtils.STATE_RESULTADO;
+	gridUsuario.dataProvider=listaUsuarios;
+	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaUsuarios.length;
+	PopUpManager.centerPopUp(this);
+}
+
+/**
+ * Metodo para setar apenas a visualização de Detalhes para usuário com perfil de Produtor
+ *
+ * @param item
+ * @param column
+ * @return
+ */
+protected function setStateDetalheProdutor():void
+{
+	currentState=ConstantesUtils.STATE_DETALHE;
+
+	usuarioSelecionado=FlexGlobals.topLevelApplication.user;
+	txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
+	txtDetalheEmail.text=usuarioSelecionado.email;
+	txtDetalheLogin.text=usuarioSelecionado.login;
+	txtDetalheNome.text=usuarioSelecionado.nome;
+	cmbDetalheEstado.text=usuarioSelecionado.municipio.estado.descricao;
+	cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
+	cmbDetalhePerfil.text=usuarioSelecionado.perfil;
+	btnDetalheVoltar.visible=false;
+	PopUpManager.centerPopUp(this);
 }
 
 /**
@@ -663,36 +669,29 @@ protected function validar():Boolean
 }
 
 /**
- * Metodo para setar apenas a visualização de Detalhes para usuário com perfil de Produtor
- *
- * @param item
- * @param column
- * @return
+ * Ação do botão voltar da pesquisa.
+ * @param event
  */
-protected function setStateDetalheProdutor():void
+protected function voltarPesquisa():void
 {
-	currentState=ConstantesUtils.STATE_DETALHE;
-
-	usuarioSelecionado=FlexGlobals.topLevelApplication.user;
-	txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
-	txtDetalheEmail.text=usuarioSelecionado.email;
-	txtDetalheLogin.text=usuarioSelecionado.login;
-	txtDetalheNome.text=usuarioSelecionado.nome;
-	cmbDetalheEstado.text=usuarioSelecionado.municipio.estado.descricao;
-	cmbDetalheMunicipio.text=usuarioSelecionado.municipio.descricao;
-	cmbDetalhePerfil.text=usuarioSelecionado.perfil;
-	btnDetalheVoltar.visible=false;
+	if (gridUsuario == null)
+	{
+		currentState=ConstantesUtils.STATE_PESQUISA;
+	}
+	else
+	{
+		currentState=ConstantesUtils.STATE_RESULTADO;
+		actionBtnPesquisar();
+	}
+	txtPesquisaNome.focusManager.setFocus(txtPesquisaNome);
 	PopUpManager.centerPopUp(this);
-}
+	if (panelError != null)
+	{
+		panelError.visible=false;
+	}
 
-
-/**
- *
- * @param item
- * @param column
- * @return
- */
-protected function cpflabelFunc(item:Object, column:AdvancedDataGridColumn):String
-{
-	return cpfFormatter.format(item.cpf);
+	if (panelSucesso != null)
+	{
+		panelSucesso.visible=false;
+	}
 }
