@@ -1087,7 +1087,14 @@ protected function serviceResultAnimalSalvar(event:ResultEvent):void
 protected function serviceResultPesquisarClassificacaoLinear(event:ResultEvent):void
 {
 	var listaClassificacao:ArrayCollection=event.result as ArrayCollection;
-	dataGridResultadoClassificacao.dataProvider=listaClassificacao;
+	if (listaClassificacao != null || listaClassificacao.length > 0)
+	{
+		dataGridResultadoClassificacao.dataProvider=listaClassificacao;
+	}
+	else
+	{
+		dataGridResultadoClassificacao.dataProvider=null;
+	}
 	PopUpManager.centerPopUp(this);
 
 }
@@ -1095,7 +1102,15 @@ protected function serviceResultPesquisarClassificacaoLinear(event:ResultEvent):
 protected function serviceResultPesquisarProvaTouro(event:ResultEvent):void
 {
 	var listaProvaTouro:ArrayCollection=event.result as ArrayCollection;
-	dataGridResultadoProvaTouro.dataProvider=listaProvaTouro;
+
+	if (listaProvaTouro != null || listaProvaTouro.length > 0)
+	{
+		dataGridResultadoProvaTouro.dataProvider=listaProvaTouro;
+	}
+	else
+	{
+		dataGridResultadoProvaTouro.dataProvider=null;
+	}
 	PopUpManager.centerPopUp(this);
 
 }
