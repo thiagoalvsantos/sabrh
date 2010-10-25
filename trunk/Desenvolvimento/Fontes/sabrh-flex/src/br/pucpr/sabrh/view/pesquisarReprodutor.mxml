@@ -3,12 +3,41 @@
 
 	<fx:Script source="../controller/pesquisarReprodutor.as"/>
 
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+
+			[Bindable]
+			private var medalsAC:ArrayCollection=new ArrayCollection([
+				{Country: "U", Gold: -1},
+				{Country: "C", Gold: 4},
+				{Country: "R", Gold: -4},
+				{Country: "Ru", Gold: 2},
+				{Country: "US", Gold: 3},
+				{Country: "Chia", Gold: 1},
+				{Country: "Russia", Gold: 5},]);
+		]]>
+	</fx:Script>
+
 	<fx:Declarations>
+
+		<!-- Define custom colors for use as fills. -->
+		<mx:SolidColor id="sc1" color="yellow" alpha=".8"/>
+		<mx:SolidColor id="sc2" color="0xCCCCCC" alpha=".6"/>
+		<mx:SolidColor id="sc3" color="0xFFCC66" alpha=".6"/>
+
+		<!-- Define custom Strokes for the columns. -->
+		<mx:Stroke id="s1" color="yellow" weight="2"/>
+		<mx:Stroke id="s2" color="0xCCCCCC" weight="2"/>
+		<mx:Stroke id="s3" color="0xFFCC66" weight="2"/>
 
 		<s:RemoteObject id="animalService" fault="" destination="AnimalService" showBusyCursor="true">
 			<s:method name="pesquisar" result=""/>
 			<s:method name="salvar" result=""/>
 			<s:method name="recuperarAnimalPadrao" result=""/>
+		</s:RemoteObject>
+		<s:RemoteObject id="provaTouroService" fault="onFault(event)" destination="ProvaTouroService" showBusyCursor="true">
+			<s:method name="pesquisarReprodutor" result="{serviceResultPesquisarReprodutor(event)}"/>
 		</s:RemoteObject>
 
 		<s:Parallel id="exibeMensagemParallel">
@@ -28,29 +57,29 @@
 		</fx:Array>
 
 		<fx:Array id="listaAtributoConformacao">
-			<fx:Object atributo="Altura Úbere Posterior"/>
-			<fx:Object atributo="Ângulo do Casco"/>
-			<fx:Object atributo="Ângulo Garupa"/>
-			<fx:Object atributo="Angulosidade"/>
-			<fx:Object atributo="Colocação de Tetos Anteriores"/>
-			<fx:Object atributo="Colocação de Tetos Posteriores"/>
-			<fx:Object atributo="Comprimento Tetos"/>
-			<fx:Object atributo="Estatura"/>
-			<fx:Object atributo="Inserção Úbere Anterior"/>
-			<fx:Object atributo="Largura da Garupa"/>
-			<fx:Object atributo="Largura do Peito"/>
-			<fx:Object atributo="Largura Úbere Posterior"/>
-			<fx:Object atributo="Ligamento Médio"/>
-			<fx:Object atributo="Pernas Posteriores - Vista Lateral"/>
-			<fx:Object atributo="Pernas Posteriores - Vista Posterior"/>
-			<fx:Object atributo="Profundidade Corporal"/>
-			<fx:Object atributo="Profundidade do Úbere"/>
-			<fx:Object atributo="Score Pernas e Pés"/>
+			<fx:Object atributo="Altura Úbere Posterior" value="alturaUberePosterior"/>
+			<fx:Object atributo="Ângulo do Casco" value="anguloCasco"/>
+			<fx:Object atributo="Ângulo Garupa" value="anguloGarupa"/>
+			<fx:Object atributo="Angulosidade" value="angulosidade"/>
+			<fx:Object atributo="Colocação de Tetos Anteriores" value="colocacaoTetosAnteriores"/>
+			<fx:Object atributo="Colocação de Tetos Posteriores" value="colocacaoTetosPosteriores"/>
+			<fx:Object atributo="Comprimento Tetos" value="comprimentoTetos"/>
+			<fx:Object atributo="Estatura" value="estatura"/>
+			<fx:Object atributo="Inserção Úbere Anterior" value="insercaoUbereAnterior"/>
+			<fx:Object atributo="Largura da Garupa" value="larguraGarupa"/>
+			<fx:Object atributo="Largura do Peito" value="larguraPeito"/>
+			<fx:Object atributo="Largura Úbere Posterior" value="alturaUberePosterior"/>
+			<fx:Object atributo="Ligamento Médio" value="ligamentoMedio"/>
+			<fx:Object atributo="Pernas Posteriores - Vista Lateral" value="pernasPostVistaLateral"/>
+			<fx:Object atributo="Pernas Posteriores - Vista Posterior" value="pernasPostVistaPost"/>
+			<fx:Object atributo="Profundidade Corporal" value="profundidadeCorporal"/>
+			<fx:Object atributo="Profundidade do Úbere" value="profundidadeUbere"/>
+			<fx:Object atributo="Score Pernas e Pés" value="pontucaoPernasPes"/>
 		</fx:Array>
 
 		<s:ArrayCollection id="arrayAtributoConformacao" source="{listaAtributoConformacao}"/>
-		<s:ArrayCollection id="arrayAtributoConformacaoSelecionado" collectionChange="verificaLimiteDataGrid()"/>
-		
+		<s:ArrayCollection id="arrayAtributoConformacaoSelecionado" collectionChange="{verificaLimiteDataGrid()}"/>
+
 		<entity:Animal id="vacaSelecionada"/>
 
 	</fx:Declarations>
@@ -58,13 +87,13 @@
 
 	<s:states>
 		<s:State name="statePesquisa"/>
-		<s:State name="stateNovo"/>
-		<s:State name="stateResultado"/>
 		<s:State name="stateDetalhe"/>
-		<s:State name="stateEditar"/>
+		<s:State name="stateResultado"/>
+		<!-- <s:State name="stateNovo"/>
+			 <s:State name="stateEditar"/> -->
 	</s:states>
 
-	<s:Scroller width="100%" height="100%">
+	<s:Scroller width="100%" height="100%" x.stateDetalhe="-3" y.stateDetalhe="4">
 		<s:Group maxWidth="900" maxHeight="500" width="100%">
 
 			<!--//////////////////////////
@@ -76,14 +105,15 @@
 					 /////////////////////////////-->
 				<s:Panel id="panelPesquisa" width="100%" title="Pesquisa" includeIn="statePesquisa,stateResultado">
 					<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5">
-						<s:HGroup>
+						<s:HGroup horizontalAlign="center" width="100%">
 							<s:HGroup verticalAlign="middle">
-								<s:Label id="lblPesquisaReprodutorRegistro" text="Registro"/>
-								<s:TextInput id="txtPesquisaReprodutorRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+								<s:Label id="lblPesquisaRegistroVaca" text="Registro"/>
+								<s:TextInput id="txtPesquisaRegistroVaca" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
 							</s:HGroup>
 							<s:HGroup verticalAlign="middle">
-								<s:Label id="lblPesquisaReprodutorApelido" text="Apelido"/>
-								<s:TextInput id="txtPesquisaReprodutorApelido" width="370" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+								<s:Label id="lblPesquisaApelidoVaca" text="Apelido"/>
+								<s:TextInput id="txtPesquisaApelidoVaca" width="370" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+								<s:Button label="Buscar" click="abrirConsultarAnimal(txtPesquisaApelidoVaca,'pesquisa',ConstantesUtils.SEXO_FEMEA)" buttonMode="true"/>
 							</s:HGroup>
 						</s:HGroup>
 						<s:BorderContainer width="100%" height="26" styleName="panelProducao">
@@ -105,23 +135,23 @@
 							</s:VGroup>
 							<s:VGroup gap="16" horizontalAlign="center" width="100%" height="100%" verticalAlign="middle">
 								<s:HGroup>
-									<mx:DataGrid id="dataGridConformacao" width="240" dataProvider="{arrayAtributoConformacao}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" verticalScrollPolicy="on" doubleClickEnabled="true" doubleClick="btnClickMoverDireita()" itemClick="dataGridSelect(dataGridConformacao)" tabIndex="5">
+									<mx:DataGrid id="dataGridConformacao" width="240" dataProvider="{arrayAtributoConformacao}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" verticalScrollPolicy="on" doubleClickEnabled="true" doubleClick="{btnClickMoverDireita()}" itemClick="{dataGridSelect(dataGridConformacao)}" tabIndex="5">
 										<mx:columns>
 											<mx:DataGridColumn dataField="atributo" headerText="Atributos de Conformação"/>
 										</mx:columns>
 									</mx:DataGrid>
 									<s:VGroup height="100%" verticalAlign="middle">
-										<s:Button id="btnMoverDireita" label=">" buttonMode="true" width="29" height="29" click="btnClickMoverDireita()" tabIndex="6"/>
-										<s:Button id="btnMoverEsquerda" label=">" buttonMode="true" rotation="180" width="29" height="29" click="btnClickMoverEsquerda()" tabIndex="7"/>
+										<s:Button id="btnMoverDireita" label=">" buttonMode="true" width="29" height="29" click="{btnClickMoverDireita()}" tabIndex="6"/>
+										<s:Button id="btnMoverEsquerda" label=">" buttonMode="true" rotation="180" width="29" height="29" click="{btnClickMoverEsquerda()}" tabIndex="7"/>
 									</s:VGroup>
-									<mx:DataGrid id="dataGridConformacaoSelecionado" width="240" dataProvider="{arrayAtributoConformacaoSelecionado}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" x="10" y="250" doubleClickEnabled="true" doubleClick="btnClickMoverEsquerda()" sortableColumns="false"  itemClick="dataGridSelect(dataGridConformacaoSelecionado)" tabIndex="8">
+									<mx:DataGrid id="dataGridConformacaoSelecionado" width="240" dataProvider="{arrayAtributoConformacaoSelecionado}" dragEnabled="true" dragMoveEnabled="true" dropEnabled="true" x="10" y="250" doubleClickEnabled="true" doubleClick="{btnClickMoverEsquerda()}" sortableColumns="false" itemClick="{dataGridSelect(dataGridConformacaoSelecionado)}" tabIndex="8">
 										<mx:columns>
 											<mx:DataGridColumn dataField="atributo" headerText="Atributos para Pesquisa"/>
 										</mx:columns>
 									</mx:DataGrid>
 									<s:VGroup height="100%" verticalAlign="middle" paddingLeft="-5">
-										<s:Button id="btnMoverCima" label=">" buttonMode="true" rotation="-90" width="29" height="29" click="btnClickMoverCima()" enabled="false" tabIndex="9"/>
-										<s:Button id="btnMoverBaixo" label=">" buttonMode="true" rotation="90" width="29" height="29" click="btnClickMoverBaixo()" enabled="false" tabIndex="10"/>
+										<s:Button id="btnMoverCima" label=">" buttonMode="true" rotation="-90" width="29" height="29" click="{btnClickMoverCima()}" enabled="false" tabIndex="9"/>
+										<s:Button id="btnMoverBaixo" label=">" buttonMode="true" rotation="90" width="29" height="29" click="{btnClickMoverBaixo()}" enabled="false" tabIndex="10"/>
 									</s:VGroup>
 								</s:HGroup>
 							</s:VGroup>
@@ -133,10 +163,10 @@
 							<s:VGroup gap="16" horizontalAlign="center" width="100%" height="100%" verticalAlign="middle">
 								<s:HGroup verticalAlign="middle">
 									<s:Label text="Produção %"/>
-									<s:TextInput id="confProducao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado." tabIndex="11"/>
+									<s:TextInput id="txtPesquisaConfiabilidadeProducao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado." tabIndex="11"/>
 									<mx:Spacer width="70"/>
 									<s:Label text="Conformação %"/>
-									<s:TextInput id="confConformacao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado." tabIndex="12"/>
+									<s:TextInput id="txtPesquisaConfiabilidadeConformacao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado." tabIndex="12"/>
 								</s:HGroup>
 							</s:VGroup>
 						</s:BorderContainer>
@@ -145,12 +175,14 @@
 						<s:VGroup width="100%">
 							<s:HGroup>
 								<s:Button label="Pesquisar" click="{btnClickPesquisar()}" buttonMode="true" tabIndex="13"/>
-								<s:Button label="Novo" click="" tabIndex="14" buttonMode="true"/>
-								<s:Button label="Limpar" click="" tabIndex="15" buttonMode="true"/>
+								<s:Button label="Limpar" click="" tabIndex="14" buttonMode="true"/>
 							</s:HGroup>
 						</s:VGroup>
 						<s:VGroup horizontalAlign="right">
-							<s:Button id="btnComparar" label="Comparar Reprodutores" click="" buttonMode="true" includeIn="stateResultado" enabled="false" tabIndex="16"/>
+							<s:HGroup>
+								<s:Button id="btnDetalhe" label="Detalhe" click="{btnClickDetalhe()}" buttonMode="true" includeIn="stateResultado" enabled="false" tabIndex="15"/>
+								<s:Button id="btnComparar" label="Comparar Reprodutores" click="" buttonMode="true" includeIn="stateResultado" enabled="false" tabIndex="16"/>
+							</s:HGroup>
 						</s:VGroup>
 					</s:controlBarContent>
 				</s:Panel>
@@ -158,7 +190,7 @@
 					 //	RESULTADO - PESQUISA
 					 /////////////////////////////-->
 				<s:BorderContainer id="panelResultado" width="100%" height="100%" includeIn="stateResultado">
-					<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" rowCount="3" allowMultipleSelection="true" itemClick="controlarSelecoes()">
+					<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" rowCount="3" allowMultipleSelection="true" itemClick="{controlarSelecoes()}">
 						<mx:columns>
 							<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="true" dataField="registro"/>
 							<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" sortable="true" dataField="nome"/>
@@ -169,6 +201,139 @@
 						</mx:columns>
 					</mx:AdvancedDataGrid>
 				</s:BorderContainer>
+			</s:VGroup>
+
+			<!--//////////////////////////
+				 //	DETALHE DO TOURO
+				 /////////////////////////////-->
+			<s:VGroup id="groupDetalhe" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateDetalhe">
+				<s:Panel width="100%" height="100%" title="Detalhe do Touro">
+					<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
+						<!-- Dados Gerais -->
+						<s:Panel width="100%" height="95" title="Dados Gerais">
+							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
+								<s:HGroup>
+									<s:HGroup width="360" verticalAlign="middle">
+										<s:VGroup x="10" y="15" gap="16" width="155">
+											<s:Label id="lblDetalheTouroRegistro" text="Registro"/>
+										</s:VGroup>
+										<s:VGroup y="10" x="220">
+											<s:TextInput id="txtDetalheTouroRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup verticalAlign="middle">
+										<s:VGroup x="10" y="15" gap="16" width="132">
+											<s:Label id="lblDetalheTouroDataProva" text="Data Prova Touro"/>
+										</s:VGroup>
+										<s:VGroup y="10" x="220">
+											<s:TextInput id="txtDetalheTouroDataProva" width="100" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup verticalAlign="middle">
+										<s:VGroup x="10" y="15" gap="16" width="90">
+											<s:Label id="lblDetalheTouroQtdFilhas" text="Qtd. Filhas"/>
+										</s:VGroup>
+										<s:VGroup y="10" x="220">
+											<s:TextInput id="txtDetalheTouroQtdFilhas" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+										</s:VGroup>
+									</s:HGroup>
+								</s:HGroup>
+								<s:HGroup>
+									<s:HGroup verticalAlign="middle">
+										<s:VGroup x="10" y="15" gap="16" width="155">
+											<s:Label id="lblDetalheTouroApelido" text="Apelido"/>
+										</s:VGroup>
+										<s:VGroup y="10" x="220" >
+											<s:TextInput id="txtDetalheTouroApelido" width="189" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup verticalAlign="middle">
+										<s:VGroup x="10" y="15" gap="16" width="132">
+											<s:Label id="lblDetalheTouroPreco" text="Preço"/>
+										</s:VGroup>
+										<s:VGroup y="10" x="220">
+											<s:TextInput id="txtDetalheTouroPreco" width="100" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+										</s:VGroup>
+									</s:HGroup>
+								</s:HGroup>
+							</s:VGroup>
+						</s:Panel>
+						<!-- Produção -->
+						<s:Panel width="100%" title="Produção" height="95">
+							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
+								<s:HGroup>
+									<s:HGroup width="360" verticalAlign="middle">
+										<s:VGroup x="10" y="15" gap="16" width="155">
+											<s:Label id="lblDetalheTouroPercentualProteina" text="Percentual de Proteina"/>
+										</s:VGroup>
+										<s:VGroup y="10" x="220">
+											<s:TextInput id="txtDetalheTouroPercentualProteina" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup width="248" verticalAlign="middle">
+										<s:VGroup x="10" y="15" gap="16" width="132">
+											<s:Label id="lblDetalheTouroPercentualGordura" text="Percentual de Gordura"/>
+										</s:VGroup>
+										<s:VGroup y="10" x="220">
+											<s:TextInput id="txtDetalheTouroPercentualGordura" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+										</s:VGroup>
+									</s:HGroup>
+									<s:HGroup verticalAlign="middle">
+										<s:VGroup x="10" y="15" gap="16" width="90">
+											<s:Label id="lblDetalheTouroQuiloLeite" text="Quilos de leite"/>
+										</s:VGroup>
+										<s:VGroup y="10" x="220">
+											<s:TextInput id="txtDetalheTouroQuiloLeite" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+										</s:VGroup>
+									</s:HGroup>
+								</s:HGroup>
+								<s:HGroup verticalAlign="middle">
+									<s:VGroup x="10" y="15" gap="16" width="155">
+										<s:Label id="lblDetalheTouroConfiabilidadeProducao" text="Confiabilidade de Produção"/>
+									</s:VGroup>
+									<s:VGroup y="10" x="220">
+										<s:TextInput id="txtDetalheTouroConfiabilidadeProducao" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+									</s:VGroup>
+								</s:HGroup>
+							</s:VGroup>
+						</s:Panel>
+						<!-- Conformação -->
+						<s:Panel width="100%" title="Conformação">
+							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
+								<s:HGroup>
+									<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
+										<s:Label id="lblDetalheTouroConfiabilidadeConformacao" text="Confiabilidade de Conformação"/>
+									</s:VGroup>
+									<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+										<s:TextInput id="txtDetalheTouroConfiabilidadeConformacao" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+									</s:VGroup>
+								</s:HGroup>
+								<s:HGroup width="100%" horizontalAlign="center">
+									<mx:BarChart id="bar" height="100%" width="45%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{medalsAC}">
+
+										<mx:verticalAxis>
+											<mx:CategoryAxis categoryField="Country"/>
+										</mx:verticalAxis>
+
+										<mx:series>
+											<mx:BarSeries yField="Country" xField="Gold" displayName="Gold" fill="{sc1}" stroke="{s1}"/>
+											<mx:BarSeries yField="Country" xField="Silver" displayName="Silver" fill="{sc2}" stroke="{s2}"/>
+											<mx:BarSeries yField="Country" xField="Bronze" displayName="Bronze" fill="{sc3}" stroke="{s3}"/>
+										</mx:series>
+									</mx:BarChart>
+
+
+								</s:HGroup>
+							</s:VGroup>
+						</s:Panel>
+					</s:VGroup>
+
+					<s:controlBarContent>
+						<s:Button label="Voltar" click="{}" buttonMode="true" tabIndex="34"/>
+						<s:Button label="Salvar" click="{}" buttonMode="true" tabIndex="32"/>
+						<s:Button label="Excuir" click="{}" buttonMode="true" tabIndex="33" id="btnProvaTouroExcluir"/>
+					</s:controlBarContent>
+				</s:Panel>
 			</s:VGroup>
 		</s:Group>
 	</s:Scroller>
