@@ -783,6 +783,7 @@ protected function gridClickResultado(event:ListEvent):void
 	if (animalSelecionado.sexo == ConstantesUtils.SEXO_FEMEA)
 	{
 		btnClassificacaoProva.label=ConstantesUtils.CLASSIFICACAO_LINEAR;
+		btnClassificacaoProva.removeEventListener(MouseEvent.CLICK,btnClickProvaTouro);
 		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, btnClickClassificacaoLinear);
 		btnClassificacaoProva.visible=true;
 		btnAcasalar.visible=true;
@@ -792,8 +793,10 @@ protected function gridClickResultado(event:ListEvent):void
 	else if (animalSelecionado.sexo == ConstantesUtils.SEXO_MACHO)
 	{
 		btnClassificacaoProva.label=ConstantesUtils.PROVA_TOURO;
+		btnClassificacaoProva.removeEventListener(MouseEvent.CLICK,btnClickClassificacaoLinear);
 		btnClassificacaoProva.addEventListener(MouseEvent.CLICK, btnClickProvaTouro);
 		btnClassificacaoProva.visible=true;
+		btnAcasalar.visible=false;
 		detalheStatusFemea.visible=false;
 	}
 

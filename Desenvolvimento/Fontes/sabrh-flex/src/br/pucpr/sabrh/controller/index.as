@@ -1,4 +1,5 @@
 import br.pucpr.sabrh.view.login;
+import br.pucpr.sabrh.view.manterAcasalamento;
 import br.pucpr.sabrh.view.manterAnimal;
 import br.pucpr.sabrh.view.manterPropriedade;
 import br.pucpr.sabrh.view.manterUsuario;
@@ -98,6 +99,15 @@ public function abrirPesquisarReprodutor():void
 	var popUpPesquisarReprodutor:pesquisarReprodutor=pesquisarReprodutor(PopUpManager.createPopUp(this, pesquisarReprodutor, true));
 	PopUpManager.centerPopUp(popUpPesquisarReprodutor);
 	popUpEffect.target=popUpPesquisarReprodutor;
+	popUpEffect.play();
+}
+
+//Função para abrir a tela de Pesquisa de Reprodutor.
+public function abrirManterAcasalamento():void
+{
+	var popUpManterAcasalamento:manterAcasalamento=manterAcasalamento(PopUpManager.createPopUp(this, manterAcasalamento, true));
+	PopUpManager.centerPopUp(popUpManterAcasalamento);
+	popUpEffect.target=popUpManterAcasalamento;
 	popUpEffect.play();
 }
 
