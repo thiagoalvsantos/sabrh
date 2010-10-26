@@ -12,7 +12,9 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import br.pucpr.sabrh.entity.Acasalamento;
+import br.pucpr.sabrh.entity.EventoAcasalamento;
 import br.pucpr.sabrh.persistence.AcasalamentoDAO;
+import br.pucpr.sabrh.persistence.EventoAcasalamentoDAO;
 import br.pucpr.sabrh.services.AcasalamentoService;
 
 /**
@@ -26,29 +28,34 @@ import br.pucpr.sabrh.services.AcasalamentoService;
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class AcasalamentoBusiness implements AcasalamentoService {
 
-	/** O atributo dao. */
+	/** O atributo dao acasalamento dao. */
 	@EJB
-	private AcasalamentoDAO dao;
+	private AcasalamentoDAO daoAcasalamentoDAO;
+
+	/** O atributo evento acasalamento dao. */
+	@EJB
+	private EventoAcasalamentoDAO eventoAcasalamentoDAO;
 
 	/**
-	 * Get dao.
+	 * Get evento acasalamento dao.
 	 * 
-	 * @return the dao
-	 * @see AcasalamentoBusiness#dao.
+	 * @return the evento acasalamento dao
+	 * @see AcasalamentoBusiness#eventoAcasalamentoDAO.
 	 */
-	public AcasalamentoDAO getDao() {
-		return dao;
+	public EventoAcasalamentoDAO getEventoAcasalamentoDAO() {
+		return eventoAcasalamentoDAO;
 	}
 
 	/**
-	 * Set dao.
+	 * Set evento acasalamento dao.
 	 * 
-	 * @param dao
-	 *            - dao.
-	 * @see AcasalamentoBusiness#dao.
+	 * @param eventoAcasalamentoDAO
+	 *            - evento acasalamento dao.
+	 * @see AcasalamentoBusiness#eventoAcasalamentoDAO.
 	 */
-	public void setDao(AcasalamentoDAO dao) {
-		this.dao = dao;
+	public void setEventoAcasalamentoDAO(
+			EventoAcasalamentoDAO eventoAcasalamentoDAO) {
+		this.eventoAcasalamentoDAO = eventoAcasalamentoDAO;
 	}
 
 	/*
@@ -74,7 +81,52 @@ public class AcasalamentoBusiness implements AcasalamentoService {
 	@Override
 	public List<Acasalamento> pesquisar(Acasalamento acasalamento,
 			Date dataInicio, Date dataFim) {
-		return dao.pesquisar(acasalamento, dataInicio, dataFim);
+		return daoAcasalamentoDAO.pesquisar(acasalamento, dataInicio, dataFim);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.AcasalamentoService#salvarEvento(br.pucpr.sabrh
+	 * .entity.EventoAcasalamento)
+	 */
+	@Override
+	public EventoAcasalamento salvarEvento(EventoAcasalamento eventoAcasalamento) {
+		return eventoAcasalamentoDAO.salvar(eventoAcasalamento);
+	}
+
+	/**
+	 * Set dao acasalamento dao.
+	 * 
+	 * @param daoAcasalamentoDAO
+	 *            - dao acasalamento dao.
+	 * @see AcasalamentoBusiness#daoAcasalamentoDAO.
+	 */
+	public void setDaoAcasalamentoDAO(AcasalamentoDAO daoAcasalamentoDAO) {
+		this.daoAcasalamentoDAO = daoAcasalamentoDAO;
+	}
+
+	/**
+	 * Get dao acasalamento dao.
+	 * 
+	 * @return the dao acasalamento dao
+	 * @see AcasalamentoBusiness#daoAcasalamentoDAO.
+	 */
+	public AcasalamentoDAO getDaoAcasalamentoDAO() {
+		return daoAcasalamentoDAO;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.services.AcasalamentoService#pesquisarEvento(br.pucpr.
+	 * sabrh.entity.Acasalamento)
+	 */
+	@Override
+	public List<EventoAcasalamento> pesquisarEvento(Acasalamento acasalamento) {
+		return eventoAcasalamentoDAO.pesquisar(acasalamento);
 	}
 
 }
