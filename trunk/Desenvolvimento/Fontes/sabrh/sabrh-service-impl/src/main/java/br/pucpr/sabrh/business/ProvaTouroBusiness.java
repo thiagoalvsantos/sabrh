@@ -122,9 +122,40 @@ public class ProvaTouroBusiness implements ProvaTouroService {
 		List<ProvaTouro> listaProvaTouro = dao
 				.pesquisarReprodutor(filtroAcasalamento);
 		List<ProvaTouro> listaResultado = new ArrayList<ProvaTouro>();
+		List<ProvaTouro> listaProvaTouroFiltrada = new ArrayList<ProvaTouro>();
+		boolean existe=false;
+		boolean removido=false;
+		
+		for (ProvaTouro provaTouro : listaProvaTouro) {
+			if (listaProvaTouroFiltrada.isEmpty()){
+				listaProvaTouroFiltrada.add(provaTouro);
+			}else{
+				existe=false;
+				removido=false;
+				for (ProvaTouro provaTouroFiltrada : listaProvaTouroFiltrada) {
+					if (provaTouro.getAnimal().getRegistro().equals(provaTouroFiltrada.getAnimal().getRegistro())){
+						existe=true;
+						if (provaTouro.getDataUltimaAtualizacao().after(provaTouroFiltrada.getDataUltimaAtualizacao())){
+							listaProvaTouroFiltrada.remove(provaTouroFiltrada);
+							removido=true;
+							break;
+						} else {
+							if (provaTouro.getCodigo() > provaTouroFiltrada.getCodigo() && provaTouro.getDataUltimaAtualizacao().equals(provaTouroFiltrada.getDataUltimaAtualizacao())){
+								listaProvaTouroFiltrada.remove(provaTouroFiltrada);
+								removido=true;
+								break;
+							}
+						}
+					}
+				}
+				if ((existe && removido) || !existe)
+					listaProvaTouroFiltrada.add(provaTouro);
+			}
+		}
+		
 		int contador = 0;
 		if (filtroAcasalamento.getFemea() != null) {
-			for (ProvaTouro provaTouro : listaProvaTouro) {
+			for (ProvaTouro provaTouro : listaProvaTouroFiltrada) {
 				// verifica consanguinidade do animal
 				if (animalService.verificarConsanguinidade(
 						filtroAcasalamento.getFemea(), provaTouro.getAnimal())){
@@ -135,7 +166,7 @@ public class ProvaTouroBusiness implements ProvaTouroService {
 					break;
 			}
 		} else {
-			listaResultado = listaProvaTouro;
+			listaResultado = listaProvaTouroFiltrada;
 		}
 		return listaResultado;
 	}
