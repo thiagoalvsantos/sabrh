@@ -3,6 +3,7 @@
  */
 package br.pucpr.sabrh.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -104,6 +105,19 @@ public class ClassificacaoLinearBusiness implements ClassificacaoLinearService {
 			classificacaoLinear.setAnimal(animal);
 			return classificacaoLinear;
 		}
+	}
+	
+	@Override
+	public List<ClassificacaoLinear> pesquisarGeracao(Animal animal) {
+		List<ClassificacaoLinear> listaClassificacao = new ArrayList<ClassificacaoLinear>();
+		ClassificacaoLinear classificacaoLinearAnimal = new ClassificacaoLinear();
+		do{
+			classificacaoLinearAnimal=pesquisarUltimaClassificacao(animal);
+			listaClassificacao.add(classificacaoLinearAnimal);
+			animal=classificacaoLinearAnimal.getAnimal().getMae();
+		}while(!animal.getRegistro().equals("000000000000000"));
+		
+		return listaClassificacao;
 	}
 
 }

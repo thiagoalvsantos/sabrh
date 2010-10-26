@@ -54,5 +54,14 @@ public interface ClassificacaoLinearService {
 	 * @return ClassificacaoLinear
 	 */
 	ClassificacaoLinear pesquisarUltimaClassificacao(Animal animal);
+	
+	/**
+	 * Pesquisar geracao a partir de um animal.
+	 * 
+	 * @param animal
+	 *            - animal
+	 * @return list
+	 */
+	List<ClassificacaoLinear> pesquisarGeracao(Animal animal);
 
 }
