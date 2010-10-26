@@ -202,6 +202,14 @@ protected function btnClickSalvarEvento():void
 			case "PROPOSTA":
 				break;
 			case "INSEMINACAO":
+				var evento:EventoAcasalamento=new EventoAcasalamento();
+				evento.acasalamento=acasalamentoSelecionado;
+				evento.comentario=StringUtil.trim(txtEventoComentario.text);
+				evento.dataEvento=txtEventoData.selectedDate;
+				evento.tipoEventoAcasalamento="INSEMINACAO";
+				acasalamentoService.salvarEvento(evento);
+				acasalamentoSelecionado.dataAcasalamento = evento.dataEvento;
+				acasalamentoService.salvar(acasalamentoSelecionado);
 				break;
 			case "FALHA_INSEMINACAO":
 				break;
@@ -336,7 +344,32 @@ protected function serviceResultEventoAcasalamentoSalvar(event:ResultEvent):void
 	cmbEventoTipoEvento.selectedIndex=-1;
 	cmbEventoTipoEvento.selectedIndex=0;
 	cmbEventoTipoEvento.errorString=null;
+}
 
+protected function serviceResultAcasalamentoSalvar(event:ResultEvent):void
+{
+	acasalamentoSelecionado=event.result as Acasalamento;
+
+	statusService.listarStatusEventoAcasalamento();
+	acasalamentoService.pesquisarEvento(acasalamentoSelecionado);
+
+	var df:DateFormatter=new DateFormatter();
+	df.formatString="DD/MM/YYYY";
+
+	txtDetalheFemea.text=acasalamentoSelecionado.femea.apelido;
+	txtDetalheMacho.text=acasalamentoSelecionado.macho.apelido;
+	txtDetalheCria.text=acasalamentoSelecionado.cria.apelido;
+	txtDetalheDataAcasalamento.text=df.format(acasalamentoSelecionado.dataAcasalamento);
+	txtDetalheStatusAcasalamento.text=acasalamentoSelecionado.tipoAcasalamento;
+
+	txtEventoComentario.text=null;
+	txtEventoComentario.errorString=null;
+	txtEventoData.selectedDate=null;
+	txtEventoData.errorString=null;
+	cmbEventoTipoEvento.selectedIndex=-1;
+	cmbEventoTipoEvento.selectedIndex=0;
+	cmbEventoTipoEvento.errorString=null;
+	PopUpManager.centerPopUp(this);
 }
 
 

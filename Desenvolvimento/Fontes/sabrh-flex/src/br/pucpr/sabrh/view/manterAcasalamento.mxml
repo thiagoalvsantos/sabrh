@@ -9,6 +9,7 @@
 			<s:method name="pesquisar" result="{serviceResultAcasalamentoPesquisar(event)}"/>
 			<s:method name="pesquisarEvento" result="{serviceResultEventoAcasalamentoPesquisar(event)}"/>
 			<s:method name="salvarEvento" result="{serviceResultEventoAcasalamentoSalvar(event)}"/>
+			<s:method name="salvar" result="{serviceResultAcasalamentoSalvar(event)}"/>
 		</s:RemoteObject>
 
 		<s:RemoteObject id="statusService" fault="onFault(event)" destination="StatusService" showBusyCursor="true">
