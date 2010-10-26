@@ -123,9 +123,9 @@ public class ProvaTouro implements Serializable {
 	@Column(name = "VL_PERNAS_POST_POST", nullable = false)
 	private short pernasPostVistaPost;
 
-	/** O atributo pontucao pernas pes. */
-	@Column(name = "VL_PONT_PERNAS_PES", nullable = false)
-	private short pontuacaoPernasPes;
+	/** O atributo profundidade talao. */
+	@Column(name = "VL_PROFUND_TALAO", nullable = false)
+	private short profundidadeTalao;
 
 	// /////////////////////////
 	//
@@ -531,24 +531,24 @@ public class ProvaTouro implements Serializable {
 	}
 
 	/**
-	 * Get pontuacao pernas pes.
+	 * Get profundidade talao.
 	 * 
-	 * @return the pontuacao pernas pes
-	 * @see ProvaTouro#pontuacaoPernasPes.
+	 * @return the profundidade talao
+	 * @see ProvaTouro#profundidadeTalao.
 	 */
-	public short getPontuacaoPernasPes() {
-		return pontuacaoPernasPes;
+	public short getProfundidadeTalao() {
+		return profundidadeTalao;
 	}
 
 	/**
-	 * Set pontucao pernas pes.
+	 * Set profundidade talao.
 	 * 
-	 * @param pontucaoPernasPes
-	 *            - pontucao pernas pes.
-	 * @see ProvaTouro#pontucaoPernasPes.
+	 * @param profundidadeTalao
+	 *            - profundidade talao.
+	 * @see ProvaTouro#profundidadeTalao.
 	 */
-	public void setPontuacaoPernasPes(short pontuacaoPernasPes) {
-		this.pontuacaoPernasPes = pontuacaoPernasPes;
+	public void setProfundidadeTalao(short profundidadeTalao) {
+		this.profundidadeTalao = profundidadeTalao;
 	}
 
 	/**
