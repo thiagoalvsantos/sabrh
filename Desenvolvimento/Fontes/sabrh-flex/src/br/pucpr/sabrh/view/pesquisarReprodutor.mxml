@@ -9,35 +9,36 @@
 
 			[Bindable]
 			private var medalsAC:ArrayCollection=new ArrayCollection([
-				{Country: "U", Gold: -1},
-				{Country: "C", Gold: 4},
-				{Country: "R", Gold: -4},
-				{Country: "Ru", Gold: 2},
-				{Country: "US", Gold: 3},
-				{Country: "Chia", Gold: 1},
-				{Country: "Russia", Gold: 5},]);
+				{Atributo: "U", Valor: -1},
+				{Atributo: "C", Valor: 4},
+				{Atributo: "R", Valor: -4},
+				{Atributo: "Ru", Valor: 2},
+				{Atributo: "US", Valor: 3},
+				{Atributo: "Chia", Valor: 1},
+				{Atributo: "Russia", Valor: 5}]);
 		]]>
 	</fx:Script>
 
 	<fx:Declarations>
 
 		<!-- Define custom colors for use as fills. -->
-		<mx:SolidColor id="sc1" color="yellow" alpha=".8"/>
+		<mx:SolidColor id="sc1" color="0x1E90FF" alpha=".5"/>
 		<mx:SolidColor id="sc2" color="0xCCCCCC" alpha=".6"/>
 		<mx:SolidColor id="sc3" color="0xFFCC66" alpha=".6"/>
 
 		<!-- Define custom Strokes for the columns. -->
-		<mx:Stroke id="s1" color="yellow" weight="2"/>
+		<mx:Stroke id="s1" color="0x00BFFF" weight="1"/>
 		<mx:Stroke id="s2" color="0xCCCCCC" weight="2"/>
 		<mx:Stroke id="s3" color="0xFFCC66" weight="2"/>
 
 		<s:RemoteObject id="animalService" fault="" destination="AnimalService" showBusyCursor="true">
 			<s:method name="pesquisar" result=""/>
-			<s:method name="salvar" result=""/>
-			<s:method name="recuperarAnimalPadrao" result=""/>
 		</s:RemoteObject>
 		<s:RemoteObject id="provaTouroService" fault="onFault(event)" destination="ProvaTouroService" showBusyCursor="true">
 			<s:method name="pesquisarReprodutor" result="{serviceResultPesquisarReprodutor(event)}"/>
+		</s:RemoteObject>
+		<s:RemoteObject id="classificacaoLinearService" fault="onFault(event)" destination="ClassificacaoLinearService" showBusyCursor="true">
+			<s:method name="pesquisarUltimaClassificacao" result="{serviceResultPesquisarUltimaClassificacao(event)}"/>
 		</s:RemoteObject>
 
 		<s:Parallel id="exibeMensagemParallel">
@@ -49,12 +50,6 @@
 			<s:Fade alphaFrom="1" alphaTo="0"/>
 			<s:Resize heightFrom="40" heightTo="0"/>
 		</s:Parallel>
-
-		<fx:Array id="listaTemp">
-			<fx:Object registro="HOU0980980HH" nome="Touro da Raça Holandesa" kgLeite="+1538" filhas="121" confProducao="80%" confConformacao="98%"/>
-			<fx:Object registro="2380238948HHHS33" nome="Touro de outra Raça Holandesa" kgLeite="-89" filhas="50" confProducao="99%" confConformacao="99%"/>
-			<fx:Object registro="HOU0980980HH" nome="Touro da Raça Holandesa" kgLeite="+2408" filhas="157" confProducao="87%" confConformacao="96%"/>
-		</fx:Array>
 
 		<fx:Array id="listaAtributoConformacao">
 			<fx:Object atributo="Altura Úbere Posterior" value="alturaUberePosterior"/>
@@ -76,11 +71,15 @@
 			<fx:Object atributo="Profundidade do Úbere" value="profundidadeUbere"/>
 			<fx:Object atributo="Score Pernas e Pés" value="pontucaoPernasPes"/>
 		</fx:Array>
+		
+		<mx:CurrencyFormatter id="currencyFormatter" currencySymbol="R$" precision="2" decimalSeparatorFrom="," decimalSeparatorTo="," useThousandsSeparator="true" thousandsSeparatorFrom="." thousandsSeparatorTo="." useNegativeSign="false"/>
 
 		<s:ArrayCollection id="arrayAtributoConformacao" source="{listaAtributoConformacao}"/>
 		<s:ArrayCollection id="arrayAtributoConformacaoSelecionado" collectionChange="{verificaLimiteDataGrid()}"/>
-
-		<entity:Animal id="vacaSelecionada"/>
+		
+		<s:ArrayCollection id="listaAtributoConformacaoGrafico"/>
+		
+		<entity:ProvaTouro id="provaTouroSelecionado"/>
 
 	</fx:Declarations>
 
@@ -175,7 +174,7 @@
 						<s:VGroup width="100%">
 							<s:HGroup>
 								<s:Button label="Pesquisar" click="{btnClickPesquisar()}" buttonMode="true" tabIndex="13"/>
-								<s:Button label="Limpar" click="" tabIndex="14" buttonMode="true"/>
+								<s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex="14" buttonMode="true"/>
 							</s:HGroup>
 						</s:VGroup>
 						<s:VGroup horizontalAlign="right">
@@ -192,12 +191,20 @@
 				<s:BorderContainer id="panelResultado" width="100%" height="100%" includeIn="stateResultado">
 					<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" rowCount="3" allowMultipleSelection="true" itemClick="{controlarSelecoes()}">
 						<mx:columns>
-							<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="true" dataField="registro"/>
-							<mx:AdvancedDataGridColumn textAlign="left" headerText="Nome" sortable="true" dataField="nome"/>
-							<mx:AdvancedDataGridColumn textAlign="center" headerText="Filhas" sortable="true" dataField="filhas" width="70"/>
-							<mx:AdvancedDataGridColumn textAlign="center" headerText="Kg de Leite" sortable="true" dataField="kgLeite" width="100"/>
-							<mx:AdvancedDataGridColumn textAlign="center" headerText="Confiabilidade Produção" sortable="true" dataField="confProducao" width="180"/>
-							<mx:AdvancedDataGridColumn textAlign="center" headerText="Confiabilidade Conformação" sortable="true" dataField="confConformacao" width="180"/>
+							<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="true" dataField="codigo"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Nome" dataField="" sortable="true">
+								<mx:itemRenderer>
+									<fx:Component>
+										<mx:Canvas>
+											<s:Label text="{data.animal.nome}" horizontalCenter="0" verticalCenter="0"/>
+										</mx:Canvas>
+									</fx:Component>
+								</mx:itemRenderer>
+							</mx:AdvancedDataGridColumn>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Filhas" sortable="true" dataField="quantidadeFilhas" width="70"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Kg de Leite" sortable="true" dataField="quiloLeite" width="100"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Confiabilidade Produção" sortable="true" dataField="confiabilidadeProducao" width="180"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Confiabilidade Conformação" sortable="true" dataField="confiabilidadeConformacao" width="180"/>
 						</mx:columns>
 					</mx:AdvancedDataGrid>
 				</s:BorderContainer>
@@ -239,12 +246,12 @@
 									</s:HGroup>
 								</s:HGroup>
 								<s:HGroup>
-									<s:HGroup verticalAlign="middle">
+									<s:HGroup verticalAlign="middle" width="360">
 										<s:VGroup x="10" y="15" gap="16" width="155">
 											<s:Label id="lblDetalheTouroApelido" text="Apelido"/>
 										</s:VGroup>
 										<s:VGroup y="10" x="220" >
-											<s:TextInput id="txtDetalheTouroApelido" width="189" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroApelido" width="199" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
 										</s:VGroup>
 									</s:HGroup>
 									<s:HGroup verticalAlign="middle">
@@ -270,7 +277,7 @@
 											<s:TextInput id="txtDetalheTouroPercentualProteina" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
 										</s:VGroup>
 									</s:HGroup>
-									<s:HGroup width="248" verticalAlign="middle">
+									<s:HGroup width="239" verticalAlign="middle">
 										<s:VGroup x="10" y="15" gap="16" width="132">
 											<s:Label id="lblDetalheTouroPercentualGordura" text="Percentual de Gordura"/>
 										</s:VGroup>
@@ -309,16 +316,13 @@
 									</s:VGroup>
 								</s:HGroup>
 								<s:HGroup width="100%" horizontalAlign="center">
-									<mx:BarChart id="bar" height="100%" width="45%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{medalsAC}">
-
+									<mx:BarChart id="barChartProvaTouro" height="100%" width="55%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{listaAtributoConformacaoGrafico}" >
 										<mx:verticalAxis>
-											<mx:CategoryAxis categoryField="Country"/>
+											<mx:CategoryAxis categoryField="Atributo"/>
 										</mx:verticalAxis>
-
 										<mx:series>
-											<mx:BarSeries yField="Country" xField="Gold" displayName="Gold" fill="{sc1}" stroke="{s1}"/>
-											<mx:BarSeries yField="Country" xField="Silver" displayName="Silver" fill="{sc2}" stroke="{s2}"/>
-											<mx:BarSeries yField="Country" xField="Bronze" displayName="Bronze" fill="{sc3}" stroke="{s3}"/>
+											<mx:BarSeries yField="Atributo" xField="Touro" fill="{sc1}" stroke="{s1}"/>
+											<mx:BarSeries yField="Atributo" xField="Vaca" fill="{sc2}" stroke="{s2}"/>
 										</mx:series>
 									</mx:BarChart>
 

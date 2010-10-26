@@ -17,6 +17,7 @@
 			<s:method name="salvar" result="{serviceResultSalvarClassificacao(event)}"/>
 			<s:method name="pesquisar" result="{serviceResultPesquisarClassificacaoLinear(event)}"/>
 			<s:method name="excluir" result="{serviceResultSalvarClassificacao(event)}"/>
+			<s:method name="pesquisarUltimaClassificacao" result="{serviceResultPesquisarUltimaClassificacao(event)}"/>
 		</s:RemoteObject>
 		<s:RemoteObject id="provaTouroService" fault="onFault(event)" destination="ProvaTouroService" showBusyCursor="true">
 			<s:method name="salvar" result="{serviceResultSalvarProvaTouro(event)}"/>
@@ -86,6 +87,7 @@
 			<mx:NumberValidator id="nbrValProvaTouroTouroAnguloCasco" source="{txtProvaTouroAnguloCasco}" property="text" required="true" minValue="0" maxValue="9"/>
 			<mx:NumberValidator id="nbrValProvaTouroPernasPostVistaLateral" source="{txtProvaTouroPernasPostVistaLateral}" property="text" required="true" minValue="0" maxValue="9"/>
 			<mx:NumberValidator id="nbrValProvaTouroPernasPostVistaPost" source="{txtProvaTouroPernasPostVistaPost}" property="text" required="true" minValue="0" maxValue="9"/>
+			<mx:NumberValidator id="nbrValProvaTouroPontuacaoPernasPes" source="{txtProvaTouroPontuacaoPernasPes}" property="text" required="true" minValue="0" maxValue="9"/>
 			<!-- Sistema Mamário-->
 			<mx:NumberValidator id="nbrValProvaTouroProfundidadeUbere" source="{txtProvaTouroProfundidadeUbere}" property="text" required="true" minValue="0" maxValue="9"/>
 			<mx:NumberValidator id="nbrValProvaTouroColocacaoTetorAnteriores" source="{txtProvaTouroColocacaoTetorAnteriores}" property="text" required="true" minValue="0" maxValue="9"/>
@@ -870,7 +872,7 @@
 							</s:VGroup>
 						</s:Panel>
 						<!-- Pernas e Pes -->
-						<s:Panel width="100%" title="Pernas e Pés" height="90">
+						<s:Panel width="100%" title="Pernas e Pés" height="117">
 							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
 								<s:HGroup>
 									<s:HGroup>
@@ -879,9 +881,14 @@
 												<s:Label id="lblProvaTouroAnguloCasco" text="Ângulo de Casco"/>
 												<s:Label text="*" color="#B22222" fontWeight="bold"/>
 											</s:HGroup>
+											<s:HGroup>
+												<s:Label id="lblProvaTouroPontuacaoPernasPes" text="Pontuação Pernas e Pés"/>
+												<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											</s:HGroup>
 										</s:VGroup>
 										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
 											<s:TextInput id="txtProvaTouroAnguloCasco" width="50" restrict="0-9" maxChars="1" tabIndex="13"/>
+											<s:TextInput id="txtProvaTouroPontuacaoPernasPes" width="50" restrict="0-9" maxChars="1" tabIndex="16"/>
 										</s:VGroup>
 									</s:HGroup>
 									<s:HGroup>
@@ -929,9 +936,9 @@
 											</s:HGroup>
 										</s:VGroup>
 										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-											<s:TextInput id="txtProvaTouroProfundidadeUbere" width="50" restrict="0-9" maxChars="1" tabIndex="16"/>
-											<s:TextInput id="txtProvaTouroColocacaoTetorAnteriores" width="50" restrict="0-9" maxChars="1" tabIndex="19"/>
-											<s:TextInput id="txtProvaTouroColocacaoTetosPosteriores" width="50" restrict="0-9" maxChars="1" tabIndex="22"/>
+											<s:TextInput id="txtProvaTouroProfundidadeUbere" width="50" restrict="0-9" maxChars="1" tabIndex="17"/>
+											<s:TextInput id="txtProvaTouroColocacaoTetorAnteriores" width="50" restrict="0-9" maxChars="1" tabIndex="20"/>
+											<s:TextInput id="txtProvaTouroColocacaoTetosPosteriores" width="50" restrict="0-9" maxChars="1" tabIndex="23"/>
 										</s:VGroup>
 									</s:HGroup>
 									<s:HGroup>
@@ -950,9 +957,9 @@
 											</s:HGroup>
 										</s:VGroup>
 										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-											<s:TextInput id="txtProvaTouroLigamentoMedio" width="50" restrict="0-9" maxChars="1" tabIndex="17"/>
-											<s:TextInput id="txtProvaTouroAlturaUberePosterior" width="50" restrict="0-9" maxChars="1" tabIndex="20"/>
-											<s:TextInput id="txtProvaTouroComprimentoTetos" width="50" restrict="0-9" maxChars="1" tabIndex="23"/>
+											<s:TextInput id="txtProvaTouroLigamentoMedio" width="50" restrict="0-9" maxChars="1" tabIndex="18"/>
+											<s:TextInput id="txtProvaTouroAlturaUberePosterior" width="50" restrict="0-9" maxChars="1" tabIndex="21"/>
+											<s:TextInput id="txtProvaTouroComprimentoTetos" width="50" restrict="0-9" maxChars="1" tabIndex="24"/>
 										</s:VGroup>
 									</s:HGroup>
 									<s:HGroup>
@@ -967,8 +974,8 @@
 											</s:HGroup>
 										</s:VGroup>
 										<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-											<s:TextInput id="txtProvaTouroInsersaoUbereAnterior" width="50" restrict="0-9" maxChars="1" tabIndex="18"/>
-											<s:TextInput id="txtProvaTouroLarguraUberePosterior" width="50" restrict="0-9" maxChars="1" tabIndex="21"/>
+											<s:TextInput id="txtProvaTouroInsersaoUbereAnterior" width="50" restrict="0-9" maxChars="1" tabIndex="19"/>
+											<s:TextInput id="txtProvaTouroLarguraUberePosterior" width="50" restrict="0-9" maxChars="1" tabIndex="22"/>
 										</s:VGroup>
 									</s:HGroup>
 								</s:HGroup>
@@ -981,11 +988,11 @@
 									<s:HGroup verticalAlign="middle" verticalCenter="0" paddingLeft="10">
 										<s:Label id="lblProvaTouroConfiabilidadeProducao" text="Confiabilidade Produção" fontWeight="bold"/>
 										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										<s:TextInput id="txtProvaTouroConfiabilidadeProducao" width="50" restrict="0-9" maxChars="2" tabIndex="24"/>
+										<s:TextInput id="txtProvaTouroConfiabilidadeProducao" width="50" restrict="0-9" maxChars="2" tabIndex="25"/>
 										<mx:Spacer width="30"/>
 										<s:Label id="lblProvaTouroConfiabilidadeConformacao" text="Confiabilidade Conformação" fontWeight="bold"/>
 										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										<s:TextInput id="txtProvaTouroConfiabilidadeConformacao" width="50" restrict="0-9" maxChars="2" tabIndex="25"/>
+										<s:TextInput id="txtProvaTouroConfiabilidadeConformacao" width="50" restrict="0-9" maxChars="2" tabIndex="26"/>
 									</s:HGroup>
 								</s:BorderContainer>
 							</s:VGroup>
@@ -993,9 +1000,9 @@
 					</s:VGroup>
 
 					<s:controlBarContent>
-						<s:Button label="Voltar" click="{btnClickVoltarProvaTouroLista()}" buttonMode="true" tabIndex="34"/>
-						<s:Button label="Salvar" click="{btnClickSalvarProvaTouro()}" buttonMode="true" tabIndex="32"/>
-						<s:Button label="Excuir" click="{btnClickExcluirProvaTouro()}" buttonMode="true" tabIndex="33" id="btnProvaTouroExcluir"/>
+						<s:Button label="Voltar" click="{btnClickVoltarProvaTouroLista()}" buttonMode="true" tabIndex="35"/>
+						<s:Button label="Salvar" click="{btnClickSalvarProvaTouro()}" buttonMode="true" tabIndex="33"/>
+						<s:Button label="Excuir" click="{btnClickExcluirProvaTouro()}" buttonMode="true" tabIndex="32" id="btnProvaTouroExcluir"/>
 					</s:controlBarContent>
 				</s:Panel>
 			</s:VGroup>
