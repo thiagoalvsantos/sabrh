@@ -69,7 +69,7 @@ public class EventoAcasalamentoDAOImpl implements EventoAcasalamentoDAO {
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(EventoAcasalamento.class);
 		c.add(Restrictions.eq("acasalamento", acasalamento));
-		c.addOrder(Order.asc("dataEvento"));
+		c.addOrder(Order.asc("codigo"));
 		return c.list();
 
 	}

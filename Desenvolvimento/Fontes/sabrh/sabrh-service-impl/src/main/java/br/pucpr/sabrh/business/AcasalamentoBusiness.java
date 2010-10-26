@@ -67,8 +67,7 @@ public class AcasalamentoBusiness implements AcasalamentoService {
 	 */
 	@Override
 	public Acasalamento salvar(Acasalamento acasalamento) {
-		// TODO Auto-generated method stub
-		return null;
+		return daoAcasalamentoDAO.salvar(acasalamento);
 	}
 
 	/*
