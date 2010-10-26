@@ -10,6 +10,8 @@ import javax.ejb.Stateless;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import br.pucpr.sabrh.entity.TipoAcasalamento;
+import br.pucpr.sabrh.entity.TipoEventoAcasalamento;
 import br.pucpr.sabrh.entity.TipoStatus;
 import br.pucpr.sabrh.entity.TipoStatusFemea;
 import br.pucpr.sabrh.services.StatusService;
@@ -42,6 +44,20 @@ public class StatusBusiness implements StatusService {
 		ArrayList<TipoStatusFemea> tipoStatusFemea = new ArrayList<TipoStatusFemea>();
 		CollectionUtils.addAll(tipoStatusFemea, TipoStatusFemea.values());
 		return tipoStatusFemea;
+	}
+
+	@Override
+	public List<TipoAcasalamento> listarStatusAcasalamento() {
+		ArrayList<TipoAcasalamento> tipoAcasalamentos= new ArrayList<TipoAcasalamento>();
+		CollectionUtils.addAll(tipoAcasalamentos, TipoAcasalamento.values());
+		return tipoAcasalamentos;
+	}
+
+	@Override
+	public List<TipoEventoAcasalamento> listarStatusEventoAcasalamento() {
+		ArrayList<TipoEventoAcasalamento> tipoEventoAcasalamentos= new ArrayList<TipoEventoAcasalamento>();
+		CollectionUtils.addAll(tipoEventoAcasalamentos, TipoEventoAcasalamento.values());
+		return tipoEventoAcasalamentos;
 	}
 
 }

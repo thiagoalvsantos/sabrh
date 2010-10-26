@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import br.pucpr.sabrh.entity.TipoAcasalamento;
+import br.pucpr.sabrh.entity.TipoEventoAcasalamento;
 import br.pucpr.sabrh.entity.TipoStatus;
 import br.pucpr.sabrh.entity.TipoStatusFemea;
 
@@ -33,4 +35,8 @@ public interface StatusService {
 	 * @return list
 	 */
 	List<TipoStatusFemea> listarStatusFemea();
+	
+	List<TipoAcasalamento> listarStatusAcasalamento();
+	
+	List<TipoEventoAcasalamento> listarStatusEventoAcasalamento();
 }
