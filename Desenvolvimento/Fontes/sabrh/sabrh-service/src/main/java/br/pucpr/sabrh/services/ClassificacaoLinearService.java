@@ -19,7 +19,7 @@ import br.pucpr.sabrh.entity.ClassificacaoLinear;
  */
 @Remote
 public interface ClassificacaoLinearService {
-	
+
 	/**
 	 * Pesquisar.
 	 * 
@@ -28,7 +28,7 @@ public interface ClassificacaoLinearService {
 	 * @return list
 	 */
 	List<ClassificacaoLinear> pesquisar(Animal animal);
-	
+
 	/**
 	 * Salvar.
 	 * 
@@ -37,7 +37,7 @@ public interface ClassificacaoLinearService {
 	 * @return classificacao linear
 	 */
 	ClassificacaoLinear salvar(ClassificacaoLinear classificacaoLinear);
-	
+
 	/**
 	 * Realiza Excluir.
 	 * 
@@ -45,5 +45,14 @@ public interface ClassificacaoLinearService {
 	 *            - classificacao linear.
 	 */
 	void excluir(ClassificacaoLinear classificacaoLinear);
+
+	/**
+	 * Pesquisar ultima classificacao Linear.
+	 * 
+	 * @param animal
+	 *            - animal
+	 * @return ClassificacaoLinear
+	 */
+	ClassificacaoLinear pesquisarUltimaClassificacao(Animal animal);
 
 }

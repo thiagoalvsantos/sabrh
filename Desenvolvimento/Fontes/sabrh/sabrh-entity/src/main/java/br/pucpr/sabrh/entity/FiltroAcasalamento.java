@@ -3,12 +3,17 @@
  */
 package br.pucpr.sabrh.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Class FiltroAcasalamento.
  */
-public class FiltroAcasalamento {
+public class FiltroAcasalamento implements Serializable{
+
+	
+	/** O atributo serial version uid. */
+	private static final long serialVersionUID = -6965092152285540430L;
 
 	/** O atributo lista conformacao. */
 	private List<String> listaConformacao;

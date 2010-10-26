@@ -42,5 +42,4 @@ public interface ClassificacaoLinearDAO {
 	 */
 	void excluir(ClassificacaoLinear classificacaoLinear);
 	
-
 }

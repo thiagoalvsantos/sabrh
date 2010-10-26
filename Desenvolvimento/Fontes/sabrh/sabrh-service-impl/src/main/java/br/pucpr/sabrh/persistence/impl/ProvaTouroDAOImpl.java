@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.pucpr.sabrh.entity.Animal;
@@ -87,18 +88,52 @@ public class ProvaTouroDAOImpl implements ProvaTouroDAO {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.persistence.ProvaTouroDAO#excluir(br.pucpr.sabrh.entity
+	 * .ProvaTouro)
+	 */
 	@Override
 	public void excluir(ProvaTouro provaTouro) {
 		provaTouro = entityManager.merge(provaTouro);
 		entityManager.remove(provaTouro);
 		entityManager.flush();
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.persistence.ProvaTouroDAO#pesquisarReprodutor(br.pucpr
+	 * .sabrh.entity.FiltroAcasalamento)
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProvaTouro> pesquisarReprodutor(
 			FiltroAcasalamento filtroAcasalamento) {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = (Session) entityManager.getDelegate();
+		Criteria c = s.createCriteria(ProvaTouro.class, "provaTouro");
+
+		if (filtroAcasalamento.getConfiabilidadeConformacao() >= 0)
+			c.add(Restrictions.ge("confiabilidadeConformacao",
+					filtroAcasalamento.getConfiabilidadeConformacao()));
+
+		if (filtroAcasalamento.getConfiabilidadeProducao() >= 0)
+			c.add(Restrictions.ge("confiabilidadeProducao",
+					filtroAcasalamento.getConfiabilidadeProducao()));
+
+		for (String atributo : filtroAcasalamento.getListaProducao()) {
+			c.addOrder(Order.asc(atributo));
+		}
+
+		for (String atributo : filtroAcasalamento.getListaConformacao()) {
+			c.addOrder(Order.asc(atributo));
+		}
+
+		List<ProvaTouro> result = c.list();
+		return result;
 	}
 
 }

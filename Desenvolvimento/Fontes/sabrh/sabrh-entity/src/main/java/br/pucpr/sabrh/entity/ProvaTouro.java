@@ -125,7 +125,7 @@ public class ProvaTouro implements Serializable {
 
 	/** O atributo pontucao pernas pes. */
 	@Column(name = "VL_PONT_PERNAS_PES", nullable = false)
-	private short pontucaoPernasPes;
+	private short pontuacaoPernasPes;
 
 	// /////////////////////////
 	//
@@ -531,13 +531,13 @@ public class ProvaTouro implements Serializable {
 	}
 
 	/**
-	 * Get pontucao pernas pes.
+	 * Get pontuacao pernas pes.
 	 * 
-	 * @return the pontucao pernas pes
-	 * @see ProvaTouro#pontucaoPernasPes.
+	 * @return the pontuacao pernas pes
+	 * @see ProvaTouro#pontuacaoPernasPes.
 	 */
-	public short getPontucaoPernasPes() {
-		return pontucaoPernasPes;
+	public short getPontuacaoPernasPes() {
+		return pontuacaoPernasPes;
 	}
 
 	/**
@@ -547,8 +547,8 @@ public class ProvaTouro implements Serializable {
 	 *            - pontucao pernas pes.
 	 * @see ProvaTouro#pontucaoPernasPes.
 	 */
-	public void setPontucaoPernasPes(short pontucaoPernasPes) {
-		this.pontucaoPernasPes = pontucaoPernasPes;
+	public void setPontuacaoPernasPes(short pontuacaoPernasPes) {
+		this.pontuacaoPernasPes = pontuacaoPernasPes;
 	}
 
 	/**
