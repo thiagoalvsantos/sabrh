@@ -88,4 +88,22 @@ public class ClassificacaoLinearBusiness implements ClassificacaoLinearService {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.pucpr.sabrh.services.ClassificacaoLinearService#
+	 * pesquisarUltimaClassificacao(br.pucpr.sabrh.entity.Animal)
+	 */
+	@Override
+	public ClassificacaoLinear pesquisarUltimaClassificacao(Animal animal) {
+		List<ClassificacaoLinear> listaClassificacao = dao.pesquisar(animal);
+		if (listaClassificacao.size() > 0) {
+			return listaClassificacao.get(0);
+		} else {
+			ClassificacaoLinear classificacaoLinear = new ClassificacaoLinear();
+			classificacaoLinear.setAnimal(animal);
+			return classificacaoLinear;
+		}
+	}
+
 }

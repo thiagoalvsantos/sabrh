@@ -115,17 +115,24 @@ public class ProvaTouroBusiness implements ProvaTouroService {
 		dao.excluir(provaTouro);
 
 	}
-	
+
 	@Override
 	public List<ProvaTouro> pesquisarReprodutor(
 			FiltroAcasalamento filtroAcasalamento) {
-		List<ProvaTouro> listaProvaTouro = dao.pesquisarReprodutor(filtroAcasalamento);
+		List<ProvaTouro> listaProvaTouro = dao
+				.pesquisarReprodutor(filtroAcasalamento);
 		List<ProvaTouro> listaResultado = new ArrayList<ProvaTouro>();
-		if (filtroAcasalamento.getFemea() != null){
+		int contador = 0;
+		if (filtroAcasalamento.getFemea() != null) {
 			for (ProvaTouro provaTouro : listaProvaTouro) {
-				//verifica consanguinidade do animal
-					if (animalService.verificarConsanguinidade(filtroAcasalamento.getFemea(), provaTouro.getAnimal()))
-						listaResultado.add(provaTouro);
+				// verifica consanguinidade do animal
+				if (animalService.verificarConsanguinidade(
+						filtroAcasalamento.getFemea(), provaTouro.getAnimal())){
+					listaResultado.add(provaTouro);
+					contador++;
+				}
+				if(contador == 3)
+					break;
 			}
 		} else {
 			listaResultado = listaProvaTouro;
