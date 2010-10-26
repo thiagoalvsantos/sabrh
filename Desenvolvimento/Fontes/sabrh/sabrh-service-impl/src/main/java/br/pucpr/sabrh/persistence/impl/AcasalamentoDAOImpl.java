@@ -15,7 +15,6 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -23,8 +22,6 @@ import org.hibernate.criterion.Restrictions;
 
 import br.pucpr.sabrh.entity.Acasalamento;
 import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.ClassificacaoLinear;
-import br.pucpr.sabrh.entity.Propriedade;
 import br.pucpr.sabrh.entity.Usuario;
 import br.pucpr.sabrh.persistence.AcasalamentoDAO;
 
@@ -67,6 +64,7 @@ public class AcasalamentoDAOImpl implements AcasalamentoDAO {
 	 * br.pucpr.sabrh.persistence.AcasalamentoDAO#pesquisar(br.pucpr.sabrh.entity
 	 * .Acasalamento, java.util.Date, java.util.Date)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Acasalamento> pesquisar(Acasalamento acasalamento,
 			Date dataInicio, Date dataFim) {

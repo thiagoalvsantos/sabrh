@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import br.pucpr.sabrh.entity.Acasalamento;
+import br.pucpr.sabrh.entity.EventoAcasalamento;
 
 /**
  * Interface de serviço da camada core relacionado ao componente Acasalamento.
@@ -40,4 +41,22 @@ public interface AcasalamentoService {
 	 * @return list
 	 */
 	List<Acasalamento> pesquisar(Acasalamento acasalamento,Date dataInicio,Date dataFim);
+	
+	/**
+	 * Salvar evento.
+	 * 
+	 * @param eventoAcasalamento
+	 *            - evento acasalamento
+	 * @return evento acasalamento
+	 */
+	EventoAcasalamento salvarEvento(EventoAcasalamento eventoAcasalamento);
+	
+	/**
+	 * Pesquisar evento.
+	 * 
+	 * @param acasalamento
+	 *            - acasalamento
+	 * @return list
+	 */
+	List<EventoAcasalamento> pesquisarEvento(Acasalamento acasalamento);
 }
