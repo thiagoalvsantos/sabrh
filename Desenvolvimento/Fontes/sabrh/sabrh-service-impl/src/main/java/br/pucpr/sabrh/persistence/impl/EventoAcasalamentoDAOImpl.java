@@ -49,8 +49,12 @@ public class EventoAcasalamentoDAOImpl implements EventoAcasalamentoDAO {
 		this.entityManager = entityManager;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.pucpr.sabrh.persistence.EventoAcasalamentoDAO#salvar(br.pucpr.sabrh.entity.EventoAcasalamento)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.persistence.EventoAcasalamentoDAO#salvar(br.pucpr.sabrh
+	 * .entity.EventoAcasalamento)
 	 */
 	@Override
 	public EventoAcasalamento salvar(EventoAcasalamento eventoAcasalamento) {
@@ -60,8 +64,12 @@ public class EventoAcasalamentoDAOImpl implements EventoAcasalamentoDAO {
 		return eventoAcasalamento;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.pucpr.sabrh.persistence.EventoAcasalamentoDAO#pesquisar(br.pucpr.sabrh.entity.Acasalamento)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.pucpr.sabrh.persistence.EventoAcasalamentoDAO#pesquisar(br.pucpr.sabrh
+	 * .entity.Acasalamento)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -69,7 +77,7 @@ public class EventoAcasalamentoDAOImpl implements EventoAcasalamentoDAO {
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(EventoAcasalamento.class);
 		c.add(Restrictions.eq("acasalamento", acasalamento));
-		c.addOrder(Order.asc("codigo"));
+		c.addOrder(Order.desc("codigo"));
 		return c.list();
 
 	}
