@@ -197,30 +197,58 @@ protected function btnClickSalvarEvento():void
 	if (validar())
 	{
 
+		var evento:EventoAcasalamento=new EventoAcasalamento();
 		switch (cmbEventoTipoEvento.selectedItem)
 		{
 			case "PROPOSTA":
 				break;
 			case "INSEMINACAO":
-				var evento:EventoAcasalamento=new EventoAcasalamento();
 				evento.acasalamento=acasalamentoSelecionado;
 				evento.comentario=StringUtil.trim(txtEventoComentario.text);
 				evento.dataEvento=txtEventoData.selectedDate;
 				evento.tipoEventoAcasalamento="INSEMINACAO";
 				acasalamentoService.salvarEvento(evento);
-				acasalamentoSelecionado.dataAcasalamento = evento.dataEvento;
+				acasalamentoSelecionado.dataAcasalamento=evento.dataEvento;
+				acasalamentoSelecionado.tipoAcasalamento="INSEMINACAO";
 				acasalamentoService.salvar(acasalamentoSelecionado);
 				break;
 			case "FALHA_INSEMINACAO":
+				evento.acasalamento=acasalamentoSelecionado;
+				evento.comentario=StringUtil.trim(txtEventoComentario.text);
+				evento.dataEvento=txtEventoData.selectedDate;
+				evento.tipoEventoAcasalamento="FALHA_INSEMINACAO";
+				acasalamentoService.salvarEvento(evento);
+				acasalamentoSelecionado.tipoAcasalamento="FALHA_INSEMINACAO";
+				acasalamentoService.salvar(acasalamentoSelecionado);
 				break;
 			case "PRENHA":
+				evento.acasalamento=acasalamentoSelecionado;
+				evento.comentario=StringUtil.trim(txtEventoComentario.text);
+				evento.dataEvento=txtEventoData.selectedDate;
+				evento.tipoEventoAcasalamento="PRENHA";
+				acasalamentoService.salvarEvento(evento);
+				acasalamentoSelecionado.tipoAcasalamento="PRENHA";
+				acasalamentoService.salvar(acasalamentoSelecionado);
 				break;
 			case "ABORTO":
+				evento.acasalamento=acasalamentoSelecionado;
+				evento.comentario=StringUtil.trim(txtEventoComentario.text);
+				evento.dataEvento=txtEventoData.selectedDate;
+				evento.tipoEventoAcasalamento="ABORTO";
+				acasalamentoService.salvarEvento(evento);
+				acasalamentoSelecionado.tipoAcasalamento="ABORTO";
+				acasalamentoService.salvar(acasalamentoSelecionado);
 				break;
 			case "NASCIMENTO":
+				evento.acasalamento=acasalamentoSelecionado;
+				evento.comentario=StringUtil.trim(txtEventoComentario.text);
+				evento.dataEvento=txtEventoData.selectedDate;
+				evento.tipoEventoAcasalamento="NASCIMENTO";
+				acasalamentoService.salvarEvento(evento);
+				acasalamentoSelecionado.tipoAcasalamento="NASCIMENTO";
+				acasalamentoService.salvar(acasalamentoSelecionado);
 				break;
 			case "COMENTARIO":
-				var evento:EventoAcasalamento=new EventoAcasalamento();
 				evento.acasalamento=acasalamentoSelecionado;
 				evento.comentario=StringUtil.trim(txtEventoComentario.text);
 				evento.dataEvento=txtEventoData.selectedDate;
@@ -261,7 +289,6 @@ protected function gridClickResultadoAcasalamento(event:ListEvent):void
 
 	acasalamentoSelecionado=event.currentTarget.selectedItem;
 
-	statusService.listarStatusEventoAcasalamento();
 	acasalamentoService.pesquisarEvento(acasalamentoSelecionado);
 
 	var df:DateFormatter=new DateFormatter();
@@ -329,6 +356,8 @@ protected function serviceResultEventoAcasalamentoPesquisar(event:ResultEvent):v
 	// Atribui a lista de eventos para a grid de resultado
 	dataGridEvento.dataProvider=listaEventoAcasalamento;
 
+	statusService.listarStatusEventoAcasalamento();
+
 	PopUpManager.centerPopUp(this);
 
 }
@@ -339,8 +368,6 @@ protected function serviceResultEventoAcasalamentoSalvar(event:ResultEvent):void
 	PopUpManager.centerPopUp(this);
 	txtEventoComentario.text=null;
 	txtEventoComentario.errorString=null;
-	txtEventoData.selectedDate=null;
-	txtEventoData.errorString=null;
 	cmbEventoTipoEvento.selectedIndex=-1;
 	cmbEventoTipoEvento.selectedIndex=0;
 	cmbEventoTipoEvento.errorString=null;
@@ -364,8 +391,6 @@ protected function serviceResultAcasalamentoSalvar(event:ResultEvent):void
 
 	txtEventoComentario.text=null;
 	txtEventoComentario.errorString=null;
-	txtEventoData.selectedDate=null;
-	txtEventoData.errorString=null;
 	cmbEventoTipoEvento.selectedIndex=-1;
 	cmbEventoTipoEvento.selectedIndex=0;
 	cmbEventoTipoEvento.errorString=null;
@@ -392,9 +417,52 @@ protected function serviceResultListarStatusEvento(event:ResultEvent):void
 	listaStatus.addItem(ConstantesUtils.SELECIONE);
 	listaStatus.addAll(event.result as ArrayCollection);
 
+
+	listaStatus.removeItemAt(listaStatus.getItemIndex("PROPOSTA"));
+	switch (acasalamentoSelecionado.tipoAcasalamento)
+	{
+		case "PROPOSTA":
+			listaStatus.removeItemAt(listaStatus.getItemIndex("FALHA_INSEMINACAO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("PRENHA"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("ABORTO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("NASCIMENTO"));
+			break;
+		case "INSEMINACAO":
+
+			listaStatus.removeItemAt(listaStatus.getItemIndex("INSEMINACAO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("ABORTO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("NASCIMENTO"));
+			break;
+		case "FALHA_INSEMINACAO":
+			listaStatus.removeItemAt(listaStatus.getItemIndex("FALHA_INSEMINACAO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("PRENHA"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("ABORTO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("NASCIMENTO"));
+			break;
+		case "PRENHA":
+			listaStatus.removeItemAt(listaStatus.getItemIndex("INSEMINACAO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("FALHA_INSEMINACAO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("PRENHA"));
+			break;
+		case "ABORTO":
+			listaStatus.removeItemAt(listaStatus.getItemIndex("FALHA_INSEMINACAO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("PRENHA"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("ABORTO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("NASCIMENTO"));
+			break;
+		case "NASCIMENTO":
+			listaStatus.removeItemAt(listaStatus.getItemIndex("INSEMINACAO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("FALHA_INSEMINACAO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("PRENHA"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("ABORTO"));
+			listaStatus.removeItemAt(listaStatus.getItemIndex("NASCIMENTO"));
+			break;
+	}
 	cmbEventoTipoEvento.dataProvider=listaStatus;
 	cmbEventoTipoEvento.selectedIndex=-1;
 	cmbEventoTipoEvento.selectedIndex=0
+
+
 
 }
 
@@ -406,16 +474,8 @@ protected function validar():Boolean
 	//se não existem erros 
 	if (errors.length == 0)
 	{
-		if (txtEventoData.selectedDate > new Date())
-		{
-			txtEventoData.errorString="Data deve ser igual ou menor que a data atual";
-			txtEventoData.focusManager.setFocus(txtEventoData);
-		}
-		else
-		{
-			panelError.visible=false;
-			return true;
-		}
+		panelError.visible=false;
+		return true;
 	}
 	else
 	{

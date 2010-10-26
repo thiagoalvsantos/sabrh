@@ -29,7 +29,6 @@
 
 		<fx:Array id="validadores">
 			<mx:NumberValidator id="cmbValTipoEvento" source="{cmbEventoTipoEvento}" property="selectedIndex" required="true" minValue="1" lowerThanMinError.stateEditar="Este campo é obrigatório" triggerEvent="change"/>
-			<mx:StringValidator id="strValDataEvento" source="{txtEventoData}" property="text" required="true"/>
 			<mx:StringValidator id="strValEventoComentario" source="{txtEventoComentario}" property="text" required="true" maxLength="255"/>
 		</fx:Array>
 
@@ -168,7 +167,7 @@
 								<s:HGroup verticalAlign="middle">
 									<s:Label id="lblEventoDataEvento" text="Data"/>
 									<s:Label text="*" color="#B22222" fontWeight="bold" width="46"/>
-									<mx:DateField id="txtEventoData" width="250" tabIndex="1"/>
+									<mx:DateField id="txtEventoData" width="250" tabIndex="1" selectedDate="{new Date()}" enabled="false"/>
 									<mx:Spacer width="10"/>
 									<s:Label id="lblEventoTipo" text="Tipo"/>
 									<s:Label text="*" color="#B22222" fontWeight="bold"/>
@@ -179,6 +178,24 @@
 									<s:Label text="*" color="#B22222" fontWeight="bold"/>
 									<s:TextInput id="txtEventoComentario" width="567" tabIndex="3"/>
 								</s:HGroup>
+								<s:BorderContainer id="panelCria" width="100%" height="100%" visible="false" s>
+									<s:VGroup>
+										<s:HGroup verticalAlign="middle">
+											<s:Label id="lblEventoCriaRegistro" text="Registro Cria"/>
+											<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											<s:TextInput id="txtEventoCriaRegistro" width="150"/>
+											<mx:Spacer width="10"/>
+											<s:Label id="lblEventoCriaNome" text="Nome Cria"/>
+											<s:Label text="*" color="#B22222" fontWeight="bold"/>
+											<s:TextInput id="txtEventoCriaNome" width="350"/>
+										</s:HGroup>
+										<s:HGroup verticalAlign="middle">
+											<s:Label id="lblEventoCriaApelido" text="Apelido Cria"/>
+											<s:Label text="*" color="#B22222" fontWeight="bold" width="11"/>
+											<s:TextInput id="txtEventoCriaApelido" width="599"/>
+										</s:HGroup>
+									</s:VGroup>
+								</s:BorderContainer>
 							</s:VGroup>
 						</s:HGroup>
 						<mx:AdvancedDataGrid id="dataGridEvento" left="10" right="10" top="10" bottom="10" designViewDataType="flat" itemClick="gridClickEvento(event)" width="100%">
