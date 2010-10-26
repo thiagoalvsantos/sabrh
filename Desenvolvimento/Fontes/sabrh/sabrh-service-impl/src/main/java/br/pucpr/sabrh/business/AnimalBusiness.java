@@ -94,7 +94,6 @@ public class AnimalBusiness implements AnimalService {
 		List<Animal> filhos = new ArrayList<Animal>();
 		List<Animal> pais = new ArrayList<Animal>();
 		List<Animal> avos = new ArrayList<Animal>();
-		List<Animal> bisavos = new ArrayList<Animal>();
 		List<Animal> arvore = new ArrayList<Animal>();
 
 		filhos.add(femea);
@@ -106,9 +105,6 @@ public class AnimalBusiness implements AnimalService {
 
 			avos = criarGeracao(pais);
 			adicionarGeracao(arvore, avos);
-
-			bisavos = criarGeracao(avos);
-			adicionarGeracao(arvore, bisavos);
 
 		} catch (Exception e) {
 			return false;
