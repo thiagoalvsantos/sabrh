@@ -1,6 +1,7 @@
 import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Acasalamento;
 import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.EventoAcasalamento;
 import br.pucpr.sabrh.entity.Propriedade;
 import br.pucpr.sabrh.entity.Usuario;
 
@@ -8,47 +9,47 @@ import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.core.FlexGlobals;
 import mx.events.CloseEvent;
+import mx.events.ListEvent;
 import mx.formatters.DateFormatter;
 import mx.managers.PopUpManager;
 import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
+import mx.utils.StringUtil;
+import mx.validators.Validator;
 
-
-protected function init():void{
-	statusService.listarStatusAcasalamento();
-}
-protected function onFault(event:FaultEvent):void
+public function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsulta:String, propriedade:Propriedade):void
 {
-	//Ocorreu uma falha ao chamar o servico. 
-	Alert.show(event.fault.rootCause.message);
-}
+	atributoDestino.text=propriedade.nome;
 
-//Função para abrir a tela de Consultar Usuários.
-protected function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
-{
-	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
-	popUpConsultarUsuario.janelaOrigem=this;
-	popUpConsultarUsuario.tipoConsulta=tipoConsulta;
-	popUpConsultarUsuario.atributoDestino=atributo;
-	if (txtPesquisaPropriedade.text != "")
+	if (tipoConsulta == "novo")
 	{
-		popUpConsultarUsuario.txtPesquisaNome.text=propriedadePesquisa.proprietario.nome;
-		popUpConsultarUsuario.txtPesquisaNome.enabled=false;
+		propriedadeNovo=propriedade;
 	}
-	PopUpManager.centerPopUp(popUpConsultarUsuario);
-	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
-	FlexGlobals.topLevelApplication.popUpEffect.play();
+	else
+	{
+		if (tipoConsulta == "pesquisa")
+		{
+			propriedadePesquisa=propriedade;
+			proprietarioPesquisa=propriedade.proprietario;
+			txtPesquisaProprietario.text=proprietarioPesquisa.nome;
+			btnPesquisaBuscarProprietario.enabled=false;
+		}
+	}
+
 }
 
-/**
- *	Fechar a tela de manter usuário
- *
- * @param event
- */
-protected function fechar(event:CloseEvent):void
+
+
+
+//Função que recebe o retorno da consulta de Usuário.
+public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
 {
-	// fecha tela de manter usuário
-	PopUpManager.removePopUp(this);
+	atributoDestino.text=usuario.nome;
+
+	if (tipoConsulta == "pesquisa")
+	{
+		proprietarioPesquisa=usuario;
+	}
 }
 
 
@@ -67,6 +68,23 @@ protected function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:St
 	}
 	PopUpManager.centerPopUp(popUpConsultarPropriedade);
 	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarPropriedade;
+	FlexGlobals.topLevelApplication.popUpEffect.play();
+}
+
+//Função para abrir a tela de Consultar Usuários.
+protected function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String):void
+{
+	var popUpConsultarUsuario:consultarUsuario=consultarUsuario(PopUpManager.createPopUp(this.parent, consultarUsuario, true));
+	popUpConsultarUsuario.janelaOrigem=this;
+	popUpConsultarUsuario.tipoConsulta=tipoConsulta;
+	popUpConsultarUsuario.atributoDestino=atributo;
+	if (txtPesquisaPropriedade.text != "")
+	{
+		popUpConsultarUsuario.txtPesquisaNome.text=propriedadePesquisa.proprietario.nome;
+		popUpConsultarUsuario.txtPesquisaNome.enabled=false;
+	}
+	PopUpManager.centerPopUp(popUpConsultarUsuario);
+	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarUsuario;
 	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
@@ -174,55 +192,70 @@ protected function btnClickPesquisar():void
 	acasalamentoService.pesquisar(acasalamento, dataInicio, dataFim);
 }
 
-protected function serviceResultAcasalamentoPesquisar(event:ResultEvent):void
+protected function btnClickSalvarEvento():void
 {
-	// Recupera lista de animais
-	var listaAcasalamento:ArrayCollection=event.result as ArrayCollection;
+	if (validar())
+	{
+		var evento:EventoAcasalamento=new EventoAcasalamento();
 
-	// Altera estado da tela para "RESULTADO"
-	currentState=ConstantesUtils.STATE_RESULTADO;
+		evento.acasalamento=acasalamentoSelecionado;
+		evento.comentario=StringUtil.trim(txtEventoComentario.text);
+		evento.dataEvento=txtEventoData.selectedDate;
+		evento.tipoEventoAcasalamento=cmbEventoTipoEvento.selectedItem;
 
-	// Atribui a lista de animais para a grid de resultado
-	dataGridResultadoAcasalamento.dataProvider=listaAcasalamento;
+		acasalamentoService.salvarEvento(evento);
+	}
+}
 
-	// Informa o número de registros encontrados 
-	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaAcasalamento.length;
+protected function btnClickVoltarPesquisa():void
+{
+	currentState=ConstantesUtils.STATE_PESQUISA;
+	init();
+}
+
+/**
+ *	Fechar a tela de manter usuário
+ *
+ * @param event
+ */
+protected function fechar(event:CloseEvent):void
+{
+	// fecha tela de manter usuário
+	PopUpManager.removePopUp(this);
+}
+
+protected function gridClickEvento(event:ListEvent):void
+{
+
+	// TODO FAZER METODO
+}
+
+
+protected function gridClickResultadoAcasalamento(event:ListEvent):void
+{
+	currentState=ConstantesUtils.STATE_DETALHE;
+
+	acasalamentoSelecionado=event.currentTarget.selectedItem;
+
+	statusService.listarStatusEventoAcasalamento();
+	acasalamentoService.pesquisarEvento(acasalamentoSelecionado);
+
+	var df:DateFormatter=new DateFormatter();
+	df.formatString="DD/MM/YYYY";
+
+	txtDetalheFemea.text=acasalamentoSelecionado.femea.apelido;
+	txtDetalheMacho.text=acasalamentoSelecionado.macho.apelido;
+	txtDetalheCria.text=acasalamentoSelecionado.cria.apelido;
+	txtDetalheDataAcasalamento.text=df.format(acasalamentoSelecionado.dataAcasalamento);
+	txtDetalheStatusAcasalamento.text=acasalamentoSelecionado.tipoAcasalamento;
+
 	PopUpManager.centerPopUp(this);
-
 }
 
 
-//Função que recebe o retorno da consulta de Usuário.
-public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
+protected function init():void
 {
-	atributoDestino.text=usuario.nome;
-
-	if (tipoConsulta == "pesquisa")
-	{
-		proprietarioPesquisa=usuario;
-	}
-}
-
-//Função que recebe o retorno da consulta de Propriedade.
-public function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsulta:String, propriedade:Propriedade):void
-{
-	atributoDestino.text=propriedade.nome;
-
-	if (tipoConsulta == "novo")
-	{
-		propriedadeNovo=propriedade;
-	}
-	else
-	{
-		if (tipoConsulta == "pesquisa")
-		{
-			propriedadePesquisa=propriedade;
-			proprietarioPesquisa=propriedade.proprietario;
-			txtPesquisaProprietario.text=proprietarioPesquisa.nome;
-			btnPesquisaBuscarProprietario.enabled=false;
-		}
-	}
-
+	statusService.listarStatusAcasalamento();
 }
 
 protected function labelFunctionDataAcasalamento(item:Object, column:AdvancedDataGridColumn):String
@@ -233,29 +266,113 @@ protected function labelFunctionDataAcasalamento(item:Object, column:AdvancedDat
 	return dateFormat.format(item.dataAcasalamento);
 }
 
+protected function labelFunctionDataEvento(item:Object, column:AdvancedDataGridColumn):String
+{
+	var dateFormat:DateFormatter=new DateFormatter();
+	dateFormat.formatString="DD/MM/YYYY";
+
+	return dateFormat.format(item.dataEvento);
+}
+
+protected function onFault(event:FaultEvent):void
+{
+	//Ocorreu uma falha ao chamar o servico. 
+	Alert.show(event.fault.rootCause.message);
+}
+
+protected function serviceResultAcasalamentoPesquisar(event:ResultEvent):void
+{
+	// Recupera lista de animais
+	var listaAcasalamento:ArrayCollection=event.result as ArrayCollection;
+
+	// Altera estado da tela para "RESULTADO"
+	currentState=ConstantesUtils.STATE_RESULTADO;
+
+	// Atribui a lista de acasalamentos para a grid de resultado
+	dataGridResultadoAcasalamento.dataProvider=listaAcasalamento;
+
+	// Informa o número de registros encontrados 
+	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaAcasalamento.length;
+	PopUpManager.centerPopUp(this);
+
+}
+
+protected function serviceResultEventoAcasalamentoPesquisar(event:ResultEvent):void
+{
+	// Recupera lista de animais
+	var listaEventoAcasalamento:ArrayCollection=event.result as ArrayCollection;
+
+	// Atribui a lista de eventos para a grid de resultado
+	dataGridEvento.dataProvider=listaEventoAcasalamento;
+
+	PopUpManager.centerPopUp(this);
+
+}
+
+protected function serviceResultEventoAcasalamentoSalvar(event:ResultEvent):void
+{
+	acasalamentoService.pesquisarEvento(acasalamentoSelecionado);
+	PopUpManager.centerPopUp(this);
+	txtEventoComentario.text=null;
+	txtEventoComentario.errorString=null;
+	txtEventoData.selectedDate=null;
+	txtEventoData.errorString=null;
+	cmbEventoTipoEvento.selectedIndex=-1;
+	cmbEventoTipoEvento.selectedIndex=0;
+	cmbEventoTipoEvento.errorString=null;
+
+}
+
+
+
 protected function serviceResultListarStatusAcasalamento(event:ResultEvent):void
 {
 	var listaStatus:ArrayCollection=new ArrayCollection();
 	listaStatus.addItem(ConstantesUtils.SELECIONE);
 	listaStatus.addAll(event.result as ArrayCollection);
-	
-	if (currentState == ConstantesUtils.STATE_PESQUISA)
+
+	cmbPesquisaStatusAcasalamento.dataProvider=listaStatus;
+	cmbPesquisaStatusAcasalamento.selectedIndex=-1;
+	cmbPesquisaStatusAcasalamento.selectedIndex=0
+
+}
+
+protected function serviceResultListarStatusEvento(event:ResultEvent):void
+{
+	var listaStatus:ArrayCollection=new ArrayCollection();
+	listaStatus.addItem(ConstantesUtils.SELECIONE);
+	listaStatus.addAll(event.result as ArrayCollection);
+
+	cmbEventoTipoEvento.dataProvider=listaStatus;
+	cmbEventoTipoEvento.selectedIndex=-1;
+	cmbEventoTipoEvento.selectedIndex=0
+
+}
+
+protected function validar():Boolean
+{
+	//executa todos os validadores
+	var errors:Array=Validator.validateAll(validadores);
+
+	//se não existem erros 
+	if (errors.length == 0)
 	{
-		cmbPesquisaStatusAcasalamento.dataProvider=listaStatus;
-		cmbPesquisaStatusAcasalamento.selectedIndex=-1;
-		cmbPesquisaStatusAcasalamento.selectedIndex=0
-		
+		if (txtEventoData.selectedDate > new Date())
+		{
+			txtEventoData.errorString="Data deve ser igual ou menor que a data atual";
+			txtEventoData.focusManager.setFocus(txtEventoData);
+		}
+		else
+		{
+			panelError.visible=false;
+			return true;
+		}
 	}
-//	else
-//	{
-//		cmbNovoStatus.dataProvider=listaStatus;
-//		cmbNovoStatus.selectedIndex=-1;
-//		cmbNovoStatus.selectedIndex=0;
-//		
-//		if (currentState == ConstantesUtils.STATE_EDITAR)
-//		{
-//			cmbNovoStatus.selectedItem=usuarioSelecionado.status;
-//		}
-//		cmbNovoStatus.errorString=null;
-//	}
+	else
+	{
+		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
+	}
+	panelError.visible=true;
+
+	return false;
 }

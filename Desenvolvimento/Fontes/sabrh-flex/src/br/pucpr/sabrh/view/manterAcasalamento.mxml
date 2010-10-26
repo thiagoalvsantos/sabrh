@@ -7,11 +7,13 @@
 	<fx:Declarations>
 		<s:RemoteObject id="acasalamentoService" fault="onFault(event)" destination="AcasalamentoService" showBusyCursor="true">
 			<s:method name="pesquisar" result="{serviceResultAcasalamentoPesquisar(event)}"/>
+			<s:method name="pesquisarEvento" result="{serviceResultEventoAcasalamentoPesquisar(event)}"/>
+			<s:method name="salvarEvento" result="{serviceResultEventoAcasalamentoSalvar(event)}"/>
 		</s:RemoteObject>
 
 		<s:RemoteObject id="statusService" fault="onFault(event)" destination="StatusService" showBusyCursor="true">
 			<s:method name="listarStatusAcasalamento" result="{serviceResultListarStatusAcasalamento(event)}"/>
-			<s:method name="listarStatusEventoAcasalamento" result="{serviceResultAcasalamentoPesquisar(event)}"/>
+			<s:method name="listarStatusEventoAcasalamento" result="{serviceResultListarStatusEvento(event)}"/>
 		</s:RemoteObject>
 
 		<s:Parallel id="exibeMensagemParallel">
@@ -24,10 +26,17 @@
 			<s:Resize heightFrom="40" heightTo="0"/>
 		</s:Parallel>
 
+		<fx:Array id="validadores">
+			<mx:NumberValidator id="cmbValTipoEvento" source="{cmbEventoTipoEvento}" property="selectedIndex" required="true" minValue="1" lowerThanMinError.stateEditar="Este campo é obrigatório" triggerEvent="change"/>
+			<mx:StringValidator id="strValDataEvento" source="{txtEventoData}" property="text" required="true"/>
+			<mx:StringValidator id="strValEventoComentario" source="{txtEventoComentario}" property="text" required="true" maxLength="255"/>
+		</fx:Array>
+
 		<entity:Usuario id="proprietarioPesquisa"/>
 		<entity:Propriedade id="propriedadePesquisa"/>
 		<entity:Propriedade id="propriedadeNovo"/>
 		<entity:Animal id="animalPesquisa"/>
+		<entity:Acasalamento id="acasalamentoSelecionado"/>
 	</fx:Declarations>
 
 	<s:states>
@@ -75,7 +84,7 @@
 					 //	RESULTADO - PESQUISA
 					 /////////////////////////////-->
 				<s:Panel id="panelResultado" width="100%" height="100%" title="Resultado" includeIn="stateResultado">
-					<mx:AdvancedDataGrid id="dataGridResultadoAcasalamento" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="">
+					<mx:AdvancedDataGrid id="dataGridResultadoAcasalamento" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="gridClickResultadoAcasalamento(event)">
 						<mx:columns>
 							<mx:AdvancedDataGridColumn textAlign="center" headerText="Codigo" sortable="true" dataField="codigo"/>
 							<mx:AdvancedDataGridColumn textAlign="center" headerText="Data Acasalamento" sortable="true" labelFunction="labelFunctionDataAcasalamento"/>
@@ -116,19 +125,74 @@
 				 /////////////////////////////-->
 			<s:VGroup id="groupDetalhe" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateDetalhe">
 				<!--//////////////////////////
-					 //
+					 // DADOS ACASALAMENTO
 					 /////////////////////////////-->
 				<s:Panel id="panelDados" width="100%" title="Dados Acasalamento" includeIn="stateDetalhe">
-					<s:VGroup x="10" y="15" gap="16">
-						<s:HGroup>
-							<s:Label id="lblDetalheFemea" text="Fêmea"/>
-							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+					<s:HGroup>
+						<s:HGroup paddingTop="5" paddingBottom="5" paddingRight="5" paddingLeft="5">
+							<s:VGroup paddingTop="5" gap="16">
+								<s:Label id="lblDetalheFemea" text="Fêmea"/>
+								<s:Label id="lblDetalheCria" text="Cria"/>
+								<s:Label id="lblDetalheDataAcasalamento" text="Data Acasalamento"/>
+							</s:VGroup>
+							<s:VGroup>
+								<s:TextInput id="txtDetalheFemea" width="250" editable="false" borderColor="#D3D3D3"/>
+								<s:TextInput id="txtDetalheCria" width="250" editable="false" borderColor="#D3D3D3"/>
+								<s:TextInput id="txtDetalheDataAcasalamento" width="250" editable="false" borderColor="#D3D3D3"/>
+							</s:VGroup>
 						</s:HGroup>
+						<s:HGroup paddingTop="5" paddingBottom="5" paddingRight="5" paddingLeft="5">
+							<s:VGroup paddingTop="5" gap="16">
+								<s:Label id="lblDetalheMacho" text="Macho"/>
+								<s:Label id="lblDetalheStatusAcasalamento" text="Status"/>
+							</s:VGroup>
+							<s:VGroup>
+								<s:TextInput id="txtDetalheMacho" width="250" editable="false" borderColor="#D3D3D3"/>
+								<s:TextInput id="txtDetalheStatusAcasalamento" width="250" editable="false" borderColor="#D3D3D3"/>
+							</s:VGroup>
+						</s:HGroup>
+					</s:HGroup>
+				</s:Panel>
+				<!--//////////////////////////
+					 // EVENTO
+					 /////////////////////////////-->
+				<s:Panel id="panelEvento" width="100%" title="Evento" includeIn="stateDetalhe">
+					<s:VGroup width="100%" height="100%" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+						<s:BorderContainer id="panelError" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelError" visible="false">
+							<s:Label text="Erro ao incluir evento. Verificar campos em vermelho." left="50" verticalCenter="0"/>
+							<mx:Image source="@Embed(source='../assets/img/error.png')" verticalCenter="0" left="10"/>
+						</s:BorderContainer>
+						<s:HGroup paddingTop="5" paddingBottom="5" paddingRight="5" paddingLeft="5">
+							<s:VGroup>
+								<s:HGroup verticalAlign="middle">
+									<s:Label id="lblEventoDataEvento" text="Data"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold" width="46"/>
+									<mx:DateField id="txtEventoData" width="250" tabIndex="1"/>
+									<mx:Spacer width="10"/>
+									<s:Label id="lblEventoTipo" text="Tipo"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									<s:DropDownList id="cmbEventoTipoEvento" width="250" tabIndex="2"/>
+								</s:HGroup>
+								<s:HGroup verticalAlign="middle">
+									<s:Label id="lblEventoComentario" text="Comentário"/>
+									<s:Label text="*" color="#B22222" fontWeight="bold"/>
+									<s:TextInput id="txtEventoComentario" width="567" tabIndex="3"/>
+								</s:HGroup>
+							</s:VGroup>
+						</s:HGroup>
+						<mx:AdvancedDataGrid id="dataGridEvento" left="10" right="10" top="10" bottom="10" designViewDataType="flat" itemClick="gridClickEvento(event)" width="100%">
+							<mx:columns>
+								<mx:AdvancedDataGridColumn textAlign="center" headerText="Codigo" sortable="true" dataField="codigo"/>
+								<mx:AdvancedDataGridColumn textAlign="center" headerText="Data Evento" sortable="true" labelFunction="labelFunctionDataEvento"/>
+								<mx:AdvancedDataGridColumn textAlign="center" headerText="Tipo" sortable="true" dataField="tipoEventoAcasalamento"/>
+								<mx:AdvancedDataGridColumn textAlign="center" headerText="Comentário" sortable="true" dataField="comentario"/>
+							</mx:columns>
+						</mx:AdvancedDataGrid>
 					</s:VGroup>
-					<s:VGroup x="70" y="10">
-						<s:TextInput id="txtDetalheFemea" x="60" y="10" width="514" editable="false" borderColor="#D3D3D3"/>
-					</s:VGroup>
-
+					<s:controlBarContent>
+						<s:Button label="Salvar" click="{btnClickSalvarEvento()}" tabIndex="4" buttonMode="true"/>
+						<s:Button label="Voltar" click="{btnClickVoltarPesquisa()}" tabIndex="5" buttonMode="true"/>
+					</s:controlBarContent>
 				</s:Panel>
 			</s:VGroup>
 		</s:Group>

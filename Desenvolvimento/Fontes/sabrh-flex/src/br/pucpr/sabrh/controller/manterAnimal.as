@@ -1,14 +1,5 @@
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.ClassificacaoLinear;
-import br.pucpr.sabrh.entity.Propriedade;
-import br.pucpr.sabrh.entity.ProvaTouro;
-import br.pucpr.sabrh.view.pesquisarReprodutor;
-
 import flash.events.MouseEvent;
-
 import flashx.textLayout.formats.Float;
-
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.core.FlexGlobals;
@@ -21,7 +12,12 @@ import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
-
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.ClassificacaoLinear;
+import br.pucpr.sabrh.entity.Propriedade;
+import br.pucpr.sabrh.entity.ProvaTouro;
+import br.pucpr.sabrh.view.pesquisarReprodutor;
 import spark.components.NavigatorContent;
 
 public var maeDefault:Animal;
@@ -142,6 +138,17 @@ protected function abrirConsultarUsuario(atributo:TextInput, tipoConsulta:String
 	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
+protected function btnClickAcasalar():void
+{
+	var popUpPesquisarReprodutor:pesquisarReprodutor=pesquisarReprodutor(PopUpManager.createPopUp(this.parent, pesquisarReprodutor, true));
+	popUpPesquisarReprodutor.vacaSelecionada=animalSelecionado;
+	popUpPesquisarReprodutor.txtPesquisaRegistroVaca.text=animalSelecionado.registro;
+	popUpPesquisarReprodutor.txtPesquisaApelidoVaca.text=animalSelecionado.apelido;
+	PopUpManager.centerPopUp(popUpPesquisarReprodutor);
+	PopUpManager.centerPopUp(this);
+	PopUpManager.removePopUp(this);
+}
+
 protected function btnClickClassificacaoLinear(event:MouseEvent):void
 {
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
@@ -152,17 +159,6 @@ protected function btnClickClassificacaoLinear(event:MouseEvent):void
 
 	dataGridResultadoClassificacao.dataProvider=animalSelecionado.listaClassificacao;
 	PopUpManager.centerPopUp(this);
-}
-
-protected function btnClickAcasalar():void
-{
-	var popUpPesquisarReprodutor:pesquisarReprodutor=pesquisarReprodutor(PopUpManager.createPopUp(this.parent, pesquisarReprodutor, true));
-	popUpPesquisarReprodutor.vacaSelecionada=animalSelecionado;
-	popUpPesquisarReprodutor.txtPesquisaRegistroVaca.text=animalSelecionado.registro;
-	popUpPesquisarReprodutor.txtPesquisaApelidoVaca.text=animalSelecionado.apelido;
-	PopUpManager.centerPopUp(popUpPesquisarReprodutor);
-	PopUpManager.centerPopUp(this);
-	PopUpManager.removePopUp(this);
 }
 
 protected function btnClickExcluirClassificacao():void
