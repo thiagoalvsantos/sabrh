@@ -202,7 +202,7 @@ protected function btnClickSalvarEvento():void
 			case "PROPOSTA":
 				break;
 			case "INSEMINACAO":
-				if (acasalamentoSelecionado.femea.status == "GESTAÇÃO" || acasalamentoSelecionado.femea.status == "DESCARTE")
+				if (acasalamentoSelecionado.femea.status == "GESTACAO" || acasalamentoSelecionado.femea.status == "DESCARTE")
 				{
 					Alert.show("Animal fêmea em fase de DESCARTE ou GESTAÇÃO. Não será possivel fazer a inseminação.")
 				}
@@ -216,7 +216,7 @@ protected function btnClickSalvarEvento():void
 					acasalamentoSelecionado.dataAcasalamento=evento.dataEvento;
 					acasalamentoSelecionado.tipoAcasalamento="INSEMINACAO";
 					acasalamentoService.salvar(acasalamentoSelecionado);
-					acasalamentoSelecionado.femea.status="GESTAÇÃO";
+					acasalamentoSelecionado.femea.status="GESTACAO";
 					animalService.salvar(acasalamentoSelecionado.femea);
 				}
 				break;
@@ -228,7 +228,7 @@ protected function btnClickSalvarEvento():void
 				acasalamentoService.salvarEvento(evento);
 				acasalamentoSelecionado.tipoAcasalamento="FALHA_INSEMINACAO";
 				acasalamentoService.salvar(acasalamentoSelecionado);
-				acasalamentoSelecionado.femea.status="LACTAÇÃO";
+				acasalamentoSelecionado.femea.status="LACTACAO";
 				animalService.salvar(acasalamentoSelecionado.femea);
 				break;
 			case "PRENHA":
@@ -248,7 +248,7 @@ protected function btnClickSalvarEvento():void
 				acasalamentoService.salvarEvento(evento);
 				acasalamentoSelecionado.tipoAcasalamento="ABORTO";
 				acasalamentoService.salvar(acasalamentoSelecionado);
-				acasalamentoSelecionado.femea.status="LACTAÇÃO";
+				acasalamentoSelecionado.femea.status="LACTACAO";
 				animalService.salvar(acasalamentoSelecionado.femea);
 				break;
 			case "NASCIMENTO":
@@ -268,7 +268,7 @@ protected function btnClickSalvarEvento():void
 						animal.status="DESCARTE";
 					}
 					animalService.salvar(animal);
-					acasalamentoSelecionado.femea.status="AMAMENTAÇÃO";
+					acasalamentoSelecionado.femea.status="AMAMENTACAO";
 					animalService.salvar(acasalamentoSelecionado.femea);
 				}
 				break;
@@ -438,7 +438,7 @@ protected function serviceResultAnimalSalvar(event:ResultEvent):void
 		acasalamentoService.salvar(acasalamentoSelecionado);
 	}
 
-	if (ani.status != null && ani.status == "AMAMENTAÇÃO")
+	if (ani.status != null && ani.status == "AMAMENTACAO")
 	{
 		Alert.show("Cria salva com sucesso!");
 		panelCria.visible=false;
