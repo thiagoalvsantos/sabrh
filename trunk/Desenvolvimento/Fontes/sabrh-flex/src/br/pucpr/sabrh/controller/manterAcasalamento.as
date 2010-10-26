@@ -196,14 +196,30 @@ protected function btnClickSalvarEvento():void
 {
 	if (validar())
 	{
-		var evento:EventoAcasalamento=new EventoAcasalamento();
 
-		evento.acasalamento=acasalamentoSelecionado;
-		evento.comentario=StringUtil.trim(txtEventoComentario.text);
-		evento.dataEvento=txtEventoData.selectedDate;
-		evento.tipoEventoAcasalamento=cmbEventoTipoEvento.selectedItem;
-
-		acasalamentoService.salvarEvento(evento);
+		switch (cmbEventoTipoEvento.selectedItem)
+		{
+			case "PROPOSTA":
+				break;
+			case "INSEMINACAO":
+				break;
+			case "FALHA_INSEMINACAO":
+				break;
+			case "PRENHA":
+				break;
+			case "ABORTO":
+				break;
+			case "NASCIMENTO":
+				break;
+			case "COMENTARIO":
+				var evento:EventoAcasalamento=new EventoAcasalamento();
+				evento.acasalamento=acasalamentoSelecionado;
+				evento.comentario=StringUtil.trim(txtEventoComentario.text);
+				evento.dataEvento=txtEventoData.selectedDate;
+				evento.tipoEventoAcasalamento="COMENTARIO";
+				acasalamentoService.salvarEvento(evento);
+				break;
+		}
 	}
 }
 
