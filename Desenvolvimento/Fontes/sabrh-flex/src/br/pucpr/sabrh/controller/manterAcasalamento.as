@@ -13,6 +13,10 @@ import mx.managers.PopUpManager;
 import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 
+
+protected function init():void{
+	statusService.listarStatusAcasalamento();
+}
 protected function onFault(event:FaultEvent):void
 {
 	//Ocorreu uma falha ao chamar o servico. 
@@ -66,6 +70,17 @@ protected function abrirConsultarPropriedade(atributo:TextInput, tipoConsulta:St
 	FlexGlobals.topLevelApplication.popUpEffect.play();
 }
 
+
+
+protected function btnClickLimparPesquisa():void
+{
+	txtPesquisaDataFim.selectedDate=null;
+	txtPesquisaDataInicio.selectedDate=null;
+	txtPesquisaNomeAnimal.text=null;
+	txtPesquisaPropriedade.text=null;
+	txtPesquisaProprietario.text=null;
+	txtPesquisaRegistroAnimal.text=null;
+}
 
 protected function btnClickPesquisar():void
 {
@@ -216,4 +231,31 @@ protected function labelFunctionDataAcasalamento(item:Object, column:AdvancedDat
 	dateFormat.formatString="DD/MM/YYYY";
 
 	return dateFormat.format(item.dataAcasalamento);
+}
+
+protected function serviceResultListarStatusAcasalamento(event:ResultEvent):void
+{
+	var listaStatus:ArrayCollection=new ArrayCollection();
+	listaStatus.addItem(ConstantesUtils.SELECIONE);
+	listaStatus.addAll(event.result as ArrayCollection);
+	
+	if (currentState == ConstantesUtils.STATE_PESQUISA)
+	{
+		cmbPesquisaStatusAcasalamento.dataProvider=listaStatus;
+		cmbPesquisaStatusAcasalamento.selectedIndex=-1;
+		cmbPesquisaStatusAcasalamento.selectedIndex=0
+		
+	}
+//	else
+//	{
+//		cmbNovoStatus.dataProvider=listaStatus;
+//		cmbNovoStatus.selectedIndex=-1;
+//		cmbNovoStatus.selectedIndex=0;
+//		
+//		if (currentState == ConstantesUtils.STATE_EDITAR)
+//		{
+//			cmbNovoStatus.selectedItem=usuarioSelecionado.status;
+//		}
+//		cmbNovoStatus.errorString=null;
+//	}
 }
