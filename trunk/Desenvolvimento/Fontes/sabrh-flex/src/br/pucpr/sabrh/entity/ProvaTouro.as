@@ -32,6 +32,7 @@ package br.pucpr.sabrh.entity
 		public var anguloCasco:Number;
 		public var pernasPostVistaLateral:Number;
 		public var pernasPostVistaPost:Number;
+		public var pontuacaoPernasPes:Number;
 		
 		// sistema mamário
 		public var profundidadeUbere:Number;
