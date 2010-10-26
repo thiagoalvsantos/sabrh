@@ -136,15 +136,21 @@ public class AnimalBusiness implements AnimalService {
 	private List<Animal> criarGeracao(List<Animal> filhos) throws Exception {
 		ArrayList<Animal> geracao = new ArrayList<Animal>();
 		for (Animal animal : filhos) {
-			if (!geracao.contains(animal.getPai())) {
-				geracao.add(animal.getPai());
-			} else {
-				throw new Exception();
+			if (!animal.getPai().getRegistro().equals("000000000000000")
+					|| !animal.getPai().getRegistro().equals("000000000000001")) {
+				if (!geracao.contains(animal.getPai())) {
+					geracao.add(animal.getPai());
+				} else {
+					throw new Exception();
+				}
 			}
-			if (!geracao.contains(animal.getMae())) {
-				geracao.add(animal.getMae());
-			} else {
-				throw new Exception();
+			if (!animal.getMae().getRegistro().equals("000000000000000")
+					|| !animal.getMae().getRegistro().equals("000000000000001")) {
+				if (!geracao.contains(animal.getMae())) {
+					geracao.add(animal.getMae());
+				} else {
+					throw new Exception();
+				}
 			}
 		}
 		return geracao;
