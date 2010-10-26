@@ -9,13 +9,13 @@ package br.pucpr.sabrh.entity;
 public enum TipoStatusFemea {
 
 	/** O atributo LACTACAO. */
-	LACTAÇÃO,
+	LACTACAO,
 
 	/** O atributo GESTACAO. */
-	GESTAÇÃO,
+	GESTACAO,
 
 	/** O atributo AMAMENTACAO. */
-	AMAMENTAÇÃO,
+	AMAMENTACAO,
 	
 	/** O atributo DESCARTE. */
 	DESCARTE;
