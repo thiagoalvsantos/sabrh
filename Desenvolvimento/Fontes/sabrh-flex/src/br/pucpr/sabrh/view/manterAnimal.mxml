@@ -237,8 +237,8 @@
 							</s:VGroup>
 							<s:VGroup y="10" x="120">
 								<s:TextInput id="txtNovoRegistro" width="150" maxChars="20" enabled.stateEditar="false" tabIndex="1"/>
-								<s:TextInput id="txtNovoNome" width="370" tabIndex="2"/>
-								<s:TextInput id="txtNovoApelido" width="370" tabIndex="3"/>
+								<s:TextInput id="txtNovoNome" width="370" tabIndex="2" maxChars="255"/>
+								<s:TextInput id="txtNovoApelido" width="370" tabIndex="3" maxChars="255"/>
 								<s:HGroup>
 									<s:TextInput id="txtNovoPropriedade" width="370" editable="false" tabFocusEnabled="false"/>
 									<s:Button label="Buscar" tabIndex="4" click="{abrirConsultarPropriedade(txtNovoPropriedade,'novo')}" buttonMode="true"/>
