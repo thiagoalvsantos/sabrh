@@ -4,6 +4,7 @@ import br.pucpr.sabrh.view.manterAnimal;
 import br.pucpr.sabrh.view.manterPropriedade;
 import br.pucpr.sabrh.view.manterUsuario;
 import br.pucpr.sabrh.view.pesquisarReprodutor;
+import br.pucpr.sabrh.view.relatorios;
 
 import flash.display.InteractiveObject;
 import flash.events.TimerEvent;
@@ -108,6 +109,15 @@ public function abrirManterAcasalamento():void
 	var popUpManterAcasalamento:manterAcasalamento=manterAcasalamento(PopUpManager.createPopUp(this, manterAcasalamento, true));
 	PopUpManager.centerPopUp(popUpManterAcasalamento);
 	popUpEffect.target=popUpManterAcasalamento;
+	popUpEffect.play();
+}
+
+//Função para abrir a tela de Relatórios.
+public function abrirRelatorios():void
+{
+	var popUpRelatorios:relatorios=relatorios(PopUpManager.createPopUp(this, relatorios, true));
+	PopUpManager.centerPopUp(popUpRelatorios);
+	popUpEffect.target=popUpRelatorios;
 	popUpEffect.play();
 }
 

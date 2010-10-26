@@ -50,7 +50,7 @@
 			<fx:Object atributo="Inserção Úbere Anterior" value="insercaoUbereAnterior"/>
 			<fx:Object atributo="Largura da Garupa" value="larguraGarupa"/>
 			<fx:Object atributo="Largura do Peito" value="larguraPeito"/>
-			<fx:Object atributo="Largura Úbere Posterior" value="alturaUberePosterior"/>
+			<fx:Object atributo="Largura Úbere Posterior" value="larguraUberePosterior"/>
 			<fx:Object atributo="Ligamento Médio" value="ligamentoMedio"/>
 			<fx:Object atributo="Pernas Posteriores - Vista Lateral" value="pernasPostVistaLateral"/>
 			<fx:Object atributo="Pernas Posteriores - Vista Posterior" value="pernasPostVistaPost"/>
@@ -58,14 +58,14 @@
 			<fx:Object atributo="Profundidade do Úbere" value="profundidadeUbere"/>
 			<fx:Object atributo="Profundidade do Talão" value="profundidadeTalao"/>
 		</fx:Array>
-		
+
 		<mx:CurrencyFormatter id="currencyFormatter" currencySymbol="R$" precision="2" decimalSeparatorFrom="," decimalSeparatorTo="," useThousandsSeparator="true" thousandsSeparatorFrom="." thousandsSeparatorTo="." useNegativeSign="false"/>
 
 		<s:ArrayCollection id="arrayAtributoConformacao" source="{listaAtributoConformacao}"/>
 		<s:ArrayCollection id="arrayAtributoConformacaoSelecionado" collectionChange="{verificaLimiteDataGrid()}"/>
-		
+
 		<s:ArrayCollection id="listaAtributoConformacaoGrafico"/>
-		
+
 		<entity:ProvaTouro id="provaTouroSelecionado"/>
 
 	</fx:Declarations>
@@ -201,6 +201,16 @@
 				 //	DETALHE DO TOURO
 				 /////////////////////////////-->
 			<s:VGroup id="groupDetalhe" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateDetalhe">
+				<s:HGroup horizontalAlign="center" width="100%">
+					<s:HGroup verticalAlign="middle">
+						<s:Label id="lblDetalheRegistroVaca" text="Registro"/>
+						<s:TextInput id="txtDetalheRegistroVaca" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+					</s:HGroup>
+					<s:HGroup verticalAlign="middle">
+						<s:Label id="lblDetalheApelidoVaca" text="Apelido"/>
+						<s:TextInput id="txtDetalheApelidoVaca" width="370" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+					</s:HGroup>
+				</s:HGroup>
 				<s:Panel width="100%" height="100%" title="Detalhe do Touro">
 					<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
 						<!-- Dados Gerais -->
@@ -237,7 +247,7 @@
 										<s:VGroup x="10" y="15" gap="16" width="155">
 											<s:Label id="lblDetalheTouroApelido" text="Apelido"/>
 										</s:VGroup>
-										<s:VGroup y="10" x="220" >
+										<s:VGroup y="10" x="220">
 											<s:TextInput id="txtDetalheTouroApelido" width="199" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
 										</s:VGroup>
 									</s:HGroup>
@@ -303,7 +313,7 @@
 									</s:VGroup>
 								</s:HGroup>
 								<s:HGroup width="100%" horizontalAlign="center">
-									<mx:BarChart id="barChartProvaTouro" height="100%" width="55%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{listaAtributoConformacaoGrafico}" >
+									<mx:BarChart id="barChartProvaTouro" height="100%" width="55%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{listaAtributoConformacaoGrafico}">
 										<mx:verticalAxis>
 											<mx:CategoryAxis categoryField="Atributo"/>
 										</mx:verticalAxis>
@@ -322,7 +332,6 @@
 					<s:controlBarContent>
 						<s:Button label="Voltar" click="{btnClickVoltarPesquisaReprodutor()}" buttonMode="true" tabIndex="34"/>
 						<s:Button label="Acasalar" click="{btnClickAcasalar()}" buttonMode="true" tabIndex="32"/>
-						<s:Button label="Excuir" click="{}" buttonMode="true" tabIndex="33" id="btnProvaTouroExcluir"/>
 					</s:controlBarContent>
 				</s:Panel>
 			</s:VGroup>

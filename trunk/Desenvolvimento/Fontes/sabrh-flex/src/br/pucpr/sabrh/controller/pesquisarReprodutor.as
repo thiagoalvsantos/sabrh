@@ -98,6 +98,9 @@ protected function btnClickDetalhe():void
 			criarElementosGraficoComClassificacao();
 		else 
 			criarElementosGraficoSemClassificacao();
+		
+		txtDetalheApelidoVaca.text=classificacaoVacaSelecionada.animal.apelido;
+		txtDetalheRegistroVaca.text=classificacaoVacaSelecionada.animal.registro;
 	}
 	else
 	{
