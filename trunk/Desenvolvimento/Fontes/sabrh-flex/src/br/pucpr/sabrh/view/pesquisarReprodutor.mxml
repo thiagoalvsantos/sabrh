@@ -3,22 +3,6 @@
 
 	<fx:Script source="../controller/pesquisarReprodutor.as"/>
 
-	<fx:Script>
-		<![CDATA[
-			import mx.collections.ArrayCollection;
-
-			[Bindable]
-			private var medalsAC:ArrayCollection=new ArrayCollection([
-				{Atributo: "U", Valor: -1},
-				{Atributo: "C", Valor: 4},
-				{Atributo: "R", Valor: -4},
-				{Atributo: "Ru", Valor: 2},
-				{Atributo: "US", Valor: 3},
-				{Atributo: "Chia", Valor: 1},
-				{Atributo: "Russia", Valor: 5}]);
-		]]>
-	</fx:Script>
-
 	<fx:Declarations>
 
 		<!-- Define custom colors for use as fills. -->
@@ -39,6 +23,9 @@
 		</s:RemoteObject>
 		<s:RemoteObject id="classificacaoLinearService" fault="onFault(event)" destination="ClassificacaoLinearService" showBusyCursor="true">
 			<s:method name="pesquisarUltimaClassificacao" result="{serviceResultPesquisarUltimaClassificacao(event)}"/>
+		</s:RemoteObject>
+		<s:RemoteObject id="acasalamentoService" fault="onFault(event)" destination="AcasalamentoService" showBusyCursor="true">
+			<s:method name="salvar" result="{serviceResultAcasalamentoSalvar(event)}"/>
 		</s:RemoteObject>
 
 		<s:Parallel id="exibeMensagemParallel">
@@ -115,16 +102,17 @@
 								<s:Button label="Buscar" click="abrirConsultarAnimal(txtPesquisaApelidoVaca,'pesquisa',ConstantesUtils.SEXO_FEMEA)" buttonMode="true"/>
 							</s:HGroup>
 						</s:HGroup>
-						<s:BorderContainer width="100%" height="26" styleName="panelProducao">
+						<s:BorderContainer width="100%" styleName="panelProducao" height="30">
 							<s:VGroup paddingTop="3" paddingLeft="2">
-								<s:Label text="Produção"/>
+								<s:Label text="Confiabilidade"/>
 							</s:VGroup>
-							<s:VGroup horizontalAlign="center" width="100%" height="100%" verticalAlign="middle">
-								<s:HGroup gap="25">
-									<s:CheckBox id="checkBoxQntFilhas" label="Quantidade de Filhas" tabIndex="1"/>
-									<s:CheckBox id="checkBoxKgLeite" label="Kg de Leite" tabIndex="2"/>
-									<s:CheckBox id="checkBoxPerGordura" label="Percentual de Gordura" tabIndex="3"/>
-									<s:CheckBox id="checkBoxPerProteina" label="Percentual de Proteina" tabIndex="4"/>
+							<s:VGroup gap="16" horizontalAlign="center" width="100%" height="100%" verticalAlign="middle">
+								<s:HGroup verticalAlign="middle">
+									<s:Label text="Produção %"/>
+									<s:TextInput id="txtPesquisaConfiabilidadeProducao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado." tabIndex="11"/>
+									<mx:Spacer width="70"/>
+									<s:Label text="Conformação %"/>
+									<s:TextInput id="txtPesquisaConfiabilidadeConformacao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado." tabIndex="12"/>
 								</s:HGroup>
 							</s:VGroup>
 						</s:BorderContainer>
@@ -155,17 +143,16 @@
 								</s:HGroup>
 							</s:VGroup>
 						</s:BorderContainer>
-						<s:BorderContainer width="100%" styleName="panelProducao" height="30">
+						<s:BorderContainer width="100%" height="26" styleName="panelProducao">
 							<s:VGroup paddingTop="3" paddingLeft="2">
-								<s:Label text="Confiabilidade"/>
+								<s:Label text="Produção"/>
 							</s:VGroup>
-							<s:VGroup gap="16" horizontalAlign="center" width="100%" height="100%" verticalAlign="middle">
-								<s:HGroup verticalAlign="middle">
-									<s:Label text="Produção %"/>
-									<s:TextInput id="txtPesquisaConfiabilidadeProducao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado." tabIndex="11"/>
-									<mx:Spacer width="70"/>
-									<s:Label text="Conformação %"/>
-									<s:TextInput id="txtPesquisaConfiabilidadeConformacao" width="40" restrict="0-9" maxChars="2" toolTip="Mínimo de porcentagem a ser pesquisado." tabIndex="12"/>
+							<s:VGroup horizontalAlign="center" width="100%" height="100%" verticalAlign="middle">
+								<s:HGroup gap="25">
+									<s:CheckBox id="checkBoxQntFilhas" label="Quantidade de Filhas" tabIndex="1"/>
+									<s:CheckBox id="checkBoxKgLeite" label="Kg de Leite" tabIndex="2"/>
+									<s:CheckBox id="checkBoxPerGordura" label="Percentual de Gordura" tabIndex="3"/>
+									<s:CheckBox id="checkBoxPerProteina" label="Percentual de Proteina" tabIndex="4"/>
 								</s:HGroup>
 							</s:VGroup>
 						</s:BorderContainer>
@@ -333,8 +320,8 @@
 					</s:VGroup>
 
 					<s:controlBarContent>
-						<s:Button label="Voltar" click="{}" buttonMode="true" tabIndex="34"/>
-						<s:Button label="Salvar" click="{}" buttonMode="true" tabIndex="32"/>
+						<s:Button label="Voltar" click="{btnClickVoltarPesquisaReprodutor()}" buttonMode="true" tabIndex="34"/>
+						<s:Button label="Acasalar" click="{btnClickAcasalar()}" buttonMode="true" tabIndex="32"/>
 						<s:Button label="Excuir" click="{}" buttonMode="true" tabIndex="33" id="btnProvaTouroExcluir"/>
 					</s:controlBarContent>
 				</s:Panel>
