@@ -92,7 +92,7 @@ protected function btnClickDetalhe():void
 	listaAtributoConformacaoGrafico=new ArrayCollection();
 	if (classificacaoVacaSelecionada != null)
 	{
-		adicionarElementoLista("Score Pernas e Pés", provaTouroSelecionado.pontuacaoPernasPes, classificacaoVacaSelecionada.pontuacaoPernasPes, listaAtributoConformacaoGrafico);
+		adicionarElementoLista("Profundidade do Talão", provaTouroSelecionado.profundidadeTalao, classificacaoVacaSelecionada.profundidadeTalao, listaAtributoConformacaoGrafico);
 		adicionarElementoLista("Profundidade do Úbere", provaTouroSelecionado.profundidadeUbere, classificacaoVacaSelecionada.profundidadeUbere, listaAtributoConformacaoGrafico);
 		adicionarElementoLista("Profundidade Corporal", provaTouroSelecionado.profundidadeCorporal, classificacaoVacaSelecionada.profundidadeCorporal, listaAtributoConformacaoGrafico);
 		adicionarElementoLista("Pernas Posteriores - Vista Posterior", provaTouroSelecionado.pernasPostVistaPost, classificacaoVacaSelecionada.pernasPostVistaPost, listaAtributoConformacaoGrafico);
@@ -113,7 +113,7 @@ protected function btnClickDetalhe():void
 	}
 	else
 	{
-		adicionarElementoLista("Score Pernas e Pés", provaTouroSelecionado.pontuacaoPernasPes, -1, listaAtributoConformacaoGrafico);
+		adicionarElementoLista("Profundidade do Talão", provaTouroSelecionado.profundidadeTalao, -1, listaAtributoConformacaoGrafico);
 		adicionarElementoLista("Profundidade do Úbere", provaTouroSelecionado.profundidadeUbere, -1, listaAtributoConformacaoGrafico);
 		adicionarElementoLista("Profundidade Corporal", provaTouroSelecionado.profundidadeCorporal, -1, listaAtributoConformacaoGrafico);
 		adicionarElementoLista("Pernas Posteriores - Vista Posterior", provaTouroSelecionado.pernasPostVistaPost, -1, listaAtributoConformacaoGrafico);

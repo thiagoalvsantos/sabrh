@@ -69,7 +69,7 @@
 			<fx:Object atributo="Pernas Posteriores - Vista Posterior" value="pernasPostVistaPost"/>
 			<fx:Object atributo="Profundidade Corporal" value="profundidadeCorporal"/>
 			<fx:Object atributo="Profundidade do Úbere" value="profundidadeUbere"/>
-			<fx:Object atributo="Score Pernas e Pés" value="pontucaoPernasPes"/>
+			<fx:Object atributo="Profundidade do Talão" value="profundidadeTalao"/>
 		</fx:Array>
 		
 		<mx:CurrencyFormatter id="currencyFormatter" currencySymbol="R$" precision="2" decimalSeparatorFrom="," decimalSeparatorTo="," useThousandsSeparator="true" thousandsSeparatorFrom="." thousandsSeparatorTo="." useNegativeSign="false"/>

@@ -1,5 +1,14 @@
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.ClassificacaoLinear;
+import br.pucpr.sabrh.entity.Propriedade;
+import br.pucpr.sabrh.entity.ProvaTouro;
+import br.pucpr.sabrh.view.pesquisarReprodutor;
+
 import flash.events.MouseEvent;
+
 import flashx.textLayout.formats.Float;
+
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.core.FlexGlobals;
@@ -12,12 +21,7 @@ import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.ClassificacaoLinear;
-import br.pucpr.sabrh.entity.Propriedade;
-import br.pucpr.sabrh.entity.ProvaTouro;
-import br.pucpr.sabrh.view.pesquisarReprodutor;
+
 import spark.components.NavigatorContent;
 
 public var maeDefault:Animal;
@@ -646,7 +650,7 @@ protected function btnClickSalvarProvaTouro():void
 		provaTouro.anguloCasco=new Number(txtProvaTouroAnguloCasco.text);
 		provaTouro.pernasPostVistaLateral=new Number(txtProvaTouroPernasPostVistaLateral.text);
 		provaTouro.pernasPostVistaPost=new Number(txtProvaTouroPernasPostVistaPost.text);
-		provaTouro.pontuacaoPernasPes=new Number(txtProvaTouroPontuacaoPernasPes.text);
+		provaTouro.profundidadeTalao=new Number(txtProvaTouroProfundidadeTalao.text);
 		
 		//Sistema Mamário
 		provaTouro.profundidadeUbere=new Number(txtProvaTouroProfundidadeUbere.text);
@@ -860,7 +864,15 @@ protected function gridClickResultadoProvaTouro(event:ListEvent):void
 	//Dados Gerais
 	txtProvaTouroDataProva.selectedDate=provaTouroSelecionada.dataUltimaAtualizacao;
 	txtProvaTouroQtdFilhas.text=provaTouroSelecionada.quantidadeFilhas.toString();
-	txtProvaTouroPreco.text=currencyFormatter.format(provaTouroSelecionada.preco.toString());
+	var precoTemp:String="";
+	for (var i:int=0; i < provaTouroSelecionada.preco.toString().length; i++)
+	{
+		if (provaTouroSelecionada.preco.toString().length - i == 2)
+			precoTemp=precoTemp + "," + provaTouroSelecionada.preco.toString().charAt(i);
+		else
+			precoTemp=precoTemp + provaTouroSelecionada.preco.toString().charAt(i);
+	}
+	txtProvaTouroPreco.text=currencyFormatter.format(precoTemp);
 	//Produção 
 	txtProvaTouroPercentualProteina.text=provaTouroSelecionada.proteina.toString();
 	txtProvaTouroPercentualGordura.text=provaTouroSelecionada.gordura.toString();
@@ -877,7 +889,7 @@ protected function gridClickResultadoProvaTouro(event:ListEvent):void
 	txtProvaTouroAnguloCasco.text=provaTouroSelecionada.anguloCasco.toString();
 	txtProvaTouroPernasPostVistaLateral.text=provaTouroSelecionada.pernasPostVistaLateral.toString();
 	txtProvaTouroPernasPostVistaPost.text=provaTouroSelecionada.pernasPostVistaPost.toString();
-	txtProvaTouroPontuacaoPernasPes.text=provaTouroSelecionada.pontuacaoPernasPes.toString();
+	txtProvaTouroProfundidadeTalao.text=provaTouroSelecionada.profundidadeTalao.toString();
 	// Sistema Mamário
 	txtProvaTouroProfundidadeUbere.text=provaTouroSelecionada.profundidadeUbere.toString();
 	txtProvaTouroColocacaoTetorAnteriores.text=provaTouroSelecionada.colocacaoTetosAnteriores.toString();
@@ -924,6 +936,20 @@ protected function labelFunctionDataClassificacao(item:Object, column:AdvancedDa
 	dateFormat.formatString="DD/MM/YYYY";
 	
 	return dateFormat.format(item.dataClassificacao);
+}
+
+protected function labelFunctionPreco(item:Object, column:AdvancedDataGridColumn):String
+{
+	
+	var precoTemp:String="";
+	for (var i:int=0; i < item.preco.toString().length; i++)
+	{
+		if (item.preco.toString().length - i == 2)
+			precoTemp=precoTemp + "," + item.preco.toString().charAt(i);
+		else
+			precoTemp=precoTemp + item.preco.toString().charAt(i);
+	}
+	return currencyFormatter.format(precoTemp);
 }
 
 protected function labelFunctionDataProvaTouro(item:Object, column:AdvancedDataGridColumn):String
@@ -1100,7 +1126,7 @@ protected function serviceResultPesquisarProvaTouro(event:ResultEvent):void
 	var listaProvaTouro:ArrayCollection=event.result as ArrayCollection;
 	
 	if (listaProvaTouro != null || listaProvaTouro.length > 0)
-	{
+	{		
 		dataGridResultadoProvaTouro.dataProvider=listaProvaTouro;
 	}
 	else
