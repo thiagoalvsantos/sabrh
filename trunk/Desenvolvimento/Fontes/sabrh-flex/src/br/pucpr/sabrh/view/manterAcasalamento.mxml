@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:TitleWindow width="900" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Acasalamentos ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
+<s:TitleWindow width="900" xmlns:fx="http://ns.adobe.com/mxml/2009" creationComplete="init()" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Acasalamentos ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
 
 
 	<fx:Script source="../controller/manterAcasalamento.as"/>
@@ -7,6 +7,11 @@
 	<fx:Declarations>
 		<s:RemoteObject id="acasalamentoService" fault="onFault(event)" destination="AcasalamentoService" showBusyCursor="true">
 			<s:method name="pesquisar" result="{serviceResultAcasalamentoPesquisar(event)}"/>
+		</s:RemoteObject>
+
+		<s:RemoteObject id="statusService" fault="onFault(event)" destination="StatusService" showBusyCursor="true">
+			<s:method name="listarStatusAcasalamento" result="{serviceResultListarStatusAcasalamento(event)}"/>
+			<s:method name="listarStatusEventoAcasalamento" result="{serviceResultAcasalamentoPesquisar(event)}"/>
 		</s:RemoteObject>
 
 		<s:Parallel id="exibeMensagemParallel">
@@ -50,6 +55,7 @@
 						<s:Label id="lblPesquisaPropriedade" x="10" y="75" text="Propriedade"/>
 						<s:Label id="lblPesquisaDataInicio" x="10" y="105" text="Data Inicio"/>
 						<s:Label id="lblPesquisaDataFim" text="Data Fim" x="265" y="105"/>
+						<s:Label id="lblPesquisaStatus" text="Status" x="10" y="135"/>
 						<s:TextInput id="txtPesquisaRegistroAnimal" x="100" y="10" width="150" tabIndex="1"/>
 						<s:TextInput id="txtPesquisaNomeAnimal" x="350" y="10" width="300" tabIndex="2"/>
 						<s:TextInput id="txtPesquisaProprietario" x="100" y="40" width="472" editable="false" focusEnabled="false"/>
@@ -58,12 +64,11 @@
 						<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="70" tabIndex="4" buttonMode="true"/>
 						<mx:DateField id="txtPesquisaDataInicio" tabIndex="5" x="100" y="100" width="150" yearNavigationEnabled="true"/>
 						<mx:DateField id="txtPesquisaDataFim" tabIndex="6" x="350" y="100" width="150" yearNavigationEnabled="true"/>
+						<s:DropDownList id="cmbPesquisaStatusAcasalamento" x="100" y="130" width="200" tabIndex="7"/>
 					</mx:Canvas>
 					<s:controlBarContent>
 						<s:Button label="Pesquisar" click="{btnClickPesquisar()}" tabIndex.statePesquisa="7" buttonMode="true"/>
-						<!--
-							 <s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex.statePesquisa="11" buttonMode="true"/>
-						-->
+						<s:Button label="Limpar" click="{btnClickLimparPesquisa()}" tabIndex.statePesquisa="11" buttonMode="true"/>
 					</s:controlBarContent>
 				</s:Panel>
 				<!--//////////////////////////
@@ -73,7 +78,7 @@
 					<mx:AdvancedDataGrid id="dataGridResultadoAcasalamento" left="5" right="5" top="5" bottom="5" designViewDataType="flat" itemClick="">
 						<mx:columns>
 							<mx:AdvancedDataGridColumn textAlign="center" headerText="Codigo" sortable="true" dataField="codigo"/>
-							<mx:AdvancedDataGridColumn textAlign="center" headerText="Data Acasalamento" sortable="true"  labelFunction="labelFunctionDataAcasalamento"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Data Acasalamento" sortable="true" labelFunction="labelFunctionDataAcasalamento"/>
 							<mx:AdvancedDataGridColumn textAlign="center" headerText="Fêmea" sortable="true">
 								<mx:itemRenderer>
 									<fx:Component>
@@ -104,6 +109,26 @@
 							<mx:AdvancedDataGridColumn textAlign="center" headerText="Status" sortable="true" dataField="tipoAcasalamento"/>
 						</mx:columns>
 					</mx:AdvancedDataGrid>
+				</s:Panel>
+			</s:VGroup>
+			<!--//////////////////////////
+				 //	DETALHE
+				 /////////////////////////////-->
+			<s:VGroup id="groupDetalhe" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateDetalhe">
+				<!--//////////////////////////
+					 //
+					 /////////////////////////////-->
+				<s:Panel id="panelDados" width="100%" title="Dados Acasalamento" includeIn="stateDetalhe">
+					<s:VGroup x="10" y="15" gap="16">
+						<s:HGroup>
+							<s:Label id="lblDetalheFemea" text="Fêmea"/>
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
+						</s:HGroup>
+					</s:VGroup>
+					<s:VGroup x="70" y="10">
+						<s:TextInput id="txtDetalheFemea" x="60" y="10" width="514" editable="false" borderColor="#D3D3D3"/>
+					</s:VGroup>
+
 				</s:Panel>
 			</s:VGroup>
 		</s:Group>
