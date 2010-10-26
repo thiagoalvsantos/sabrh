@@ -1,3 +1,10 @@
+import br.pucpr.sabrh.components.constantes.ConstantesUtils;
+import br.pucpr.sabrh.entity.Acasalamento;
+import br.pucpr.sabrh.entity.Animal;
+import br.pucpr.sabrh.entity.ClassificacaoLinear;
+import br.pucpr.sabrh.entity.FiltroAcasalamento;
+import br.pucpr.sabrh.entity.ProvaTouro;
+
 import mx.collections.ArrayCollection;
 import mx.collections.Sort;
 import mx.collections.SortField;
@@ -10,11 +17,6 @@ import mx.formatters.DateFormatter;
 import mx.managers.PopUpManager;
 import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
-import br.pucpr.sabrh.components.constantes.ConstantesUtils;
-import br.pucpr.sabrh.entity.Animal;
-import br.pucpr.sabrh.entity.ClassificacaoLinear;
-import br.pucpr.sabrh.entity.FiltroAcasalamento;
-import br.pucpr.sabrh.entity.ProvaTouro;
 
 public var classificacaoVacaSelecionada:ClassificacaoLinear;
 
@@ -92,51 +94,64 @@ protected function btnClickDetalhe():void
 	listaAtributoConformacaoGrafico=new ArrayCollection();
 	if (classificacaoVacaSelecionada != null)
 	{
-		adicionarElementoLista("Profundidade do Talão", provaTouroSelecionado.profundidadeTalao, classificacaoVacaSelecionada.profundidadeTalao, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Profundidade do Úbere", provaTouroSelecionado.profundidadeUbere, classificacaoVacaSelecionada.profundidadeUbere, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Profundidade Corporal", provaTouroSelecionado.profundidadeCorporal, classificacaoVacaSelecionada.profundidadeCorporal, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Pernas Posteriores - Vista Posterior", provaTouroSelecionado.pernasPostVistaPost, classificacaoVacaSelecionada.pernasPostVistaPost, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Pernas Posteriores - Vista Lateral", provaTouroSelecionado.pernasPostVistaLateral, classificacaoVacaSelecionada.pernasPostVistaLateral, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Ligamento Médio", provaTouroSelecionado.ligamentoMedio, classificacaoVacaSelecionada.ligamentoMedio, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Largura Úbere Posterior", provaTouroSelecionado.larguraUberePosterior, classificacaoVacaSelecionada.larguraUberePosterior, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Largura do Peito", provaTouroSelecionado.larguraPeito, classificacaoVacaSelecionada.larguraPeito, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Largura da Garupa", provaTouroSelecionado.larguraGarupa, classificacaoVacaSelecionada.larguraGarupa, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Inserção Úbere Anterior", provaTouroSelecionado.insercaoUbereAnterior, classificacaoVacaSelecionada.insercaoUbereAnterior, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Estatura", provaTouroSelecionado.estatura, classificacaoVacaSelecionada.estatura, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Comprimento Tetos", provaTouroSelecionado.comprimentoTetos, classificacaoVacaSelecionada.comprimentoTetos, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Colocação de Tetos Posteriores", provaTouroSelecionado.colocacaoTetosPosteriores, classificacaoVacaSelecionada.colocacaoTetosPosteriores, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Colocação de Tetos Anteriores", provaTouroSelecionado.colocacaoTetosAnteriores, classificacaoVacaSelecionada.colocacaoTetosAnteriores, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Angulosidade", provaTouroSelecionado.angulosidade, classificacaoVacaSelecionada.angulosidade, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Ângulo Garupa", provaTouroSelecionado.anguloGarupa, classificacaoVacaSelecionada.anguloGarupa, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Ângulo do Casco", provaTouroSelecionado.anguloCasco, classificacaoVacaSelecionada.anguloCasco, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Altura Úbere Posterior", provaTouroSelecionado.alturaUberePosterior, classificacaoVacaSelecionada.alturaUberePosterior, listaAtributoConformacaoGrafico);
+		if (classificacaoVacaSelecionada.classificacaoFinal!="")
+			criarElementosGraficoComClassificacao();
+		else 
+			criarElementosGraficoSemClassificacao();
 	}
 	else
 	{
-		adicionarElementoLista("Profundidade do Talão", provaTouroSelecionado.profundidadeTalao, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Profundidade do Úbere", provaTouroSelecionado.profundidadeUbere, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Profundidade Corporal", provaTouroSelecionado.profundidadeCorporal, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Pernas Posteriores - Vista Posterior", provaTouroSelecionado.pernasPostVistaPost, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Pernas Posteriores - Vista Lateral", provaTouroSelecionado.pernasPostVistaLateral, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Ligamento Médio", provaTouroSelecionado.ligamentoMedio, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Largura Úbere Posterior", provaTouroSelecionado.larguraUberePosterior, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Largura do Peito", provaTouroSelecionado.larguraPeito, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Largura da Garupa", provaTouroSelecionado.larguraGarupa, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Inserção Úbere Anterior", provaTouroSelecionado.insercaoUbereAnterior, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Estatura", provaTouroSelecionado.estatura, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Comprimento Tetos", provaTouroSelecionado.comprimentoTetos, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Colocação de Tetos Posteriores", provaTouroSelecionado.colocacaoTetosPosteriores, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Colocação de Tetos Anteriores", provaTouroSelecionado.colocacaoTetosAnteriores, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Angulosidade", provaTouroSelecionado.angulosidade, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Ângulo Garupa", provaTouroSelecionado.anguloGarupa, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Ângulo do Casco", provaTouroSelecionado.anguloCasco, -1, listaAtributoConformacaoGrafico);
-		adicionarElementoLista("Altura Úbere Posterior", provaTouroSelecionado.alturaUberePosterior, -1, listaAtributoConformacaoGrafico);
+		criarElementosGraficoSemClassificacao();
 	}
 
 	barChartProvaTouro.setStyle("gutterLeft", 200);
 	listaAtributoConformacaoGrafico.refresh();
 
 	PopUpManager.centerPopUp(this);
+}
+
+protected function criarElementosGraficoComClassificacao():void
+{
+	adicionarElementoLista("Profundidade do Talão", provaTouroSelecionado.profundidadeTalao, classificacaoVacaSelecionada.profundidadeTalao, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Profundidade do Úbere", provaTouroSelecionado.profundidadeUbere, classificacaoVacaSelecionada.profundidadeUbere, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Profundidade Corporal", provaTouroSelecionado.profundidadeCorporal, classificacaoVacaSelecionada.profundidadeCorporal, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Pernas Posteriores - Vista Posterior", provaTouroSelecionado.pernasPostVistaPost, classificacaoVacaSelecionada.pernasPostVistaPost, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Pernas Posteriores - Vista Lateral", provaTouroSelecionado.pernasPostVistaLateral, classificacaoVacaSelecionada.pernasPostVistaLateral, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Ligamento Médio", provaTouroSelecionado.ligamentoMedio, classificacaoVacaSelecionada.ligamentoMedio, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Largura Úbere Posterior", provaTouroSelecionado.larguraUberePosterior, classificacaoVacaSelecionada.larguraUberePosterior, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Largura do Peito", provaTouroSelecionado.larguraPeito, classificacaoVacaSelecionada.larguraPeito, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Largura da Garupa", provaTouroSelecionado.larguraGarupa, classificacaoVacaSelecionada.larguraGarupa, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Inserção Úbere Anterior", provaTouroSelecionado.insercaoUbereAnterior, classificacaoVacaSelecionada.insercaoUbereAnterior, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Estatura", provaTouroSelecionado.estatura, classificacaoVacaSelecionada.estatura, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Comprimento Tetos", provaTouroSelecionado.comprimentoTetos, classificacaoVacaSelecionada.comprimentoTetos, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Colocação de Tetos Posteriores", provaTouroSelecionado.colocacaoTetosPosteriores, classificacaoVacaSelecionada.colocacaoTetosPosteriores, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Colocação de Tetos Anteriores", provaTouroSelecionado.colocacaoTetosAnteriores, classificacaoVacaSelecionada.colocacaoTetosAnteriores, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Angulosidade", provaTouroSelecionado.angulosidade, classificacaoVacaSelecionada.angulosidade, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Ângulo Garupa", provaTouroSelecionado.anguloGarupa, classificacaoVacaSelecionada.anguloGarupa, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Ângulo do Casco", provaTouroSelecionado.anguloCasco, classificacaoVacaSelecionada.anguloCasco, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Altura Úbere Posterior", provaTouroSelecionado.alturaUberePosterior, classificacaoVacaSelecionada.alturaUberePosterior, listaAtributoConformacaoGrafico);
+}
+
+protected function criarElementosGraficoSemClassificacao():void
+{
+	adicionarElementoLista("Profundidade do Talão", provaTouroSelecionado.profundidadeTalao, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Profundidade do Úbere", provaTouroSelecionado.profundidadeUbere, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Profundidade Corporal", provaTouroSelecionado.profundidadeCorporal, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Pernas Posteriores - Vista Posterior", provaTouroSelecionado.pernasPostVistaPost, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Pernas Posteriores - Vista Lateral", provaTouroSelecionado.pernasPostVistaLateral, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Ligamento Médio", provaTouroSelecionado.ligamentoMedio, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Largura Úbere Posterior", provaTouroSelecionado.larguraUberePosterior, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Largura do Peito", provaTouroSelecionado.larguraPeito, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Largura da Garupa", provaTouroSelecionado.larguraGarupa, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Inserção Úbere Anterior", provaTouroSelecionado.insercaoUbereAnterior, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Estatura", provaTouroSelecionado.estatura, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Comprimento Tetos", provaTouroSelecionado.comprimentoTetos, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Colocação de Tetos Posteriores", provaTouroSelecionado.colocacaoTetosPosteriores, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Colocação de Tetos Anteriores", provaTouroSelecionado.colocacaoTetosAnteriores, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Angulosidade", provaTouroSelecionado.angulosidade, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Ângulo Garupa", provaTouroSelecionado.anguloGarupa, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Ângulo do Casco", provaTouroSelecionado.anguloCasco, -1, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Altura Úbere Posterior", provaTouroSelecionado.alturaUberePosterior, -1, listaAtributoConformacaoGrafico);
 }
 
 /**
@@ -187,6 +202,66 @@ protected function btnClickMoverBaixo():void
 	}
 }
 
+/**
+ * Verificar possibilidade de acasalamento
+ */
+protected function btnClickAcasalar():void
+{
+	if (classificacaoVacaSelecionada == null)
+		Alert.show("Antes de salvar um acasalamento deve ser selecionado uma vaca!", "Acasalamento");
+	else if (classificacaoVacaSelecionada.classificacaoFinal == null)
+		Alert.show(classificacaoVacaSelecionada.animal.nome + " não possui classificação linear.\nPor este motivo não haverão comparações no acompanhamento. Deseja continuar?", "Acasalamento", Alert.YES | Alert.NO, this, resultAlertSalvarAcasalamento);
+	else
+	{
+		salvarAcasalamento();
+	}	
+}
+
+/**
+ * Verifica a resposta do Alert e chama serviço de salvar acasalamento possibilidade de acasalamento
+ */
+public function resultAlertSalvarAcasalamento(event:CloseEvent):void
+{
+	if (event.detail == Alert.YES)
+	{
+		salvarAcasalamento();
+	}
+}
+
+/**
+ * Chama serviço de salvar acasalamento possibilidade de acasalamento
+ */
+protected function salvarAcasalamento():void
+{
+		var acasalamento:Acasalamento = new Acasalamento();
+		acasalamento.classificacaoLinear=classificacaoVacaSelecionada;
+		acasalamento.femea=classificacaoVacaSelecionada.animal;
+		acasalamento.macho=provaTouroSelecionado.animal;
+		acasalamento.provaTouro=provaTouroSelecionado;
+		acasalamento.tipoAcasalamento="PROPOSTA";
+		acasalamento.dataAcasalamento=new Date();
+		
+		acasalamentoService.salvar(acasalamento);
+}
+
+/**
+ * Result do metodo Salvar Acasalamento
+ */
+protected function serviceResultAcasalamentoSalvar(event:ResultEvent):void
+{
+	Alert.show("Acasalamento salvo com sucesso!\nPara detalhes e acompanhamentos consulte o menu de Acasalamento!", "Acasalamento");
+	
+	btnClickVoltarPesquisaReprodutor();
+}
+
+/**
+ * Volta para a tela de consultar reprodutor
+ */
+protected function btnClickVoltarPesquisaReprodutor():void
+{
+	currentState=ConstantesUtils.STATE_PESQUISA;
+}
+	
 /**
  * Altera a ordem de um item para cima da lista de atributos para pesquisa
  */
