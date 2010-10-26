@@ -94,12 +94,13 @@ public class AnimalBusiness implements AnimalService {
 		List<Animal> filhos = new ArrayList<Animal>();
 		List<Animal> pais = new ArrayList<Animal>();
 		List<Animal> avos = new ArrayList<Animal>();
-		List<Animal> arvore = new ArrayList<Animal>();
+		List<String> arvore = new ArrayList<String>();
 
 		filhos.add(femea);
 		filhos.add(macho);
 
 		try {
+			adicionarGeracao(arvore, filhos);
 			pais = criarGeracao(filhos);
 			adicionarGeracao(arvore, pais);
 
@@ -113,14 +114,14 @@ public class AnimalBusiness implements AnimalService {
 		return true;
 	}
 
-	private void adicionarGeracao(List<Animal> arvore, List<Animal> geracao)
+	private void adicionarGeracao(List<String> arvore, List<Animal> geracao)
 			throws Exception {
 
 		for (Animal animal : geracao) {
 			if (!animal.getRegistro().equals("000000000000000")
-					|| !animal.getRegistro().equals("000000000000001")) {
-				if (!arvore.contains(animal)) {
-					arvore.add(animal);
+					&& !animal.getRegistro().equals("000000000000001")) {
+				if (!arvore.contains(animal.getRegistro())) {
+					arvore.add(animal.getRegistro());
 				} else {
 					throw new Exception();
 				}
@@ -133,7 +134,7 @@ public class AnimalBusiness implements AnimalService {
 		ArrayList<Animal> geracao = new ArrayList<Animal>();
 		for (Animal animal : filhos) {
 			if (!animal.getPai().getRegistro().equals("000000000000000")
-					|| !animal.getPai().getRegistro().equals("000000000000001")) {
+					&& !animal.getPai().getRegistro().equals("000000000000001")) {
 				if (!geracao.contains(animal.getPai())) {
 					geracao.add(animal.getPai());
 				} else {
@@ -141,7 +142,7 @@ public class AnimalBusiness implements AnimalService {
 				}
 			}
 			if (!animal.getMae().getRegistro().equals("000000000000000")
-					|| !animal.getMae().getRegistro().equals("000000000000001")) {
+					&& !animal.getMae().getRegistro().equals("000000000000001")) {
 				if (!geracao.contains(animal.getMae())) {
 					geracao.add(animal.getMae());
 				} else {

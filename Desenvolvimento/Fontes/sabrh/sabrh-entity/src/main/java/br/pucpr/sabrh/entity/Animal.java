@@ -325,52 +325,12 @@ public class Animal implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Animal other = (Animal) obj;
-		if (apelido == null) {
-			if (other.apelido != null)
-				return false;
-		} else if (!apelido.equals(other.apelido))
-			return false;
-		if (dataNascimento == null) {
-			if (other.dataNascimento != null)
-				return false;
-		} else if (!dataNascimento.equals(other.dataNascimento))
-			return false;
-		if (listaClassificacao == null) {
-			if (other.listaClassificacao != null)
-				return false;
-		} else if (!listaClassificacao.equals(other.listaClassificacao))
-			return false;
-		if (mae == null) {
-			if (other.mae != null)
-				return false;
-		} else if (!mae.equals(other.mae))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (pai == null) {
-			if (other.pai != null)
-				return false;
-		} else if (!pai.equals(other.pai))
-			return false;
-		if (propriedade == null) {
-			if (other.propriedade != null)
-				return false;
-		} else if (!propriedade.equals(other.propriedade))
-			return false;
 		if (registro == null) {
 			if (other.registro != null)
 				return false;
 		} else if (!registro.equals(other.registro))
 			return false;
-		if (sexo != other.sexo)
-			return false;
-		if (status != other.status)
-			return false;
 		return true;
 	}
-	
-	
+
 }
