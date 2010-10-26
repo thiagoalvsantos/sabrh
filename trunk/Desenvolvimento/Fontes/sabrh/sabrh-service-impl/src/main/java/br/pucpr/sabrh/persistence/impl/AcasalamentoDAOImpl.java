@@ -128,7 +128,8 @@ public class AcasalamentoDAOImpl implements AcasalamentoDAO {
 		}
 
 		if (executa) {
-			c.addOrder(Order.asc("dataAcasalamento"));
+			c.addOrder(Order.desc("dataAcasalamento"));
+			c.addOrder(Order.desc("codigo"));
 			List<Acasalamento> result = c.list();
 			return result;
 
