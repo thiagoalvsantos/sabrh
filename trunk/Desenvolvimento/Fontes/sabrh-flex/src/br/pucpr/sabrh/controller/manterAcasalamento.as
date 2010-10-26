@@ -17,6 +17,8 @@ import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
 
+import spark.events.IndexChangeEvent;
+
 public function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsulta:String, propriedade:Propriedade):void
 {
 	atributoDestino.text=propriedade.nome;
@@ -37,9 +39,6 @@ public function resultConsultarPropriedade(atributoDestino:TextInput, tipoConsul
 	}
 
 }
-
-
-
 
 //Função que recebe o retorno da consulta de Usuário.
 public function resultConsultarUsuario(atributoDestino:TextInput, tipoConsulta:String, usuario:Usuario):void
@@ -203,14 +202,23 @@ protected function btnClickSalvarEvento():void
 			case "PROPOSTA":
 				break;
 			case "INSEMINACAO":
-				evento.acasalamento=acasalamentoSelecionado;
-				evento.comentario=StringUtil.trim(txtEventoComentario.text);
-				evento.dataEvento=txtEventoData.selectedDate;
-				evento.tipoEventoAcasalamento="INSEMINACAO";
-				acasalamentoService.salvarEvento(evento);
-				acasalamentoSelecionado.dataAcasalamento=evento.dataEvento;
-				acasalamentoSelecionado.tipoAcasalamento="INSEMINACAO";
-				acasalamentoService.salvar(acasalamentoSelecionado);
+				if (acasalamentoSelecionado.femea.status == "GESTAÇÃO" || acasalamentoSelecionado.femea.status == "DESCARTE")
+				{
+					Alert.show("Animal fêmea em fase de DESCARTE ou GESTAÇÃO. Não será possivel fazer a inseminação.")
+				}
+				else
+				{
+					evento.acasalamento=acasalamentoSelecionado;
+					evento.comentario=StringUtil.trim(txtEventoComentario.text);
+					evento.dataEvento=txtEventoData.selectedDate;
+					evento.tipoEventoAcasalamento="INSEMINACAO";
+					acasalamentoService.salvarEvento(evento);
+					acasalamentoSelecionado.dataAcasalamento=evento.dataEvento;
+					acasalamentoSelecionado.tipoAcasalamento="INSEMINACAO";
+					acasalamentoService.salvar(acasalamentoSelecionado);
+					acasalamentoSelecionado.femea.status="GESTAÇÃO";
+					animalService.salvar(acasalamentoSelecionado.femea);
+				}
 				break;
 			case "FALHA_INSEMINACAO":
 				evento.acasalamento=acasalamentoSelecionado;
@@ -220,6 +228,8 @@ protected function btnClickSalvarEvento():void
 				acasalamentoService.salvarEvento(evento);
 				acasalamentoSelecionado.tipoAcasalamento="FALHA_INSEMINACAO";
 				acasalamentoService.salvar(acasalamentoSelecionado);
+				acasalamentoSelecionado.femea.status="LACTAÇÃO";
+				animalService.salvar(acasalamentoSelecionado.femea);
 				break;
 			case "PRENHA":
 				evento.acasalamento=acasalamentoSelecionado;
@@ -238,15 +248,29 @@ protected function btnClickSalvarEvento():void
 				acasalamentoService.salvarEvento(evento);
 				acasalamentoSelecionado.tipoAcasalamento="ABORTO";
 				acasalamentoService.salvar(acasalamentoSelecionado);
+				acasalamentoSelecionado.femea.status="LACTAÇÃO";
+				animalService.salvar(acasalamentoSelecionado.femea);
 				break;
 			case "NASCIMENTO":
-				evento.acasalamento=acasalamentoSelecionado;
-				evento.comentario=StringUtil.trim(txtEventoComentario.text);
-				evento.dataEvento=txtEventoData.selectedDate;
-				evento.tipoEventoAcasalamento="NASCIMENTO";
-				acasalamentoService.salvarEvento(evento);
-				acasalamentoSelecionado.tipoAcasalamento="NASCIMENTO";
-				acasalamentoService.salvar(acasalamentoSelecionado);
+				if (validarCria())
+				{
+					var animal:Animal=new Animal();
+					animal.apelido=StringUtil.trim(txtEventoCriaApelido.text);
+					animal.dataNascimento=txtEventoData.selectedDate;
+					animal.mae=acasalamentoSelecionado.femea;
+					animal.pai=acasalamentoSelecionado.macho;
+					animal.propriedade=animal.mae.propriedade;
+					animal.registro=StringUtil.trim(txtEventoCriaRegistro.text);
+					animal.sexo=radioGroupCriaSexo.selectedValue as String;
+					animal.nome=StringUtil.trim(txtEventoCriaNome.text);
+					if (animal.sexo == "FEMEA")
+					{
+						animal.status="DESCARTE";
+					}
+					animalService.salvar(animal);
+					acasalamentoSelecionado.femea.status="AMAMENTAÇÃO";
+					animalService.salvar(acasalamentoSelecionado.femea);
+				}
 				break;
 			case "COMENTARIO":
 				evento.acasalamento=acasalamentoSelecionado;
@@ -263,6 +287,26 @@ protected function btnClickVoltarPesquisa():void
 {
 	currentState=ConstantesUtils.STATE_PESQUISA;
 	init();
+}
+
+
+protected function cmbChangeEventoTipoEvento(event:IndexChangeEvent):void
+{
+	if (cmbEventoTipoEvento.selectedItem == "NASCIMENTO")
+	{
+		if (panelCria.visible != true)
+		{
+			panelCria.visible=true;
+		}
+	}
+	else
+	{
+		if (panelCria.visible != false)
+		{
+			panelCria.visible=false;
+		}
+	}
+
 }
 
 /**
@@ -296,9 +340,16 @@ protected function gridClickResultadoAcasalamento(event:ListEvent):void
 
 	txtDetalheFemea.text=acasalamentoSelecionado.femea.apelido;
 	txtDetalheMacho.text=acasalamentoSelecionado.macho.apelido;
-	txtDetalheCria.text=acasalamentoSelecionado.cria.apelido;
+	if (acasalamentoSelecionado.cria != null)
+	{
+		txtDetalheCria.text=acasalamentoSelecionado.cria.apelido;
+	}
 	txtDetalheDataAcasalamento.text=df.format(acasalamentoSelecionado.dataAcasalamento);
 	txtDetalheStatusAcasalamento.text=acasalamentoSelecionado.tipoAcasalamento;
+	
+	txtEventoComentario.text = null;
+	txtEventoComentario.errorString = null;
+	txtEventoComentario.focusManager.setFocus(txtEventoComentario);
 
 	PopUpManager.centerPopUp(this);
 }
@@ -348,6 +399,77 @@ protected function serviceResultAcasalamentoPesquisar(event:ResultEvent):void
 
 }
 
+protected function serviceResultAcasalamentoSalvar(event:ResultEvent):void
+{
+	acasalamentoSelecionado=event.result as Acasalamento;
+
+	statusService.listarStatusEventoAcasalamento();
+	acasalamentoService.pesquisarEvento(acasalamentoSelecionado);
+
+	var df:DateFormatter=new DateFormatter();
+	df.formatString="DD/MM/YYYY";
+
+	txtDetalheFemea.text=acasalamentoSelecionado.femea.apelido;
+	txtDetalheMacho.text=acasalamentoSelecionado.macho.apelido;
+	if (acasalamentoSelecionado.cria != null)
+	{
+		txtDetalheCria.text=acasalamentoSelecionado.cria.apelido;
+	}
+	txtDetalheDataAcasalamento.text=df.format(acasalamentoSelecionado.dataAcasalamento);
+	txtDetalheStatusAcasalamento.text=acasalamentoSelecionado.tipoAcasalamento;
+
+	txtEventoComentario.text=null;
+	txtEventoComentario.errorString=null;
+	cmbEventoTipoEvento.selectedIndex=-1;
+	cmbEventoTipoEvento.selectedIndex=0;
+	cmbEventoTipoEvento.errorString=null;
+	PopUpManager.centerPopUp(this);
+}
+
+protected function serviceResultAnimalSalvar(event:ResultEvent):void
+{
+
+	var ani:Animal=event.result as Animal;
+
+	if (ani.sexo == "MACHO" || ani.status == "DESCARTE")
+	{
+		acasalamentoSelecionado.tipoAcasalamento="NASCIMENTO";
+		acasalamentoSelecionado.cria=event.result as Animal;
+		acasalamentoService.salvar(acasalamentoSelecionado);
+	}
+
+	if (ani.status != null && ani.status == "AMAMENTAÇÃO")
+	{
+		Alert.show("Cria salva com sucesso!");
+		panelCria.visible=false;
+		var evento:EventoAcasalamento=new EventoAcasalamento();
+		evento.acasalamento=acasalamentoSelecionado;
+		evento.comentario=StringUtil.trim(txtEventoComentario.text);
+		evento.dataEvento=txtEventoData.selectedDate;
+		evento.tipoEventoAcasalamento="NASCIMENTO";
+		acasalamentoService.salvarEvento(evento);
+
+	}
+	else
+	{
+		if (ani.status != null && ani.status != "DESCARTE")
+		{
+			acasalamentoSelecionado.femea.status=ani.status;
+		}
+	}
+	if (panelCria.visible==true)
+	{
+		txtEventoCriaApelido.text=null;
+		txtEventoCriaApelido.errorString=null;
+		txtEventoCriaRegistro.text=null;
+		txtEventoCriaRegistro.errorString=null;
+		txtEventoCriaNome.text=null;
+		txtEventoCriaNome.errorString=null;
+		radioGroupCriaSexo.selectedValue="MACHO";
+	}
+
+}
+
 protected function serviceResultEventoAcasalamentoPesquisar(event:ResultEvent):void
 {
 	// Recupera lista de animais
@@ -372,32 +494,6 @@ protected function serviceResultEventoAcasalamentoSalvar(event:ResultEvent):void
 	cmbEventoTipoEvento.selectedIndex=0;
 	cmbEventoTipoEvento.errorString=null;
 }
-
-protected function serviceResultAcasalamentoSalvar(event:ResultEvent):void
-{
-	acasalamentoSelecionado=event.result as Acasalamento;
-
-	statusService.listarStatusEventoAcasalamento();
-	acasalamentoService.pesquisarEvento(acasalamentoSelecionado);
-
-	var df:DateFormatter=new DateFormatter();
-	df.formatString="DD/MM/YYYY";
-
-	txtDetalheFemea.text=acasalamentoSelecionado.femea.apelido;
-	txtDetalheMacho.text=acasalamentoSelecionado.macho.apelido;
-	txtDetalheCria.text=acasalamentoSelecionado.cria.apelido;
-	txtDetalheDataAcasalamento.text=df.format(acasalamentoSelecionado.dataAcasalamento);
-	txtDetalheStatusAcasalamento.text=acasalamentoSelecionado.tipoAcasalamento;
-
-	txtEventoComentario.text=null;
-	txtEventoComentario.errorString=null;
-	cmbEventoTipoEvento.selectedIndex=-1;
-	cmbEventoTipoEvento.selectedIndex=0;
-	cmbEventoTipoEvento.errorString=null;
-	PopUpManager.centerPopUp(this);
-}
-
-
 
 protected function serviceResultListarStatusAcasalamento(event:ResultEvent):void
 {
@@ -470,6 +566,26 @@ protected function validar():Boolean
 {
 	//executa todos os validadores
 	var errors:Array=Validator.validateAll(validadores);
+
+	//se não existem erros 
+	if (errors.length == 0)
+	{
+		panelError.visible=false;
+		return true;
+	}
+	else
+	{
+		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
+	}
+	panelError.visible=true;
+
+	return false;
+}
+
+protected function validarCria():Boolean
+{
+	//executa todos os validadores
+	var errors:Array=Validator.validateAll(validadoresCria);
 
 	//se não existem erros 
 	if (errors.length == 0)

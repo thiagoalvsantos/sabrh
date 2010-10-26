@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:TitleWindow width="900" xmlns:fx="http://ns.adobe.com/mxml/2009" creationComplete="init()" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Acasalamentos ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
 
-
 	<fx:Script source="../controller/manterAcasalamento.as"/>
 
 	<fx:Declarations>
@@ -17,9 +16,18 @@
 			<s:method name="listarStatusEventoAcasalamento" result="{serviceResultListarStatusEvento(event)}"/>
 		</s:RemoteObject>
 
+		<s:RemoteObject id="animalService" fault="onFault(event)" destination="AnimalService" showBusyCursor="true">
+			<s:method name="salvar" result="{serviceResultAnimalSalvar(event)}"/>
+		</s:RemoteObject>
+
 		<s:Parallel id="exibeMensagemParallel">
 			<s:Fade alphaFrom="0" alphaTo="1"/>
 			<s:Resize heightFrom="0" heightTo="40"/>
+		</s:Parallel>
+
+		<s:Parallel id="exibeMensagemParallelCria">
+			<s:Fade alphaFrom="0" alphaTo="1"/>
+			<s:Resize heightFrom="0" heightTo="80"/>
 		</s:Parallel>
 
 		<s:Parallel id="escondeMensagemParallel">
@@ -27,9 +35,20 @@
 			<s:Resize heightFrom="40" heightTo="0"/>
 		</s:Parallel>
 
+		<s:Parallel id="escondeMensagemParallelCria">
+			<s:Fade alphaFrom="1" alphaTo="0"/>
+			<s:Resize heightFrom="80" heightTo="0"/>
+		</s:Parallel>
+
 		<fx:Array id="validadores">
 			<mx:NumberValidator id="cmbValTipoEvento" source="{cmbEventoTipoEvento}" property="selectedIndex" required="true" minValue="1" lowerThanMinError.stateEditar="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:StringValidator id="strValEventoComentario" source="{txtEventoComentario}" property="text" required="true" maxLength="255"/>
+		</fx:Array>
+
+		<fx:Array id="validadoresCria">
+			<mx:StringValidator id="strValEventoCriaApelido" source="{txtEventoCriaApelido}" property="text" required="true" minLength="5" maxLength="255"/>
+			<mx:StringValidator id="strValEventoCriaNome" source="{txtEventoCriaNome}" property="text" required="true" minLength="5" maxLength="255"/>
+			<mx:StringValidator id="strValEventoCriaRegistro" source="{txtEventoCriaRegistro}" property="text" required="true" minLength="15" maxLength="20"/>
 		</fx:Array>
 
 		<entity:Usuario id="proprietarioPesquisa"/>
@@ -37,6 +56,8 @@
 		<entity:Propriedade id="propriedadeNovo"/>
 		<entity:Animal id="animalPesquisa"/>
 		<entity:Acasalamento id="acasalamentoSelecionado"/>
+
+		<s:RadioButtonGroup id="radioGroupCriaSexo"/>
 	</fx:Declarations>
 
 	<s:states>
@@ -171,34 +192,43 @@
 									<mx:Spacer width="10"/>
 									<s:Label id="lblEventoTipo" text="Tipo"/>
 									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									<s:DropDownList id="cmbEventoTipoEvento" width="250" tabIndex="2"/>
+									<s:DropDownList id="cmbEventoTipoEvento" width="250" tabIndex="2" change="cmbChangeEventoTipoEvento(event)"/>
 								</s:HGroup>
 								<s:HGroup verticalAlign="middle">
 									<s:Label id="lblEventoComentario" text="Comentário"/>
 									<s:Label text="*" color="#B22222" fontWeight="bold"/>
 									<s:TextInput id="txtEventoComentario" width="567" tabIndex="3"/>
 								</s:HGroup>
-								<s:BorderContainer id="panelCria" width="100%" height="100%" visible="false" styleName="panelProducao">
-									<s:VGroup>
+								<s:BorderContainer visible="false" id="panelCria" left="5" right="5" height="0" hideEffect="{escondeMensagemParallelCria}" showEffect="{exibeMensagemParallelCria}" styleName="panelProducao">
+									<s:VGroup paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
 										<s:HGroup verticalAlign="middle">
 											<s:Label id="lblEventoCriaRegistro" text="Registro Cria"/>
 											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-											<s:TextInput id="txtEventoCriaRegistro" width="150"/>
+											<s:TextInput id="txtEventoCriaRegistro" width="150" maxChars="20" tabIndex="4"/>
 											<mx:Spacer width="10"/>
 											<s:Label id="lblEventoCriaNome" text="Nome Cria"/>
 											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-											<s:TextInput id="txtEventoCriaNome" width="350"/>
+											<s:TextInput id="txtEventoCriaNome" width="350" maxChars="255"/>
 										</s:HGroup>
 										<s:HGroup verticalAlign="middle">
 											<s:Label id="lblEventoCriaApelido" text="Apelido Cria"/>
 											<s:Label text="*" color="#B22222" fontWeight="bold" width="11"/>
-											<s:TextInput id="txtEventoCriaApelido" width="599"/>
+											<s:TextInput id="txtEventoCriaApelido" width="599" maxChars="255" tabIndex="5"/>
+										</s:HGroup>
+										<s:HGroup verticalAlign="middle">
+											<s:Label id="lblEventoCriaSexo" text="Sexo Cria"/>
+											<s:Label text="*" color="#B22222" fontWeight="bold" width="25"/>
+											<s:HGroup>
+												<s:RadioButton label="Macho" groupName="radioGroupCriaSexo" value="MACHO" selected="true" tabIndex="7"/>
+												<mx:Spacer width="10"/>
+												<s:RadioButton label="Fêmea" groupName="radioGroupCriaSexo" value="FEMEA" tabIndex="8"/>
+											</s:HGroup>
 										</s:HGroup>
 									</s:VGroup>
 								</s:BorderContainer>
 							</s:VGroup>
 						</s:HGroup>
-						<mx:AdvancedDataGrid id="dataGridEvento" left="10" right="10" top="10" bottom="10" designViewDataType="flat" itemClick="gridClickEvento(event)" width="100%">
+						<mx:AdvancedDataGrid id="dataGridEvento" left="10" right="10" top="10" bottom="10" designViewDataType="flat" itemClick="gridClickEvento(event)" width="100%" >
 							<mx:columns>
 								<mx:AdvancedDataGridColumn textAlign="center" headerText="Codigo" sortable="true" dataField="codigo"/>
 								<mx:AdvancedDataGridColumn textAlign="center" headerText="Data Evento" sortable="true" labelFunction="labelFunctionDataEvento"/>
