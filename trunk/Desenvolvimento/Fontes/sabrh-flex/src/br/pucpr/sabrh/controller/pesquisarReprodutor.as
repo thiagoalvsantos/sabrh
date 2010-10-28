@@ -80,7 +80,15 @@ protected function btnClickDetalhe():void
 	txtDetalheTouroDataProva.text=df.format(provaTouroSelecionado.dataUltimaAtualizacao);
 	txtDetalheTouroQtdFilhas.text=provaTouroSelecionado.quantidadeFilhas.toString();
 	txtDetalheTouroApelido.text=provaTouroSelecionado.animal.apelido;
-	txtDetalheTouroPreco.text=currencyFormatter.format(provaTouroSelecionado.preco.toString());
+	var precoTemp:String="";
+	for (var i:int=0; i < provaTouroSelecionado.preco.toString().length; i++)
+	{
+		if (provaTouroSelecionado.preco.toString().length - i == 2)
+			precoTemp=precoTemp + "," + provaTouroSelecionado.preco.toString().charAt(i);
+		else
+			precoTemp=precoTemp + provaTouroSelecionado.preco.toString().charAt(i);
+	}
+	txtDetalheTouroPreco.text=currencyFormatter.format(precoTemp);
 
 	//Produção
 	txtDetalheTouroPercentualProteina.text=provaTouroSelecionado.proteina.toString();
@@ -263,6 +271,7 @@ protected function serviceResultAcasalamentoSalvar(event:ResultEvent):void
 protected function btnClickVoltarPesquisaReprodutor():void
 {
 	currentState=ConstantesUtils.STATE_PESQUISA;
+	PopUpManager.centerPopUp(this);
 }
 	
 /**
