@@ -313,7 +313,7 @@
 									</s:VGroup>
 								</s:HGroup>
 								<s:HGroup width="100%" horizontalAlign="center">
-									<mx:BarChart id="barChartProvaTouro" height="100%" width="55%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{listaAtributoConformacaoGrafico}">
+									<mx:BarChart id="barChartProvaTouro" height="100%" width="70%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{listaAtributoConformacaoGrafico}">
 										<mx:verticalAxis>
 											<mx:CategoryAxis categoryField="Atributo"/>
 										</mx:verticalAxis>

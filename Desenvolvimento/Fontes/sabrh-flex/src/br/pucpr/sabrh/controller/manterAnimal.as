@@ -366,6 +366,7 @@ protected function btnClickNovaProvaTouro():void
 	txtProvaTouroAnguloCasco.text=null;
 	txtProvaTouroPernasPostVistaLateral.text=null;
 	txtProvaTouroPernasPostVistaPost.text=null;
+	txtProvaTouroProfundidadeTalao.text=null;
 	// Sistema Mamário
 	txtProvaTouroProfundidadeUbere.text=null;
 	txtProvaTouroColocacaoTetorAnteriores.text=null;
@@ -400,6 +401,7 @@ protected function btnClickNovaProvaTouro():void
 	txtProvaTouroAnguloCasco.errorString=null;
 	txtProvaTouroPernasPostVistaLateral.errorString=null;
 	txtProvaTouroPernasPostVistaPost.errorString=null;
+	txtProvaTouroProfundidadeTalao.errorString=null;
 	// Sistema Mamário
 	txtProvaTouroProfundidadeUbere.errorString=null;
 	txtProvaTouroColocacaoTetorAnteriores.errorString=null;
@@ -675,16 +677,19 @@ protected function btnClickSalvarProvaTouro():void
 protected function btnClickVoltarClassificacaoLista():void
 {
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
+	PopUpManager.centerPopUp(this);
 }
 
 protected function btnClickVoltarDetalhe():void
 {
 	currentState=ConstantesUtils.STATE_DETALHE;
+	PopUpManager.centerPopUp(this);
 }
 
 protected function btnClickVoltarProvaTouroLista():void
 {
 	currentState=ConstantesUtils.STATE_PROVA_TOURO_LISTA;
+	PopUpManager.centerPopUp(this);
 }
 
 /**
