@@ -21,10 +21,10 @@
 
 		<mx:Form horizontalCenter="0" verticalCenter="0" dropShadowVisible="true">
 			<mx:FormItem label="Usuário">
-				<mx:TextInput id="txtUsuario" text="thiago"/>
+				<mx:TextInput id="txtUsuario" text="thiago" maxChars="50"/>
 			</mx:FormItem>
 			<mx:FormItem label="Senha">
-				<mx:TextInput displayAsPassword="true" id="txtSenha" text="123456"/>
+				<mx:TextInput displayAsPassword="true" id="txtSenha" text="123456" maxChars="50"/>
 			</mx:FormItem>
 		</mx:Form>
 		<s:Button id="btnEntrar" label="Entrar" click="autenticar()" x="295" y="112" height="50"/>
