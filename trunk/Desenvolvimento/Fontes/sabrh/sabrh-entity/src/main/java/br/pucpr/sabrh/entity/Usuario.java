@@ -59,11 +59,11 @@ public class Usuario implements Serializable {
 	private String cpf;
 
 	/** O atributo nome. */
-	@Column(name = "TX_NOME", length = 255, nullable = false)
+	@Column(name = "TX_NOME", length = 80, nullable = false)
 	private String nome;
 
 	/** O atributo email. */
-	@Column(name = "TX_EMAIL", length = 255, nullable = false)
+	@Column(name = "TX_EMAIL", length = 80, nullable = false)
 	private String email;
 
 	/** O atributo municipio. */
