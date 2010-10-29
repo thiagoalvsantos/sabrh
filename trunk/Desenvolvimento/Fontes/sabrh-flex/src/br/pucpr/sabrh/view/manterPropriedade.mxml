@@ -19,7 +19,7 @@
 		</s:RemoteObject>
 
 		<fx:Array id="val">
-			<mx:StringValidator id="strValNome" source="{txtNovoNome}" property="text" required="true" minLength="5" maxLength="255"/>
+			<mx:StringValidator id="strValNome" source="{txtNovoNome}" property="text" required="true" minLength="5" maxLength="100"/>
 			<mx:NumberValidator id="numValEstado" source="{cmbNovoEstado}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:NumberValidator id="numValMunicipio" source="{cmbNovoMunicipio}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:StringValidator id="strValTelefone" source="{txtNovoTelefone}" property="text" required="true" minLength="10" maxLength="13" tooShortError="O campo deve conter 10 caracteres. Ex: (99)9999-9999" />
@@ -64,10 +64,10 @@
 				<s:Label id="lblPesquisaEstado" x="10" y="45" text="Estado"/>
 				<s:Label id="lblPesquisaMunicipio" x="305" y="45" text="Município"/>
 				<s:Label id="lblPesquisaProprietario" x="10" y="75" text="Proprietário"/>
-				<s:TextInput id="txtPesquisaNome" width="514" tabIndex="1" x="120" y="10"/>
+				<s:TextInput id="txtPesquisaNome" width="514" tabIndex="1" x="120" y="10" maxChars="100"/>
 				<s:DropDownList id="cmbPesquisaEstado" labelField="descricao" change="cbmEstadoChange()" tabIndex="2" x="120" y="40" width="171"/>
 				<s:DropDownList id="cmbPesquisaMunicipio" width="264" enabled="false" labelField="descricao" tabIndex="3" x="370" y="40"/>
-				<s:TextInput id="txtPesquisaProprietario" tabIndex="4" x="120" y="70" width="440" editable="false"/>
+				<s:TextInput id="txtPesquisaProprietario" tabIndex="4" x="120" y="70" width="440" editable="false" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}"/>
 				<s:Button id="btnPesquisaBuscar" label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="570" y="70" buttonMode="true"/>
 			</mx:Canvas>
 			<s:controlBarContent>
@@ -145,11 +145,11 @@
 					</s:VGroup>
 					
 					<s:VGroup x="100" y="10">
-						<s:TextInput id="txtNovoNome" width="514" maxChars="255" tabIndex="1" focusEnabled="true"/>
+						<s:TextInput id="txtNovoNome" width="514" maxChars="100" tabIndex="1" focusEnabled="true"/>
 						<s:DropDownList id="cmbNovoEstado" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
 						<components:TextInputTelefone id="txtNovoTelefone" width="171" tabIndex="4" maxChars="10"/> 
 						<s:HGroup>
-							<s:TextInput id="txtNovoProprietario" maxChars="50" tabIndex="5" width="438" editable="false"/>
+							<s:TextInput id="txtNovoProprietario" maxChars="50" tabIndex="5" width="438" editable="false" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}"/>
 							<s:Button id="btnNovoBuscar" label="Buscar" click="{abrirConsultarUsuario(txtNovoProprietario,'novo')}" buttonMode="true"/>
 						</s:HGroup>
 					</s:VGroup>

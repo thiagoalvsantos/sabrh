@@ -26,7 +26,7 @@
 		</s:RemoteObject>
 
 		<fx:Array id="val">
-			<mx:StringValidator id="strValNome" source="{txtNovoNome}" property="text" required="true" minLength="5" maxLength="255"/>
+			<mx:StringValidator id="strValNome" source="{txtNovoNome}" property="text" required="true" minLength="5" maxLength="80"/>
 			<mx:NumberValidator id="numValEstado" source="{cmbNovoEstado}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:NumberValidator id="numValMunicipio" source="{cmbNovoMunicipio}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
 			<mx:NumberValidator id="numValPerfil" source="{cmbNovoPerfil}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
@@ -142,13 +142,13 @@
 					</s:VGroup>
 					
 					<s:VGroup x="70" y="10">
-						<s:TextInput id="txtNovoNome" width="514" maxChars="255" tabIndex="1"/>
+						<s:TextInput id="txtNovoNome" width="514" maxChars="80" tabIndex="1"/>
 						<s:DropDownList id="cmbNovoEstado" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
 						<s:DropDownList id="cmbNovoPerfil" width="171" tabIndex="4"/>
 						<components:TextInputCPF id="txtNovoCPF" width="171" tabIndex="5" enabled.stateEditar="false"/>
 						<s:TextInput id="txtNovoLogin" width="171" maxChars="50" tabIndex="6" enabled.stateEditar="false"/>
 						<s:TextInput id="txtNovoSenha" width="171" displayAsPassword="true" maxChars="50" tabIndex="8"/>
-						<s:TextInput id="txtNovoEmail" width="514" tabIndex="10" maxChars="255"/>
+						<s:TextInput id="txtNovoEmail" width="514" tabIndex="10" maxChars="80"/>
 					</s:VGroup>
 					
 					<s:VGroup x="255" y="40">
