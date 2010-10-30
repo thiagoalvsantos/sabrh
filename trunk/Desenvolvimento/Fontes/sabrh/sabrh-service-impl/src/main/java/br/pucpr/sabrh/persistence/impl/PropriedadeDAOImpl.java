@@ -64,6 +64,20 @@ public class PropriedadeDAOImpl implements PropriedadeDAO {
 		List<Propriedade> result = c.list();
 		return result;
 	}
+	
+	/* (non-Javadoc)
+	 * @see br.pucpr.sabrh.persistence.PropriedadeDAO#propriedadeExistente(br.pucpr.sabrh.entity.Propriedade)
+	 */
+	@Override
+	public Propriedade propriedadeExistente(Propriedade propriedade) {
+		Session s = (Session) entityManager.getDelegate();
+		Criteria c = s.createCriteria(Propriedade.class, "propri");
+		c.add(Restrictions.eq("nome", propriedade.getNome()).ignoreCase());
+		c.add(Restrictions.eq("municipio", propriedade.getMunicipio()));
+		c.add(Restrictions.ne("codigo", propriedade.getCodigo()));
+		Propriedade result = (Propriedade) c.uniqueResult();
+		return result;
+	}
 
 	/*
 	 * (non-Javadoc)
