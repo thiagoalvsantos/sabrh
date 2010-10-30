@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:TitleWindow width="900" creationComplete="init(event)" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Usuários ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
 
-
 	<fx:Script source="../controller/manterUsuario.as"/>
 
 	<fx:Declarations>
@@ -121,7 +120,7 @@
 						</s:HGroup>
 						<s:HGroup>
 							<s:Label id="lblNovoPerfil" text="Perfil"/>
-							<s:Label text="*" color="#B22222" fontWeight="bold"/>						
+							<s:Label text="*" color="#B22222" fontWeight="bold"/>
 						</s:HGroup>
 						<s:HGroup>
 							<s:Label id="lblNovoCPF" text="CPF"/>
@@ -140,17 +139,17 @@
 							<s:Label text="*" color="#B22222" fontWeight="bold"/>
 						</s:HGroup>
 					</s:VGroup>
-					
+
 					<s:VGroup x="70" y="10">
 						<s:TextInput id="txtNovoNome" width="514" maxChars="80" tabIndex="1"/>
 						<s:DropDownList id="cmbNovoEstado" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
-						<s:DropDownList id="cmbNovoPerfil" width="171" tabIndex="4"/>
+						<s:DropDownList id="cmbNovoPerfil" width="171" tabIndex="4" enabled.stateEditar="false"/>
 						<components:TextInputCPF id="txtNovoCPF" width="171" tabIndex="5" enabled.stateEditar="false"/>
 						<s:TextInput id="txtNovoLogin" width="171" maxChars="50" tabIndex="6" enabled.stateEditar="false"/>
 						<s:TextInput id="txtNovoSenha" width="171" displayAsPassword="true" maxChars="50" tabIndex="8"/>
 						<s:TextInput id="txtNovoEmail" width="514" tabIndex="10" maxChars="80"/>
 					</s:VGroup>
-					
+
 					<s:VGroup x="255" y="40">
 						<s:HGroup verticalAlign="middle">
 							<s:Label id="lblNovoMunicipio" text="Município"/>
