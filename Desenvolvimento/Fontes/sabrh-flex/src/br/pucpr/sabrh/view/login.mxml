@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" horizontalCenter="0" verticalCenter="0" title=".:: Login ::." width="491" height="196">
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" horizontalCenter="0" verticalCenter="0" width="900" height="500" styleName="canvasLogin">
 
 	<fx:Script source="../controller/login.as"/>
 
@@ -17,16 +17,18 @@
 
 	</fx:Declarations>
 
-	<mx:HBox horizontalCenter="0" verticalCenter="0" horizontalAlign="center" verticalAlign="middle" defaultButton="{btnEntrar}">
+
+
+	<mx:HBox horizontalAlign="center" verticalAlign="middle" defaultButton="{btnEntrar}" right="50" top="50">
 
 		<mx:Form horizontalCenter="0" verticalCenter="0" dropShadowVisible="true">
 			<mx:FormItem label="Usuário">
-				<mx:TextInput id="txtUsuario" text="thiago" maxChars="50"/>
+				<mx:TextInput id="txtUsuario" text="thiago" maxChars="20"/>
 			</mx:FormItem>
 			<mx:FormItem label="Senha">
-				<mx:TextInput displayAsPassword="true" id="txtSenha" text="123456" maxChars="50"/>
+				<mx:TextInput displayAsPassword="true" id="txtSenha" text="123456" maxChars="20"/>
 			</mx:FormItem>
 		</mx:Form>
 		<s:Button id="btnEntrar" label="Entrar" click="autenticar()" x="295" y="112" height="50"/>
 	</mx:HBox>
-</mx:Panel>
+</s:BorderContainer>
