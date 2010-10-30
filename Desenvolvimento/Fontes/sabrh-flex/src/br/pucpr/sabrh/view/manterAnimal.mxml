@@ -169,9 +169,9 @@
 						<s:TextInput id="txtPesquisaNomePai" x="350" y="40" width="300" tabIndex="4"/>
 						<s:TextInput id="txtPesquisaRegistroMae" x="100" y="70" width="150" tabIndex="5"/>
 						<s:TextInput id="txtPesquisaNomeMae" x="350" y="70" width="300" tabIndex="6"/>
-						<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false" focusEnabled="false"/>
+						<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false" focusEnabled="false" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}"/>
 						<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="100" tabIndex="7" buttonMode="true"/>
-						<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false" focusEnabled="false"/>
+						<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false" focusEnabled="false" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}"/>
 						<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8" buttonMode="true"/>
 						<s:CheckBox id="checkBoxMacho" x="705" y="10" label="Macho" tabIndex="9"/>
 						<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea" tabIndex="9"/>
@@ -240,15 +240,15 @@
 								<s:TextInput id="txtNovoNome" width="370" tabIndex="2" maxChars="255"/>
 								<s:TextInput id="txtNovoApelido" width="370" tabIndex="3" maxChars="255"/>
 								<s:HGroup>
-									<s:TextInput id="txtNovoPropriedade" width="370" editable="false" tabFocusEnabled="false"/>
+									<s:TextInput id="txtNovoPropriedade" width="370" editable="false" tabFocusEnabled="false" click="{abrirConsultarPropriedade(txtNovoPropriedade,'novo')}"/>
 									<s:Button label="Buscar" tabIndex="4" click="{abrirConsultarPropriedade(txtNovoPropriedade,'novo')}" buttonMode="true"/>
 								</s:HGroup>
 								<s:HGroup>
-									<s:TextInput id="txtNovoPai" width="370" editable="false" tabFocusEnabled="false"/>
+									<s:TextInput id="txtNovoPai" width="370" editable="false" tabFocusEnabled="false" click="abrirConsultarAnimal(txtNovoPai,'novo',ConstantesUtils.SEXO_MACHO)"/>
 									<s:Button label="Buscar" tabIndex="5" click="abrirConsultarAnimal(txtNovoPai,'novo',ConstantesUtils.SEXO_MACHO)" buttonMode="true"/>
 								</s:HGroup>
 								<s:HGroup>
-									<s:TextInput id="txtNovoMae" width="370" editable="false" tabFocusEnabled="false"/>
+									<s:TextInput id="txtNovoMae" width="370" editable="false" tabFocusEnabled="false" click="abrirConsultarAnimal(txtNovoMae,'novo',ConstantesUtils.SEXO_FEMEA)"/>
 									<s:Button label="Buscar" tabIndex="6" click="abrirConsultarAnimal(txtNovoMae,'novo',ConstantesUtils.SEXO_FEMEA)" buttonMode="true"/>
 								</s:HGroup>
 								<s:HGroup verticalAlign="middle">
@@ -261,8 +261,8 @@
 									</s:HGroup>
 								</s:HGroup>
 								<s:HGroup>
-									<s:RadioButton label="Macho" groupName="radioGroupNovoSexo" value="MACHO" selected="true" tabIndex="9"/>
-									<s:RadioButton label="Fêmea" groupName="radioGroupNovoSexo" value="FEMEA" tabIndex="10"/>
+									<s:RadioButton label="Macho" groupName="radioGroupNovoSexo" value="MACHO" selected="true" tabIndex="9" enabled.stateEditar="false"/>
+									<s:RadioButton label="Fêmea" groupName="radioGroupNovoSexo" value="FEMEA" tabIndex="10" enabled.stateEditar="false"/>
 								</s:HGroup>
 							</s:VGroup>
 						</mx:Canvas>

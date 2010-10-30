@@ -45,9 +45,9 @@
 				<s:TextInput id="txtPesquisaNomePai" x="350" y="40" width="300" tabIndex="4"/>
 				<s:TextInput id="txtPesquisaRegistroMae" x="100" y="70" width="150" tabIndex="5"/>
 				<s:TextInput id="txtPesquisaNomeMae" x="350" y="70" width="300" tabIndex="6"/>
-				<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false" focusEnabled="false"/>
+				<s:TextInput id="txtPesquisaProprietario" x="100" y="100" width="472" editable="false" focusEnabled="false" click="{btnClickConsultarUsuario(txtPesquisaProprietario,'pesquisa')}"/>
 				<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{btnClickConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="100" tabIndex="7" buttonMode="true"/>
-				<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false" focusEnabled="false"/>
+				<s:TextInput id="txtPesquisaPropriedade" x="100" y="130" width="472" editable="false" focusEnabled="false" click="{btnClickConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}"/>
 				<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{btnClickConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="130" tabIndex="8" buttonMode="true"/>
 				<s:CheckBox id="checkBoxMacho" x="705" y="10" label="Macho" tabIndex="9"/>
 				<s:CheckBox id="checkBoxFemea" x="770" y="10" label="Fêmea" tabIndex="9"/>
