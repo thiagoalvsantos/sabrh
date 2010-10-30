@@ -39,7 +39,7 @@
 				<s:TextInput id="txtPesquisaNome" width="514" tabIndex="1" x="120" y="10"/>
 				<s:DropDownList id="cmbPesquisaEstado" labelField="descricao" change="cbmEstadoChange()" tabIndex="2" x="120" y="40" width="171"/>
 				<s:DropDownList id="cmbPesquisaMunicipio" width="264" enabled="false" labelField="descricao" tabIndex="3" x="370" y="40"/>
-				<s:TextInput id="txtPesquisaProprietario" tabIndex="4" x="120" y="70" width="440" editable="false" focusEnabled="false"/>
+				<s:TextInput id="txtPesquisaProprietario" tabIndex="4" x="120" y="70" width="440" editable="false" focusEnabled="false" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}"/>
 				<s:Button id="btnPesquisaBuscar" label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="570" y="70" tabIndex="4" buttonMode="true"/>
 			</mx:Canvas>
 			<s:controlBarContent>
