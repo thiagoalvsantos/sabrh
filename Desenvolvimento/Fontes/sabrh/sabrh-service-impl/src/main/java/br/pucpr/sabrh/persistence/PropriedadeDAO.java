@@ -32,4 +32,13 @@ public interface PropriedadeDAO {
 	 * @return propriedade
 	 */
 	Propriedade salvar(Propriedade propriedade);
+	
+	/**
+	 * Propriedade existente.
+	 * 
+	 * @param propriedade
+	 *            - propriedade.
+	 * @return verdadeiro, se bem sucedido.
+	 */
+	Propriedade propriedadeExistente(Propriedade propriedade);
 }

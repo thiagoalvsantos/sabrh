@@ -35,5 +35,15 @@ public interface PropriedadeService {
 	 * @return propriedade
 	 */
 	Propriedade salvar(Propriedade propriedade);
+	
+	
+	/**
+	 * Propriedade existente.
+	 * 
+	 * @param propriedade
+	 *            - propriedade.
+	 * @return verdadeiro, se bem sucedido.
+	 */
+	boolean propriedadeExistente(Propriedade propriedade);
 
 }

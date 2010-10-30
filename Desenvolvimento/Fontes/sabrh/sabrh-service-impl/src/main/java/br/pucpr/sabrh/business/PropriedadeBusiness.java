@@ -51,5 +51,17 @@ public class PropriedadeBusiness implements PropriedadeService {
 
 		return propriedadeDAO.salvar(propriedade);
 	}
+	
+	/* (non-Javadoc)
+	 * @see br.pucpr.sabrh.services.PropriedadeService#propriedadeExistente(br.pucpr.sabrh.entity.Propriedade)
+	 */
+	@Override
+	public boolean propriedadeExistente(Propriedade propriedade) {
+		Propriedade result = propriedadeDAO.propriedadeExistente(propriedade);
+		if (result == null)
+			return false;
+		else
+			return true;
+	}
 
 }
