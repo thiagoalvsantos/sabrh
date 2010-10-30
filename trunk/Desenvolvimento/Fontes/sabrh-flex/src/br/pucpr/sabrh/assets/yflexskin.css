@@ -705,3 +705,11 @@ mx|Tree
 	backgroundAlpha: 0.5;
 	color: #292929; 
 }
+
+.canvasLogin{
+	background-image: Embed(source="img/login.png");
+	background-image-fill-mode:scale;
+	
+}
+
+
