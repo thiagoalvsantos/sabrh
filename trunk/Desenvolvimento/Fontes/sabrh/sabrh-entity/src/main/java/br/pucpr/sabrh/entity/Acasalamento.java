@@ -43,7 +43,7 @@ public class Acasalamento implements Serializable {
 	
 	@ManyToOne(targetEntity = Animal.class)
 	@JoinColumn(name = "TX_CRIA", referencedColumnName = "TX_REGISTRO")
-	@ForeignKey(name = "FK_ACASALAMENTO_PAI")
+	@ForeignKey(name = "FK_ACASALAMENTO_CRIA")
 	private Animal cria;
 	
 	@Column(name = "DT_ACASALAMENTO", nullable = false)
