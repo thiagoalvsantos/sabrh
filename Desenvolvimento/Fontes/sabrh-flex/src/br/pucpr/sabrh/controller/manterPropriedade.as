@@ -18,7 +18,7 @@ import mx.validators.Validator;
 
 import spark.components.TextInput;
 
-
+var propriedadeNovo:Propriedade=null;;
 
 
 /**
@@ -250,25 +250,25 @@ protected function actionBtnSalvarPropriedade():void
 	if (validar())
 	{
 		panelError.visible=false;
-		var propriedade:Propriedade=new Propriedade();
-		propriedade.municipio=cmbNovoMunicipio.selectedItem;
-		propriedade.nome=txtNovoNome.text;
-		propriedade.proprietario=proprietarioNovo;
-		propriedade.telefone=txtNovoTelefone.text;
+		propriedadeNovo=new Propriedade();
+		propriedadeNovo.municipio=cmbNovoMunicipio.selectedItem;
+		propriedadeNovo.nome=txtNovoNome.text;
+		propriedadeNovo.proprietario=proprietarioNovo;
+		propriedadeNovo.telefone=txtNovoTelefone.text;
 
 		//retira mascara telefone
-		propriedade.telefone=propriedade.telefone.replace("(", "");
-		propriedade.telefone=propriedade.telefone.replace(")", "");
-		propriedade.telefone=propriedade.telefone.replace("-", "");
+		propriedadeNovo.telefone=propriedadeNovo.telefone.replace("(", "");
+		propriedadeNovo.telefone=propriedadeNovo.telefone.replace(")", "");
+		propriedadeNovo.telefone=propriedadeNovo.telefone.replace("-", "");
 
 		if (currentState == ConstantesUtils.STATE_EDITAR)
 		{
-			propriedade.codigo=propriedadeSelecionada.codigo;
+			propriedadeNovo.codigo=propriedadeSelecionada.codigo;
 		}
 
-		propriedadeSelecionada=propriedade;
-
-		propriedadeService.salvar(propriedade);
+		propriedadeSelecionada=propriedadeNovo;
+		
+		propriedadeService.propriedadeExistente(propriedadeNovo);
 
 	}
 }
@@ -297,15 +297,31 @@ protected function pesquisarPropriedadesResult(event:ResultEvent):void
 }
 
 /**
- * Resultado da inserção de usuários
+ * Resultado da pesquisa de propriedade existente
+ *
+ * @param event
+ */
+protected function propriedadeExistenteResult(event:ResultEvent):void
+{
+	var propriedadeExistente:Boolean=event.result;
+	if (propriedadeExistente){
+		txtNovoNome.errorString="Propriedade já existente na cidade.";
+		panelError.visible=true;
+	} else {
+		propriedadeService.salvar(propriedadeNovo);
+	}
+}
+
+/**
+ * Resultado da inserção de propriedade
  *
  * @param event
  */
 protected function salvarPropriedadeResult(event:ResultEvent):void
 {
 	currentState=ConstantesUtils.STATE_DETALHE;
-
-	panelSucesso.visible=true;
+	
+	txtNovoNome.errorString=null;
 
 	txtDetalheNome.text=propriedadeSelecionada.nome;
 	txtDetalheProprietario.text=propriedadeSelecionada.proprietario.nome;
@@ -314,6 +330,7 @@ protected function salvarPropriedadeResult(event:ResultEvent):void
 	cmbDetalheMunicipio.text=propriedadeSelecionada.municipio.descricao;
 
 	PopUpManager.centerPopUp(this);
+	panelSucesso.visible=true;
 }
 
 /**

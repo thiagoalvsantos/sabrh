@@ -16,6 +16,7 @@
 		<s:RemoteObject id="propriedadeService" fault="onFault(event)" destination="PropriedadeService" showBusyCursor="true">
 			<s:method name="pesquisar" result="{pesquisarPropriedadesResult(event)}"/>
 			<s:method name="salvar" result="{salvarPropriedadeResult(event)}"/>
+			<s:method name="propriedadeExistente" result="{propriedadeExistenteResult(event)}"/>
 		</s:RemoteObject>
 
 		<fx:Array id="val">
@@ -149,7 +150,7 @@
 						<s:DropDownList id="cmbNovoEstado" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
 						<components:TextInputTelefone id="txtNovoTelefone" width="171" tabIndex="4" maxChars="10"/> 
 						<s:HGroup>
-							<s:TextInput id="txtNovoProprietario" maxChars="50" tabIndex="5" width="438" editable="false" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}"/>
+							<s:TextInput id="txtNovoProprietario" maxChars="50" tabIndex="5" width="438" editable="false" click="{abrirConsultarUsuario(txtNovoProprietario,'novo')}"/>
 							<s:Button id="btnNovoBuscar" label="Buscar" click="{abrirConsultarUsuario(txtNovoProprietario,'novo')}" buttonMode="true"/>
 						</s:HGroup>
 					</s:VGroup>
