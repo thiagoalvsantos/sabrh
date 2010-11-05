@@ -37,7 +37,7 @@ public class Usuario implements Serializable {
 	private Long codigo;
 
 	/** O atributo login. */
-	@Column(name = "TX_LOGIN", length = 50, unique = true, nullable = false)
+	@Column(name = "TX_LOGIN", length = 20, unique = true, nullable = false)
 	private String login;
 
 	/** O atributo senha. */
