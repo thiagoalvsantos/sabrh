@@ -26,9 +26,9 @@
 		</s:RemoteObject>
 
 		<fx:Array id="val">
-			<mx:StringValidator id="strValRegistro" source="{txtNovoRegistro}" property="text" required="true" minLength="15" maxLength="20"/>
+			<mx:StringValidator id="strValRegistro" source="{txtNovoRegistro}" property="text" required="true"  maxLength="20"/>
 			<mx:StringValidator id="strValNome" source="{txtNovoNome}" property="text" required="true" minLength="5" maxLength="255"/>
-			<mx:StringValidator id="strValApelido" source="{txtNovoApelido}" property="text" required="true" minLength="5" maxLength="255"/>
+			<mx:StringValidator id="strValApelido" source="{txtNovoApelido}" property="text" required="true" maxLength="255"/>
 			<mx:StringValidator id="strValPropriedade" source="{txtNovoPropriedade}" property="text" required="true"/>
 			<mx:DateValidator id="dateValDataNascimento" source="{txtNovoDataNascimento}" property="text" required="true" allowedFormatChars="/"/>
 		</fx:Array>

@@ -23,7 +23,7 @@
 
 		<mx:Form horizontalCenter="0" verticalCenter="0" dropShadowVisible="true">
 			<mx:FormItem label="Usuário">
-				<mx:TextInput id="txtUsuario" text="thiago" maxChars="20"/>
+				<mx:TextInput id="txtUsuario" text="thiago" maxChars="20" restrict="A-Za-z0-9."/>
 			</mx:FormItem>
 			<mx:FormItem label="Senha">
 				<mx:TextInput displayAsPassword="true" id="txtSenha" text="123456" maxChars="20"/>

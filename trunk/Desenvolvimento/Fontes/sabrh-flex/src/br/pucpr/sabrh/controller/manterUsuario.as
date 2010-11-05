@@ -10,7 +10,6 @@ import mx.rpc.events.FaultEvent;
 import mx.rpc.events.ResultEvent;
 import mx.utils.StringUtil;
 import mx.validators.Validator;
-// login
 import br.pucpr.sabrh.components.ToolTipUtil;
 import br.pucpr.sabrh.components.constantes.ConstantesUtils;
 import br.pucpr.sabrh.entity.Municipio;
@@ -100,15 +99,8 @@ protected function actionBtnNovo():void
 
 }
 
-/**
- * //////////////////////////////////////////////////////
- *
- * 	Eventos de botões
- *
- * //////////////////////////////////////////////////////
- * /
 
-   /**
+/**
  *	Evento botão de pesquisar usuários.
  *
  * @param event
@@ -180,14 +172,6 @@ protected function actionBtnSalvarUsuario():void
 }
 
 /**
- * //////////////////////////////////////////////////////
- *
- * 	Eventos de componentes.
- *
- * //////////////////////////////////////////////////////
- * /
-
-   /**
  * Evento de seleção de estado
  *
  * @param event
@@ -220,7 +204,6 @@ protected function cbmEstadoChange():void
 	}
 
 }
-
 
 /**
  *
