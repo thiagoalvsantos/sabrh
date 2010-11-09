@@ -6,13 +6,13 @@
 	<fx:Declarations>
 
 		<!-- Define custom colors for use as fills. -->
-		<mx:SolidColor id="sc1" color="0x1E90FF" alpha=".5"/>
-		<mx:SolidColor id="sc2" color="0xCCCCCC" alpha=".6"/>
+		<mx:SolidColor id="sc1" color="0x1E90FF" alpha=".7"/>
+		<mx:SolidColor id="sc2" color="0xFF1493" alpha=".7"/>
 		<mx:SolidColor id="sc3" color="0xFFCC66" alpha=".6"/>
 
 		<!-- Define custom Strokes for the columns. -->
-		<mx:Stroke id="s1" color="0x00BFFF" weight="1"/>
-		<mx:Stroke id="s2" color="0xCCCCCC" weight="2"/>
+		<mx:Stroke id="s1" color="0x104E8B" weight="1"/>
+		<mx:Stroke id="s2" color="0xB03060" weight="1"/>
 		<mx:Stroke id="s3" color="0xFFCC66" weight="2"/>
 
 		<s:RemoteObject id="animalService" fault="" destination="AnimalService" showBusyCursor="true">
@@ -73,13 +73,14 @@
 
 	<s:states>
 		<s:State name="statePesquisa"/>
-		<s:State name="stateDetalhe"/>
+		<s:State name="stateDetalheSemClassificacao"/>
+		<s:State name="stateDetalheComClassificacao"/>
 		<s:State name="stateResultado"/>
 		<!-- <s:State name="stateNovo"/>
 			 <s:State name="stateEditar"/> -->
 	</s:states>
 
-	<s:Scroller width="100%" height="100%" x.stateDetalhe="-3" y.stateDetalhe="4">
+	<s:Scroller width="100%" height="100%">
 		<s:Group maxWidth="900" maxHeight="500" width="100%">
 
 			<!--//////////////////////////
@@ -200,7 +201,7 @@
 			<!--//////////////////////////
 				 //	DETALHE DO TOURO
 				 /////////////////////////////-->
-			<s:VGroup id="groupDetalhe" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateDetalhe">
+			<s:VGroup id="groupDetalhe" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateDetalheSemClassificacao,stateDetalheComClassificacao">
 				<s:HGroup horizontalAlign="center" width="100%">
 					<s:HGroup verticalAlign="middle">
 						<s:Label id="lblDetalheRegistroVaca" text="Registro"/>
@@ -313,16 +314,17 @@
 									</s:VGroup>
 								</s:HGroup>
 								<s:HGroup width="100%" horizontalAlign="center">
-									<mx:BarChart id="barChartProvaTouro" height="100%" width="70%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{listaAtributoConformacaoGrafico}">
+									<mx:BarChart id="barChartProvaTouro" height="100%" width="80%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{listaAtributoConformacaoGrafico}">
 										<mx:verticalAxis>
 											<mx:CategoryAxis categoryField="Atributo"/>
 										</mx:verticalAxis>
 										<mx:series>
-											<mx:BarSeries yField="Atributo" xField="Touro" fill="{sc1}" stroke="{s1}"/>
-											<mx:BarSeries yField="Atributo" xField="Vaca" fill="{sc2}" stroke="{s2}"/>
+											<mx:BarSeries id="barSeriesTouro" yField="Atributo" xField="Touro" fill="{sc1}" stroke="{s1}"/>
+											<mx:BarSeries id="barSeriesVaca" yField="Atributo" xField="Vaca" fill="{sc2}" stroke="{s2}" includeIn="stateDetalheComClassificacao"/>
 										</mx:series>
 									</mx:BarChart>
-
+									
+									<mx:Legend dataProvider="{barChartProvaTouro}"/>
 
 								</s:HGroup>
 							</s:VGroup>
