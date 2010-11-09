@@ -119,13 +119,13 @@ public class ProvaTouroDAOImpl implements ProvaTouroDAO {
 		if (filtroAcasalamento.getConfiabilidadeConformacao() >= 0){
 			c.add(Restrictions.ge("confiabilidadeConformacao",
 					filtroAcasalamento.getConfiabilidadeConformacao()));
-			c.addOrder(Order.desc("confiabilidadeConformacao"));
+//			c.addOrder(Order.desc("confiabilidadeConformacao"));
 		}
 
 		if (filtroAcasalamento.getConfiabilidadeProducao() >= 0){
 			c.add(Restrictions.ge("confiabilidadeProducao",
 					filtroAcasalamento.getConfiabilidadeProducao()));
-			c.addOrder(Order.desc("confiabilidadeProducao"));
+//			c.addOrder(Order.desc("confiabilidadeProducao"));
 		}
 
 		for (String atributo : filtroAcasalamento.getListaProducao()) {
