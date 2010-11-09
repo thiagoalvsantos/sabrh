@@ -69,7 +69,7 @@ protected function adicionarElementoLista(nomeAtributo:String, valorTouro:Number
 
 protected function btnClickDetalhe():void
 {
-	currentState=ConstantesUtils.STATE_DETALHE;
+	currentState=ConstantesUtils.STATE_DETALHE+"SemClassificacao";
 
 	provaTouroSelecionado=dataGridResultado.selectedItem as ProvaTouro;
 
@@ -102,10 +102,13 @@ protected function btnClickDetalhe():void
 	listaAtributoConformacaoGrafico=new ArrayCollection();
 	if (classificacaoVacaSelecionada != null)
 	{
-		if (classificacaoVacaSelecionada.classificacaoFinal!="")
+		if (classificacaoVacaSelecionada.classificacaoFinal!=""){
+			currentState=ConstantesUtils.STATE_DETALHE+"ComClassificacao";
 			criarElementosGraficoComClassificacao();
-		else 
+			barSeriesVaca.displayName=classificacaoVacaSelecionada.animal.apelido.toString();
+		} else { 
 			criarElementosGraficoSemClassificacao();
+		}
 		
 		txtDetalheApelidoVaca.text=classificacaoVacaSelecionada.animal.apelido;
 		txtDetalheRegistroVaca.text=classificacaoVacaSelecionada.animal.registro;
@@ -113,9 +116,12 @@ protected function btnClickDetalhe():void
 	else
 	{
 		criarElementosGraficoSemClassificacao();
+		txtDetalheApelidoVaca.text="";
+		txtDetalheRegistroVaca.text="";
 	}
 
 	barChartProvaTouro.setStyle("gutterLeft", 200);
+	barSeriesTouro.displayName=provaTouroSelecionado.animal.apelido.toString();
 	listaAtributoConformacaoGrafico.refresh();
 
 	PopUpManager.centerPopUp(this);
@@ -270,7 +276,7 @@ protected function serviceResultAcasalamentoSalvar(event:ResultEvent):void
  */
 protected function btnClickVoltarPesquisaReprodutor():void
 {
-	currentState=ConstantesUtils.STATE_PESQUISA;
+	currentState=ConstantesUtils.STATE_RESULTADO;
 	PopUpManager.centerPopUp(this);
 }
 	
@@ -336,6 +342,9 @@ protected function btnClickPesquisar():void
 		filtroAcasalamento.femea=classificacaoVacaSelecionada.animal;
 
 	// PRODUÇÃO
+	if (checkBoxQntFilhas.selected)
+		listaProducao.push("quantidadeFilhas");
+	
 	if (checkBoxKgLeite.selected)
 		listaProducao.push("quiloLeite");
 
@@ -345,8 +354,6 @@ protected function btnClickPesquisar():void
 	if (checkBoxPerProteina.selected)
 		listaProducao.push("proteina");
 
-	if (checkBoxQntFilhas.selected)
-		listaProducao.push("quantidadeFilhas");
 
 	// CONFORMAÇÃO
 	for (var i:int=0; i < dataGridConformacaoSelecionado.dataProvider.source.length; i++)
