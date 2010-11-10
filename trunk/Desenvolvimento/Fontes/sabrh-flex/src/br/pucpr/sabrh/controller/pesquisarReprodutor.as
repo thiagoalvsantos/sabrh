@@ -63,15 +63,97 @@ protected function adicionarElementoLista(nomeAtributo:String, valorTouro:Number
 	if (valorVaca == -1)
 		objeto={Atributo: nomeAtributo, Touro: valorTouro};
 	else
-		objeto={Atributo: nomeAtributo, Touro: valorTouro, Vaca: valorVaca};
+		objeto={Atributo: nomeAtributo, Touro: valorTouro, AnimalComparado: valorVaca};
 	lista.addItem(objeto);
+}
+
+protected function btnClickComparar():void
+{
+	currentState=ConstantesUtils.STATE_DETALHE_COMPARACAO;
+	
+	provaTouroSelecionado=dataGridResultado.selectedItems[0] as ProvaTouro;
+	provaTouroSelecionado2=dataGridResultado.selectedItems[1] as ProvaTouro;
+	
+	//Dados Gerais
+	txtDetalheTouroRegistro.text=provaTouroSelecionado.animal.registro;
+	txtDetalheTouroRegistro2.text=provaTouroSelecionado2.animal.registro;
+	var df:DateFormatter=new DateFormatter();
+	df.formatString="DD/MM/YYYY";
+	txtDetalheTouroDataProva.text=df.format(provaTouroSelecionado.dataUltimaAtualizacao);
+	txtDetalheTouroDataProva2.text=df.format(provaTouroSelecionado2.dataUltimaAtualizacao);
+	txtDetalheTouroQtdFilhas.text=provaTouroSelecionado.quantidadeFilhas.toString();
+	txtDetalheTouroQtdFilhas2.text=provaTouroSelecionado2.quantidadeFilhas.toString();
+	txtDetalheTouroApelido.text=provaTouroSelecionado.animal.apelido;
+	txtDetalheTouroApelido2.text=provaTouroSelecionado2.animal.apelido;
+	var precoTemp:String="";
+	for (var i:int=0; i < provaTouroSelecionado.preco.toString().length; i++)
+	{
+		if (provaTouroSelecionado.preco.toString().length - i == 2)
+			precoTemp=precoTemp + "," + provaTouroSelecionado.preco.toString().charAt(i);
+		else
+			precoTemp=precoTemp + provaTouroSelecionado.preco.toString().charAt(i);
+	}
+	txtDetalheTouroPreco.text=currencyFormatter.format(precoTemp);
+	precoTemp="";
+	for (i=0; i < provaTouroSelecionado2.preco.toString().length; i++)
+	{
+		if (provaTouroSelecionado2.preco.toString().length - i == 2)
+			precoTemp=precoTemp + "," + provaTouroSelecionado2.preco.toString().charAt(i);
+		else
+			precoTemp=precoTemp + provaTouroSelecionado2.preco.toString().charAt(i);
+	}
+	txtDetalheTouroPreco2.text=currencyFormatter.format(precoTemp);
+	
+	//Produção
+	txtDetalheTouroPercentualProteina.text=provaTouroSelecionado.proteina.toString();
+	txtDetalheTouroPercentualProteina2.text=provaTouroSelecionado2.proteina.toString();
+	txtDetalheTouroPercentualGordura.text=provaTouroSelecionado.gordura.toString();
+	txtDetalheTouroPercentualGordura2.text=provaTouroSelecionado2.gordura.toString();
+	txtDetalheTouroQuiloLeite.text=provaTouroSelecionado.quiloLeite.toString();
+	txtDetalheTouroQuiloLeite2.text=provaTouroSelecionado2.quiloLeite.toString();
+	txtDetalheTouroConfiabilidadeProducao.text=provaTouroSelecionado.confiabilidadeProducao.toString();
+	txtDetalheTouroConfiabilidadeProducao2.text=provaTouroSelecionado2.confiabilidadeProducao.toString();
+	
+	//Conformação
+	txtDetalheTouroConfiabilidadeConformacao.text=provaTouroSelecionado.confiabilidadeConformacao.toString();
+	txtDetalheTouroConfiabilidadeConformacao2.text=provaTouroSelecionado2.confiabilidadeConformacao.toString();
+	
+	listaAtributoConformacaoGrafico=new ArrayCollection();
+	criarElementosGraficoComComparacao();
+	
+	btnSelecionarTouro.label="Selecionar "+provaTouroSelecionado.animal.apelido.toString();
+	btnSelecionarTouro2.label="Selecionar "+provaTouroSelecionado2.animal.apelido.toString();
+	
+	barChartProvaTouro.setStyle("gutterLeft", 200);
+	barSeriesTouro.displayName=provaTouroSelecionado.animal.apelido.toString();
+	barSeriesTouro2.displayName=provaTouroSelecionado2.animal.apelido.toString();
+	listaAtributoConformacaoGrafico.refresh();
+	
+	PopUpManager.centerPopUp(this);
+}
+
+protected function btnClickSelecionarTouro(valor:int):void
+{
+	if (valor == 1)
+	{
+		var itensSelecionado:Array=dataGridResultado.selectedItems;
+		itensSelecionado.shift();
+		dataGridResultado.selectedItems=itensSelecionado;
+	}
+	else
+	{
+		var itensSelecionados:Array=dataGridResultado.selectedItems;
+		itensSelecionados.pop();
+		dataGridResultado.selectedItems=itensSelecionados;
+	}
+	btnClickDetalhe();
 }
 
 protected function btnClickDetalhe():void
 {
-	currentState=ConstantesUtils.STATE_DETALHE+"SemClassificacao";
+	currentState=ConstantesUtils.STATE_DETALHE_SEM_CLASSIFICACAO;
 
-	provaTouroSelecionado=dataGridResultado.selectedItem as ProvaTouro;
+	provaTouroSelecionado=dataGridResultado.selectedItems[0] as ProvaTouro;
 
 	//Dados Gerais
 	txtDetalheTouroRegistro.text=provaTouroSelecionado.animal.registro;
@@ -103,7 +185,7 @@ protected function btnClickDetalhe():void
 	if (classificacaoVacaSelecionada != null)
 	{
 		if (classificacaoVacaSelecionada.classificacaoFinal!=""){
-			currentState=ConstantesUtils.STATE_DETALHE+"ComClassificacao";
+			currentState=ConstantesUtils.STATE_DETALHE_COM_CLASSIFICACAO;
 			criarElementosGraficoComClassificacao();
 			barSeriesVaca.displayName=classificacaoVacaSelecionada.animal.apelido.toString();
 		} else { 
@@ -116,8 +198,6 @@ protected function btnClickDetalhe():void
 	else
 	{
 		criarElementosGraficoSemClassificacao();
-		txtDetalheApelidoVaca.text="";
-		txtDetalheRegistroVaca.text="";
 	}
 
 	barChartProvaTouro.setStyle("gutterLeft", 200);
@@ -169,6 +249,28 @@ protected function criarElementosGraficoSemClassificacao():void
 	adicionarElementoLista("Ângulo Garupa", provaTouroSelecionado.anguloGarupa, -1, listaAtributoConformacaoGrafico);
 	adicionarElementoLista("Ângulo do Casco", provaTouroSelecionado.anguloCasco, -1, listaAtributoConformacaoGrafico);
 	adicionarElementoLista("Altura Úbere Posterior", provaTouroSelecionado.alturaUberePosterior, -1, listaAtributoConformacaoGrafico);
+}
+
+protected function criarElementosGraficoComComparacao():void
+{
+	adicionarElementoLista("Profundidade do Talão", provaTouroSelecionado.profundidadeTalao, provaTouroSelecionado2.profundidadeTalao, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Profundidade do Úbere", provaTouroSelecionado.profundidadeUbere, provaTouroSelecionado2.profundidadeUbere, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Profundidade Corporal", provaTouroSelecionado.profundidadeCorporal, provaTouroSelecionado2.profundidadeCorporal, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Pernas Posteriores - Vista Posterior", provaTouroSelecionado.pernasPostVistaPost, provaTouroSelecionado2.pernasPostVistaPost, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Pernas Posteriores - Vista Lateral", provaTouroSelecionado.pernasPostVistaLateral, provaTouroSelecionado2.pernasPostVistaLateral, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Ligamento Médio", provaTouroSelecionado.ligamentoMedio, provaTouroSelecionado2.ligamentoMedio, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Largura Úbere Posterior", provaTouroSelecionado.larguraUberePosterior, provaTouroSelecionado2.larguraUberePosterior, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Largura do Peito", provaTouroSelecionado.larguraPeito, provaTouroSelecionado2.larguraPeito, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Largura da Garupa", provaTouroSelecionado.larguraGarupa, provaTouroSelecionado2.larguraGarupa, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Inserção Úbere Anterior", provaTouroSelecionado.insercaoUbereAnterior, provaTouroSelecionado2.insercaoUbereAnterior, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Estatura", provaTouroSelecionado.estatura, provaTouroSelecionado2.estatura, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Comprimento Tetos", provaTouroSelecionado.comprimentoTetos, provaTouroSelecionado2.comprimentoTetos, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Colocação de Tetos Posteriores", provaTouroSelecionado.colocacaoTetosPosteriores, provaTouroSelecionado2.colocacaoTetosPosteriores, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Colocação de Tetos Anteriores", provaTouroSelecionado.colocacaoTetosAnteriores, provaTouroSelecionado2.colocacaoTetosAnteriores, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Angulosidade", provaTouroSelecionado.angulosidade, provaTouroSelecionado2.angulosidade, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Ângulo Garupa", provaTouroSelecionado.anguloGarupa, provaTouroSelecionado2.anguloGarupa, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Ângulo do Casco", provaTouroSelecionado.anguloCasco, provaTouroSelecionado2.anguloCasco, listaAtributoConformacaoGrafico);
+	adicionarElementoLista("Altura Úbere Posterior", provaTouroSelecionado.alturaUberePosterior, provaTouroSelecionado2.alturaUberePosterior, listaAtributoConformacaoGrafico);
 }
 
 /**
