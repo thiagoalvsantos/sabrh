@@ -32,16 +32,16 @@ public class Usuario implements Serializable {
 	/** O atributo codigo. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(initialValue = 1, sequenceName = "SEQ_USUARIO", name = "codigo")
+	@SequenceGenerator(initialValue = 0, sequenceName = "SEQ_USUARIO", name = "codigo")
 	@Column(name = "CD_CODIGO", length = 8)
-	private Long codigo;
+	private long codigo;
 
 	/** O atributo login. */
 	@Column(name = "TX_LOGIN", length = 20, unique = true, nullable = false)
 	private String login;
 
 	/** O atributo senha. */
-	@Column(name = "TX_SENHA", length = 50, nullable = false)
+	@Column(name = "TX_SENHA", length = 24, nullable = false)
 	private String senha;
 
 	/** O atributo status. */
@@ -99,7 +99,7 @@ public class Usuario implements Serializable {
 	 * @return the codigo
 	 * @see Usuario#codigo.
 	 */
-	public Long getCodigo() {
+	public long getCodigo() {
 		return codigo;
 	}
 
@@ -110,7 +110,7 @@ public class Usuario implements Serializable {
 	 *            - codigo.
 	 * @see Usuario#codigo.
 	 */
-	public void setCodigo(Long codigo) {
+	public void setCodigo(long codigo) {
 		this.codigo = codigo;
 	}
 
