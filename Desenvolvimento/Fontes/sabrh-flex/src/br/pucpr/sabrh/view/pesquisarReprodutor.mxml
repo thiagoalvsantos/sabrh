@@ -7,13 +7,13 @@
 
 		<!-- Define custom colors for use as fills. -->
 		<mx:SolidColor id="sc1" color="0x1E90FF" alpha=".7"/>
-		<mx:SolidColor id="sc2" color="0xFF1493" alpha=".7"/>
-		<mx:SolidColor id="sc3" color="0xFFCC66" alpha=".6"/>
+		<mx:SolidColor id="sc2" color="0xDB7093" alpha=".8"/>
+		<mx:SolidColor id="sc3" color="0x00CD66" alpha=".8"/>
 
 		<!-- Define custom Strokes for the columns. -->
 		<mx:Stroke id="s1" color="0x104E8B" weight="1"/>
 		<mx:Stroke id="s2" color="0xB03060" weight="1"/>
-		<mx:Stroke id="s3" color="0xFFCC66" weight="2"/>
+		<mx:Stroke id="s3" color="0x2E8B57" weight="1"/>
 
 		<s:RemoteObject id="animalService" fault="" destination="AnimalService" showBusyCursor="true">
 			<s:method name="pesquisar" result=""/>
@@ -67,6 +67,7 @@
 		<s:ArrayCollection id="listaAtributoConformacaoGrafico"/>
 
 		<entity:ProvaTouro id="provaTouroSelecionado"/>
+		<entity:ProvaTouro id="provaTouroSelecionado2"/>
 
 	</fx:Declarations>
 
@@ -75,6 +76,7 @@
 		<s:State name="statePesquisa"/>
 		<s:State name="stateDetalheSemClassificacao"/>
 		<s:State name="stateDetalheComClassificacao"/>
+		<s:State name="stateDetalheComparacao"/>
 		<s:State name="stateResultado"/>
 		<!-- <s:State name="stateNovo"/>
 			 <s:State name="stateEditar"/> -->
@@ -168,7 +170,7 @@
 						<s:VGroup horizontalAlign="right">
 							<s:HGroup>
 								<s:Button id="btnDetalhe" label="Detalhe" click="{btnClickDetalhe()}" buttonMode="true" includeIn="stateResultado" enabled="false" tabIndex="15"/>
-								<s:Button id="btnComparar" label="Comparar Reprodutores" click="" buttonMode="true" includeIn="stateResultado" enabled="false" tabIndex="16"/>
+								<s:Button id="btnComparar" label="Comparar Reprodutores" click="{btnClickComparar()}" buttonMode="true" includeIn="stateResultado" enabled="false" tabIndex="16"/>
 							</s:HGroup>
 						</s:VGroup>
 					</s:controlBarContent>
@@ -201,8 +203,8 @@
 			<!--//////////////////////////
 				 //	DETALHE DO TOURO
 				 /////////////////////////////-->
-			<s:VGroup id="groupDetalhe" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateDetalheSemClassificacao,stateDetalheComClassificacao">
-				<s:HGroup horizontalAlign="center" width="100%">
+			<s:VGroup id="groupDetalhe" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateDetalheSemClassificacao,stateDetalheComClassificacao,stateDetalheComparacao">
+				<s:HGroup horizontalAlign="center" width="100%" includeIn="stateDetalheComClassificacao">
 					<s:HGroup verticalAlign="middle">
 						<s:Label id="lblDetalheRegistroVaca" text="Registro"/>
 						<s:TextInput id="txtDetalheRegistroVaca" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
@@ -215,7 +217,7 @@
 				<s:Panel width="100%" height="100%" title="Detalhe do Touro">
 					<s:VGroup width="100%" height="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="10">
 						<!-- Dados Gerais -->
-						<s:Panel width="100%" height="95" title="Dados Gerais">
+						<s:Panel width="100%" height="95" title="Dados Gerais" height.stateDetalheComparacao="150">
 							<s:VGroup width="100%" paddingBottom="10" paddingLeft="5" paddingRight="5" paddingTop="5">
 								<s:HGroup>
 									<s:HGroup width="360" verticalAlign="middle">
@@ -223,7 +225,8 @@
 											<s:Label id="lblDetalheTouroRegistro" text="Registro"/>
 										</s:VGroup>
 										<s:VGroup y="10" x="220">
-											<s:TextInput id="txtDetalheTouroRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroRegistro" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" borderColor.stateDetalheComparacao="#1E90FF" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroRegistro2" width="150" maxChars="20" editable="false" borderColor="#00CD66" tabFocusEnabled="false" includeIn="stateDetalheComparacao"/>
 										</s:VGroup>
 									</s:HGroup>
 									<s:HGroup verticalAlign="middle">
@@ -231,7 +234,8 @@
 											<s:Label id="lblDetalheTouroDataProva" text="Data Prova Touro"/>
 										</s:VGroup>
 										<s:VGroup y="10" x="220">
-											<s:TextInput id="txtDetalheTouroDataProva" width="100" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroDataProva" width="100" editable="false" borderColor="#D3D3D3" borderColor.stateDetalheComparacao="#1E90FF" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroDataProva2" width="100" editable="false" borderColor="#00CD66" tabFocusEnabled="false" includeIn="stateDetalheComparacao"/>
 										</s:VGroup>
 									</s:HGroup>
 									<s:HGroup verticalAlign="middle">
@@ -239,7 +243,8 @@
 											<s:Label id="lblDetalheTouroQtdFilhas" text="Qtd. Filhas"/>
 										</s:VGroup>
 										<s:VGroup y="10" x="220">
-											<s:TextInput id="txtDetalheTouroQtdFilhas" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroQtdFilhas" width="50" editable="false" borderColor="#D3D3D3" borderColor.stateDetalheComparacao="#1E90FF" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroQtdFilhas2" width="50" editable="false" borderColor="#00CD66" tabFocusEnabled="false" includeIn="stateDetalheComparacao"/>
 										</s:VGroup>
 									</s:HGroup>
 								</s:HGroup>
@@ -249,7 +254,8 @@
 											<s:Label id="lblDetalheTouroApelido" text="Apelido"/>
 										</s:VGroup>
 										<s:VGroup y="10" x="220">
-											<s:TextInput id="txtDetalheTouroApelido" width="199" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroApelido" width="199" editable="false" borderColor="#D3D3D3" borderColor.stateDetalheComparacao="#1E90FF" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroApelido2" width="199" editable="false" borderColor="#00CD66" tabFocusEnabled="false" includeIn="stateDetalheComparacao"/>
 										</s:VGroup>
 									</s:HGroup>
 									<s:HGroup verticalAlign="middle">
@@ -257,7 +263,8 @@
 											<s:Label id="lblDetalheTouroPreco" text="Preço"/>
 										</s:VGroup>
 										<s:VGroup y="10" x="220">
-											<s:TextInput id="txtDetalheTouroPreco" width="100" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroPreco" width="100" editable="false" borderColor="#D3D3D3" borderColor.stateDetalheComparacao="#1E90FF" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroPreco2" width="100" editable="false" borderColor="#00CD66" tabFocusEnabled="false" includeIn="stateDetalheComparacao"/>
 										</s:VGroup>
 									</s:HGroup>
 								</s:HGroup>
@@ -271,34 +278,38 @@
 										<s:VGroup x="10" y="15" gap="16" width="155">
 											<s:Label id="lblDetalheTouroPercentualProteina" text="Percentual de Proteina"/>
 										</s:VGroup>
-										<s:VGroup y="10" x="220">
-											<s:TextInput id="txtDetalheTouroPercentualProteina" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
-										</s:VGroup>
+										<s:HGroup y="10" x="220">
+											<s:TextInput id="txtDetalheTouroPercentualProteina" width="50" editable="false" borderColor="#D3D3D3" borderColor.stateDetalheComparacao="#1E90FF" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroPercentualProteina2" width="50" editable="false" borderColor="#00CD66" tabFocusEnabled="false" includeIn="stateDetalheComparacao"/>
+										</s:HGroup>
 									</s:HGroup>
 									<s:HGroup width="239" verticalAlign="middle">
 										<s:VGroup x="10" y="15" gap="16" width="132">
 											<s:Label id="lblDetalheTouroPercentualGordura" text="Percentual de Gordura"/>
 										</s:VGroup>
-										<s:VGroup y="10" x="220">
-											<s:TextInput id="txtDetalheTouroPercentualGordura" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
-										</s:VGroup>
+										<s:HGroup y="10" x="220">
+											<s:TextInput id="txtDetalheTouroPercentualGordura" width="49" editable="false" borderColor="#D3D3D3" borderColor.stateDetalheComparacao="#1E90FF" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroPercentualGordura2" width="45" editable="false" borderColor="#00CD66" tabFocusEnabled="false" includeIn="stateDetalheComparacao"/>
+										</s:HGroup>
 									</s:HGroup>
 									<s:HGroup verticalAlign="middle">
 										<s:VGroup x="10" y="15" gap="16" width="90">
 											<s:Label id="lblDetalheTouroQuiloLeite" text="Quilos de leite"/>
 										</s:VGroup>
-										<s:VGroup y="10" x="220">
-											<s:TextInput id="txtDetalheTouroQuiloLeite" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
-										</s:VGroup>
+										<s:HGroup y="10" x="220">
+											<s:TextInput id="txtDetalheTouroQuiloLeite" width="50" editable="false" borderColor="#D3D3D3" borderColor.stateDetalheComparacao="#1E90FF" tabFocusEnabled="false"/>
+											<s:TextInput id="txtDetalheTouroQuiloLeite2" width="50" editable="false" borderColor="#00CD66" tabFocusEnabled="false" includeIn="stateDetalheComparacao"/>
+										</s:HGroup>
 									</s:HGroup>
 								</s:HGroup>
 								<s:HGroup verticalAlign="middle">
 									<s:VGroup x="10" y="15" gap="16" width="155">
 										<s:Label id="lblDetalheTouroConfiabilidadeProducao" text="Confiabilidade de Produção"/>
 									</s:VGroup>
-									<s:VGroup y="10" x="220">
-										<s:TextInput id="txtDetalheTouroConfiabilidadeProducao" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
-									</s:VGroup>
+									<s:HGroup y="10" x="220">
+										<s:TextInput id="txtDetalheTouroConfiabilidadeProducao" width="50" editable="false" borderColor="#D3D3D3" borderColor.stateDetalheComparacao="#1E90FF" tabFocusEnabled="false"/>
+										<s:TextInput id="txtDetalheTouroConfiabilidadeProducao2" width="50" editable="false" borderColor="#00CD66" tabFocusEnabled="false" includeIn="stateDetalheComparacao"/>
+									</s:HGroup>
 								</s:HGroup>
 							</s:VGroup>
 						</s:Panel>
@@ -309,9 +320,10 @@
 									<s:VGroup x="10" y="15" gap="16" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="10" width="200">
 										<s:Label id="lblDetalheTouroConfiabilidadeConformacao" text="Confiabilidade de Conformação"/>
 									</s:VGroup>
-									<s:VGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-										<s:TextInput id="txtDetalheTouroConfiabilidadeConformacao" width="50" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
-									</s:VGroup>
+									<s:HGroup y="10" x="220" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
+										<s:TextInput id="txtDetalheTouroConfiabilidadeConformacao" width="50" editable="false" borderColor="#D3D3D3" borderColor.stateDetalheComparacao="#1E90FF" tabFocusEnabled="false"/>
+										<s:TextInput id="txtDetalheTouroConfiabilidadeConformacao2" width="50" editable="false" borderColor="#00CD66" tabFocusEnabled="false" includeIn="stateDetalheComparacao"/>
+									</s:HGroup>
 								</s:HGroup>
 								<s:HGroup width="100%" horizontalAlign="center">
 									<mx:BarChart id="barChartProvaTouro" height="100%" width="80%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{listaAtributoConformacaoGrafico}">
@@ -320,7 +332,8 @@
 										</mx:verticalAxis>
 										<mx:series>
 											<mx:BarSeries id="barSeriesTouro" yField="Atributo" xField="Touro" fill="{sc1}" stroke="{s1}"/>
-											<mx:BarSeries id="barSeriesVaca" yField="Atributo" xField="Vaca" fill="{sc2}" stroke="{s2}" includeIn="stateDetalheComClassificacao"/>
+											<mx:BarSeries id="barSeriesVaca" yField="Atributo" xField="AnimalComparado" fill="{sc2}" stroke="{s2}" includeIn="stateDetalheComClassificacao"/>
+											<mx:BarSeries id="barSeriesTouro2" yField="Atributo" xField="AnimalComparado" fill="{sc3}" stroke="{s3}" includeIn="stateDetalheComparacao"/>
 										</mx:series>
 									</mx:BarChart>
 									
@@ -333,7 +346,9 @@
 
 					<s:controlBarContent>
 						<s:Button label="Voltar" click="{btnClickVoltarPesquisaReprodutor()}" buttonMode="true" tabIndex="34"/>
-						<s:Button label="Acasalar" click="{btnClickAcasalar()}" buttonMode="true" tabIndex="32"/>
+						<s:Button id="btnSelecionarTouro" label="Selecionar Touro" click="{btnClickSelecionarTouro(0)}" buttonMode="true" tabIndex="34" includeIn="stateDetalheComparacao"/>
+						<s:Button id="btnSelecionarTouro2" label="Selecionar Touro" click="{btnClickSelecionarTouro(1)}" buttonMode="true" tabIndex="34" includeIn="stateDetalheComparacao"/>
+						<s:Button label="Acasalar" click="{btnClickAcasalar()}" buttonMode="true" tabIndex="32" includeIn="stateDetalheComClassificacao, stateDetalheSemClassificacao"/>
 					</s:controlBarContent>
 				</s:Panel>
 			</s:VGroup>
