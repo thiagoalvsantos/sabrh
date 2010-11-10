@@ -72,7 +72,7 @@
 				<s:Label id="lblPesquisaMunicipio" x="245" y="45" text="Município"/>
 				<s:Label id="lblPesquisaPerfil" x="10" y="75" text="Perfil"/>
 				<s:Label id="lblPesquisaStatus" x="245" y="75" text="Status"/>
-				<s:TextInput id="txtPesquisaNome" x="60" y="10" width="514" tabIndex.statePesquisa="1"/>
+				<s:TextInput id="txtPesquisaNome" x="60" y="10" width="514" tabIndex.statePesquisa="1" maxChars="80"/>
 				<s:DropDownList id="cmbPesquisaEstado" x="60" y="40" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex.statePesquisa="2"/>
 				<s:DropDownList id="cmbPesquisaMunicipio" x="310" y="40" width="264" enabled="false" labelField="descricao" tabIndex.statePesquisa="3"/>
 				<s:DropDownList id="cmbPesquisaPerfil" x="60" y="70" width="171" tabIndex.statePesquisa="4"/>
@@ -141,12 +141,12 @@
 					</s:VGroup>
 
 					<s:VGroup x="70" y="10">
-						<s:TextInput id="txtNovoNome" width="514" maxChars="80" tabIndex="1" restrict="A-Za-zá-úÁ=Ú."/>
+						<s:TextInput id="txtNovoNome" width="514" maxChars="80" tabIndex="1" restrict="A-Za-zá-úÁ=Ú. "/>
 						<s:DropDownList id="cmbNovoEstado" width="171" labelField="descricao" change="cbmEstadoChange()" tabIndex="2"/>
 						<s:DropDownList id="cmbNovoPerfil" width="171" tabIndex="4" enabled.stateEditar="false"/>
 						<components:TextInputCPF id="txtNovoCPF" width="171" tabIndex="5" enabled.stateEditar="false"/>
 						<s:TextInput id="txtNovoLogin" width="171" maxChars="20" tabIndex="6" enabled.stateEditar="false" restrict="A-Za-z0-9."/>
-						<s:TextInput id="txtNovoSenha" width="171" displayAsPassword="true" maxChars="30" tabIndex="8"/>
+						<s:TextInput id="txtNovoSenha" width="171" displayAsPassword="true" maxChars="20" tabIndex="8"/>
 						<s:TextInput id="txtNovoEmail" width="514" tabIndex="10" maxChars="80"/>
 					</s:VGroup>
 
@@ -166,7 +166,7 @@
 						<s:HGroup verticalAlign="middle">
 							<s:Label id="lblNovoConfirmacaoSenha" text="Confirmar Senha"/>
 							<s:Label text="*" color="#B22222" fontWeight="bold"/>
-							<s:TextInput id="txtNovoConfirmarSenha" width="219" displayAsPassword="true" maxChars="30" tabIndex="9"/>
+							<s:TextInput id="txtNovoConfirmarSenha" width="219" displayAsPassword="true" maxChars="20" tabIndex="9"/>
 						</s:HGroup>
 					</s:VGroup>
 				</mx:Canvas>
