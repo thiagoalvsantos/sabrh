@@ -335,8 +335,6 @@ protected function inserirUsuarioResult(event:ResultEvent):void
 {
 	currentState=ConstantesUtils.STATE_DETALHE;
 
-	panelSucesso.visible=true;
-
 	usuarioSelecionado=event.result as Usuario;
 
 	txtDetalheCPF.text=cpfFormatter.format(usuarioSelecionado.cpf);
@@ -353,6 +351,8 @@ protected function inserirUsuarioResult(event:ResultEvent):void
 	{
 		FlexGlobals.topLevelApplication.user=usuarioSelecionado;
 	}
+
+	panelSucesso.visible=true;
 }
 
 /**
