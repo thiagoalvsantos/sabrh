@@ -113,7 +113,7 @@ public class ClassificacaoLinearBusiness implements ClassificacaoLinearService {
 		ClassificacaoLinear classificacaoLinearAnimal = new ClassificacaoLinear();
 		do{
 			classificacaoLinearAnimal=pesquisarUltimaClassificacao(animal);
-			listaClassificacao.add(classificacaoLinearAnimal);
+			listaClassificacao.add(0, classificacaoLinearAnimal);
 			animal=classificacaoLinearAnimal.getAnimal().getMae();
 		}while(!animal.getRegistro().equals("000000000000000"));
 		
