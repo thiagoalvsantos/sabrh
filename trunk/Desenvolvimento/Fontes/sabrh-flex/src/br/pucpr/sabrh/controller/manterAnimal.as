@@ -148,6 +148,96 @@ protected function btnClickAcasalar():void
 	classificacaoLinearService.pesquisarUltimaClassificacao(animalSelecionado);
 }
 
+protected function btnClickGenealogia():void
+{
+	currentState=ConstantesUtils.STATE_GENEALOGIA;
+	//ANIMAL
+	txtGenealogiaAnimalNome.text=animalSelecionado.nome;
+	txtGenealogiaAnimalRegistro.text=animalSelecionado.registro;
+	
+	//PAI
+	if (animalSelecionado.pai.registro=="000000000000000" || animalSelecionado.pai.registro=="000000000000001")
+	{
+		txtGenealogiaPaiNome.text="************************";
+		txtGenealogiaPaiRegistro.text="************************";
+		
+		txtGenealogiaMaePaiNome.text="************************";
+		txtGenealogiaMaePaiRegistro.text="************************";
+		txtGenealogiaPaiPaiNome.text="************************";
+		txtGenealogiaPaiPaiRegistro.text="************************";
+	}
+	else
+	{
+		txtGenealogiaPaiNome.text=animalSelecionado.pai.nome;
+		txtGenealogiaPaiRegistro.text=animalSelecionado.pai.registro;
+		
+		if (animalSelecionado.pai.pai.registro=="000000000000000" || animalSelecionado.pai.pai.registro=="000000000000001")
+		{
+			txtGenealogiaPaiPaiNome.text="************************";
+			txtGenealogiaPaiPaiRegistro.text="************************";
+		}
+		else
+		{
+			txtGenealogiaPaiPaiNome.text=animalSelecionado.pai.pai.nome;
+			txtGenealogiaPaiPaiRegistro.text=animalSelecionado.pai.pai.registro;
+		}
+		
+		if (animalSelecionado.pai.mae.registro=="000000000000000" || animalSelecionado.pai.mae.registro=="000000000000001")
+		{
+			txtGenealogiaMaePaiNome.text="************************";
+			txtGenealogiaMaePaiRegistro.text="************************";
+		}
+		else
+		{
+			txtGenealogiaMaePaiNome.text=animalSelecionado.pai.mae.nome;
+			txtGenealogiaMaePaiRegistro.text=animalSelecionado.pai.mae.registro;
+		}
+		
+	}
+	
+	//MAE
+	if (animalSelecionado.mae.registro=="000000000000000" || animalSelecionado.mae.registro=="000000000000001")
+	{
+		txtGenealogiaMaeNome.text="************************";
+		txtGenealogiaMaeRegistro.text="************************";
+		
+		txtGenealogiaMaeMaeNome.text="************************";
+		txtGenealogiaMaeMaeRegistro.text="************************";
+		txtGenealogiaPaiMaeNome.text="************************";
+		txtGenealogiaPaiMaeRegistro.text="************************";
+	}
+	else
+	{
+		txtGenealogiaMaeNome.text=animalSelecionado.mae.nome;
+		txtGenealogiaMaeRegistro.text=animalSelecionado.mae.registro;
+		
+		if (animalSelecionado.mae.pai.registro=="000000000000000" || animalSelecionado.mae.pai.registro=="000000000000001")
+		{
+			txtGenealogiaPaiMaeNome.text="************************";
+			txtGenealogiaPaiMaeRegistro.text="************************";
+		}
+		else
+		{
+			txtGenealogiaPaiMaeNome.text=animalSelecionado.mae.pai.nome;
+			txtGenealogiaPaiMaeRegistro.text=animalSelecionado.mae.pai.registro;
+		}
+		
+		if (animalSelecionado.mae.mae.registro=="000000000000000" || animalSelecionado.mae.mae.registro=="000000000000001")
+		{
+			txtGenealogiaMaeMaeNome.text="************************";
+			txtGenealogiaMaeMaeRegistro.text="************************";
+		}
+		else
+		{
+			txtGenealogiaMaeMaeNome.text=animalSelecionado.mae.mae.nome;
+			txtGenealogiaMaeMaeRegistro.text=animalSelecionado.mae.mae.registro;
+		}
+		
+	}
+	
+	PopUpManager.centerPopUp(this);
+}
+
 protected function btnClickClassificacaoLinear(event:MouseEvent):void
 {
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
