@@ -10,9 +10,6 @@
 			<s:method name="salvar" result="{serviceResultAnimalSalvar(event)}"/>
 			<s:method name="recuperarAnimalPadrao" result="{serviceResultRecuperarAnimalPadrao(event)}"/>
 		</s:RemoteObject>
-		<s:RemoteObject id="statusService" fault="onFault(event)" destination="StatusService" showBusyCursor="true">
-			<s:method name="listarStatusFemea" result="{listarStatusFemeaResult(event)}"/>
-		</s:RemoteObject>
 		<s:RemoteObject id="classificacaoLinearService" fault="onFault(event)" destination="ClassificacaoLinearService" showBusyCursor="true">
 			<s:method name="salvar" result="{serviceResultSalvarClassificacao(event)}"/>
 			<s:method name="pesquisar" result="{serviceResultPesquisarClassificacaoLinear(event)}"/>
@@ -26,7 +23,7 @@
 		</s:RemoteObject>
 
 		<fx:Array id="val">
-			<mx:StringValidator id="strValRegistro" source="{txtNovoRegistro}" property="text" required="true"  maxLength="20"/>
+			<mx:StringValidator id="strValRegistro" source="{txtNovoRegistro}" property="text" required="true" maxLength="20"/>
 			<mx:StringValidator id="strValNome" source="{txtNovoNome}" property="text" required="true" minLength="5" maxLength="255"/>
 			<mx:StringValidator id="strValApelido" source="{txtNovoApelido}" property="text" required="true" maxLength="255"/>
 			<mx:StringValidator id="strValPropriedade" source="{txtNovoPropriedade}" property="text" required="true"/>
@@ -102,11 +99,9 @@
 			<mx:NumberValidator id="nbrValProvaTouroConfiabilidadeConformacao" source="{txtProvaTouroConfiabilidadeConformacao}" property="text" required="true" minValue="0" maxValue="100"/>
 		</fx:Array>
 
-		<mx:NumberValidator id="numValStatusFemea" enabled="false" source="{cmbNovoStatusFemea}" property="selectedIndex" required="true" minValue="1" lowerThanMinError="Este campo é obrigatório" triggerEvent="change"/>
-
 		<mx:CurrencyFormatter id="currencyFormatter" currencySymbol="R$" precision="2" decimalSeparatorFrom="," decimalSeparatorTo="," useThousandsSeparator="true" thousandsSeparatorFrom="." thousandsSeparatorTo="." useNegativeSign="false"/>
-		<mx:CurrencyFormatter id="currencyFormatterWithoutCurrency"  precision="2" decimalSeparatorFrom="," decimalSeparatorTo="," useThousandsSeparator="true" thousandsSeparatorFrom="." thousandsSeparatorTo="." useNegativeSign="false"/>
-		
+		<mx:CurrencyFormatter id="currencyFormatterWithoutCurrency" precision="2" decimalSeparatorFrom="," decimalSeparatorTo="," useThousandsSeparator="true" thousandsSeparatorFrom="." thousandsSeparatorTo="." useNegativeSign="false"/>
+
 		<s:RadioButtonGroup id="radioGroupNovoSexo" change="radioChangeNovoSexo()"/>
 		<s:RadioButtonGroup id="radioGroupDetalheSexo"/>
 
@@ -254,11 +249,7 @@
 								<s:HGroup verticalAlign="middle">
 									<mx:DateField id="txtNovoDataNascimento" yearNavigationEnabled="true" width="170" tabIndex="7"/>
 									<mx:Spacer width="15"/>
-									<s:HGroup id="novoStatusFemea" verticalAlign="middle" visible="false">
-										<s:Label id="lblNovoStatus" text="Status"/>
-										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										<s:DropDownList id="cmbNovoStatusFemea" width="193" tabIndex="8"/>
-									</s:HGroup>
+									<s:CheckBox label="Descarte" id="checkBoxNovoDescarte"/>
 								</s:HGroup>
 								<s:HGroup>
 									<s:RadioButton label="Macho" groupName="radioGroupNovoSexo" value="MACHO" selected="true" tabIndex="9" enabled.stateEditar="false"/>
@@ -331,7 +322,7 @@
 						</mx:Canvas>
 					</s:VGroup>
 					<s:controlBarContent>
-						<s:Button label="Editar" click="{editarAnimal()}" buttonMode="true"/>
+						<s:Button label="Editar" click="{btnClickEditarAnimal()}" buttonMode="true"/>
 						<s:Button label="Voltar" click="{voltarPesquisa()}" buttonMode="true"/>
 						<s:Button buttonMode="true" id="btnClassificacaoProva" visible="false"/>
 						<s:Button label="Acasalar" buttonMode="true" id="btnAcasalar" visible="false" click="{btnClickAcasalar()}"/>
@@ -658,7 +649,7 @@
 										<mx:Spacer width="30"/>
 										<s:Label id="lblClassificacaoClassificacaoFinal" text="Classificação" fontWeight="bold"/>
 										<s:Label text="*" color="#B22222" fontWeight="bold"/>
-										<s:TextInput id="txtClassificacaoClassificacaoFinal" width="50" maxChars="4" tabIndex="31"/>
+										<s:TextInput id="txtClassificacaoClassificacaoFinal" width="50" maxChars="3" tabIndex="31"/>
 									</s:HGroup>
 								</s:BorderContainer>
 							</s:VGroup>
@@ -744,12 +735,12 @@
 									<s:TextInput id="txtProvaTouroPreco" width="100" restrict="0-9,." maxChars="7" tabIndex="3" focusOut="{currencyFormatter.format()}">
 										<s:focusOut>
 											<![CDATA[
-											txtProvaTouroPreco.text = currencyFormatter.format(txtProvaTouroPreco.text);
+												txtProvaTouroPreco.text=currencyFormatter.format(txtProvaTouroPreco.text);
 											]]>
 										</s:focusOut>
 										<s:focusIn>
 											<![CDATA[
-											txtProvaTouroPreco.text = currencyFormatterWithoutCurrency.format(txtProvaTouroPreco.text);
+												txtProvaTouroPreco.text=currencyFormatterWithoutCurrency.format(txtProvaTouroPreco.text);
 											]]>
 										</s:focusIn>
 
