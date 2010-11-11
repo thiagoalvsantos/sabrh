@@ -33,6 +33,8 @@ public function resultConsultarAnimal(atributoDestino:TextInput, tipoConsulta:St
 		atributoDestino.text=animal.apelido;
 		txtPesquisaRegistroVaca.text=animal.registro;
 		classificacaoLinearService.pesquisarUltimaClassificacao(animal);
+		currentState=ConstantesUtils.STATE_PESQUISA;
+		PopUpManager.centerPopUp(this);
 	}
 
 }
@@ -353,7 +355,10 @@ public function resultAlertSalvarAcasalamento(event:CloseEvent):void
 protected function salvarAcasalamento():void
 {
 		var acasalamento:Acasalamento = new Acasalamento();
-		acasalamento.classificacaoLinear=classificacaoVacaSelecionada;
+		if (classificacaoVacaSelecionada.dataClassificacao == null)
+			acasalamento.classificacaoLinear=null;
+		else
+			acasalamento.classificacaoLinear=classificacaoVacaSelecionada;
 		acasalamento.femea=classificacaoVacaSelecionada.animal;
 		acasalamento.macho=provaTouroSelecionado.animal;
 		acasalamento.provaTouro=provaTouroSelecionado;
