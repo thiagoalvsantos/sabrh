@@ -22,6 +22,7 @@ package br.pucpr.sabrh.components.constantes
 		public static const STATE_RESULTADO:String="stateResultado";
 		public static const STATE_DETALHE:String="stateDetalhe";
 		public static const STATE_EDITAR:String="stateEditar";
+		public static const STATE_GENEALOGIA:String="stateGenealogia";
 		public static const STATE_CLASSIFICACAO_LINEAR_LISTA:String="stateClassificacaoLinearListar";
 		public static const STATE_CLASSIFICACAO_LINEAR_EDITAR:String="stateClassificacaoLinearEditar";
 		public static const STATE_PROVA_TOURO_LISTA:String="stateProvaTouroListar";
