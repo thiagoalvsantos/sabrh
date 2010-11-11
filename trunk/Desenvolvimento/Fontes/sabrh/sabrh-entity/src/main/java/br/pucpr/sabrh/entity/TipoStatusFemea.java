@@ -13,9 +13,6 @@ public enum TipoStatusFemea {
 
 	/** O atributo GESTACAO. */
 	GESTACAO,
-
-	/** O atributo AMAMENTACAO. */
-	AMAMENTACAO,
 	
 	/** O atributo DESCARTE. */
 	DESCARTE;
