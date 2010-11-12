@@ -154,13 +154,13 @@ protected function btnClickGenealogia():void
 	//ANIMAL
 	txtGenealogiaAnimalNome.text=animalSelecionado.nome;
 	txtGenealogiaAnimalRegistro.text=animalSelecionado.registro;
-	
+
 	//PAI
-	if (animalSelecionado.pai.registro=="000000000000000" || animalSelecionado.pai.registro=="000000000000001")
+	if (animalSelecionado.pai.registro == "000000000000000" || animalSelecionado.pai.registro == "000000000000001")
 	{
 		txtGenealogiaPaiNome.text="************************";
 		txtGenealogiaPaiRegistro.text="************************";
-		
+
 		txtGenealogiaMaePaiNome.text="************************";
 		txtGenealogiaMaePaiRegistro.text="************************";
 		txtGenealogiaPaiPaiNome.text="************************";
@@ -170,8 +170,8 @@ protected function btnClickGenealogia():void
 	{
 		txtGenealogiaPaiNome.text=animalSelecionado.pai.nome;
 		txtGenealogiaPaiRegistro.text=animalSelecionado.pai.registro;
-		
-		if (animalSelecionado.pai.pai.registro=="000000000000000" || animalSelecionado.pai.pai.registro=="000000000000001")
+
+		if (animalSelecionado.pai.pai.registro == "000000000000000" || animalSelecionado.pai.pai.registro == "000000000000001")
 		{
 			txtGenealogiaPaiPaiNome.text="************************";
 			txtGenealogiaPaiPaiRegistro.text="************************";
@@ -181,8 +181,8 @@ protected function btnClickGenealogia():void
 			txtGenealogiaPaiPaiNome.text=animalSelecionado.pai.pai.nome;
 			txtGenealogiaPaiPaiRegistro.text=animalSelecionado.pai.pai.registro;
 		}
-		
-		if (animalSelecionado.pai.mae.registro=="000000000000000" || animalSelecionado.pai.mae.registro=="000000000000001")
+
+		if (animalSelecionado.pai.mae.registro == "000000000000000" || animalSelecionado.pai.mae.registro == "000000000000001")
 		{
 			txtGenealogiaMaePaiNome.text="************************";
 			txtGenealogiaMaePaiRegistro.text="************************";
@@ -192,15 +192,15 @@ protected function btnClickGenealogia():void
 			txtGenealogiaMaePaiNome.text=animalSelecionado.pai.mae.nome;
 			txtGenealogiaMaePaiRegistro.text=animalSelecionado.pai.mae.registro;
 		}
-		
+
 	}
-	
+
 	//MAE
-	if (animalSelecionado.mae.registro=="000000000000000" || animalSelecionado.mae.registro=="000000000000001")
+	if (animalSelecionado.mae.registro == "000000000000000" || animalSelecionado.mae.registro == "000000000000001")
 	{
 		txtGenealogiaMaeNome.text="************************";
 		txtGenealogiaMaeRegistro.text="************************";
-		
+
 		txtGenealogiaMaeMaeNome.text="************************";
 		txtGenealogiaMaeMaeRegistro.text="************************";
 		txtGenealogiaPaiMaeNome.text="************************";
@@ -210,8 +210,8 @@ protected function btnClickGenealogia():void
 	{
 		txtGenealogiaMaeNome.text=animalSelecionado.mae.nome;
 		txtGenealogiaMaeRegistro.text=animalSelecionado.mae.registro;
-		
-		if (animalSelecionado.mae.pai.registro=="000000000000000" || animalSelecionado.mae.pai.registro=="000000000000001")
+
+		if (animalSelecionado.mae.pai.registro == "000000000000000" || animalSelecionado.mae.pai.registro == "000000000000001")
 		{
 			txtGenealogiaPaiMaeNome.text="************************";
 			txtGenealogiaPaiMaeRegistro.text="************************";
@@ -221,8 +221,8 @@ protected function btnClickGenealogia():void
 			txtGenealogiaPaiMaeNome.text=animalSelecionado.mae.pai.nome;
 			txtGenealogiaPaiMaeRegistro.text=animalSelecionado.mae.pai.registro;
 		}
-		
-		if (animalSelecionado.mae.mae.registro=="000000000000000" || animalSelecionado.mae.mae.registro=="000000000000001")
+
+		if (animalSelecionado.mae.mae.registro == "000000000000000" || animalSelecionado.mae.mae.registro == "000000000000001")
 		{
 			txtGenealogiaMaeMaeNome.text="************************";
 			txtGenealogiaMaeMaeRegistro.text="************************";
@@ -232,9 +232,9 @@ protected function btnClickGenealogia():void
 			txtGenealogiaMaeMaeNome.text=animalSelecionado.mae.mae.nome;
 			txtGenealogiaMaeMaeRegistro.text=animalSelecionado.mae.mae.registro;
 		}
-		
+
 	}
-	
+
 	PopUpManager.centerPopUp(this);
 }
 
@@ -1350,8 +1350,16 @@ protected function validarClassificacaoLinear():Boolean
 		}
 		else
 		{
-			panelErrorClassificacao.visible=false;
-			return true;
+			if (txtClassificacaoDataClassificacao.selectedDate < animalSelecionado.dataNascimento)
+			{
+				txtClassificacaoDataClassificacao.errorString="Data da classificação deve ser postorior a data de nascimento do animal";
+				txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
+			}
+			else
+			{
+				panelErrorClassificacao.visible=false;
+				return true;
+			}
 		}
 	}
 	else
@@ -1378,8 +1386,16 @@ protected function validarProvaTouro():Boolean
 		}
 		else
 		{
-			panelErrorProvaTouro.visible=false;
-			return true;
+			if (txtProvaTouroDataProva.selectedDate < animalSelecionado.dataNascimento)
+			{
+				txtProvaTouroDataProva.errorString="Data da prova de touro deve ser posterior a data de nascimento do animal";
+				txtProvaTouroDataProva.focusManager.setFocus(txtProvaTouroDataProva);
+			}
+			else
+			{
+				panelErrorProvaTouro.visible=false;
+				return true;
+			}
 		}
 	}
 	else
