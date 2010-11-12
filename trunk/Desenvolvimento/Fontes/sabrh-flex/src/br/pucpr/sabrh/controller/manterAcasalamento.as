@@ -346,9 +346,9 @@ protected function gridClickResultadoAcasalamento(event:ListEvent):void
 	}
 	txtDetalheDataAcasalamento.text=df.format(acasalamentoSelecionado.dataAcasalamento);
 	txtDetalheStatusAcasalamento.text=acasalamentoSelecionado.tipoAcasalamento;
-	
-	txtEventoComentario.text = null;
-	txtEventoComentario.errorString = null;
+
+	txtEventoComentario.text=null;
+	txtEventoComentario.errorString=null;
 	txtEventoComentario.focusManager.setFocus(txtEventoComentario);
 
 	PopUpManager.centerPopUp(this);
@@ -457,7 +457,7 @@ protected function serviceResultAnimalSalvar(event:ResultEvent):void
 			acasalamentoSelecionado.femea.status=ani.status;
 		}
 	}
-	if (panelCria.visible==true)
+	if (panelCria.visible == true)
 	{
 		txtEventoCriaApelido.text=null;
 		txtEventoCriaApelido.errorString=null;
