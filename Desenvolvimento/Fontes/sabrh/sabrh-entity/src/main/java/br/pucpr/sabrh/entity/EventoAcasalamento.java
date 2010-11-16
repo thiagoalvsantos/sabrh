@@ -35,7 +35,7 @@ public class EventoAcasalamento implements Serializable {
 	/** O atributo codigo. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(initialValue = 1, sequenceName = "SEQ_EVENTO_ACASALAMENTO", name = "codigo")
+	@SequenceGenerator(initialValue = 0, sequenceName = "SEQ_EVENTO_ACASALAMENTO", name = "codigo_evento")
 	@Column(name = "CD_CODIGO", length = 8)
 	private int codigo;
 
