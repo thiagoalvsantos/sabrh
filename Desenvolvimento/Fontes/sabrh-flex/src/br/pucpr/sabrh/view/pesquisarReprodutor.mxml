@@ -181,8 +181,8 @@
 				<s:BorderContainer id="panelResultado" width="100%" height="100%" includeIn="stateResultado">
 					<mx:AdvancedDataGrid id="dataGridResultado" left="5" right="5" top="5" bottom="5" designViewDataType="flat" rowCount="3" allowMultipleSelection="true" itemClick="{controlarSelecoes()}">
 						<mx:columns>
-							<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="true" dataField="codigo"/>
-							<mx:AdvancedDataGridColumn textAlign="center" headerText="Nome" dataField="" sortable="true">
+							<mx:AdvancedDataGridColumn textAlign="left" headerText="Registro" sortable="false" dataField="codigo"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Nome" dataField="" sortable="false">
 								<mx:itemRenderer>
 									<fx:Component>
 										<mx:Canvas>
@@ -191,8 +191,8 @@
 									</fx:Component>
 								</mx:itemRenderer>
 							</mx:AdvancedDataGridColumn>
-							<mx:AdvancedDataGridColumn textAlign="center" headerText="Filhas" sortable="true" dataField="quantidadeFilhas" width="70"/>
-							<mx:AdvancedDataGridColumn textAlign="center" headerText="Kg de Leite" sortable="true" dataField="quiloLeite" width="100"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Filhas" sortable="false" dataField="quantidadeFilhas" width="70"/>
+							<mx:AdvancedDataGridColumn textAlign="center" headerText="Kg de Leite" sortable="false" dataField="quiloLeite" width="100"/>
 							<mx:AdvancedDataGridColumn textAlign="center" headerText="Confiabilidade Produção" sortable="true" dataField="confiabilidadeProducao" width="180"/>
 							<mx:AdvancedDataGridColumn textAlign="center" headerText="Confiabilidade Conformação" sortable="true" dataField="confiabilidadeConformacao" width="180"/>
 						</mx:columns>
