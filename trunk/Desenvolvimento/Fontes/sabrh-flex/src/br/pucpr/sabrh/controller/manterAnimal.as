@@ -445,6 +445,7 @@ protected function btnClickNovaClassificacao():void
 	txtClassificacaoPontuacaoFinal.text=null;
 	txtClassificacaoClassificacaoFinal.text=null;
 
+	txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
 	//Limpar as mensagens de erro
 
 	//Dados Gerais
@@ -490,7 +491,6 @@ protected function btnClickNovaClassificacao():void
 	txtClassificacaoPontuacaoFinal.errorString=null;
 	txtClassificacaoClassificacaoFinal.errorString=null;
 
-	txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
 	PopUpManager.centerPopUp(this);
 }
 
@@ -957,6 +957,8 @@ protected function gridClickResultadoClassificacao(event:ListEvent):void
 	//Dados Gerais
 	txtClassificacaoDataClassificacao.selectedDate=classificacaoLinearSelecionada.dataClassificacao;
 	txtClassificacaoLactacao.value=classificacaoLinearSelecionada.lactacao;
+	txtClassificacaoDataClassificacao.errorString=null;
+	txtClassificacaoLactacao.errorString=null;
 
 	//Força Leiteira
 	txtClassificacaoEstatura.text=classificacaoLinearSelecionada.estatura.toString();
@@ -1343,10 +1345,13 @@ protected function validarClassificacaoLinear():Boolean
 	//se não existem erros 
 	if (errors.length == 0)
 	{
+		var existeErro:Boolean=false;
+
 		if (txtClassificacaoDataClassificacao.selectedDate > new Date())
 		{
 			txtClassificacaoDataClassificacao.errorString="Data da classificação deve ser igual ou menor que a data atual";
 			txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
+			existeErro=true;
 		}
 		else
 		{
@@ -1354,13 +1359,78 @@ protected function validarClassificacaoLinear():Boolean
 			{
 				txtClassificacaoDataClassificacao.errorString="Data da classificação deve ser postorior a data de nascimento do animal";
 				txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
+				existeErro=true;
 			}
 			else
 			{
-				panelErrorClassificacao.visible=false;
-				return true;
+				if (txtClassificacaoDataClassificacao.selectedDate.getTime() < animalSelecionado.dataNascimento.getTime() + (5 * 86400000 * txtClassificacaoLactacao.value))
+				{
+					txtClassificacaoDataClassificacao.errorString="Data da classificação e/ou lactação incompatível com a idade do animal.";
+					txtClassificacaoLactacao.errorString="Data da classificação e/ou lactação incompatível com a idade do animal.";
+					txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
+					existeErro=true;
+				}
+			}
+
+		}
+
+		if (existeErro)
+		{
+			scroll.viewport.verticalScrollPosition=0;
+			panelErrorClassificacao.visible=true;
+			return false;
+		}
+
+		var listaClassificacao:ArrayCollection=dataGridResultadoClassificacao.dataProvider as ArrayCollection;
+		for (var i:int=0; i < listaClassificacao.length; i++)
+		{
+			var classificacao:ClassificacaoLinear=listaClassificacao[i];
+			if (classificacaoLinearSelecionada == null || (classificacaoLinearSelecionada.codigo != classificacao.codigo))
+			{
+				if (txtClassificacaoDataClassificacao.selectedDate.getTime() == classificacao.dataClassificacao.getTime())
+				{
+					txtClassificacaoDataClassificacao.errorString="Classificação Linear já cadastrada nesta data.";
+					txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
+					existeErro=true;
+					break;
+				}
+				else
+				{
+					if (txtClassificacaoDataClassificacao.selectedDate.getTime() > classificacao.dataClassificacao.getTime())
+					{
+						if (txtClassificacaoLactacao.value <= classificacao.lactacao)
+						{
+							txtClassificacaoLactacao.errorString="Ordem de lactação inválida. Verifique as lactações das classificações já cadastradas";
+							txtClassificacaoLactacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
+							existeErro=true;
+						}
+					}
+					else
+					{
+						if (txtClassificacaoDataClassificacao.selectedDate.getTime() < classificacao.dataClassificacao.getTime())
+						{
+							if (txtClassificacaoLactacao.value >= classificacao.lactacao)
+							{
+								txtClassificacaoLactacao.errorString="Ordem de lactação inválida. Verifique as lactações das classificações já cadastradas";
+								txtClassificacaoLactacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
+								existeErro=true;
+							}
+						}
+					}
+				}
 			}
 		}
+
+		if (existeErro)
+		{
+			scroll.viewport.verticalScrollPosition=0;
+		}
+		else
+		{
+			panelErrorClassificacao.visible=false;
+			return true;
+		}
+
 	}
 	else
 	{
@@ -1383,6 +1453,7 @@ protected function validarProvaTouro():Boolean
 		{
 			txtProvaTouroDataProva.errorString="Data da prova de touro deve ser igual ou menor que a data atual";
 			txtProvaTouroDataProva.focusManager.setFocus(txtProvaTouroDataProva);
+			scroll.viewport.verticalScrollPosition=0;
 		}
 		else
 		{
@@ -1390,6 +1461,7 @@ protected function validarProvaTouro():Boolean
 			{
 				txtProvaTouroDataProva.errorString="Data da prova de touro deve ser posterior a data de nascimento do animal";
 				txtProvaTouroDataProva.focusManager.setFocus(txtProvaTouroDataProva);
+				scroll.viewport.verticalScrollPosition=0;
 			}
 			else
 			{
