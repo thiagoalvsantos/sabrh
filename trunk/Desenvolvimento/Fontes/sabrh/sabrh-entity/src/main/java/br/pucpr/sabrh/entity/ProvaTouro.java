@@ -33,7 +33,7 @@ public class ProvaTouro implements Serializable {
 	/** O atributo codigo. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(initialValue = 1, sequenceName = "SEQ_PROVA_TOURO", name = "codigo")
+	@SequenceGenerator(initialValue = 0, sequenceName = "SEQ_PROVA_TOURO", name = "codigo_prova")
 	@Column(name = "CD_CODIGO")
 	private long codigo;
 

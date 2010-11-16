@@ -27,7 +27,7 @@ public class Acasalamento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(initialValue = 1, sequenceName = "SEQ_ACASALAMENTO", name = "codigo")
+	@SequenceGenerator(initialValue = 0, sequenceName = "SEQ_ACASALAMENTO", name = "codigo_acasalamento")
 	@Column(name = "CD_CODIGO", length = 8)
 	private int codigo;
 	

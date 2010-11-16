@@ -116,24 +116,24 @@ public class ProvaTouroDAOImpl implements ProvaTouroDAO {
 		Session s = (Session) entityManager.getDelegate();
 		Criteria c = s.createCriteria(ProvaTouro.class, "provaTouro");
 
+		for (String atributo : filtroAcasalamento.getListaConformacao()) {
+			c.addOrder(Order.desc(atributo));
+		}
+		
+		for (String atributo : filtroAcasalamento.getListaProducao()) {
+			c.addOrder(Order.desc(atributo));
+		}
+		
 		if (filtroAcasalamento.getConfiabilidadeConformacao() >= 0){
 			c.add(Restrictions.ge("confiabilidadeConformacao",
 					filtroAcasalamento.getConfiabilidadeConformacao()));
 //			c.addOrder(Order.desc("confiabilidadeConformacao"));
 		}
-
+		
 		if (filtroAcasalamento.getConfiabilidadeProducao() >= 0){
 			c.add(Restrictions.ge("confiabilidadeProducao",
 					filtroAcasalamento.getConfiabilidadeProducao()));
 //			c.addOrder(Order.desc("confiabilidadeProducao"));
-		}
-
-		for (String atributo : filtroAcasalamento.getListaProducao()) {
-			c.addOrder(Order.desc(atributo));
-		}
-
-		for (String atributo : filtroAcasalamento.getListaConformacao()) {
-			c.addOrder(Order.desc(atributo));
 		}
 
 		List<ProvaTouro> result = c.list();

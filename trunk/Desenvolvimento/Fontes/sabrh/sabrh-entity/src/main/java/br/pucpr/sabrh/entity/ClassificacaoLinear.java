@@ -33,7 +33,7 @@ public class ClassificacaoLinear implements Serializable {
 	/** O atributo codigo. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(initialValue = 1, sequenceName = "SEQ_CLASSIFICACAO", name = "codigo")
+	@SequenceGenerator(initialValue = 0, sequenceName = "SEQ_CLASSIFICACAO", name = "codigo_classificacao")
 	@Column(name = "CD_CODIGO")
 	private long codigo;
 
