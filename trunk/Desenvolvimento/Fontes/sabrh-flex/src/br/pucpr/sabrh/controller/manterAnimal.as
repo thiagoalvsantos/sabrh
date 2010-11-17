@@ -1449,11 +1449,13 @@ protected function validarProvaTouro():Boolean
 	//se não existem erros 
 	if (errors.length == 0)
 	{
+		var existeErro:Boolean=false;
+		
 		if (txtProvaTouroDataProva.selectedDate > new Date())
 		{
 			txtProvaTouroDataProva.errorString="Data da prova de touro deve ser igual ou menor que a data atual";
 			txtProvaTouroDataProva.focusManager.setFocus(txtProvaTouroDataProva);
-			scroll.viewport.verticalScrollPosition=0;
+			existeErro=true;
 		}
 		else
 		{
@@ -1461,13 +1463,61 @@ protected function validarProvaTouro():Boolean
 			{
 				txtProvaTouroDataProva.errorString="Data da prova de touro deve ser posterior a data de nascimento do animal";
 				txtProvaTouroDataProva.focusManager.setFocus(txtProvaTouroDataProva);
-				scroll.viewport.verticalScrollPosition=0;
+				existeErro=true;
 			}
-			else
+		}
+		
+		if (existeErro)
+		{
+			scroll.viewport.verticalScrollPosition=0;
+			panelErrorProvaTouro.visible=true;
+			return false;
+		}
+		
+		var listaProvas:ArrayCollection=dataGridResultadoProvaTouro.dataProvider as ArrayCollection;
+		for (var i:int=0; i < listaProvas.length; i++)
+		{
+			var prova:ProvaTouro=listaProvas[i];
+			if (provaTouroSelecionada == null || (provaTouroSelecionada.codigo != prova.codigo))
 			{
-				panelErrorProvaTouro.visible=false;
-				return true;
+				if (txtProvaTouroDataProva.selectedDate.getTime() > prova.dataUltimaAtualizacao.getTime())
+				{
+					if (new Number(txtProvaTouroQtdFilhas.text) < prova.quantidadeFilhas)
+					{
+						txtProvaTouroQtdFilhas.errorString="Quantidade de filhas incompatível com a data da ultima atualização.";
+						txtProvaTouroQtdFilhas.focusManager.setFocus(txtProvaTouroQtdFilhas);
+						existeErro=true;
+					}
+				}
+				else
+				{
+					if (txtProvaTouroDataProva.selectedDate.getTime() < prova.dataUltimaAtualizacao.getTime())
+					{
+						if (new Number(txtProvaTouroQtdFilhas.text) > prova.quantidadeFilhas)
+						{
+							txtProvaTouroQtdFilhas.errorString="Quantidade de filhas incompatível com a data da ultima atualização.";
+							txtProvaTouroQtdFilhas.focusManager.setFocus(txtProvaTouroQtdFilhas);
+							existeErro=true;
+						}
+					}
+					else
+					{
+							txtProvaTouroDataProva.errorString="Prova de touro já cadastrada nesta data.";
+							txtProvaTouroDataProva.focusManager.setFocus(txtProvaTouroDataProva);
+							existeErro=true;
+					}
+				}
 			}
+		}
+		
+		if (existeErro)
+		{
+			scroll.viewport.verticalScrollPosition=0;
+		}
+		else
+		{
+			panelErrorProvaTouro.visible=false;
+			return true;
 		}
 	}
 	else
