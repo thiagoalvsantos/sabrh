@@ -740,6 +740,8 @@ protected function btnClickSalvar():void
 
 protected function btnClickSalvarClassificacao():void
 {
+	txtClassificacaoLactacao.errorString=null;
+	txtClassificacaoDataClassificacao.errorString=null;
 	if (validarClassificacaoLinear())
 	{
 		var classificacaoLinear:ClassificacaoLinear;
@@ -1346,7 +1348,7 @@ protected function validarClassificacaoLinear():Boolean
 	if (errors.length == 0)
 	{
 		var existeErro:Boolean=false;
-
+		
 		if (txtClassificacaoDataClassificacao.selectedDate > new Date())
 		{
 			txtClassificacaoDataClassificacao.errorString="Data da classificação deve ser igual ou menor que a data atual";
@@ -1363,7 +1365,7 @@ protected function validarClassificacaoLinear():Boolean
 			}
 			else
 			{
-				if (txtClassificacaoDataClassificacao.selectedDate.getTime() < animalSelecionado.dataNascimento.getTime() + (5 * 86400000 * txtClassificacaoLactacao.value))
+				if (txtClassificacaoDataClassificacao.selectedDate.getTime() < animalSelecionado.dataNascimento.getTime() + (365 * 86400000))
 				{
 					txtClassificacaoDataClassificacao.errorString="Data da classificação e/ou lactação incompatível com a idade do animal.";
 					txtClassificacaoLactacao.errorString="Data da classificação e/ou lactação incompatível com a idade do animal.";
@@ -1371,7 +1373,6 @@ protected function validarClassificacaoLinear():Boolean
 					existeErro=true;
 				}
 			}
-
 		}
 
 		if (existeErro)
@@ -1387,9 +1388,17 @@ protected function validarClassificacaoLinear():Boolean
 			var classificacao:ClassificacaoLinear=listaClassificacao[i];
 			if (classificacaoLinearSelecionada == null || (classificacaoLinearSelecionada.codigo != classificacao.codigo))
 			{
+				if (txtClassificacaoLactacao.value == classificacao.lactacao)
+				{
+					txtClassificacaoLactacao.errorString="Lactação já existente";
+					txtClassificacaoLactacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
+					existeErro=true;
+					break;
+				}
+				
 				if (txtClassificacaoDataClassificacao.selectedDate.getTime() == classificacao.dataClassificacao.getTime())
 				{
-					txtClassificacaoDataClassificacao.errorString="Classificação Linear já cadastrada nesta data.";
+					txtClassificacaoDataClassificacao.errorString="Classificação linear já cadastrada nesta data";
 					txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
 					existeErro=true;
 					break;
@@ -1398,22 +1407,40 @@ protected function validarClassificacaoLinear():Boolean
 				{
 					if (txtClassificacaoDataClassificacao.selectedDate.getTime() > classificacao.dataClassificacao.getTime())
 					{
-						if (txtClassificacaoLactacao.value <= classificacao.lactacao)
+						if (txtClassificacaoLactacao.value < classificacao.lactacao)
 						{
 							txtClassificacaoLactacao.errorString="Ordem de lactação inválida. Verifique as lactações das classificações já cadastradas";
 							txtClassificacaoLactacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
 							existeErro=true;
+						}
+						else
+						{
+							if (txtClassificacaoDataClassificacao.selectedDate.getTime() < classificacao.dataClassificacao.getTime() + (365 * 86400000))
+							{
+								txtClassificacaoDataClassificacao.errorString="Tempo entre classificações inválida. O intervalo entre as classificações deve ser de no mínimo um ano";
+								txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
+								existeErro=true;
+							}
 						}
 					}
 					else
 					{
 						if (txtClassificacaoDataClassificacao.selectedDate.getTime() < classificacao.dataClassificacao.getTime())
 						{
-							if (txtClassificacaoLactacao.value >= classificacao.lactacao)
+							if (txtClassificacaoLactacao.value > classificacao.lactacao)
 							{
 								txtClassificacaoLactacao.errorString="Ordem de lactação inválida. Verifique as lactações das classificações já cadastradas";
 								txtClassificacaoLactacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
 								existeErro=true;
+							}
+							else
+							{
+								if (txtClassificacaoDataClassificacao.selectedDate.getTime() > classificacao.dataClassificacao.getTime() + (365 * 86400000))
+								{
+									txtClassificacaoDataClassificacao.errorString="Tempo entre classificações inválida. O intervalo entre as classificações deve ser de no mínimo um ano";
+									txtClassificacaoDataClassificacao.focusManager.setFocus(txtClassificacaoDataClassificacao);
+									existeErro=true;
+								}
 							}
 						}
 					}
