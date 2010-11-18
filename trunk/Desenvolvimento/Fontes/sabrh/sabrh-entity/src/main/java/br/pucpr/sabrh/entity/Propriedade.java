@@ -30,7 +30,7 @@ public class Propriedade implements Serializable {
 	/** O atributo codigo. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(initialValue = 0, sequenceName = "SEQ_PROPRIEDADE", name = "codigo_propriedade")
+	@SequenceGenerator(initialValue = 1, sequenceName = "SEQ_PROPRIEDADE", name = "codigo_propriedade")
 	@Column(name = "CD_PROPRIEDADE", length = 8)
 	private long codigo;
 
