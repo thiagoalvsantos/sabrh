@@ -97,11 +97,11 @@
 						<s:HGroup horizontalAlign="center" width="100%">
 							<s:HGroup verticalAlign="middle">
 								<s:Label id="lblPesquisaRegistroVaca" text="Registro"/>
-								<s:TextInput id="txtPesquisaRegistroVaca" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+								<s:TextInput id="txtPesquisaRegistroVaca" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false" click="abrirConsultarAnimal(txtPesquisaApelidoVaca,'pesquisa',ConstantesUtils.SEXO_FEMEA)"/>
 							</s:HGroup>
 							<s:HGroup verticalAlign="middle">
 								<s:Label id="lblPesquisaApelidoVaca" text="Apelido"/>
-								<s:TextInput id="txtPesquisaApelidoVaca" width="370" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+								<s:TextInput id="txtPesquisaApelidoVaca" width="370" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false" click="abrirConsultarAnimal(txtPesquisaApelidoVaca,'pesquisa',ConstantesUtils.SEXO_FEMEA)"/>
 								<s:Button label="Buscar" click="abrirConsultarAnimal(txtPesquisaApelidoVaca,'pesquisa',ConstantesUtils.SEXO_FEMEA)" buttonMode="true"/>
 							</s:HGroup>
 						</s:HGroup>
