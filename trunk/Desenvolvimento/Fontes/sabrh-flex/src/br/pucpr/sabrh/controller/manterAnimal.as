@@ -102,6 +102,8 @@ protected function abrirConsultarAnimal(atributo:TextInput, tipoConsulta:String,
 	popUpConsultarAnimal.tipoConsulta=tipoConsulta;
 	popUpConsultarAnimal.atributoDestino=atributo;
 	popUpConsultarAnimal.tipoAnimal=tipoAnimal;
+	if (animalSelecionado != null)
+		popUpConsultarAnimal.animalPesquisa=animalSelecionado;
 	PopUpManager.centerPopUp(popUpConsultarAnimal);
 	FlexGlobals.topLevelApplication.popUpEffect.target=popUpConsultarAnimal;
 	FlexGlobals.topLevelApplication.popUpEffect.play();
@@ -332,6 +334,8 @@ protected function btnClickExcluirProvaTouro():void
  */
 protected function btnClickLimparNovo():void
 {
+	animalSelecionado=null;
+	
 	txtNovoApelido.text="";
 	txtNovoMae.text=maeDefault.nome;
 	txtNovoNome.text="";
@@ -1563,6 +1567,7 @@ protected function validarProvaTouro():Boolean
  */
 protected function voltarPesquisa():void
 {
+	animalSelecionado=null;
 	if (dataGridResultado == null)
 	{
 		currentState=ConstantesUtils.STATE_PESQUISA;
