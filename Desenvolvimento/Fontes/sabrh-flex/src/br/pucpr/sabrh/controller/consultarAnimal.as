@@ -247,6 +247,13 @@ protected function serviceResultPesquisarAnimal(event:ResultEvent):void
 {
 	var listaAnimais:ArrayCollection=event.result as ArrayCollection;
 	currentState=ConstantesUtils.STATE_RESULTADO;
+	if (animalPesquisa != null)
+		for (var i:int=0; i < listaAnimais.length; i++)
+		{
+			var animal:Animal=listaAnimais[i];
+			if (animal.registro == animalPesquisa.registro)
+				listaAnimais.removeItemAt(i);
+		}
 	dataGridResultado.dataProvider=listaAnimais;
 	panelResultado.title=ConstantesUtils.RESULTADO_GRID + listaAnimais.length;
 	PopUpManager.centerPopUp(this);
