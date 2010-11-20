@@ -49,5 +49,14 @@ public interface AnimalDAO {
 	 *            - sexo.
 	 */
 	Animal recuperarAnimalPadrao(TipoSexoAnimal sexo);
+	
+	/**
+	 * Existe animal.
+	 * 
+	 * @param animal
+	 *            - animal.
+	 * @return verdadeiro, se bem sucedido.
+	 */
+	boolean existeAnimal(Animal animal);
 
 }

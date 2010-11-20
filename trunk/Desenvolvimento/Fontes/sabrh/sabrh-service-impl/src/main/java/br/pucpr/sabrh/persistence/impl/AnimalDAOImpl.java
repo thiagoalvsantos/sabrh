@@ -204,4 +204,15 @@ public class AnimalDAOImpl implements AnimalDAO {
 		return animal;
 	}
 
+	@Override
+	public boolean existeAnimal(Animal animal) {
+		Session s = (Session) entityManager.getDelegate();
+		Criteria c = s.createCriteria(Animal.class, "ani");
+		c.add(Restrictions.eq("registro", animal.getRegistro()));
+		if (c.uniqueResult() != null) {
+			return true;
+		}
+		return false;
+	}
+
 }

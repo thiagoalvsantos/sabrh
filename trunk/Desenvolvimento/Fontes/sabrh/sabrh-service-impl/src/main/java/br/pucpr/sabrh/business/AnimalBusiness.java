@@ -153,4 +153,9 @@ public class AnimalBusiness implements AnimalService {
 		return geracao;
 	}
 
+	@Override
+	public boolean existeAnimal(Animal animal) {
+		return dao.existeAnimal(animal);
+	}
+
 }
