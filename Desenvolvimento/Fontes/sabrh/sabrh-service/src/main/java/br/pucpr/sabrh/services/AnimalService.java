@@ -56,5 +56,15 @@ public interface AnimalService {
 	 * @return verdadeiro, se bem sucedido.
 	 */
 	boolean verificarConsanguinidade(Animal femea, Animal macho);
+	
+	
+	/**
+	 * Existe animal.
+	 * 
+	 * @param animal
+	 *            - animal.
+	 * @return verdadeiro, se bem sucedido.
+	 */
+	boolean existeAnimal(Animal animal);
 
 }
