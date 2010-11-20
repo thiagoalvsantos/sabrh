@@ -152,6 +152,7 @@ protected function btnClickAcasalar():void
 
 protected function btnClickGenealogia():void
 {
+	panelSucesso.visible=false;
 	currentState=ConstantesUtils.STATE_GENEALOGIA;
 	//ANIMAL
 	txtGenealogiaAnimalNome.text=animalSelecionado.nome;
@@ -242,6 +243,7 @@ protected function btnClickGenealogia():void
 
 protected function btnClickClassificacaoLinear(event:MouseEvent):void
 {
+	panelSucesso.visible=false;
 	currentState=ConstantesUtils.STATE_CLASSIFICACAO_LINEAR_LISTA;
 	txtDetalheClassificacaoRegistro.text=animalSelecionado.registro;
 	txtDetalheClassificacaoApelido.text=animalSelecionado.apelido;
@@ -335,7 +337,7 @@ protected function btnClickExcluirProvaTouro():void
 protected function btnClickLimparNovo():void
 {
 	animalSelecionado=null;
-	
+
 	txtNovoApelido.text="";
 	txtNovoMae.text=maeDefault.nome;
 	txtNovoNome.text="";
@@ -666,6 +668,7 @@ protected function btnClickPesquisar():void
 
 protected function btnClickProvaTouro(event:MouseEvent):void
 {
+	panelSucesso.visible=false;
 	currentState=ConstantesUtils.STATE_PROVA_TOURO_LISTA;
 	txtDetalheProvaTouroRegistro.text=animalSelecionado.registro;
 	txtDetalheProvaTouroApelido.text=animalSelecionado.apelido;
@@ -737,7 +740,15 @@ protected function btnClickSalvar():void
 			}
 		}
 
-		animalService.salvar(animal);
+		if (currentState == ConstantesUtils.STATE_NOVO)
+		{
+			animalService.existeAnimal(animal);
+			animalSelecionado=animal;
+		}
+		else
+		{
+			animalService.salvar(animal);
+		}
 	}
 
 }
@@ -1309,6 +1320,22 @@ protected function serviceResultRecuperarAnimalPadrao(event:ResultEvent):void
 		maeDefault=animal;
 }
 
+protected function serviceResultRecuperarExisteAnimal(event:ResultEvent):void
+{
+	var existe:Boolean=event.result as Boolean;
+	if (!existe)
+	{
+		animalService.salvar(animalSelecionado);
+	}
+	else
+	{
+		txtNovoRegistro.errorString="Já existe um animal com o registro informado.";
+		txtNovoRegistro.focusManager.setFocus(txtNovoRegistro);
+		panelError.visible=true;
+	}
+}
+
+
 protected function serviceResultSalvarClassificacao(event:ResultEvent):void
 {
 	btnClickClassificacaoLinear(null);
@@ -1352,7 +1379,7 @@ protected function validarClassificacaoLinear():Boolean
 	if (errors.length == 0)
 	{
 		var existeErro:Boolean=false;
-		
+
 		if (txtClassificacaoDataClassificacao.selectedDate > new Date())
 		{
 			txtClassificacaoDataClassificacao.errorString="Data da classificação deve ser igual ou menor que a data atual";
@@ -1399,7 +1426,7 @@ protected function validarClassificacaoLinear():Boolean
 					existeErro=true;
 					break;
 				}
-				
+
 				if (txtClassificacaoDataClassificacao.selectedDate.getTime() == classificacao.dataClassificacao.getTime())
 				{
 					txtClassificacaoDataClassificacao.errorString="Classificação linear já cadastrada nesta data";
@@ -1481,7 +1508,7 @@ protected function validarProvaTouro():Boolean
 	if (errors.length == 0)
 	{
 		var existeErro:Boolean=false;
-		
+
 		if (txtProvaTouroDataProva.selectedDate > new Date())
 		{
 			txtProvaTouroDataProva.errorString="Data da prova de touro deve ser igual ou menor que a data atual";
@@ -1497,14 +1524,14 @@ protected function validarProvaTouro():Boolean
 				existeErro=true;
 			}
 		}
-		
+
 		if (existeErro)
 		{
 			scroll.viewport.verticalScrollPosition=0;
 			panelErrorProvaTouro.visible=true;
 			return false;
 		}
-		
+
 		var listaProvas:ArrayCollection=dataGridResultadoProvaTouro.dataProvider as ArrayCollection;
 		for (var i:int=0; i < listaProvas.length; i++)
 		{
@@ -1533,14 +1560,14 @@ protected function validarProvaTouro():Boolean
 					}
 					else
 					{
-							txtProvaTouroDataProva.errorString="Prova de touro já cadastrada nesta data.";
-							txtProvaTouroDataProva.focusManager.setFocus(txtProvaTouroDataProva);
-							existeErro=true;
+						txtProvaTouroDataProva.errorString="Prova de touro já cadastrada nesta data.";
+						txtProvaTouroDataProva.focusManager.setFocus(txtProvaTouroDataProva);
+						existeErro=true;
 					}
 				}
 			}
 		}
-		
+
 		if (existeErro)
 		{
 			scroll.viewport.verticalScrollPosition=0;
