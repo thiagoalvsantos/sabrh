@@ -268,7 +268,7 @@ protected function btnClickSalvarEvento():void
 						animal.status="DESCARTE";
 					}
 					animalService.salvar(animal);
-					acasalamentoSelecionado.femea.status="AMAMENTACAO";
+					acasalamentoSelecionado.femea.status="LACTACAO";
 					animalService.salvar(acasalamentoSelecionado.femea);
 				}
 				break;

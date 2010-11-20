@@ -9,6 +9,7 @@
 			<s:method name="pesquisar" result="{serviceResultAnimalPesquisar(event)}"/>
 			<s:method name="salvar" result="{serviceResultAnimalSalvar(event)}"/>
 			<s:method name="recuperarAnimalPadrao" result="{serviceResultRecuperarAnimalPadrao(event)}"/>
+			<s:method name="existeAnimal" result="{serviceResultRecuperarExisteAnimal(event)}"/>
 		</s:RemoteObject>
 		<s:RemoteObject id="classificacaoLinearService" fault="onFault(event)" destination="ClassificacaoLinearService" showBusyCursor="true">
 			<s:method name="salvar" result="{serviceResultSalvarClassificacao(event)}"/>
@@ -192,7 +193,7 @@
 					</mx:AdvancedDataGrid>
 				</s:Panel>
 			</s:VGroup>
-			<!--//////////////////////////
+			<!--////////////////////////// 
 				 //	NOVO
 				 /////////////////////////////-->
 			<s:VGroup id="groupNovo" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateNovo,stateEditar">
