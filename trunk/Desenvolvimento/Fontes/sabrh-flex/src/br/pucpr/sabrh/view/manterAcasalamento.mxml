@@ -89,9 +89,9 @@
 						<s:Label id="lblPesquisaStatus" text="Status" x="10" y="135"/>
 						<s:TextInput id="txtPesquisaRegistroAnimal" x="100" y="10" width="150" tabIndex="1" restrict="A-Za-z"/>
 						<s:TextInput id="txtPesquisaNomeAnimal" x="350" y="10" width="300" tabIndex="2"/>
-						<s:TextInput id="txtPesquisaProprietario" x="100" y="40" width="472" editable="false" focusEnabled="false"/>
+						<s:TextInput id="txtPesquisaProprietario" x="100" y="40" width="472" editable="false" focusEnabled="false" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}"/>
 						<s:Button id="btnPesquisaBuscarProprietario" label="Buscar" click="{abrirConsultarUsuario(txtPesquisaProprietario,'pesquisa')}" x="580" y="40" tabIndex="3" buttonMode="true"/>
-						<s:TextInput id="txtPesquisaPropriedade" x="100" y="70" width="472" editable="false" focusEnabled="false"/>
+						<s:TextInput id="txtPesquisaPropriedade" x="100" y="70" width="472" editable="false" focusEnabled="false" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}"/>
 						<s:Button id="btnPesquisaBuscarPropriedade" label="Buscar" click="{abrirConsultarPropriedade(txtPesquisaPropriedade,'pesquisa')}" x="580" y="70" tabIndex="4" buttonMode="true"/>
 						<mx:DateField id="txtPesquisaDataInicio" tabIndex="5" x="100" y="100" width="150" yearNavigationEnabled="true"/>
 						<mx:DateField id="txtPesquisaDataFim" tabIndex="6" x="350" y="100" width="150" yearNavigationEnabled="true"/>
