@@ -256,8 +256,8 @@ protected function btnClickSalvarEvento():void
 				{
 					var animal:Animal=new Animal();
 					animal.registro=StringUtil.trim(txtEventoCriaRegistro.text);
-					
-					animalService.existeAnimal(animal);					
+
+					animalService.existeAnimal(animal);
 				}
 				break;
 			case "COMENTARIO":
@@ -273,6 +273,7 @@ protected function btnClickSalvarEvento():void
 
 protected function btnClickVoltarPesquisa():void
 {
+	panelError.visible=false;
 	currentState=ConstantesUtils.STATE_PESQUISA;
 	PopUpManager.centerPopUp(this);
 	init();
@@ -589,7 +590,7 @@ protected function validarCria():Boolean
 	{
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
 	}
-	
+
 	panelError.visible=true;
 
 	return false;
@@ -606,7 +607,7 @@ protected function serviceResultRecuperarExisteAnimal(event:ResultEvent):void
 		evento.dataEvento=txtEventoData.selectedDate;
 		evento.tipoEventoAcasalamento="NASCIMENTO";
 		acasalamentoService.salvarEvento(evento);
-		
+
 		var animal:Animal=new Animal();
 		animal.apelido=StringUtil.trim(txtEventoCriaApelido.text);
 		animal.dataNascimento=txtEventoData.selectedDate;
