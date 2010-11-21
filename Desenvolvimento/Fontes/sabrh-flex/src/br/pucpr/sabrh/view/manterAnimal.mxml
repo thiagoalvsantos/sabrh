@@ -1023,12 +1023,12 @@
 									<s:Label id="lblGenealogiaPais" text="PAIS" fontWeight="bold"/>
 								</s:HGroup>
 								<s:VGroup height="50%" gap="5" verticalAlign="middle">
-									<s:TextInput id="txtGenealogiaPaiRegistro" width="285" editable="false" borderColor="#D3D3D3"/>
-									<s:TextInput id="txtGenealogiaPaiNome" width="285" editable="false" borderColor="#D3D3D3"/>
+									<s:TextInput id="txtGenealogiaPaiRegistro" width="285" editable="false" borderColor="#1E90FF"/>
+									<s:TextInput id="txtGenealogiaPaiNome" width="285" editable="false" borderColor="#1E90FF"/>
 									</s:VGroup>
 								<s:VGroup height="50%" gap="5" verticalAlign="middle">
-									<s:TextInput id="txtGenealogiaMaeRegistro" width="285" editable="false" borderColor="#D3D3D3"/>
-									<s:TextInput id="txtGenealogiaMaeNome" width="285" editable="false" borderColor="#D3D3D3"/>
+									<s:TextInput id="txtGenealogiaMaeRegistro" width="285" editable="false" borderColor="#DB7093"/>
+									<s:TextInput id="txtGenealogiaMaeNome" width="285" editable="false" borderColor="#DB7093"/>
 								</s:VGroup>
 							</s:VGroup>
 							<s:VGroup height="100%">
@@ -1036,20 +1036,20 @@
 									<s:Label id="lblGenealogiaAvos" text="AVÓS" fontWeight="bold"/>
 								</s:HGroup>
 								<s:VGroup height="25%" gap="5" verticalAlign="middle">
-									<s:TextInput id="txtGenealogiaPaiPaiRegistro" width="285" editable="false" borderColor="#D3D3D3"/>
-									<s:TextInput id="txtGenealogiaPaiPaiNome" width="285" editable="false" borderColor="#D3D3D3"/>
+									<s:TextInput id="txtGenealogiaPaiPaiRegistro" width="285" editable="false" borderColor="#1E90FF"/>
+									<s:TextInput id="txtGenealogiaPaiPaiNome" width="285" editable="false" borderColor="#1E90FF"/>
 									</s:VGroup>
 								<s:VGroup height="25%" gap="5" verticalAlign="middle">
-									<s:TextInput id="txtGenealogiaMaePaiRegistro" width="285" editable="false" borderColor="#D3D3D3"/>
-									<s:TextInput id="txtGenealogiaMaePaiNome" width="285" editable="false" borderColor="#D3D3D3"/>
+									<s:TextInput id="txtGenealogiaMaePaiRegistro" width="285" editable="false" borderColor="#DB7093"/>
+									<s:TextInput id="txtGenealogiaMaePaiNome" width="285" editable="false" borderColor="#DB7093"/>
 									</s:VGroup>
 								<s:VGroup height="25%" gap="5" verticalAlign="middle">
-									<s:TextInput id="txtGenealogiaPaiMaeRegistro" width="285" editable="false" borderColor="#D3D3D3"/>
-									<s:TextInput id="txtGenealogiaPaiMaeNome" width="285" editable="false" borderColor="#D3D3D3"/>
+									<s:TextInput id="txtGenealogiaPaiMaeRegistro" width="285" editable="false" borderColor="#1E90FF"/>
+									<s:TextInput id="txtGenealogiaPaiMaeNome" width="285" editable="false" borderColor="#1E90FF"/>
 									</s:VGroup>
 								<s:VGroup height="25%" gap="5" verticalAlign="middle">
-									<s:TextInput id="txtGenealogiaMaeMaeRegistro" width="285" editable="false" borderColor="#D3D3D3"/>
-									<s:TextInput id="txtGenealogiaMaeMaeNome" width="285" editable="false" borderColor="#D3D3D3"/>
+									<s:TextInput id="txtGenealogiaMaeMaeRegistro" width="285" editable="false" borderColor="#DB7093"/>
+									<s:TextInput id="txtGenealogiaMaeMaeNome" width="285" editable="false" borderColor="#DB7093"/>
 								</s:VGroup>
 							</s:VGroup>
 						</s:HGroup>
