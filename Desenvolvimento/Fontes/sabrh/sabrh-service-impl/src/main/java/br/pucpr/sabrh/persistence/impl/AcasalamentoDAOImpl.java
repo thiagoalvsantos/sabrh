@@ -91,12 +91,14 @@ public class AcasalamentoDAOImpl implements AcasalamentoDAO {
 						acasalamento.getFemea().getNome(), MatchMode.ANYWHERE),
 						Restrictions.ilike("nome", acasalamento.getFemea()
 								.getNome(), MatchMode.ANYWHERE)));
+
 			}
 			if (acasalamento.getFemea().getRegistro() != null
 					&& acasalamento.getFemea().getRegistro() != "") {
 
 				q.add(Restrictions.ilike("registro", acasalamento.getFemea()
 						.getRegistro(), MatchMode.ANYWHERE));
+
 			}
 
 			if (acasalamento.getFemea().getPropriedade() != null) {
@@ -113,8 +115,8 @@ public class AcasalamentoDAOImpl implements AcasalamentoDAO {
 					q.add(Restrictions.eq("prop.proprietario",
 							qprop.uniqueResult()));
 				}
-				temp = q.list();
 			}
+			temp = q.list();
 
 			if (!temp.isEmpty()) {
 				executa = true;
@@ -132,7 +134,6 @@ public class AcasalamentoDAOImpl implements AcasalamentoDAO {
 			c.addOrder(Order.desc("codigo"));
 			List<Acasalamento> result = c.list();
 			return result;
-
 		}
 		return new ArrayList<Acasalamento>();
 	}
