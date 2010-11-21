@@ -2,26 +2,14 @@
 <s:TitleWindow width="1000" xmlns:fx="http://ns.adobe.com/mxml/2009" creationComplete="init()" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" title="..:: Relatórios ::.." close="fechar(event)" xmlns:validator="br.pucpr.sabrh.components.validator.*" xmlns:formatter="br.pucpr.sabrh.components.formatter.*" xmlns:components="br.pucpr.sabrh.components.*" xmlns:entity="br.pucpr.sabrh.entity.*">
 
 	<fx:Script source="../controller/relatorios.as"/>
-	<fx:Script>
-		<![CDATA[
-			import mx.collections.ArrayCollection;
-
-			[Bindable]
-			private var expensesAC:ArrayCollection=new ArrayCollection([
-				{Nome: "Mae", alturaUberePosterior: 2, anguloCasco: 3, anguloGarupa: -4},
-				{Nome: "Avó", alturaUberePosterior: 5, anguloCasco: 2, anguloGarupa: 6},
-				{Nome: "Neta", alturaUberePosterior: 4, anguloCasco: 5, anguloGarupa: 3},
-				{Nome: "Bisneta", alturaUberePosterior: -3, anguloCasco: -1, anguloGarupa: 9}]);
-		]]>
-	</fx:Script>
 
 	<fx:Declarations>
 		<s:RemoteObject id="classificacaoLinearService" fault="onFault(event)" destination="ClassificacaoLinearService" showBusyCursor="true">
 			<s:method name="pesquisarGeracao" result="{serviceResultAcasalamentoPesquisarGeracao(event)}"/>
 		</s:RemoteObject>
-		
+
 		<entity:Animal id="animalSelecionado"/>
-		
+
 		<s:ArrayCollection id="listaClassificacaoLinearGrafico"/>
 	</fx:Declarations>
 
@@ -35,88 +23,92 @@
 
 	<s:Scroller width="100%" height="100%" id="scroll">
 		<s:Group maxWidth="1000" maxHeight="500" width="100%">
-		<s:VGroup id="groupDetalhe" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="statePesquisa">
-			<s:HGroup horizontalAlign="center" width="100%">
-				<s:HGroup verticalAlign="middle">
-					<s:Label id="lblPesquisaRegistroVaca" text="Registro"/>
-					<s:TextInput id="txtPesquisaRegistroVaca" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
-				</s:HGroup>
-				<s:HGroup verticalAlign="middle">
-					<s:Label id="lblPesquisaApelidoVaca" text="Apelido"/>
-					<s:TextInput id="txtPesquisaApelidoVaca" width="370" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
-					<s:Button label="Buscar" click="abrirConsultarAnimal(txtPesquisaApelidoVaca,'pesquisa',ConstantesUtils.SEXO_FEMEA)" buttonMode="true" tabIndex="1"/>
-				</s:HGroup>
-			</s:HGroup>
-			<s:BorderContainer width="100%" height="30" styleName="panelTotal">
-				<s:HGroup verticalAlign="middle" verticalCenter="0" paddingLeft="10">
-					<s:Button id="btnEvolucaoGeracao" label="Evolução da Geração" click="{btnClickEvolucaoGeracao()}" buttonMode="true" tabIndex="2" enabled="false"/>
-					<s:Button id="btnRelatorios" label="Relatórios" click="{}" buttonMode="true" tabIndex="3" enabled="false"/>
-				</s:HGroup>
-			</s:BorderContainer>
-		</s:VGroup>
+			<s:VGroup width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="statePesquisa">
+				<s:Panel id="panelPesquisa" width="100%" title="Pesquisar Vaca">
+					<s:VGroup id="groupDetalhe" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5">
+						<s:HGroup horizontalAlign="center" width="100%">
+							<s:HGroup verticalAlign="middle">
+								<s:Label id="lblPesquisaRegistroVaca" text="Registro"/>
+								<s:TextInput id="txtPesquisaRegistroVaca" width="150" maxChars="20" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+							</s:HGroup>
+							<s:HGroup verticalAlign="middle">
+								<s:Label id="lblPesquisaApelidoVaca" text="Apelido"/>
+								<s:TextInput id="txtPesquisaApelidoVaca" width="370" editable="false" borderColor="#D3D3D3" tabFocusEnabled="false"/>
+								<s:Button label="Buscar" click="abrirConsultarAnimal(txtPesquisaApelidoVaca,'pesquisa',ConstantesUtils.SEXO_FEMEA)" buttonMode="true" tabIndex="1"/>
+							</s:HGroup>
+						</s:HGroup>
+						<s:BorderContainer width="100%" height="30" styleName="panelTotal">
+							<s:HGroup verticalAlign="middle" verticalCenter="0" paddingLeft="10">
+								<s:Button id="btnEvolucaoGeracao" label="Evolução da Geração" click="{btnClickEvolucaoGeracao()}" buttonMode="true" tabIndex="2" enabled="false"/>
+								<s:Button id="btnRelatorios" label="Relatórios" click="{}" buttonMode="true" tabIndex="3" enabled="false"/>
+							</s:HGroup>
+						</s:BorderContainer>
+					</s:VGroup>
+				</s:Panel>
+			</s:VGroup>
 
-		<!--//////////////////////////
-			 //	GRAFICO EVOLUCAO DA CRIA
-			 /////////////////////////////-->
-		<s:VGroup id="groupEvolucaoGeracao" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateEvolucaoGeracao">
-			<s:VGroup verticalAlign="middle" height="100%" width="100%" horizontalAlign="center">
-				<s:HGroup horizontalAlign="center" width="100%" paddingLeft="0" paddingRight="0">
-					<mx:LineChart id="linechart" height="100%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{listaClassificacaoLinearGrafico}" width="100%">
+			<!--//////////////////////////
+				 //	GRAFICO EVOLUCAO DA CRIA
+				 /////////////////////////////-->
+			<s:VGroup id="groupEvolucaoGeracao" width="100%" paddingTop="5" paddingLeft="5" paddingRight="5" paddingBottom="5" includeIn="stateEvolucaoGeracao">
+				<s:VGroup verticalAlign="middle" height="100%" width="100%" horizontalAlign="center">
+					<s:HGroup horizontalAlign="center" width="100%" paddingLeft="0" paddingRight="0">
+						<mx:LineChart id="linechart" height="100%" paddingLeft="5" paddingRight="5" showDataTips="true" dataProvider="{listaClassificacaoLinearGrafico}" width="100%">
 
-						<mx:horizontalAxis>
-							<mx:CategoryAxis categoryField="animal" dataFunction="dataFunctionNomeAnimal"/>
-						</mx:horizontalAxis>
-						
-						<mx:series>
-							<mx:LineSeries displayName="Altura Úbere Posterior" yField="alturaUberePosterior" form="curve" visible="{alturaUberePosterior.selected}"/>
-							<mx:LineSeries displayName="Ângulo do Casco" yField="anguloCasco" form="curve" visible="{anguloCasco.selected}"/>
-							<mx:LineSeries displayName="Ângulo Garupa" yField="anguloGarupa" form="curve" visible="{anguloGarupa.selected}"/>
-							<mx:LineSeries displayName="Angulosidade" yField="angulosidade" form="curve" visible="{angulosidade.selected}"/>
-							<mx:LineSeries displayName="Colocação de Tetos Anteriores" yField="colocacaoTetosAnteriores" form="curve" visible="{colocacaoTetosAnteriores.selected}"/>
-							<mx:LineSeries displayName="Colocação de Tetos Posteriores" yField="colocacaoTetosPosteriores" form="curve" visible="{colocacaoTetosPosteriores.selected}"/>
-							<mx:LineSeries displayName="Comprimento Tetos" yField="comprimentoTetos" form="curve" visible="{comprimentoTetos.selected}"/>
-							<mx:LineSeries displayName="Estatura" yField="estatura" form="curve" visible="{estatura.selected}"/>
-							<mx:LineSeries displayName="Inserção Úbere Anterior" yField="insercaoUbereAnterior" form="curve" visible="{insercaoUbereAnterior.selected}"/>
-							<mx:LineSeries displayName="Largura da Garupa" yField="larguraGarupa" form="curve" visible="{larguraGarupa.selected}"/>
-							<mx:LineSeries displayName="Largura do Peito" yField="larguraPeito" form="curve" visible="{larguraPeito.selected}"/>
-							<mx:LineSeries displayName="Largura Úbere Posterior" yField="larguraUberePosterior" form="curve" visible="{larguraUberePosterior.selected}"/>
-							<mx:LineSeries displayName="Ligamento Médio" yField="ligamentoMedio" form="curve" visible="{ligamentoMedio.selected}"/>
-							<mx:LineSeries displayName="Pernas Posteriores - Vista Lateral" yField="pernasPostVistaLateral" form="curve" visible="{pernasPostVistaLateral.selected}"/>
-							<mx:LineSeries displayName="Pernas Posteriores - Vista Posterior" yField="pernasPostVistaPost" form="curve" visible="{pernasPostVistaPost.selected}"/>
-							<mx:LineSeries displayName="Profundidade Corporal" yField="profundidadeCorporal" form="curve" visible="{profundidadeCorporal.selected}"/>
-							<mx:LineSeries displayName="Profundidade do Úbere" yField="profundidadeUbere" form="curve" visible="{profundidadeUbere.selected}"/>
-							<mx:LineSeries displayName="Profundidade do Talão" yField="profundidadeTalao" form="curve" visible="{profundidadeTalao.selected}"/>
-						</mx:series>
-					</mx:LineChart>
+							<mx:horizontalAxis>
+								<mx:CategoryAxis categoryField="animal" dataFunction="dataFunctionNomeAnimal"/>
+							</mx:horizontalAxis>
 
-					<mx:Legend id="legenda" dataProvider="{linechart}"/>
-				</s:HGroup>
-				<s:HGroup horizontalAlign="center">
-					
-				<s:TileGroup maxWidth="1000" width="100%" orientation="columns" verticalAlign="justify" horizontalAlign="justify" requestedColumnCount="4">
-						<s:CheckBox label="Altura Úbere Posterior" id="alturaUberePosterior" selected="true"/>
-						<s:CheckBox label="Ângulo do Casco" id="anguloCasco"/>
-						<s:CheckBox label="Ângulo Garupa" id="anguloGarupa"/>
-						<s:CheckBox label="Angulosidade" id="angulosidade"/>
-						<s:CheckBox label="Colocação de Tetos Anteriores" id="colocacaoTetosAnteriores" />
-						<s:CheckBox label="Colocação de Tetos Posteriores" id="colocacaoTetosPosteriores" />
-						<s:CheckBox label="Comprimento Tetos" id="comprimentoTetos" />
-						<s:CheckBox label="Estatura" id="estatura" />
-						<s:CheckBox label="Inserção Úbere Anterior" id="insercaoUbereAnterior" />
-						<s:CheckBox label="Largura da Garupa" id="larguraGarupa" />
-						<s:CheckBox label="Largura do Peito" id="larguraPeito" />
-						<s:CheckBox label="Largura Úbere Posterior" id="larguraUberePosterior" />
-						<s:CheckBox label="Ligamento Médio" id="ligamentoMedio" />
-						<s:CheckBox label="Pernas Posteriores - Vista Lateral" id="pernasPostVistaLateral" />
-						<s:CheckBox label="Pernas Posteriores - Vista Posterior" id="pernasPostVistaPost" />
-						<s:CheckBox label="Profundidade Corporal" id="profundidadeCorporal" />
-						<s:CheckBox label="Profundidade do Úbere" id="profundidadeUbere" />
-						<s:CheckBox label="Profundidade do Talão" id="profundidadeTalao" />
-				</s:TileGroup>
-				</s:HGroup>
+							<mx:series>
+								<mx:LineSeries displayName="Altura Úbere Posterior" yField="alturaUberePosterior" form="curve" visible="{alturaUberePosterior.selected}"/>
+								<mx:LineSeries displayName="Ângulo do Casco" yField="anguloCasco" form="curve" visible="{anguloCasco.selected}"/>
+								<mx:LineSeries displayName="Ângulo Garupa" yField="anguloGarupa" form="curve" visible="{anguloGarupa.selected}"/>
+								<mx:LineSeries displayName="Angulosidade" yField="angulosidade" form="curve" visible="{angulosidade.selected}"/>
+								<mx:LineSeries displayName="Colocação de Tetos Anteriores" yField="colocacaoTetosAnteriores" form="curve" visible="{colocacaoTetosAnteriores.selected}"/>
+								<mx:LineSeries displayName="Colocação de Tetos Posteriores" yField="colocacaoTetosPosteriores" form="curve" visible="{colocacaoTetosPosteriores.selected}"/>
+								<mx:LineSeries displayName="Comprimento Tetos" yField="comprimentoTetos" form="curve" visible="{comprimentoTetos.selected}"/>
+								<mx:LineSeries displayName="Estatura" yField="estatura" form="curve" visible="{estatura.selected}"/>
+								<mx:LineSeries displayName="Inserção Úbere Anterior" yField="insercaoUbereAnterior" form="curve" visible="{insercaoUbereAnterior.selected}"/>
+								<mx:LineSeries displayName="Largura da Garupa" yField="larguraGarupa" form="curve" visible="{larguraGarupa.selected}"/>
+								<mx:LineSeries displayName="Largura do Peito" yField="larguraPeito" form="curve" visible="{larguraPeito.selected}"/>
+								<mx:LineSeries displayName="Largura Úbere Posterior" yField="larguraUberePosterior" form="curve" visible="{larguraUberePosterior.selected}"/>
+								<mx:LineSeries displayName="Ligamento Médio" yField="ligamentoMedio" form="curve" visible="{ligamentoMedio.selected}"/>
+								<mx:LineSeries displayName="Pernas Posteriores - Vista Lateral" yField="pernasPostVistaLateral" form="curve" visible="{pernasPostVistaLateral.selected}"/>
+								<mx:LineSeries displayName="Pernas Posteriores - Vista Posterior" yField="pernasPostVistaPost" form="curve" visible="{pernasPostVistaPost.selected}"/>
+								<mx:LineSeries displayName="Profundidade Corporal" yField="profundidadeCorporal" form="curve" visible="{profundidadeCorporal.selected}"/>
+								<mx:LineSeries displayName="Profundidade do Úbere" yField="profundidadeUbere" form="curve" visible="{profundidadeUbere.selected}"/>
+								<mx:LineSeries displayName="Profundidade do Talão" yField="profundidadeTalao" form="curve" visible="{profundidadeTalao.selected}"/>
+							</mx:series>
+						</mx:LineChart>
+
+						<mx:Legend id="legenda" dataProvider="{linechart}"/>
+					</s:HGroup>
+					<s:HGroup horizontalAlign="center">
+
+						<s:TileGroup maxWidth="1000" width="100%" orientation="columns" verticalAlign="justify" horizontalAlign="justify" requestedColumnCount="4">
+							<s:CheckBox label="Altura Úbere Posterior" id="alturaUberePosterior" selected="true"/>
+							<s:CheckBox label="Ângulo do Casco" id="anguloCasco"/>
+							<s:CheckBox label="Ângulo Garupa" id="anguloGarupa"/>
+							<s:CheckBox label="Angulosidade" id="angulosidade"/>
+							<s:CheckBox label="Colocação de Tetos Anteriores" id="colocacaoTetosAnteriores"/>
+							<s:CheckBox label="Colocação de Tetos Posteriores" id="colocacaoTetosPosteriores"/>
+							<s:CheckBox label="Comprimento Tetos" id="comprimentoTetos"/>
+							<s:CheckBox label="Estatura" id="estatura"/>
+							<s:CheckBox label="Inserção Úbere Anterior" id="insercaoUbereAnterior"/>
+							<s:CheckBox label="Largura da Garupa" id="larguraGarupa"/>
+							<s:CheckBox label="Largura do Peito" id="larguraPeito"/>
+							<s:CheckBox label="Largura Úbere Posterior" id="larguraUberePosterior"/>
+							<s:CheckBox label="Ligamento Médio" id="ligamentoMedio"/>
+							<s:CheckBox label="Pernas Posteriores - Vista Lateral" id="pernasPostVistaLateral"/>
+							<s:CheckBox label="Pernas Posteriores - Vista Posterior" id="pernasPostVistaPost"/>
+							<s:CheckBox label="Profundidade Corporal" id="profundidadeCorporal"/>
+							<s:CheckBox label="Profundidade do Úbere" id="profundidadeUbere"/>
+							<s:CheckBox label="Profundidade do Talão" id="profundidadeTalao"/>
+						</s:TileGroup>
+					</s:HGroup>
 				</s:VGroup>
-		</s:VGroup>
-	</s:Group>
-		</s:Scroller>
+			</s:VGroup>
+		</s:Group>
+	</s:Scroller>
 
 </s:TitleWindow>
