@@ -18,6 +18,7 @@
 
 		<s:RemoteObject id="animalService" fault="onFault(event)" destination="AnimalService" showBusyCursor="true">
 			<s:method name="salvar" result="{serviceResultAnimalSalvar(event)}"/>
+			<s:method name="existeAnimal" result="{serviceResultRecuperarExisteAnimal(event)}"/>
 		</s:RemoteObject>
 
 		<s:Parallel id="exibeMensagemParallel">
@@ -42,13 +43,13 @@
 
 		<fx:Array id="validadores">
 			<mx:NumberValidator id="cmbValTipoEvento" source="{cmbEventoTipoEvento}" property="selectedIndex" required="true" minValue="1" lowerThanMinError.stateEditar="Este campo é obrigatório" triggerEvent="change"/>
-			<mx:StringValidator id="strValEventoComentario" source="{txtEventoComentario}" property="text" required="true" maxLength="255"/>
+			<mx:StringValidator id="strValEventoComentario" source="{txtEventoComentario}" property="text" required="true" maxLength="150"/>
 		</fx:Array>
 
 		<fx:Array id="validadoresCria">
-			<mx:StringValidator id="strValEventoCriaApelido" source="{txtEventoCriaApelido}" property="text" required="true" minLength="5" maxLength="255"/>
-			<mx:StringValidator id="strValEventoCriaNome" source="{txtEventoCriaNome}" property="text" required="true" minLength="5" maxLength="255"/>
-			<mx:StringValidator id="strValEventoCriaRegistro" source="{txtEventoCriaRegistro}" property="text" required="true" minLength="15" maxLength="20"/>
+			<mx:StringValidator id="strValRegistro" source="{txtEventoCriaRegistro}" property="text" required="true" maxLength="20"/>
+			<mx:StringValidator id="strValNome" source="{txtEventoCriaNome}" property="text" required="true" minLength="5" maxLength="255"/>
+			<mx:StringValidator id="strValApelido" source="{txtEventoCriaApelido}" property="text" required="true" maxLength="255"/>
 		</fx:Array>
 
 		<entity:Usuario id="proprietarioPesquisa"/>
@@ -179,7 +180,7 @@
 					 /////////////////////////////-->
 				<s:Panel id="panelEvento" width="100%" title="Evento" includeIn="stateDetalhe">
 					<s:VGroup width="100%" height="100%" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5">
-						<s:BorderContainer id="panelError" width="100%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelError" visible="false">
+						<s:BorderContainer id="panelError" width="98%" height="0" hideEffect="{escondeMensagemParallel}" showEffect="{exibeMensagemParallel}" styleName="panelError" visible="false">
 							<s:Label text="Erro ao incluir evento. Verificar campos em vermelho." left="50" verticalCenter="0"/>
 							<mx:Image source="@Embed(source='../assets/img/error.png')" verticalCenter="0" left="10"/>
 						</s:BorderContainer>
@@ -197,7 +198,7 @@
 								<s:HGroup verticalAlign="middle">
 									<s:Label id="lblEventoComentario" text="Comentário"/>
 									<s:Label text="*" color="#B22222" fontWeight="bold"/>
-									<s:TextInput id="txtEventoComentario" width="567" tabIndex="3"/>
+									<s:TextInput id="txtEventoComentario" width="567" tabIndex="3" maxChars="150"/>
 								</s:HGroup>
 								<s:BorderContainer visible="false" id="panelCria" left="5" right="5" height="0" hideEffect="{escondeMensagemParallelCria}" showEffect="{exibeMensagemParallelCria}" styleName="panelProducao">
 									<s:VGroup paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
@@ -208,12 +209,12 @@
 											<mx:Spacer width="10"/>
 											<s:Label id="lblEventoCriaNome" text="Nome Cria"/>
 											<s:Label text="*" color="#B22222" fontWeight="bold"/>
-											<s:TextInput id="txtEventoCriaNome" width="350" maxChars="255"/>
+											<s:TextInput id="txtEventoCriaNome" width="350" maxChars="255" tabIndex="5"/>
 										</s:HGroup>
 										<s:HGroup verticalAlign="middle">
 											<s:Label id="lblEventoCriaApelido" text="Apelido Cria"/>
 											<s:Label text="*" color="#B22222" fontWeight="bold" width="11"/>
-											<s:TextInput id="txtEventoCriaApelido" width="599" maxChars="255" tabIndex="5"/>
+											<s:TextInput id="txtEventoCriaApelido" width="599" maxChars="255" tabIndex="6"/>
 										</s:HGroup>
 										<s:HGroup verticalAlign="middle">
 											<s:Label id="lblEventoCriaSexo" text="Sexo Cria"/>
@@ -228,12 +229,12 @@
 								</s:BorderContainer>
 							</s:VGroup>
 						</s:HGroup>
-						<mx:AdvancedDataGrid id="dataGridEvento" left="10" right="10" top="10" bottom="10" designViewDataType="flat" itemClick="gridClickEvento(event)" width="100%" >
+						<mx:AdvancedDataGrid id="dataGridEvento" left="10" right="10" top="10" bottom="10" designViewDataType="flat" itemClick="gridClickEvento(event)" width="100%">
 							<mx:columns>
-								<mx:AdvancedDataGridColumn textAlign="center" headerText="Codigo" sortable="true" dataField="codigo"/>
-								<mx:AdvancedDataGridColumn textAlign="center" headerText="Data Evento" sortable="true" labelFunction="labelFunctionDataEvento"/>
-								<mx:AdvancedDataGridColumn textAlign="center" headerText="Tipo" sortable="true" dataField="tipoEventoAcasalamento"/>
-								<mx:AdvancedDataGridColumn textAlign="center" headerText="Comentário" sortable="true" dataField="comentario"/>
+								<mx:AdvancedDataGridColumn textAlign="center" headerText="Codigo" sortable="true" dataField="codigo" width="70"/>
+								<mx:AdvancedDataGridColumn textAlign="center" headerText="Data Evento" sortable="true" labelFunction="labelFunctionDataEvento" width="130"/>
+								<mx:AdvancedDataGridColumn textAlign="center" headerText="Tipo" sortable="true" dataField="tipoEventoAcasalamento" width="160"/>
+								<mx:AdvancedDataGridColumn textAlign="left" headerText="Comentário" sortable="true" dataField="comentario" dataTipField="comentario" showDataTips="true"/>
 							</mx:columns>
 						</mx:AdvancedDataGrid>
 					</s:VGroup>

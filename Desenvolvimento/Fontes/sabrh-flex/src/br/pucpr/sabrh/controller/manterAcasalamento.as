@@ -255,21 +255,9 @@ protected function btnClickSalvarEvento():void
 				if (validarCria())
 				{
 					var animal:Animal=new Animal();
-					animal.apelido=StringUtil.trim(txtEventoCriaApelido.text);
-					animal.dataNascimento=txtEventoData.selectedDate;
-					animal.mae=acasalamentoSelecionado.femea;
-					animal.pai=acasalamentoSelecionado.macho;
-					animal.propriedade=animal.mae.propriedade;
 					animal.registro=StringUtil.trim(txtEventoCriaRegistro.text);
-					animal.sexo=radioGroupCriaSexo.selectedValue as String;
-					animal.nome=StringUtil.trim(txtEventoCriaNome.text);
-					if (animal.sexo == "FEMEA")
-					{
-						animal.status="DESCARTE";
-					}
-					animalService.salvar(animal);
-					acasalamentoSelecionado.femea.status="LACTACAO";
-					animalService.salvar(acasalamentoSelecionado.femea);
+					
+					animalService.existeAnimal(animal);					
 				}
 				break;
 			case "COMENTARIO":
@@ -286,6 +274,7 @@ protected function btnClickSalvarEvento():void
 protected function btnClickVoltarPesquisa():void
 {
 	currentState=ConstantesUtils.STATE_PESQUISA;
+	PopUpManager.centerPopUp(this);
 	init();
 }
 
@@ -401,6 +390,8 @@ protected function serviceResultAcasalamentoPesquisar(event:ResultEvent):void
 
 protected function serviceResultAcasalamentoSalvar(event:ResultEvent):void
 {
+	if (panelCria.visible)
+		panelCria.visible=false;
 	acasalamentoSelecionado=event.result as Acasalamento;
 
 	statusService.listarStatusEventoAcasalamento();
@@ -570,7 +561,8 @@ protected function validar():Boolean
 	//se não existem erros 
 	if (errors.length == 0)
 	{
-		panelError.visible=false;
+		if (!panelCria.visible)
+			panelError.visible=false;
 		return true;
 	}
 	else
@@ -597,7 +589,45 @@ protected function validarCria():Boolean
 	{
 		errors[0].target.source.focusManager.setFocus(errors[0].target.source);
 	}
+	
 	panelError.visible=true;
 
 	return false;
+}
+
+protected function serviceResultRecuperarExisteAnimal(event:ResultEvent):void
+{
+	var existe:Boolean=event.result as Boolean;
+	if (!existe)
+	{
+		var evento:EventoAcasalamento=new EventoAcasalamento();
+		evento.acasalamento=acasalamentoSelecionado;
+		evento.comentario=StringUtil.trim(txtEventoComentario.text);
+		evento.dataEvento=txtEventoData.selectedDate;
+		evento.tipoEventoAcasalamento="NASCIMENTO";
+		acasalamentoService.salvarEvento(evento);
+		
+		var animal:Animal=new Animal();
+		animal.apelido=StringUtil.trim(txtEventoCriaApelido.text);
+		animal.dataNascimento=txtEventoData.selectedDate;
+		animal.mae=acasalamentoSelecionado.femea;
+		animal.pai=acasalamentoSelecionado.macho;
+		animal.propriedade=animal.mae.propriedade;
+		animal.registro=StringUtil.trim(txtEventoCriaRegistro.text);
+		animal.sexo=radioGroupCriaSexo.selectedValue as String;
+		animal.nome=StringUtil.trim(txtEventoCriaNome.text);
+		if (animal.sexo == "FEMEA")
+		{
+			animal.status="DESCARTE";
+		}
+		animalService.salvar(animal);
+		acasalamentoSelecionado.femea.status="LACTACAO";
+		animalService.salvar(acasalamentoSelecionado.femea);
+	}
+	else
+	{
+		txtEventoCriaRegistro.errorString="Já existe um animal com o registro informado.";
+		txtEventoCriaRegistro.focusManager.setFocus(txtEventoCriaRegistro);
+		panelError.visible=true;
+	}
 }
