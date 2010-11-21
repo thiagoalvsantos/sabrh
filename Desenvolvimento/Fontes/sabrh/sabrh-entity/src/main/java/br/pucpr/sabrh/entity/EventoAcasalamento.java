@@ -56,7 +56,7 @@ public class EventoAcasalamento implements Serializable {
 	private Date dataEvento;
 
 	/** O atributo comentario. */
-	@Column(name = "TX_COMENTARIO", length = 255, nullable = false)
+	@Column(name = "TX_COMENTARIO", length = 150, nullable = false)
 	private String comentario;
 
 	/**
